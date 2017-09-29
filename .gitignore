@@ -18,4 +18,5 @@ js/webapp/
 js/js/
 js/*-SNAPSHOT
 
-.jsweet/candies
+.jsweet/
+javadocs/

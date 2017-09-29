@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.limitless</groupId>
 	<artifactId>framework</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.5-SNAPSHOT</version>
 	<name>framework</name>
 	<description>Javascript library for the wikiot UI framework</description>
 	<developers>
@@ -182,7 +182,7 @@
 					<!-- leave these options unchanged to place the Javadoc at the right 
 						place for jsweet.org -->
 					<reportOutputDirectory>/var/www/apidocs/releases/org/jsweet/candies</reportOutputDirectory>
-					<destDir>${project.artifactId}/${project.version}</destDir>
+					<destDir>javadocs/${project.artifactId}/${project.version}</destDir>
 					<!-- end of jsweet.org configuration -->
 					<header><![CDATA[<a href="http://www.jsweet.org" target="_blank" style="text-transform: lowercase">http://www.jsweet.org<a>]]></header>
 					<bottom><![CDATA[<center>Copyright 2015, <a href="http://www.cincheo.org" target="_blank">Cinchéo SAS<a> - Web site: <a href="http://www.jsweet.org" target="_blank">http://www.jsweet.org<a><center>]]></bottom>

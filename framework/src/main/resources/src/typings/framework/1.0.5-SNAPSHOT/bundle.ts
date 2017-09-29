@@ -21,8 +21,8 @@ namespace framework.builder {
 
         configureStyles(instance : framework.JSContainer, component : framework.builder.model.Component) {
             let keys : string[] = Object.keys(component.styles);
-            for(let index440=0; index440 < keys.length; index440++) {
-                let key = keys[index440];
+            for(let index150=0; index150 < keys.length; index150++) {
+                let key = keys[index150];
                 {
                     let value : string = <string>component.styles[key];
                     instance.setStyle(key, value);
@@ -32,8 +32,8 @@ namespace framework.builder {
 
         configureParameters(instance : framework.configs.Designable, component : framework.builder.model.Component) {
             let keys : string[] = Object.keys(component.parameters);
-            for(let index441=0; index441 < keys.length; index441++) {
-                let key = keys[index441];
+            for(let index151=0; index151 < keys.length; index151++) {
+                let key = keys[index151];
                 {
                     let value : string = <string>component.parameters[key];
                     instance.setParameter(key, value);
@@ -42,8 +42,8 @@ namespace framework.builder {
         }
 
         configureEvents(instance : framework.JSContainer, component : framework.builder.model.Component) {
-            for(let index442=0; index442 < component.events.length; index442++) {
-                let event = component.events[index442];
+            for(let index152=0; index152 < component.events.length; index152++) {
+                let event = component.events[index152];
                 {
                     let listener : framework.builder.BuilderEventListener = new framework.builder.BuilderEventListener(event.source);
                     instance.addEventListener(listener, event.type);
@@ -282,8 +282,8 @@ namespace framework.core {
         }
 
         public getBeanOfType<T>(clazz : any) : T {
-            for(let index443=this.beans.keySet().iterator();index443.hasNext();) {
-                let key = index443.next();
+            for(let index153=this.beans.keySet().iterator();index153.hasNext();) {
+                let key = index153.next();
                 {
                     let bean : any = this.beans.get(key);
                     try {
@@ -552,8 +552,8 @@ namespace framework {
 namespace framework.renderer {
     export class ContainerRenderer implements framework.renderer.Renderer<framework.JSContainer> {
         public decorate(c : framework.JSContainer) {
-            for(let index444=framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.core.DecoratorsRegistry").getDecorators().iterator();index444.hasNext();) {
-                let dec = index444.next();
+            for(let index154=framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.core.DecoratorsRegistry").getDecorators().iterator();index154.hasNext();) {
+                let dec = index154.next();
                 {
                     dec.decorate(c);
                 }
@@ -617,8 +617,8 @@ namespace framework.renderer {
         }
 
         execCommands(njq : HTMLElement, container : framework.Renderable) {
-            for(let index445=container.getCommands().iterator();index445.hasNext();) {
-                let command = index445.next();
+            for(let index155=container.getCommands().iterator();index155.hasNext();) {
+                let command = index155.next();
                 {
                     let name : string = command.getName();
                     let params : Object = command.getParameters();
@@ -638,14 +638,14 @@ namespace framework.renderer {
         }
 
         renderEvents(njq : HTMLElement, c : framework.JSContainer) {
-            for(let index446=c.getListeners().keySet().iterator();index446.hasNext();) {
-                let key = index446.next();
+            for(let index156=c.getListeners().keySet().iterator();index156.hasNext();) {
+                let key = index156.next();
                 {
                     let listeners : java.util.List<framework.EventListener> = c.getListeners().get(key);
                     njq.addEventListener(key, ((listeners) => {
                         return (evt) => {
-                            for(let index447=listeners.iterator();index447.hasNext();) {
-                                let l = index447.next();
+                            for(let index157=listeners.iterator();index157.hasNext();) {
+                                let l = index157.next();
                                 {
                                     this.synchronizeFields(njq, c);
                                     l.performAction(c, evt);
@@ -694,8 +694,8 @@ namespace framework.renderer {
                     inputField.setRawValue(value);
                 }
             }
-            for(let index448=jsfield.getChildren().iterator();index448.hasNext();) {
-                let c = index448.next();
+            for(let index158=jsfield.getChildren().iterator();index158.hasNext();) {
+                let c = index158.next();
                 {
                     this.synchronizeFields(document.getElementById(c.getId()), c);
                 }
@@ -705,9 +705,9 @@ namespace framework.renderer {
         renderAttributes(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array450 = c.getChangedAttributes();
-                    for(let index449=0; index449 < array450.length; index449++) {
-                        let key = array450[index449];
+                    let array160 = c.getChangedAttributes();
+                    for(let index159=0; index159 < array160.length; index159++) {
+                        let key = array160[index159];
                         {
                             if(c.getAttribute(key) == null) {
                                 njq.removeAttribute(key);
@@ -718,8 +718,8 @@ namespace framework.renderer {
                     }
                 }
             } else {
-                for(let index451=c.getAttributeNames().iterator();index451.hasNext();) {
-                    let key = index451.next();
+                for(let index161=c.getAttributeNames().iterator();index161.hasNext();) {
+                    let key = index161.next();
                     {
                         if(c.getAttribute(key) != null) njq.setAttribute(key, c.getAttribute(key));
                     }
@@ -741,17 +741,17 @@ namespace framework.renderer {
         renderStyles(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array453 = c.getChangedStyles();
-                    for(let index452=0; index452 < array453.length; index452++) {
-                        let key = array453[index452];
+                    let array163 = c.getChangedStyles();
+                    for(let index162=0; index162 < array163.length; index162++) {
+                        let key = array163[index162];
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
                     }
                 }
             } else {
-                for(let index454=c.getStyleNames().iterator();index454.hasNext();) {
-                    let key = index454.next();
+                for(let index164=c.getStyleNames().iterator();index164.hasNext();) {
+                    let key = index164.next();
                     {
                         njq.style.setProperty(key, c.getStyle(key));
                     }
@@ -1122,8 +1122,8 @@ namespace framework {
             }
             let aStyles : string[] = styles.split(" ");
             let add : boolean = true;
-            for(let index455=0; index455 < aStyles.length; index455++) {
-                let style = aStyles[index455];
+            for(let index165=0; index165 < aStyles.length; index165++) {
+                let style = aStyles[index165];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(style.trim(),styleClass))) {
                         add = false;
@@ -1381,8 +1381,8 @@ namespace framework {
         public setRendered(b : boolean) : JSContainer {
             this.rendered = b;
             if(!b) {
-                for(let index456=this.children.iterator();index456.hasNext();) {
-                    let child = index456.next();
+                for(let index166=this.children.iterator();index166.hasNext();) {
+                    let child = index166.next();
                     {
                         child.setRendered(b);
                     }
@@ -1410,12 +1410,12 @@ namespace framework {
             if(!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for(let index457=this.renderers.iterator();index457.hasNext();) {
-                let renderer = index457.next();
+            for(let index167=this.renderers.iterator();index167.hasNext();) {
+                let renderer = index167.next();
                 renderer.doRender(this, parent)
             }
-            for(let index458=this.getChildren().iterator();index458.hasNext();) {
-                let child = index458.next();
+            for(let index168=this.getChildren().iterator();index168.hasNext();) {
+                let child = index168.next();
                 {
                     child.render();
                 }
@@ -1456,9 +1456,9 @@ namespace framework {
                 return null;
             }
             {
-                let array460 = this.parent.getAttribute("class").split(" ");
-                for(let index459=0; index459 < array460.length; index459++) {
-                    let s = array460[index459];
+                let array170 = this.parent.getAttribute("class").split(" ");
+                for(let index169=0; index169 < array170.length; index169++) {
+                    let s = array170[index169];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(s.trim(),cls))) return <T>this.parent;
                     }
@@ -1798,8 +1798,8 @@ namespace framework {
          */
         public getValue() : string {
             let val : string = this.getAttribute("value");
-            for(let index461=this.getChildren().iterator();index461.hasNext();) {
-                let opt = index461.next();
+            for(let index171=this.getChildren().iterator();index171.hasNext();) {
+                let opt = index171.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         return (<framework.JSOption>opt).getValue();
@@ -1810,8 +1810,8 @@ namespace framework {
         }
 
         public setValue$java_lang_String(val : string) {
-            for(let index462=this.getChildren().iterator();index462.hasNext();) {
-                let opt = index462.next();
+            for(let index172=this.getChildren().iterator();index172.hasNext();) {
+                let opt = index172.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         (<framework.JSOption>opt).setSelected(true);
@@ -2115,8 +2115,8 @@ namespace framework.lightning {
         }
 
         public setState(state : string) : Button {
-            for(let index463=0; index463 < Button.states_$LI$().length; index463++) {
-                let s = Button.states_$LI$()[index463];
+            for(let index173=0; index173 < Button.states_$LI$().length; index173++) {
+                let s = Button.states_$LI$()[index173];
                 {
                     this.removeClass("slds-button_" + s);
                 }
@@ -2988,8 +2988,8 @@ namespace framework.lightning {
         }
 
         public setActive(item : framework.lightning.TabItem) : Tabs {
-            for(let index464=this.nav.getChildren().iterator();index464.hasNext();) {
-                let c = index464.next();
+            for(let index174=this.nav.getChildren().iterator();index174.hasNext();) {
+                let c = index174.next();
                 {
                     let tab : framework.lightning.TabItem = <framework.lightning.TabItem>c;
                     tab.setActive(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(tab,item)));
@@ -3062,8 +3062,8 @@ namespace framework.builder {
         }
 
         public addComponents(...components : framework.builder.Component[]) : ComponentsLibrary {
-            for(let index465=0; index465 < components.length; index465++) {
-                let com = components[index465];
+            for(let index175=0; index175 < components.length; index175++) {
+                let com = components[index175];
                 {
                     let li : framework.JSContainer = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
                     this.addChild$framework_JSContainer(li);
@@ -3459,8 +3459,8 @@ namespace framework.lightning {
         public setLayout(layout : string) : DescriptionList {
             this.currentLayout = layout;
             this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-            for(let index466=this.getChildren().iterator();index466.hasNext();) {
-                let child = index466.next();
+            for(let index176=this.getChildren().iterator();index176.hasNext();) {
+                let child = index176.next();
                 {
                     child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                     child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -3715,8 +3715,8 @@ namespace framework.builder {
                 element.setInput(cb);
             } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(parameter.type, "select")) {
                 let select : framework.JSSelect = new framework.JSSelect(parameter.name);
-                for(let index467=parameter.options.iterator();index467.hasNext();) {
-                    let opt = index467.next();
+                for(let index177=parameter.options.iterator();index177.hasNext();) {
+                    let opt = index177.next();
                     {
                         let o : framework.JSOption = new framework.JSOption(opt.text, opt.value);
                         select.addOption(o);
@@ -3760,8 +3760,8 @@ namespace framework.builder {
         public setComponent(designable : framework.configs.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index468=this.__framework_builder_PropertiesEditor_component.getParameters().iterator();index468.hasNext();) {
-                let p = index468.next();
+            for(let index178=this.__framework_builder_PropertiesEditor_component.getParameters().iterator();index178.hasNext();) {
+                let p = index178.next();
                 {
                     this.addProperty$framework_configs_Parameter(p);
                 }

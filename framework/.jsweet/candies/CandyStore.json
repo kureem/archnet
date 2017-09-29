@@ -1,0 +1,57 @@
+{
+  "candies": [
+    {
+      "name": "jqueryui",
+      "version": "1.11.0-20170726",
+      "lastUpdateTimestamp": 1501684002000,
+      "modelVersion": "unknown",
+      "transpilerVersion": "2.0.0",
+      "jsOutputDirPath": "C:\\wikiotframework\\framework\\.jsweet\\candies\\js",
+      "jsDirPath": "META-INF/resources/webjars/jqueryui/1.11.0-20170726",
+      "jsFilesPaths": []
+    },
+    {
+      "name": "jquery",
+      "version": "1.10.0-20170726",
+      "lastUpdateTimestamp": 1501684104000,
+      "modelVersion": "unknown",
+      "transpilerVersion": "2.0.0",
+      "jsOutputDirPath": "C:\\wikiotframework\\framework\\.jsweet\\candies\\js",
+      "jsDirPath": "META-INF/resources/webjars/jquery/1.10.0-20170726",
+      "jsFilesPaths": []
+    },
+    {
+      "name": "codemirror",
+      "version": "0.0.0-1.1.0-20160525",
+      "lastUpdateTimestamp": 1464215458000,
+      "modelVersion": "unknown",
+      "transpilerVersion": "1.1.0",
+      "jsOutputDirPath": "C:\\wikiotframework\\framework\\.jsweet\\candies\\js",
+      "jsDirPath": "META-INF/resources/webjars/codemirror/0.0.0-1.1.0-20160525",
+      "jsFilesPaths": []
+    },
+    {
+      "name": "jsweet-core",
+      "version": "1.2.0-SNAPSHOT",
+      "lastUpdateTimestamp": 1482012944000,
+      "modelVersion": "unknown",
+      "transpilerVersion": "1.2.0",
+      "jsOutputDirPath": "C:\\wikiotframework\\framework\\.jsweet\\candies\\js",
+      "jsDirPath": "META-INF/resources/webjars/jsweet-core/1.2.0-SNAPSHOT",
+      "jsFilesPaths": []
+    },
+    {
+      "name": "j4ts",
+      "version": "0.2.0-SNAPSHOT",
+      "lastUpdateTimestamp": 1495546818000,
+      "modelVersion": "unknown",
+      "transpilerVersion": "1.1.1",
+      "jsOutputDirPath": "C:\\wikiotframework\\framework\\.jsweet\\candies\\js",
+      "jsDirPath": "META-INF/resources/webjars/j4ts/0.2.0-SNAPSHOT",
+      "jsFilesPaths": [
+        "META-INF/resources/webjars/j4ts/0.2.0-SNAPSHOT/.tsc-rootfile.js",
+        "META-INF/resources/webjars/j4ts/0.2.0-SNAPSHOT/bundle.js"
+      ]
+    }
+  ]
+}

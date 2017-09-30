@@ -1,4 +1,4 @@
-package framework.builder.model;
+package framework.builder.marshalling;
 
 public class BuilderEvent {
 	

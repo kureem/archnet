@@ -3,9 +3,7 @@ package framework.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.interactions.InteractionsDecorator;
-
-public class BasicDecoratorRegistry implements DecoratorsRegistry ,Initializable{
+public class BasicDecoratorRegistry implements DecoratorsRegistry {
 
 	private List<Decorator> decorators = new ArrayList<>();
 	
@@ -17,11 +15,6 @@ public class BasicDecoratorRegistry implements DecoratorsRegistry ,Initializable
 	@Override
 	public List<Decorator> getDecorators() {
 		return decorators;
-	}
-
-	@Override
-	public void doInit() {
-		registerDecorator(new InteractionsDecorator());
 	}
 
 }

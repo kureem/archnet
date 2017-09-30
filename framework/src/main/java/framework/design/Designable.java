@@ -1,14 +1,13 @@
-package framework.configs;
+package framework.design;
 
 import java.util.List;
 
 import framework.Renderable;
-import framework.builder.model.Component;
+import framework.builder.marshalling.Component;
 
 public interface Designable extends Renderable {
 
-	public void setParameter(String key, String value);
-	
+	public void setParameter(String key, String value, boolean designMode);
 	
 	public Component getComponent();
 	

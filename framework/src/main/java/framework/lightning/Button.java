@@ -1,13 +1,12 @@
 package framework.lightning;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import framework.JSContainer;
-import framework.builder.model.Component;
-import framework.configs.Designable;
-import framework.configs.Option;
-import framework.configs.Parameter;
+import framework.builder.marshalling.Component;
+import framework.design.Designable;
+import framework.design.Option;
+import framework.design.Parameter;
 
 public class Button extends JSContainer implements Designable {
 
@@ -96,7 +95,7 @@ public class Button extends JSContainer implements Designable {
 	}
 
 	public List<Parameter> getParameters() {
-		List<Parameter> result = new ArrayList<>();
+		List<Parameter> result = super.getParameters();
 		result.add(createParameter("label", "Label", "String"));
 		result.add(createParameter("stateful", "Stateful", "Boolean"));
 		result.add(createParameter("disabled", "Disabled", "Boolean"));
@@ -116,7 +115,7 @@ public class Button extends JSContainer implements Designable {
 	}
 
 	private Parameter createParameter(String name, String label, String type) {
-		Parameter p = new Parameter();
+		Parameter p = new Parameter(name,label,type,"advanced");
 		p.name = name;
 		p.type = type;
 		p.label = label;

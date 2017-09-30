@@ -1,5 +1,6 @@
 package framework;
 
+import static jsweet.dom.Globals.document;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -7,29 +8,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import framework.builder.model.Component;
-import framework.configs.Designable;
-import framework.configs.Parameter;
-import framework.core.Static;
+import def.jqueryui.jqueryui.DroppableOptions;
+import framework.builder.marshalling.Component;
+import framework.core.Global;
+import framework.design.Designable;
+import framework.design.Option;
+import framework.design.Parameter;
+import framework.interactions.Droppable;
 import framework.renderer.ContainerRenderer;
 import framework.renderer.Renderer;
 import jsweet.dom.HTMLElement;
 import jsweet.lang.JSON;
 import jsweet.lang.Optional;
 
-
 /**
  * 
  * @author Kurreem
  *
  */
-public class JSContainer implements Renderable, Designable {
+public class JSContainer implements Renderable, Designable, Droppable {
 
-	
 	/**
 	 * 
 	 */
 	
+	private DroppableOptions droppableOptions = null;
+
 	private final static Renderer<? extends JSContainer> DEFAULT_RENDERER = new ContainerRenderer();
 
 	@Optional
@@ -77,9 +81,8 @@ public class JSContainer implements Renderable, Designable {
 	@Optional
 	private List<JSCommand> commands = new LinkedList<>();
 
-	
 	private Component component = new Component();
-	
+
 	public JSContainer(String name, String tag) {
 		super();
 		this.tag = tag;
@@ -170,8 +173,8 @@ public class JSContainer implements Renderable, Designable {
 	@Override
 	public String uid() {
 
-		Static.idCount++;
-		return Static.idCount + "";
+		Global.idCount++;
+		return Global.idCount + "";
 		// String s= System.currentTimeMillis() + "_" + Math.random();
 		// s = s.replace('.', '_');
 		// return s;
@@ -508,7 +511,10 @@ public class JSContainer implements Renderable, Designable {
 	 */
 	@Override
 	public void render() {
-		render(null);
+		if(parent ==null)
+			render(null);
+		else
+			render(document.getElementById(parent.getId()));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -562,13 +568,13 @@ public class JSContainer implements Renderable, Designable {
 		if (parent == null) {
 			return null;
 		}
-		for (String s :parent.getAttribute("class").split(" ")) {
-			if(s.trim().equals(cls))
+		for (String s : parent.getAttribute("class").split(" ")) {
+			if (s.trim().equals(cls))
 				return (T) parent;
-		} 
-			
+		}
+
 		return ((JSContainer) parent).getAncestorWithClass(cls);
-		
+
 	}
 
 	/*
@@ -656,9 +662,8 @@ public class JSContainer implements Renderable, Designable {
 	}
 
 	@Override
-	public void setParameter(String key, String value) {
-		// TODO Auto-generated method stub
-		
+	public void setParameter(String key, String value,boolean designMode) {
+		component.parameters.$set(key, value);
 	}
 
 	@Override
@@ -668,15 +673,36 @@ public class JSContainer implements Renderable, Designable {
 
 	@Override
 	public List<Parameter> getParameters() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Parameter> params = new LinkedList<>();
+		params.add(new Parameter("name", "Name", "String", "Basic"));
+		params.add(new Parameter("class", "Style class", "String", "Basic"));
+		params.add(new Parameter("style", "Style", "String", "Basic"));
+		params.add(new Parameter("width", "Width", "String", "Basic"));
+		params.add(new Parameter("height", "Height", "String", "Basic"));
+		Parameter eventTypes = new Parameter("eventType", "Event", "select", "event");
+		eventTypes.options.add(new Option("Click","click"));
+		eventTypes.options.add(new Option("Double click","dblclick"));
+		params.add(eventTypes);
+		Parameter script = new Parameter("script","Script", "textarea","event");
+		params.add(script);
+		return params;
 	}
 
-	/*@Override
-	public List<Parameter> getParameters() {
-		
-	}*/
+	@Override
+	public DroppableOptions getDroppableOptions() {
+		return droppableOptions;
+	}
 	
-	//protected Parameter createParameter
+	public void setDroppableOptions(DroppableOptions options){
+		this.droppableOptions = options;
+	}
+
+	/*
+	 * @Override public List<Parameter> getParameters() {
+	 * 
+	 * }
+	 */
+
+	// protected Parameter createParameter
 
 }

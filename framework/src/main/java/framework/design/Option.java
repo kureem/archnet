@@ -1,4 +1,4 @@
-package framework.configs;
+package framework.design;
 
 public class Option {
 

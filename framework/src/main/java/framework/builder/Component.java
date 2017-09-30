@@ -2,7 +2,9 @@ package framework.builder;
 
 import def.jqueryui.jqueryui.DraggableOptions;
 import framework.JSContainer;
-import framework.builder.model.ComponentFactory;
+import framework.builder.libraries.ComponentFactoryRegistry;
+import framework.builder.marshalling.ComponentFactory;
+import framework.core.BeanFactory;
 import framework.interactions.Draggable;
 
 public class Component extends JSContainer implements Draggable{
@@ -15,18 +17,26 @@ public class Component extends JSContainer implements Draggable{
 
 	private JSContainer title = new JSContainer("span").addClass("slds-app-launcher__title-label");
 
-	public Component(String name, String initial, String label, ComponentFactory factory) {
-		super(name, "div");
+	
+	private ComponentFactoryRegistry  componentFactoryRegistry = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class);
+	 
+	
+	public Component(String identifier, String initial, String label) {
+		super(identifier, "div");
+		setAttribute("identifier", identifier);
 		addClass("slds-app-launcher__tile");
-
-		addChild(titleFigure);
-		titleFigure.addChild(avatar);
-		avatar.addChild(this.initial);
+		addClass("designer-component");
+		addChild(titleFigure.setAttribute("identifier", identifier));
+		titleFigure.addChild(avatar.setAttribute("identifier", identifier));
+		avatar.addChild(this.initial.setAttribute("identifier", identifier));
 		this.initial.setAttribute("title", label);
 		this.initial.setHtml(initial);
-		titleFigure.addChild(title);
+		titleFigure.addChild(title.setAttribute("identifier", identifier));
 		title.setHtml(label);
-		//addRenderer(new DraggableRenderer());
+	}
+	
+	public ComponentFactory getFactory(){
+		return componentFactoryRegistry.getComponentFactory(getName());
 	}
 
 	@Override
@@ -39,5 +49,6 @@ public class Component extends JSContainer implements Draggable{
 		opts.helper = "clone";
 		return opts;
 	}
+
 
 }

@@ -1,19 +1,20 @@
 package framework.builder.libraries;
 
 import framework.JSContainer;
-import framework.builder.AbstractComponentFactory;
 
-public class BasicComponentFactory extends AbstractComponentFactory{
+public class BasicComponentFactory extends AbstractComponentFactory {
 
-	private String tag;
+	protected String tag;
 	
+	
+
 	public BasicComponentFactory(String tag) {
 		super("html:" + tag);
 		this.tag = tag;
 	}
 
 	@Override
-	public JSContainer createInstance() {
+	public JSContainer createInstance(boolean designMode) {
 		JSContainer container = new JSContainer(tag);
 		return container;
 	}

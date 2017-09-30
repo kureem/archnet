@@ -1,7 +1,10 @@
 package framework.builder;
 
+import framework.JSContainer;
 import framework.builder.libraries.BasicComponentLibrary;
 import framework.builder.libraries.LightningComponentLibrary;
+import framework.builder.marshalling.Component;
+import framework.design.Designable;
 import framework.lightning.BorderLayout;
 import framework.lightning.Button;
 import framework.lightning.ButtonGroup;
@@ -28,6 +31,8 @@ public class Builder extends LTContainer {
 	private LightningComponentLibrary lightningComponentLib = new LightningComponentLibrary();
 	private ComponentsTabs componentsTabs = new ComponentsTabs("componentsTabs");
 	
+	private Designable selectedComponent;
+	
 	public Builder(String name) {
 		super(name, "div");
 		addChild(borderLayout);
@@ -45,13 +50,17 @@ public class Builder extends LTContainer {
 		mainEditor.addItem("Events", eventEditor).setActive(false);
 		
 		
-		Button btn = new Button();
-		btn.setLabel("Click me");
-		borderLayout.addChild(btn, "center");
+		BasicComponent rootComponent = new BasicComponent("div", "div", "DIV");
+		JSContainer root = rootComponent.getFactory().build(new Component(), true);
+		root.setStyle("width", "100%");
+		root.setStyle("height", "200px");
+		
+		//Button btn = new Button();
+		//btn.setLabel("Click me");
+		borderLayout.addChild(root, "center");
+		
 
-		basicEditorBody.setComponent(btn);
-		advancedPropertiesEditorBody.setComponent(btn);
-		eventEditor.setComponent(btn);
+		select(root);
 		
 		propertiesDockedComposer.getBody().addChild(mainEditor);
 		dockLeftPanel(true);
@@ -65,6 +74,17 @@ public class Builder extends LTContainer {
 		dockRightPanel(true);
 		
 		// composers.addChild(properties);
+	}
+	
+	
+	public Designable getSelected(){
+		return selectedComponent;
+	}
+	public void select(Designable designable){
+		this.selectedComponent = designable;
+		basicEditorBody.setComponent(designable);
+		advancedPropertiesEditorBody.setComponent(designable);
+		eventEditor.setComponent(designable);
 	}
 
 	public void dockLeftPanel(boolean b) {

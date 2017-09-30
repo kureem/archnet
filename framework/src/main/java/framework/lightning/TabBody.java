@@ -4,7 +4,7 @@ import framework.JSContainer;
 
 public class TabBody extends JSContainer{
 
-	public TabBody(String name) {
+	public TabBody(String name) { 
 		super(name,"div");
 		addClass("slds-tabs_default__content");
 		setAttribute("role", "tabpanel");

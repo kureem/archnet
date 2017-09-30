@@ -22,6 +22,8 @@ public class FormElement extends JSContainer {
 	}
 	
 	public FormElement setInput(InputField<?> input){
+		control.getChildren().clear();
+		control.setRendered(false);
 		control.addChild((JSContainer)input);
 		return this;
 	}

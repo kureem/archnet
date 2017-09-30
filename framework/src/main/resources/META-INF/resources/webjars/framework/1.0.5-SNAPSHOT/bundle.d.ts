@@ -1,26 +1,4 @@
 declare namespace framework.builder {
-    abstract class AbstractComponentFactory implements framework.builder.model.ComponentFactory {
-        impl: string;
-        constructor(impl: string);
-        /**
-         *
-         * @param {string} impl
-         * @return {boolean}
-         */
-        supports(impl: string): boolean;
-        abstract createInstance(): framework.JSContainer;
-        configureStyles(instance: framework.JSContainer, component: framework.builder.model.Component): void;
-        configureParameters(instance: framework.configs.Designable, component: framework.builder.model.Component): void;
-        configureEvents(instance: framework.JSContainer, component: framework.builder.model.Component): void;
-        /**
-         *
-         * @param {framework.builder.model.Component} component
-         * @return {framework.JSContainer}
-         */
-        build(component: framework.builder.model.Component): framework.JSContainer;
-    }
-}
-declare namespace framework.builder {
     class BuilderEventListener implements framework.EventListener {
         jsSource: string;
         constructor(jsSource: string);
@@ -34,57 +12,82 @@ declare namespace framework.builder {
 }
 declare namespace framework.builder {
     interface Editor extends framework.Renderable {
-        setComponent(designable: framework.configs.Designable): any;
+        setComponent(designable: framework.design.Designable): any;
     }
 }
-declare namespace framework.builder.model {
+declare namespace framework.builder.libraries {
+    abstract class AbstractComponentFactory implements framework.builder.marshalling.ComponentFactory {
+        impl: string;
+        constructor(impl: string);
+        /**
+         *
+         * @param {string} impl
+         * @return {boolean}
+         */
+        supports(impl: string): boolean;
+        abstract createInstance(designMode: boolean): framework.JSContainer;
+        configureStyles(instance: framework.JSContainer, component: framework.builder.marshalling.Component): void;
+        configureParameters(instance: framework.design.Designable, component: framework.builder.marshalling.Component, designMode: boolean): void;
+        configureEvents(instance: framework.JSContainer, component: framework.builder.marshalling.Component): void;
+        /**
+         *
+         * @param {framework.builder.marshalling.Component} component
+         * @param {boolean} designMode
+         * @return {framework.JSContainer}
+         */
+        build(component: framework.builder.marshalling.Component, designMode: boolean): framework.JSContainer;
+        decorateForDesignMode(instance: framework.JSContainer, designMode: boolean): void;
+    }
+}
+declare namespace framework.builder.libraries {
+    class BasicComponentFactoryRegistry implements framework.builder.libraries.ComponentFactoryRegistry {
+        factories: java.util.Map<string, framework.builder.marshalling.ComponentFactory>;
+        /**
+         *
+         * @param {string} identifier
+         * @param {*} factory
+         */
+        registerComponentFactory(identifier: string, factory: framework.builder.marshalling.ComponentFactory): void;
+        /**
+         *
+         * @param {string} identifier
+         * @return {*}
+         */
+        getComponentFactory(identifier: string): framework.builder.marshalling.ComponentFactory;
+        constructor();
+    }
+}
+declare namespace framework.builder.libraries {
+    interface ComponentFactoryRegistry {
+        registerComponentFactory(identifier: string, factory: framework.builder.marshalling.ComponentFactory): any;
+        getComponentFactory(identifier: string): framework.builder.marshalling.ComponentFactory;
+    }
+}
+declare namespace framework.builder.marshalling {
     class BuilderEvent {
         type: string;
         source: string;
         constructor();
     }
 }
-declare namespace framework.builder.model {
+declare namespace framework.builder.marshalling {
     class Component {
         impl: string;
         parameters: Object;
         children: Array<Component>;
-        events: Array<framework.builder.model.BuilderEvent>;
+        events: Array<framework.builder.marshalling.BuilderEvent>;
         styles: Object;
         constructor();
     }
 }
-declare namespace framework.builder.model {
+declare namespace framework.builder.marshalling {
     interface ComponentFactory {
         supports(impl: string): boolean;
-        build(component: framework.builder.model.Component): framework.JSContainer;
-    }
-}
-declare namespace framework.configs {
-    interface Designable extends framework.Renderable {
-        setParameter(key: string, value: string): any;
-        getComponent(): framework.builder.model.Component;
-        getParameters(): java.util.List<framework.configs.Parameter>;
-    }
-}
-declare namespace framework.configs {
-    class Option {
-        constructor(text?: any, value?: any);
-        text: string;
-        value: string;
-    }
-}
-declare namespace framework.configs {
-    class Parameter {
-        constructor(name?: any, label?: any, type?: any);
-        name: string;
-        label: string;
-        type: string;
-        options: java.util.List<framework.configs.Option>;
+        build(component: framework.builder.marshalling.Component, designMode: boolean): framework.JSContainer;
     }
 }
 declare namespace framework.core {
-    class BasicDecoratorRegistry implements framework.core.DecoratorsRegistry, framework.core.Initializable {
+    class BasicDecoratorRegistry implements framework.core.DecoratorsRegistry {
         decorators: java.util.List<framework.core.Decorator>;
         /**
          *
@@ -96,10 +99,6 @@ declare namespace framework.core {
          * @return {*}
          */
         getDecorators(): java.util.List<framework.core.Decorator>;
-        /**
-         *
-         */
-        doInit(): void;
         constructor();
     }
 }
@@ -133,13 +132,37 @@ declare namespace framework.core {
     }
 }
 declare namespace framework.core {
+    class Global extends Object {
+        static idCount: number;
+    }
+}
+declare namespace framework.core {
     interface Initializable {
         doInit(): any;
     }
 }
-declare namespace framework.core {
-    class Static {
-        static idCount: number;
+declare namespace framework.design {
+    interface Designable extends framework.Renderable {
+        setParameter(key?: any, value?: any, designMode?: any): any;
+        getComponent(): framework.builder.marshalling.Component;
+        getParameters(): java.util.List<framework.design.Parameter>;
+    }
+}
+declare namespace framework.design {
+    class Option {
+        constructor(text?: any, value?: any);
+        text: string;
+        value: string;
+    }
+}
+declare namespace framework.design {
+    class Parameter {
+        name: string;
+        label: string;
+        type: string;
+        options: java.util.List<framework.design.Option>;
+        category: string;
+        constructor(name: string, label: string, type: string, category: string);
     }
 }
 declare namespace framework {
@@ -210,11 +233,6 @@ declare namespace framework.interactions {
          */
         doRender(c?: any, root?: any): any;
         constructor();
-    }
-}
-declare namespace framework {
-    class Main {
-        static main(args: string[]): void;
     }
 }
 declare namespace framework {
@@ -345,15 +363,32 @@ declare namespace framework.util {
         static writeToFile(content: string, f: java.io.File): boolean;
     }
 }
+declare namespace framework {
+    class Boot {
+        static main(args: string[]): void;
+    }
+    namespace Boot {
+        class Boot$0 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {framework.JSContainer}
+             */
+            createInstance(designMode: boolean): framework.JSContainer;
+            constructor(__arg0: any);
+        }
+    }
+}
 declare namespace framework.builder.libraries {
-    class BasicComponentFactory extends framework.builder.AbstractComponentFactory {
+    class BasicComponentFactory extends framework.builder.libraries.AbstractComponentFactory {
         tag: string;
         constructor(tag: string);
         /**
          *
+         * @param {boolean} designMode
          * @return {framework.JSContainer}
          */
-        createInstance(): framework.JSContainer;
+        createInstance(designMode: boolean): framework.JSContainer;
     }
 }
 declare namespace framework.interactions {
@@ -378,10 +413,11 @@ declare namespace framework {
      * @param {string} tag
      * @class
      */
-    class JSContainer implements framework.Renderable, framework.configs.Designable {
+    class JSContainer implements framework.Renderable, framework.design.Designable, framework.interactions.Droppable {
         /**
          *
          */
+        droppableOptions: JQueryUI.DroppableOptions;
         static DEFAULT_RENDERER: framework.renderer.Renderer<any>;
         static DEFAULT_RENDERER_$LI$(): framework.renderer.Renderer<any>;
         listeners: java.util.Map<string, java.util.List<framework.EventListener>>;
@@ -399,7 +435,7 @@ declare namespace framework {
         changedAttributes: java.util.List<string>;
         changedStyles: java.util.List<string>;
         commands: java.util.List<JSContainer.JSCommand>;
-        component: framework.builder.model.Component;
+        component: framework.builder.marshalling.Component;
         constructor(name?: any, tag?: any);
         /**
          *
@@ -610,22 +646,30 @@ declare namespace framework {
          * @return {framework.JSContainer}
          */
         getRoot(): JSContainer;
+        setParameter$java_lang_String$java_lang_String$boolean(key: string, value: string, designMode: boolean): void;
         /**
          *
          * @param {string} key
          * @param {string} value
+         * @param {boolean} designMode
          */
-        setParameter(key: string, value: string): void;
+        setParameter(key?: any, value?: any, designMode?: any): any;
         /**
          *
-         * @return {framework.builder.model.Component}
+         * @return {framework.builder.marshalling.Component}
          */
-        getComponent(): framework.builder.model.Component;
+        getComponent(): framework.builder.marshalling.Component;
         /**
          *
          * @return {*}
          */
-        getParameters(): java.util.List<framework.configs.Parameter>;
+        getParameters(): java.util.List<framework.design.Parameter>;
+        /**
+         *
+         * @return {*}
+         */
+        getDroppableOptions(): JQueryUI.DroppableOptions;
+        setDroppableOptions(options: JQueryUI.DroppableOptions): void;
     }
     namespace JSContainer {
         class JSCommand {
@@ -642,13 +686,27 @@ declare namespace framework {
         }
     }
 }
+declare namespace framework.builder.libraries {
+    class TextComponentFactory extends framework.builder.libraries.BasicComponentFactory {
+        defaultText: string;
+        constructor(tag: string, defaultTxt: string);
+        /**
+         *
+         * @param {boolean} designMode
+         * @return {framework.JSContainer}
+         */
+        createInstance(designMode: boolean): framework.JSContainer;
+    }
+}
 declare namespace framework.builder {
     class Component extends framework.JSContainer implements framework.interactions.Draggable {
         titleFigure: framework.JSContainer;
         avatar: framework.JSContainer;
         initial: framework.JSContainer;
         title: framework.JSContainer;
-        constructor(name: string, initial: string, label: string, factory: framework.builder.model.ComponentFactory);
+        componentFactoryRegistry: framework.builder.libraries.ComponentFactoryRegistry;
+        constructor(identifier: string, initial: string, label: string);
+        getFactory(): framework.builder.marshalling.ComponentFactory;
         /**
          *
          * @return {*}
@@ -814,7 +872,7 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning {
-    class Button extends framework.JSContainer implements framework.configs.Designable {
+    class Button extends framework.JSContainer implements framework.design.Designable {
         static states: string[];
         static states_$LI$(): string[];
         static stateLabels: string[];
@@ -823,7 +881,7 @@ declare namespace framework.lightning {
         static STATE_BRAND: string;
         static STATE_DESTRUCTIVE: string;
         static STATE_SUCCESS: string;
-        __framework_lightning_Button_component: framework.builder.model.Component;
+        __framework_lightning_Button_component: framework.builder.marshalling.Component;
         constructor(name?: any);
         addIcon(icon: framework.lightning.Icon): Button;
         setLabel(label: string): Button;
@@ -831,14 +889,21 @@ declare namespace framework.lightning {
         setInverse(b: boolean): Button;
         setDisabled(b: boolean): Button;
         setStateful(b: boolean): Button;
-        setParameter(key: string, value: string): void;
-        getParameters(): java.util.List<framework.configs.Parameter>;
-        createParameter(name: string, label: string, type: string): framework.configs.Parameter;
         /**
          *
-         * @return {framework.builder.model.Component}
+         * @param {string} key
+         * @param {string} value
+         * @param {boolean} designMode
          */
-        getComponent(): framework.builder.model.Component;
+        setParameter(key?: any, value?: any, designMode?: any): any;
+        setParameter$java_lang_String$java_lang_String(key: string, value: string): void;
+        getParameters(): java.util.List<framework.design.Parameter>;
+        createParameter(name: string, label: string, type: string): framework.design.Parameter;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
     }
 }
 declare namespace framework.lightning {
@@ -1194,7 +1259,10 @@ declare namespace framework.builder {
         basicComponentLib: framework.builder.libraries.BasicComponentLibrary;
         lightningComponentLib: framework.builder.libraries.LightningComponentLibrary;
         componentsTabs: framework.builder.ComponentsTabs;
+        selectedComponent: framework.design.Designable;
         constructor(name: string);
+        getSelected(): framework.design.Designable;
+        select(designable: framework.design.Designable): void;
         dockLeftPanel(b: boolean): void;
         dockRightPanel(b: boolean): void;
     }
@@ -1246,26 +1314,15 @@ declare namespace framework.builder.libraries {
     class LightningComponentLibrary extends framework.builder.ComponentsLibrary {
         constructor();
     }
-    namespace LightningComponentLibrary {
-        class LightningComponentLibrary$0 extends framework.builder.AbstractComponentFactory {
-            __parent: any;
-            /**
-             *
-             * @return {framework.JSContainer}
-             */
-            createInstance(): framework.JSContainer;
-            constructor(__parent: any, __arg0: any);
-        }
-    }
 }
 declare namespace framework.builder {
     class PropertiesEditor extends framework.lightning.FormLayout implements framework.EventListener, framework.builder.Editor {
-        __framework_builder_PropertiesEditor_component: framework.configs.Designable;
+        __framework_builder_PropertiesEditor_component: framework.design.Designable;
         constructor(name: string);
-        setComponent(designable: framework.configs.Designable): void;
+        setComponent(designable: framework.design.Designable): void;
         addProperty$java_lang_String$framework_JSInput(label: string, input: framework.JSInput): PropertiesEditor;
         addProperty(label?: any, input?: any): any;
-        addProperty$framework_configs_Parameter(parameter: framework.configs.Parameter): PropertiesEditor;
+        addProperty$framework_design_Parameter(parameter: framework.design.Parameter): PropertiesEditor;
         /**
          *
          * @param {framework.JSContainer} source
@@ -1277,16 +1334,26 @@ declare namespace framework.builder {
 declare namespace framework.builder {
     class AdvancedPropertiesEditorBody extends framework.builder.PropertiesEditor {
         constructor();
-        setComponent(designable: framework.configs.Designable): void;
+        setComponent(designable: framework.design.Designable): void;
     }
 }
 declare namespace framework.builder {
     class BasicPropertiesEditorBody extends framework.builder.PropertiesEditor {
         constructor(name: string);
+        /**
+         *
+         * @param {*} designable
+         */
+        setComponent(designable: framework.design.Designable): void;
     }
 }
 declare namespace framework.builder {
     class EventsEditor extends framework.builder.PropertiesEditor {
         constructor();
+        /**
+         *
+         * @param {*} designable
+         */
+        setComponent(designable: framework.design.Designable): void;
     }
 }

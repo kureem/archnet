@@ -1,7 +1,7 @@
 package framework.builder;
 
-import framework.configs.Designable;
-import framework.configs.Parameter;
+import framework.design.Designable;
+import framework.design.Parameter;
 
 public class AdvancedPropertiesEditorBody extends PropertiesEditor{
 
@@ -15,6 +15,7 @@ public class AdvancedPropertiesEditorBody extends PropertiesEditor{
 		super.setComponent(designable);
 		clear();
 		for(Parameter p :  component.getParameters()){
+			if(p.category.equals("advanced"))
 			addProperty(p);
 		}
 	}

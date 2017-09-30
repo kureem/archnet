@@ -1,7 +1,7 @@
 package framework.builder;
 
 import framework.Renderable;
-import framework.configs.Designable;
+import framework.design.Designable;
 
 public interface Editor extends Renderable {
 

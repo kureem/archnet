@@ -8,3 +8,11 @@
 	border: dotted 4px steelblue;
 	position:absolute;
 }
+
+.builder .slds-docked-composer{
+	width:300px;
+}
+
+.builder .slds-docked-composer__body{
+	background:white;
+}

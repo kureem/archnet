@@ -1,6 +1,5 @@
 package framework.builder.libraries;
 
-import static jsweet.dom.Globals.window;
 import def.dom.Event;
 import def.jqueryui.jqueryui.DroppableEvent;
 import def.jqueryui.jqueryui.DroppableEventUIParam;

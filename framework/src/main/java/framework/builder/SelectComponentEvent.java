@@ -1,6 +1,5 @@
 package framework.builder;
 
-import static jsweet.dom.Globals.window;
 import framework.EventListener;
 import framework.JSContainer;
 import jsweet.dom.Event;

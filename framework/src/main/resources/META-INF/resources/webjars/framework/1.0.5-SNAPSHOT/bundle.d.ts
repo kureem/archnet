@@ -746,7 +746,14 @@ declare namespace framework.builder {
 }
 declare namespace framework.builder {
     class VisualEditor extends framework.JSContainer {
-        constructor();
+        builder: framework.builder.Builder;
+        selectedItem: framework.JSContainer;
+        root: framework.design.Designable;
+        constructor(builder: framework.builder.Builder);
+        newProject(): framework.design.Designable;
+        getRootItem(): framework.design.Designable;
+        getSelectedItem(): framework.JSContainer;
+        getBuilder(): framework.builder.Builder;
     }
 }
 declare namespace framework {
@@ -1283,24 +1290,14 @@ declare namespace framework.lightning {
 }
 declare namespace framework.builder {
     class Builder extends framework.lightning.LTContainer {
-        globalHeader: framework.lightning.GlobalHeader;
-        propertiesDockedComposer: framework.lightning.DockedComposer;
-        borderLayout: framework.lightning.BorderLayout;
-        mainEditor: framework.builder.EditorTabs;
-        basicEditorBody: framework.builder.Editor;
-        advancedPropertiesEditorBody: framework.builder.Editor;
-        eventEditor: framework.builder.Editor;
-        libraryDockedComposer: framework.lightning.DockedComposer;
-        basicComponentLib: framework.builder.libraries.BasicComponentLibrary;
-        lightningComponentLib: framework.builder.libraries.LightningComponentLibrary;
-        componentsTabs: framework.builder.ComponentsTabs;
-        selectedComponent: framework.design.Designable;
+        topMenu: framework.builder.TopMenu;
+        propertiesDockedComposer: framework.builder.properties.PropertiesDockedComposer;
+        libraryDockedComposer: framework.builder.libraries.LibrariesDockedComposer;
+        visualEditor: framework.builder.VisualEditor;
         selector: framework.builder.Selector;
         constructor(name: string);
-        getSelected(): framework.design.Designable;
+        getSelectedItem(): framework.design.Designable;
         select(designable: framework.design.Designable): void;
-        dockLeftPanel(b: boolean): void;
-        dockRightPanel(b: boolean): void;
     }
 }
 declare namespace framework.lightning {
@@ -1349,6 +1346,29 @@ declare namespace framework.builder.libraries {
 declare namespace framework.builder.libraries {
     class LightningComponentLibrary extends framework.builder.ComponentsLibrary {
         constructor();
+    }
+}
+declare namespace framework.builder.libraries {
+    class LibrariesDockedComposer extends framework.lightning.DockedComposer {
+        basicComponentLib: framework.builder.libraries.BasicComponentLibrary;
+        lightningComponentLib: framework.builder.libraries.LightningComponentLibrary;
+        componentsTabs: framework.builder.ComponentsTabs;
+        constructor(name: string);
+    }
+}
+declare namespace framework.builder.properties {
+    class PropertiesDockedComposer extends framework.lightning.DockedComposer {
+        mainEditor: framework.builder.EditorTabs;
+        basicEditorBody: framework.builder.Editor;
+        advancedPropertiesEditorBody: framework.builder.Editor;
+        eventEditor: framework.builder.Editor;
+        constructor(name: string);
+        selectComponent(designable: framework.design.Designable): void;
+    }
+}
+declare namespace framework.builder {
+    class TopMenu extends framework.lightning.GlobalHeader {
+        constructor(name: string);
     }
 }
 declare namespace framework.builder {

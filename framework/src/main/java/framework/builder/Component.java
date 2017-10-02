@@ -24,7 +24,7 @@ public class Component extends JSContainer implements Draggable{
 	public Component(String identifier, String initial, String label) {
 		super(identifier, "div");
 		setAttribute("identifier", identifier);
-		addClass("slds-app-launcher__tile");
+		//addClass("slds-app-launcher__tile");
 		addClass("designer-component");
 		addChild(titleFigure.setAttribute("identifier", identifier));
 		titleFigure.addChild(avatar.setAttribute("identifier", identifier));

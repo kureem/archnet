@@ -17,12 +17,16 @@ public class Boot {
 
 	public static void main(String[] args) {
 
+		//create beanfactory
 		BeanFactory factory = BeanFactory.getInstance();
 
+		//---register decorator registry with decorators---//
 		DecoratorsRegistry decoratorRegistry = new BasicDecoratorRegistry();
 		decoratorRegistry.registerDecorator(new InteractionsDecorator());
 		factory.addBean(DecoratorsRegistry.class, decoratorRegistry);
 
+		
+		//--- register component factory registry ---//
 		ComponentFactoryRegistry componentFactoryRegistry = new BasicComponentFactoryRegistry();
 
 		String[] txtTags = new String[]{"h1", "h2", "h3", "h4", "h5", "span", "p", "label"};
@@ -50,21 +54,13 @@ public class Boot {
 				return btn;
 			}
 		});
-
 		factory.addBean(ComponentFactoryRegistry.class, componentFactoryRegistry);
 		
+		
+		//-- added singleton bean for Selector--//
 		factory.addBean(Selector.class, new Selector());
 
 		new Builder("builder").render();
-
-		// new TestApp().render();
-
-		// new TestApp().render();
-
-		/*
-		 * setTimeout(function(()->{ c.render(document.getElementById("root"));
-		 * }),5000);
-		 */
 
 	}
 

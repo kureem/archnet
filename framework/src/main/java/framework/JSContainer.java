@@ -31,7 +31,7 @@ public class JSContainer implements Renderable, Designable, Droppable {
 	/**
 	 * 
 	 */
-	
+
 	private DroppableOptions droppableOptions = null;
 
 	private final static Renderer<? extends JSContainer> DEFAULT_RENDERER = new ContainerRenderer();
@@ -97,6 +97,16 @@ public class JSContainer implements Renderable, Designable, Droppable {
 	@Override
 	public String[] getChangedAttributes() {
 		return changedAttributes.toArray(new String[changedAttributes.size()]);
+	}
+
+	public HTMLElement getNative() {
+		HTMLElement elem = document.getElementById(getId());
+		if (elem != null) {
+			return elem;
+		} else {
+			throw new RuntimeException(
+					"The component " + getId() + " has not been rendered yet. Cannot retrieve native dom");
+		}
 	}
 
 	/*
@@ -511,7 +521,7 @@ public class JSContainer implements Renderable, Designable, Droppable {
 	 */
 	@Override
 	public void render() {
-		if(parent ==null)
+		if (parent == null)
 			render(null);
 		else
 			render(document.getElementById(parent.getId()));
@@ -662,7 +672,7 @@ public class JSContainer implements Renderable, Designable, Droppable {
 	}
 
 	@Override
-	public void setParameter(String key, String value,boolean designMode) {
+	public void setParameter(String key, String value, boolean designMode) {
 		component.parameters.$set(key, value);
 	}
 
@@ -680,10 +690,10 @@ public class JSContainer implements Renderable, Designable, Droppable {
 		params.add(new Parameter("width", "Width", "String", "Basic"));
 		params.add(new Parameter("height", "Height", "String", "Basic"));
 		Parameter eventTypes = new Parameter("eventType", "Event", "select", "event");
-		eventTypes.options.add(new Option("Click","click"));
-		eventTypes.options.add(new Option("Double click","dblclick"));
+		eventTypes.options.add(new Option("Click", "click"));
+		eventTypes.options.add(new Option("Double click", "dblclick"));
 		params.add(eventTypes);
-		Parameter script = new Parameter("script","Script", "textarea","event");
+		Parameter script = new Parameter("script", "Script", "textarea", "event");
 		params.add(script);
 		return params;
 	}
@@ -692,8 +702,8 @@ public class JSContainer implements Renderable, Designable, Droppable {
 	public DroppableOptions getDroppableOptions() {
 		return droppableOptions;
 	}
-	
-	public void setDroppableOptions(DroppableOptions options){
+
+	public void setDroppableOptions(DroppableOptions options) {
 		this.droppableOptions = options;
 	}
 

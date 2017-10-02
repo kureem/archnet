@@ -14,6 +14,7 @@ public interface Renderable {
 
 	String[] getChangedStyles();
 
+	public HTMLElement getNative();
 
 	List<Renderer<? extends Renderable>> getRenderers();
 

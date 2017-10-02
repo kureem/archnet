@@ -37,6 +37,8 @@ declare namespace framework.builder.libraries {
          */
         build(component: framework.builder.marshalling.Component, designMode: boolean): framework.JSContainer;
         decorateForDesignMode(instance: framework.JSContainer, designMode: boolean): void;
+        decorateDroppable(instance: framework.JSContainer, designMode: boolean): void;
+        decorateCallSelector(container: framework.JSContainer, designMode: boolean): void;
     }
 }
 declare namespace framework.builder.libraries {
@@ -84,6 +86,18 @@ declare namespace framework.builder.marshalling {
     interface ComponentFactory {
         supports(impl: string): boolean;
         build(component: framework.builder.marshalling.Component, designMode: boolean): framework.JSContainer;
+    }
+}
+declare namespace framework.builder {
+    class SelectComponentEvent implements framework.EventListener {
+        selector: framework.builder.Selector;
+        constructor(selector: framework.builder.Selector);
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
 declare namespace framework.core {
@@ -239,6 +253,7 @@ declare namespace framework {
     interface Renderable {
         getChangedAttributes(): string[];
         getChangedStyles(): string[];
+        getNative(): HTMLElement;
         getRenderers(): java.util.List<framework.renderer.Renderer<any>>;
         addRenderer(renderer: framework.renderer.Renderer<any>): Renderable;
         getId(): string;
@@ -442,6 +457,7 @@ declare namespace framework {
          * @return {Array}
          */
         getChangedAttributes(): string[];
+        getNative(): HTMLElement;
         /**
          *
          * @return {Array}
@@ -712,6 +728,25 @@ declare namespace framework.builder {
          * @return {*}
          */
         getDraggableOptions(): JQueryUI.DraggableOptions;
+    }
+}
+declare namespace framework.builder {
+    class Selector extends framework.JSContainer implements framework.EventListener {
+        selected: framework.JSContainer;
+        constructor();
+        getSelected(): framework.JSContainer;
+        select(component: framework.design.Designable): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.builder {
+    class VisualEditor extends framework.JSContainer {
+        constructor();
     }
 }
 declare namespace framework {
@@ -1260,6 +1295,7 @@ declare namespace framework.builder {
         lightningComponentLib: framework.builder.libraries.LightningComponentLibrary;
         componentsTabs: framework.builder.ComponentsTabs;
         selectedComponent: framework.design.Designable;
+        selector: framework.builder.Selector;
         constructor(name: string);
         getSelected(): framework.design.Designable;
         select(designable: framework.design.Designable): void;

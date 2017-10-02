@@ -1,6 +1,7 @@
 package framework;
 
 import framework.builder.Builder;
+import framework.builder.Selector;
 import framework.builder.libraries.AbstractComponentFactory;
 import framework.builder.libraries.BasicComponentFactory;
 import framework.builder.libraries.BasicComponentFactoryRegistry;
@@ -51,6 +52,8 @@ public class Boot {
 		});
 
 		factory.addBean(ComponentFactoryRegistry.class, componentFactoryRegistry);
+		
+		factory.addBean(Selector.class, new Selector());
 
 		new Builder("builder").render();
 

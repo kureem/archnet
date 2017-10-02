@@ -1,0 +1,10 @@
+.builder .visual-editor{
+	
+}
+
+.builder .designer-selector{
+	background: yellow;
+	opacity:0.6;
+	border: dotted 4px steelblue;
+	position:absolute;
+}

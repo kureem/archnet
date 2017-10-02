@@ -4,6 +4,7 @@ import framework.JSContainer;
 import framework.builder.libraries.BasicComponentLibrary;
 import framework.builder.libraries.LightningComponentLibrary;
 import framework.builder.marshalling.Component;
+import framework.core.BeanFactory;
 import framework.design.Designable;
 import framework.lightning.BorderLayout;
 import framework.lightning.Button;
@@ -33,8 +34,11 @@ public class Builder extends LTContainer {
 	
 	private Designable selectedComponent;
 	
+	private Selector selector;
+	
 	public Builder(String name) {
 		super(name, "div");
+		addClass("builder");
 		addChild(borderLayout);
 		ButtonGroup actions = new ButtonGroup("actions");
 		actions.addButton(new Button("new").setLabel("New").setState(Button.STATE_NEUTRAL));
@@ -50,6 +54,7 @@ public class Builder extends LTContainer {
 		mainEditor.addItem("Events", eventEditor).setActive(false);
 		
 		
+		//put in workspace
 		BasicComponent rootComponent = new BasicComponent("div", "div", "DIV");
 		JSContainer root = rootComponent.getFactory().build(new Component(), true);
 		root.setStyle("width", "100%");
@@ -60,7 +65,11 @@ public class Builder extends LTContainer {
 		borderLayout.addChild(root, "center");
 		
 
+		selector =BeanFactory.getInstance().getBeanOfType(Selector.class);
+		borderLayout.addChild(selector);
+		
 		select(root);
+		
 		
 		propertiesDockedComposer.getBody().addChild(mainEditor);
 		dockLeftPanel(true);
@@ -85,6 +94,7 @@ public class Builder extends LTContainer {
 		basicEditorBody.setComponent(designable);
 		advancedPropertiesEditorBody.setComponent(designable);
 		eventEditor.setComponent(designable);
+		selector.select(designable);
 	}
 
 	public void dockLeftPanel(boolean b) {

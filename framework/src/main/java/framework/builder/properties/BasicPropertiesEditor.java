@@ -1,11 +1,11 @@
-package framework.builder;
+package framework.builder.properties;
 
 import framework.design.Designable;
 import framework.design.Parameter;
 
-public class BasicPropertiesEditorBody extends PropertiesEditor {
+public class BasicPropertiesEditor extends BasePropertiesEditor {
 
-	public BasicPropertiesEditorBody(String name) {
+	public BasicPropertiesEditor(String name) {
 		super(name);
 		
 		/*addProperty(new Parameter("name", "Name", "String"));

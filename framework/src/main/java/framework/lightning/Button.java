@@ -4,6 +4,7 @@ import java.util.List;
 
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
+import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Option;
 import framework.design.Parameter;
@@ -115,7 +116,7 @@ public class Button extends JSContainer implements Designable {
 	}
 
 	private Parameter createParameter(String name, String label, String type) {
-		Parameter p = new Parameter(name,label,type,"advanced");
+		Parameter p = new AttributeParameter(name,label,"advanced");
 		p.name = name;
 		p.type = type;
 		p.label = label;

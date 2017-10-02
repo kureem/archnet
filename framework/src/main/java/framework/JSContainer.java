@@ -11,9 +11,14 @@ import java.util.Set;
 import def.jqueryui.jqueryui.DroppableOptions;
 import framework.builder.marshalling.Component;
 import framework.core.Global;
+import framework.design.AttributeParameter;
 import framework.design.Designable;
+import framework.design.EventScriptParameter;
+import framework.design.EventTypeParameter;
+import framework.design.NameParameter;
 import framework.design.Option;
 import framework.design.Parameter;
+import framework.design.StyleParameter;
 import framework.interactions.Droppable;
 import framework.renderer.ContainerRenderer;
 import framework.renderer.Renderer;
@@ -413,6 +418,7 @@ public class JSContainer implements Renderable, Designable, Droppable {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+		setAttribute("name", name);
 	}
 
 	/*
@@ -684,19 +690,21 @@ public class JSContainer implements Renderable, Designable, Droppable {
 	@Override
 	public List<Parameter> getParameters() {
 		List<Parameter> params = new LinkedList<>();
-		params.add(new Parameter("name", "Name", "String", "Basic"));
-		params.add(new Parameter("class", "Style class", "String", "Basic"));
-		params.add(new Parameter("style", "Style", "String", "Basic"));
-		params.add(new Parameter("width", "Width", "String", "Basic"));
-		params.add(new Parameter("height", "Height", "String", "Basic"));
-		Parameter eventTypes = new Parameter("eventType", "Event", "select", "event");
+		params.add(new NameParameter("Name","Basic"));
+		params.add(new AttributeParameter("class", "Style class", "Basic"));
+		//params.add(new Parameter("style", "Style", "String", "Basic"));
+		params.add(new StyleParameter("width", "Width", "Basic"));
+		params.add(new StyleParameter("height", "Height",  "Basic"));
+		EventTypeParameter eventTypes = new EventTypeParameter("eventType", "Event",  "event");
 		eventTypes.options.add(new Option("Click", "click"));
 		eventTypes.options.add(new Option("Double click", "dblclick"));
 		params.add(eventTypes);
-		Parameter script = new Parameter("script", "Script", "textarea", "event");
+		EventScriptParameter script = new EventScriptParameter("script", "Script", "event");
 		params.add(script);
 		return params;
 	}
+	
+	
 
 	@Override
 	public DroppableOptions getDroppableOptions() {

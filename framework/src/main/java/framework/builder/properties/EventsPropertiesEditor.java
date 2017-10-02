@@ -1,11 +1,11 @@
-package framework.builder;
+package framework.builder.properties;
 
 import framework.design.Designable;
 import framework.design.Parameter;
 
-public class EventsEditor extends PropertiesEditor{
+public class EventsPropertiesEditor extends BasePropertiesEditor{
 
-	public EventsEditor() {
+	public EventsPropertiesEditor() {
 		super("events");
 		setStacked(true);		
 	}

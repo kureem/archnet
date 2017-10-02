@@ -10,11 +10,6 @@ declare namespace framework.builder {
         performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
-declare namespace framework.builder {
-    interface Editor extends framework.Renderable {
-        setComponent(designable: framework.design.Designable): any;
-    }
-}
 declare namespace framework.builder.libraries {
     abstract class AbstractComponentFactory implements framework.builder.marshalling.ComponentFactory {
         impl: string;
@@ -86,6 +81,17 @@ declare namespace framework.builder.marshalling {
     interface ComponentFactory {
         supports(impl: string): boolean;
         build(component: framework.builder.marshalling.Component, designMode: boolean): framework.JSContainer;
+    }
+}
+declare namespace framework.builder.properties {
+    interface PropertiesEditor extends framework.Renderable {
+        setComponent(designable: framework.design.Designable): any;
+    }
+}
+declare namespace framework.builder.properties {
+    interface PropertyEditor extends framework.Renderable {
+        setDesignable(designable: framework.design.Designable): any;
+        setProperty(parameter: framework.design.Parameter): any;
     }
 }
 declare namespace framework.builder {
@@ -170,13 +176,14 @@ declare namespace framework.design {
     }
 }
 declare namespace framework.design {
-    class Parameter {
+    abstract class Parameter {
         name: string;
         label: string;
         type: string;
         options: java.util.List<framework.design.Option>;
         category: string;
         constructor(name: string, label: string, type: string, category: string);
+        abstract getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
     }
 }
 declare namespace framework {
@@ -404,6 +411,90 @@ declare namespace framework.builder.libraries {
          * @return {framework.JSContainer}
          */
         createInstance(designMode: boolean): framework.JSContainer;
+    }
+}
+declare namespace framework.design {
+    class AttributeParameter extends framework.design.Parameter {
+        constructor(name: string, label: string, category: string);
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+    }
+}
+declare namespace framework.design {
+    abstract class BooleanParameter extends framework.design.Parameter {
+        constructor(name: string, label: string, category: string);
+    }
+}
+declare namespace framework.design {
+    class EventScriptParameter extends framework.design.Parameter {
+        eventTypeEditor: framework.builder.properties.EventTypeEditor;
+        constructor(name: string, label: string, category: string);
+        setEventTypeEditor(editor: framework.builder.properties.EventTypeEditor): void;
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+    }
+}
+declare namespace framework.design {
+    class EventTypeParameter extends framework.design.Parameter {
+        constructor(name: string, label: string, category: string);
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+    }
+}
+declare namespace framework.design {
+    class NameParameter extends framework.design.Parameter {
+        constructor(label: string, category: string);
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+    }
+}
+declare namespace framework.design {
+    class SelectParameter extends framework.design.Parameter {
+        constructor(name: string, label: string, category: string);
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+    }
+}
+declare namespace framework.design {
+    class StyleParameter extends framework.design.Parameter {
+        constructor(name: string, label: string, category: string);
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+    }
+}
+declare namespace framework.design {
+    class TextParameter extends framework.design.Parameter {
+        constructor(name: string, label: string, category: string);
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
     }
 }
 declare namespace framework.interactions {
@@ -733,7 +824,9 @@ declare namespace framework.builder {
 declare namespace framework.builder {
     class Selector extends framework.JSContainer implements framework.EventListener {
         selected: framework.JSContainer;
+        visualEditor: framework.builder.VisualEditor;
         constructor();
+        setVisualEditor(editor: framework.builder.VisualEditor): void;
         getSelected(): framework.JSContainer;
         select(component: framework.design.Designable): void;
         /**
@@ -749,10 +842,15 @@ declare namespace framework.builder {
         builder: framework.builder.Builder;
         selectedItem: framework.JSContainer;
         root: framework.design.Designable;
+        selector: framework.builder.Selector;
+        composers: framework.JSContainer;
+        propertiesDockedComposer: framework.builder.properties.PropertiesDockedComposer;
+        libraryDockedComposer: framework.builder.libraries.LibrariesDockedComposer;
         constructor(builder: framework.builder.Builder);
         newProject(): framework.design.Designable;
         getRootItem(): framework.design.Designable;
         getSelectedItem(): framework.JSContainer;
+        selectItem(designable: framework.design.Designable): void;
         getBuilder(): framework.builder.Builder;
     }
 }
@@ -1192,9 +1290,112 @@ declare namespace framework.lightning {
         setTruncate(b: boolean): Text;
     }
 }
+declare namespace framework {
+    class TextComponent extends framework.JSContainer {
+        constructor(name: string, tag: string);
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.design.Parameter>;
+    }
+}
 declare namespace framework.builder {
     class BasicComponent extends framework.builder.Component {
         constructor(name: string, initial: string, label: string);
+    }
+}
+declare namespace framework.builder.properties {
+    abstract class AbstractCheckBoxPropertyEditor extends framework.JSCheckBox implements framework.builder.properties.PropertyEditor, framework.EventListener {
+        designable: framework.design.Designable;
+        parameter: framework.design.Parameter;
+        constructor(name: string);
+        /**
+         *
+         * @param {*} designable
+         */
+        setDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {framework.design.Parameter} parameter
+         */
+        setProperty(parameter: framework.design.Parameter): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        abstract performAction(source: framework.JSContainer, evt: Event): any;
+    }
+}
+declare namespace framework.builder.properties {
+    abstract class AbstractInputPropertyEditor extends framework.JSInput implements framework.builder.properties.PropertyEditor, framework.EventListener {
+        designable: framework.design.Designable;
+        parameter: framework.design.Parameter;
+        constructor(name: string);
+        /**
+         *
+         * @param {*} designable
+         */
+        setDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {framework.design.Parameter} parameter
+         */
+        setProperty(parameter: framework.design.Parameter): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        abstract performAction(source: framework.JSContainer, evt: Event): any;
+    }
+}
+declare namespace framework.builder.properties {
+    abstract class AbstractSelectPropertyEditor extends framework.JSSelect implements framework.builder.properties.PropertyEditor, framework.EventListener {
+        designable: framework.design.Designable;
+        parameter: framework.design.Parameter;
+        constructor(name: string);
+        /**
+         *
+         * @param {*} designable
+         */
+        setDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {framework.design.Parameter} parameter
+         */
+        setProperty(parameter: framework.design.Parameter): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        abstract performAction(source: framework.JSContainer, evt: Event): any;
+    }
+}
+declare namespace framework.builder.properties {
+    class EventScriptEditor extends framework.JSTextArea implements framework.builder.properties.PropertyEditor, framework.EventListener {
+        designable: framework.design.Designable;
+        parameter: framework.design.Parameter;
+        eventTypeEditor: framework.builder.properties.EventTypeEditor;
+        constructor(name: string, eventTypeEditor: framework.builder.properties.EventTypeEditor);
+        /**
+         *
+         * @param {*} designable
+         */
+        setDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {framework.design.Parameter} parameter
+         */
+        setProperty(parameter: framework.design.Parameter): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
 declare namespace framework.lightning {
@@ -1291,13 +1492,9 @@ declare namespace framework.lightning {
 declare namespace framework.builder {
     class Builder extends framework.lightning.LTContainer {
         topMenu: framework.builder.TopMenu;
-        propertiesDockedComposer: framework.builder.properties.PropertiesDockedComposer;
-        libraryDockedComposer: framework.builder.libraries.LibrariesDockedComposer;
         visualEditor: framework.builder.VisualEditor;
-        selector: framework.builder.Selector;
         constructor(name: string);
         getSelectedItem(): framework.design.Designable;
-        select(designable: framework.design.Designable): void;
     }
 }
 declare namespace framework.lightning {
@@ -1331,11 +1528,66 @@ declare namespace framework.builder {
         addComponentList(label: string, ...components: framework.builder.Component[]): ComponentsTabs;
     }
 }
-declare namespace framework.builder {
-    class EditorTabs extends framework.lightning.Tabs {
+declare namespace framework.builder.properties {
+    class ProtertiesEditorTabs extends framework.lightning.Tabs {
         constructor(name: string);
-        addItem$java_lang_String$framework_builder_Editor(label: string, editor: framework.builder.Editor): framework.lightning.TabItem;
+        addItem$java_lang_String$framework_builder_properties_PropertiesEditor(label: string, editor: framework.builder.properties.PropertiesEditor): framework.lightning.TabItem;
         addItem(label?: any, editor?: any): any;
+    }
+}
+declare namespace framework.builder.properties {
+    class AttributeEditor extends framework.builder.properties.AbstractInputPropertyEditor {
+        constructor();
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.builder.properties {
+    class NameEditor extends framework.builder.properties.AbstractInputPropertyEditor {
+        constructor();
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.builder.properties {
+    class StyleEditor extends framework.builder.properties.AbstractInputPropertyEditor {
+        constructor();
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.builder.properties {
+    class TextEditor extends framework.builder.properties.AbstractInputPropertyEditor {
+        constructor(name: string);
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.builder.properties {
+    class EventTypeEditor extends framework.builder.properties.AbstractSelectPropertyEditor {
+        constructor(name: string);
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
 declare namespace framework.builder.libraries {
@@ -1358,10 +1610,10 @@ declare namespace framework.builder.libraries {
 }
 declare namespace framework.builder.properties {
     class PropertiesDockedComposer extends framework.lightning.DockedComposer {
-        mainEditor: framework.builder.EditorTabs;
-        basicEditorBody: framework.builder.Editor;
-        advancedPropertiesEditorBody: framework.builder.Editor;
-        eventEditor: framework.builder.Editor;
+        mainEditor: framework.builder.properties.ProtertiesEditorTabs;
+        basicEditorBody: framework.builder.properties.PropertiesEditor;
+        advancedPropertiesEditorBody: framework.builder.properties.PropertiesEditor;
+        eventEditor: framework.builder.properties.PropertiesEditor;
         constructor(name: string);
         selectComponent(designable: framework.design.Designable): void;
     }
@@ -1371,14 +1623,15 @@ declare namespace framework.builder {
         constructor(name: string);
     }
 }
-declare namespace framework.builder {
-    class PropertiesEditor extends framework.lightning.FormLayout implements framework.EventListener, framework.builder.Editor {
-        __framework_builder_PropertiesEditor_component: framework.design.Designable;
+declare namespace framework.builder.properties {
+    class BasePropertiesEditor extends framework.lightning.FormLayout implements framework.EventListener, framework.builder.properties.PropertiesEditor {
+        __framework_builder_properties_BasePropertiesEditor_component: framework.design.Designable;
+        editors: java.util.List<framework.builder.properties.PropertyEditor>;
         constructor(name: string);
         setComponent(designable: framework.design.Designable): void;
-        addProperty$java_lang_String$framework_JSInput(label: string, input: framework.JSInput): PropertiesEditor;
+        addProperty$java_lang_String$framework_JSInput(label: string, input: framework.JSInput): BasePropertiesEditor;
         addProperty(label?: any, input?: any): any;
-        addProperty$framework_design_Parameter(parameter: framework.design.Parameter): PropertiesEditor;
+        addProperty$framework_design_Parameter(parameter: framework.design.Parameter): BasePropertiesEditor;
         /**
          *
          * @param {framework.JSContainer} source
@@ -1387,14 +1640,14 @@ declare namespace framework.builder {
         performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
-declare namespace framework.builder {
-    class AdvancedPropertiesEditorBody extends framework.builder.PropertiesEditor {
+declare namespace framework.builder.properties {
+    class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
         constructor();
         setComponent(designable: framework.design.Designable): void;
     }
 }
-declare namespace framework.builder {
-    class BasicPropertiesEditorBody extends framework.builder.PropertiesEditor {
+declare namespace framework.builder.properties {
+    class BasicPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
         constructor(name: string);
         /**
          *
@@ -1403,8 +1656,8 @@ declare namespace framework.builder {
         setComponent(designable: framework.design.Designable): void;
     }
 }
-declare namespace framework.builder {
-    class EventsEditor extends framework.builder.PropertiesEditor {
+declare namespace framework.builder.properties {
+    class EventsPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
         constructor();
         /**
          *

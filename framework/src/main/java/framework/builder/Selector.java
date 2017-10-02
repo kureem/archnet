@@ -12,11 +12,17 @@ import jsweet.dom.Event;
 public class Selector extends JSContainer  implements EventListener{
 
 	private JSContainer selected = null;
+	
+	private VisualEditor visualEditor;
 
 	public Selector() {
 		super("selector", "div");
 		addClass("designer-selector");
 		addEventListener(this, "click");
+	}
+	
+	public void setVisualEditor(VisualEditor editor){
+		this.visualEditor = editor;
 	}
 
 	public JSContainer getSelected() {
@@ -44,7 +50,7 @@ public class Selector extends JSContainer  implements EventListener{
 			
 			
 			
-			
+			visualEditor.selectItem(component);
 			
 		} catch (Exception e) {
 			//e.printStackTrace();

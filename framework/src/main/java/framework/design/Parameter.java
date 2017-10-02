@@ -3,7 +3,9 @@ package framework.design;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Parameter {
+import framework.builder.properties.PropertyEditor;
+
+public abstract class Parameter {
 
 	public String name;
 
@@ -24,6 +26,6 @@ public class Parameter {
 		this.category = category;
 	}
 
-	
+	public abstract PropertyEditor getEditor(Designable designable);
 	
 }

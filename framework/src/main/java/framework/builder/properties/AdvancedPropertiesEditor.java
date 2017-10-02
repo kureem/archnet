@@ -1,13 +1,13 @@
-package framework.builder;
+package framework.builder.properties;
 
 import framework.design.Designable;
 import framework.design.Parameter;
 
-public class AdvancedPropertiesEditorBody extends PropertiesEditor{
+public class AdvancedPropertiesEditor extends BasePropertiesEditor{
 
 	
 	
-	public AdvancedPropertiesEditorBody() {
+	public AdvancedPropertiesEditor() {
 		super("advanced");
 	}
 	

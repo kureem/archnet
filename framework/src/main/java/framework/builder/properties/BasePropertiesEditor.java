@@ -1,4 +1,7 @@
-package framework.builder;
+package framework.builder.properties;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import framework.EventListener;
 import framework.InputField;
@@ -15,11 +18,13 @@ import framework.lightning.FormElement;
 import framework.lightning.FormLayout;
 import jsweet.dom.Event;
 
-public class PropertiesEditor extends FormLayout implements EventListener, Editor {
+public class BasePropertiesEditor extends FormLayout implements EventListener, PropertiesEditor {
 
 	protected Designable component;
+	
+	private List<PropertyEditor> editors = new LinkedList<>();
 
-	public PropertiesEditor(String name) {
+	public BasePropertiesEditor(String name) {
 		super(name, "div");
 		setHorizontal(true).addClass("slds-form_compact");
 
@@ -29,7 +34,7 @@ public class PropertiesEditor extends FormLayout implements EventListener, Edito
 		this.component = designable;
 	}
 
-	public PropertiesEditor addProperty(String label, JSInput input) {
+	public BasePropertiesEditor addProperty(String label, JSInput input) {
 		FormElement width = new FormElement("elem", "div");
 		width.setLabel(label);
 		input.addClass("slds-input");
@@ -38,10 +43,13 @@ public class PropertiesEditor extends FormLayout implements EventListener, Edito
 		return this;
 	}
 
-	public PropertiesEditor addProperty(Parameter parameter) {
+	public BasePropertiesEditor addProperty(Parameter parameter) {
+		//todo: delegate to ioc container to allow extension via simple configurations.
 		FormElement element = new FormElement("elem", "div");
 		element.setLabel(parameter.label);
-		if (parameter.type.equalsIgnoreCase("String")) {
+		PropertyEditor editor  = parameter.getEditor(component);
+		element.setInput((InputField)editor);
+		/*if (parameter.type.equalsIgnoreCase("String")) {
 			JSInput input = new JSInput(parameter.name);
 			input.addEventListener(this, "change");
 			input.addClass("slds-input");
@@ -65,7 +73,7 @@ public class PropertiesEditor extends FormLayout implements EventListener, Edito
 			element.setInput(cb);
 			cb.addEventListener(this, "change");
 		}
-
+*/
 		addFormElement(element);
 		return this;
 

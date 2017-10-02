@@ -1,9 +1,9 @@
-package framework.builder;
+package framework.builder.properties;
 
 import framework.Renderable;
 import framework.design.Designable;
 
-public interface Editor extends Renderable {
+public interface PropertiesEditor extends Renderable {
 
 	public void setComponent(Designable designable);
 	

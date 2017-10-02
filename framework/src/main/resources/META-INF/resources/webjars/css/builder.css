@@ -4,15 +4,53 @@
 
 .builder .designer-selector{
 	background: yellow;
-	opacity:0.6;
+	opacity:0.4;
 	border: dotted 4px steelblue;
 	position:absolute;
 }
 
 .builder .slds-docked-composer{
-	width:300px;
+	max-width:300px;
 }
 
 .builder .slds-docked-composer__body{
 	background:white;
+}
+
+.builder .properties-composer .slds-form_compact{
+	
+}
+
+.builder .slds-form_compact .slds-input{
+	border-radius:0px;
+	line-height: 20px;
+	min-height: 0px;
+	padding: 0 4px;
+	margin: 0px;
+}
+
+.builder .slds-form_compact .slds-form-element{
+	margin: 0px;
+	background: #ebebeb;
+}
+
+.builder .slds-tabs_compact .slds-tabs_default__content{
+	padding: 0px;
+}
+
+.builder .slds-tabs_compact .slds-tabs_default__content .slds-library{
+	
+	margin: 0px;
+	height: 400px;
+	overflow: auto;
+}
+
+.builder .visual-editor .slds-docked-composer{
+	z-index:1000;
+}
+
+.builder .visual-editor .composers{
+	position: absolute;
+	width:0px;
+	height: 0px;
 }

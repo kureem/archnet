@@ -7,10 +7,7 @@ public class Builder extends LTContainer {
 
 	private TopMenu topMenu = new TopMenu("header");
 
-	
 	private VisualEditor visualEditor;
-
-	
 
 	public Builder(String name) {
 		super(name, "div");
@@ -20,12 +17,9 @@ public class Builder extends LTContainer {
 		visualEditor = new VisualEditor(this);
 		addChild(visualEditor);
 		visualEditor.newProject();
-
 	}
 
 	public Designable getSelectedItem() {
 		return visualEditor.getSelectedItem();
 	}
-
-	
 }

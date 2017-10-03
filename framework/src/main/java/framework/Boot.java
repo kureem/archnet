@@ -33,7 +33,7 @@ public class Boot {
 		String[] txtTagsLabels = new String[]{"Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Normal Text", "paragraph", "Label"};
 		
 		String[] tags = new String[] { "div", "a", "img", "ol", "ul", "li",
-				"form", "fieldset", "input", "select", "textarea", "button" };
+				"form", "fieldset", "select", "button" };
 
 		for(int i =0; i < txtTags.length;i++){
 			String tag = txtTags[i];
@@ -44,6 +44,27 @@ public class Boot {
 		for (String tag : tags) {
 			componentFactoryRegistry.registerComponentFactory("html:" + tag, new BasicComponentFactory(tag));
 		}
+		
+		componentFactoryRegistry.registerComponentFactory("html:input" , new AbstractComponentFactory("html:input") {
+			
+			@Override
+			public JSContainer createInstance(boolean designMode) {
+				JSInput input = new JSInput("Input");
+				return input;
+			}
+		});
+		
+		
+		componentFactoryRegistry.registerComponentFactory("html:textarea" , new AbstractComponentFactory("html:input") {
+			
+			@Override
+			public JSContainer createInstance(boolean designMode) {
+				//JSInput input = new JSInput("Input");
+				JSTextArea input = new JSTextArea("TextArea");
+				return input;
+			}
+		});
+		
 
 		componentFactoryRegistry.registerComponentFactory("lgt:btn", new AbstractComponentFactory("lgt:btn") {
 

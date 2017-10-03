@@ -55,8 +55,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index185 = 0; index185 < keys.length; index185++) {
-                        var key = keys[index185];
+                    for (var index1151 = 0; index1151 < keys.length; index1151++) {
+                        var key = keys[index1151];
                         {
                             var value = component.styles[key];
                             instance.setStyle(key, value);
@@ -65,8 +65,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index186 = 0; index186 < keys.length; index186++) {
-                        var key = keys[index186];
+                    for (var index1152 = 0; index1152 < keys.length; index1152++) {
+                        var key = keys[index1152];
                         {
                             var value = component.parameters[key];
                             instance['setParameter$java_lang_String$java_lang_String$boolean'](key, value, designMode);
@@ -74,8 +74,8 @@ var framework;
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index187 = 0; index187 < component.events.length; index187++) {
-                        var event_1 = component.events[index187];
+                    for (var index1153 = 0; index1153 < component.events.length; index1153++) {
+                        var event_1 = component.events[index1153];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source);
                             instance.addEventListener(listener, event_1.type);
@@ -292,8 +292,8 @@ var framework;
                 this.beans.put(mixxingName, instance);
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
-                for (var index188 = this.beans.keySet().iterator(); index188.hasNext();) {
-                    var key = index188.next();
+                for (var index1154 = this.beans.keySet().iterator(); index1154.hasNext();) {
+                    var key = index1154.next();
                     {
                         var bean = this.beans.get(key);
                         try {
@@ -488,8 +488,8 @@ var framework;
             function ContainerRenderer() {
             }
             ContainerRenderer.prototype.decorate = function (c) {
-                for (var index189 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index189.hasNext();) {
-                    var dec = index189.next();
+                for (var index1155 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index1155.hasNext();) {
+                    var dec = index1155.next();
                     {
                         dec.decorate(c);
                     }
@@ -558,8 +558,8 @@ var framework;
                     throw new Error('invalid overload');
             };
             ContainerRenderer.prototype.execCommands = function (njq, container) {
-                for (var index190 = container.getCommands().iterator(); index190.hasNext();) {
-                    var command = index190.next();
+                for (var index1156 = container.getCommands().iterator(); index1156.hasNext();) {
+                    var command = index1156.next();
                     {
                         var name_1 = command.getName();
                         var params = command.getParameters();
@@ -586,14 +586,14 @@ var framework;
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var _this = this;
-                for (var index191 = c.getListeners().keySet().iterator(); index191.hasNext();) {
-                    var key = index191.next();
+                for (var index1157 = c.getListeners().keySet().iterator(); index1157.hasNext();) {
+                    var key = index1157.next();
                     {
                         var listeners = c.getListeners().get(key);
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
-                                for (var index192 = listeners.iterator(); index192.hasNext();) {
-                                    var l = index192.next();
+                                for (var index1158 = listeners.iterator(); index1158.hasNext();) {
+                                    var l = index1158.next();
                                     {
                                         _this.synchronizeFields(njq, c);
                                         l.performAction(c, evt);
@@ -668,8 +668,8 @@ var framework;
                         inputField.setRawValue(value);
                     }
                 }
-                for (var index193 = jsfield.getChildren().iterator(); index193.hasNext();) {
-                    var c = index193.next();
+                for (var index1159 = jsfield.getChildren().iterator(); index1159.hasNext();) {
+                    var c = index1159.next();
                     {
                         this.synchronizeFields(document.getElementById(c.getId()), c);
                     }
@@ -678,9 +678,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array195 = c.getChangedAttributes();
-                        for (var index194 = 0; index194 < array195.length; index194++) {
-                            var key = array195[index194];
+                        var array1161 = c.getChangedAttributes();
+                        for (var index1160 = 0; index1160 < array1161.length; index1160++) {
+                            var key = array1161[index1160];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -693,8 +693,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index196 = c.getAttributeNames().iterator(); index196.hasNext();) {
-                        var key = index196.next();
+                    for (var index1162 = c.getAttributeNames().iterator(); index1162.hasNext();) {
+                        var key = index1162.next();
                         {
                             if (c.getAttribute(key) != null)
                                 njq.setAttribute(key, c.getAttribute(key));
@@ -721,9 +721,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array198 = c.getChangedStyles();
-                        for (var index197 = 0; index197 < array198.length; index197++) {
-                            var key = array198[index197];
+                        var array1164 = c.getChangedStyles();
+                        for (var index1163 = 0; index1163 < array1164.length; index1163++) {
+                            var key = array1164[index1163];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -731,8 +731,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index199 = c.getStyleNames().iterator(); index199.hasNext();) {
-                        var key = index199.next();
+                    for (var index1165 = c.getStyleNames().iterator(); index1165.hasNext();) {
+                        var key = index1165.next();
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
@@ -879,20 +879,22 @@ var framework;
             var componentFactoryRegistry = new framework.builder.libraries.BasicComponentFactoryRegistry();
             var txtTags = ["h1", "h2", "h3", "h4", "h5", "span", "p", "label"];
             var txtTagsLabels = ["Heading 1", "Heading 2", "Heading 3", "Heading 4", "Heading 5", "Normal Text", "paragraph", "Label"];
-            var tags = ["div", "a", "img", "ol", "ul", "li", "form", "fieldset", "input", "select", "textarea", "button"];
+            var tags = ["div", "a", "img", "ol", "ul", "li", "form", "fieldset", "select", "button"];
             for (var i = 0; i < txtTags.length; i++) {
                 var tag = txtTags[i];
                 var defaultText = txtTagsLabels[i];
                 componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.TextComponentFactory(tag, defaultText));
             }
             ;
-            for (var index200 = 0; index200 < tags.length; index200++) {
-                var tag = tags[index200];
+            for (var index1166 = 0; index1166 < tags.length; index1166++) {
+                var tag = tags[index1166];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
             }
-            componentFactoryRegistry.registerComponentFactory("lgt:btn", new Boot.Boot$0("lgt:btn"));
+            componentFactoryRegistry.registerComponentFactory("html:input", new Boot.Boot$0("html:input"));
+            componentFactoryRegistry.registerComponentFactory("html:textarea", new Boot.Boot$1("html:input"));
+            componentFactoryRegistry.registerComponentFactory("lgt:btn", new Boot.Boot$2("lgt:btn"));
             factory.addBean("framework.builder.libraries.ComponentFactoryRegistry", componentFactoryRegistry);
             factory.addBean(framework.builder.Selector, new framework.builder.Selector());
             new framework.builder.Builder("builder").render();
@@ -913,14 +915,50 @@ var framework;
              * @return {framework.JSContainer}
              */
             Boot$0.prototype.createInstance = function (designMode) {
-                var btn = new framework.lightning.Button();
-                btn.setLabel("Button");
-                return btn;
+                var input = new framework.JSInput("Input");
+                return input;
             };
             return Boot$0;
         }(framework.builder.libraries.AbstractComponentFactory));
         Boot.Boot$0 = Boot$0;
         Boot$0["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$1 = (function (_super) {
+            __extends(Boot$1, _super);
+            function Boot$1(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {framework.JSContainer}
+             */
+            Boot$1.prototype.createInstance = function (designMode) {
+                var input = new framework.JSTextArea("TextArea");
+                return input;
+            };
+            return Boot$1;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$1 = Boot$1;
+        Boot$1["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$2 = (function (_super) {
+            __extends(Boot$2, _super);
+            function Boot$2(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {framework.JSContainer}
+             */
+            Boot$2.prototype.createInstance = function (designMode) {
+                var btn = new framework.lightning.Button();
+                btn.setLabel("Button");
+                return btn;
+            };
+            return Boot$2;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$2 = Boot$2;
+        Boot$2["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
     })(Boot = framework.Boot || (framework.Boot = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -1035,8 +1073,8 @@ var framework;
              */
             EventTypeParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.EventTypeEditor("eventType");
-                for (var index201 = this.options.iterator(); index201.hasNext();) {
-                    var opt = index201.next();
+                for (var index1167 = this.options.iterator(); index1167.hasNext();) {
+                    var opt = index1167.next();
                     {
                         var o = new framework.JSOption(opt.text, opt.value);
                         editor.addOption(o);
@@ -1143,6 +1181,30 @@ var framework;
         }(framework.design.Parameter));
         design.TextParameter = TextParameter;
         TextParameter["__class"] = "framework.design.TextParameter";
+    })(design = framework.design || (framework.design = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var design;
+    (function (design) {
+        var ValueParameter = (function (_super) {
+            __extends(ValueParameter, _super);
+            function ValueParameter(name, label, category) {
+                return _super.call(this, name, label, "String", category) || this;
+            }
+            /**
+             *
+             * @param {*} designable
+             * @return {*}
+             */
+            ValueParameter.prototype.getEditor = function (designable) {
+                var editor = new framework.builder.properties.ValuePropertyEditor("s");
+                editor.setProperty(designable, this);
+                return editor;
+            };
+            return ValueParameter;
+        }(framework.design.Parameter));
+        design.ValueParameter = ValueParameter;
+        ValueParameter["__class"] = "framework.design.ValueParameter";
     })(design = framework.design || (framework.design = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -1351,8 +1413,8 @@ var framework;
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index202 = 0; index202 < aStyles.length; index202++) {
-                var style = aStyles[index202];
+            for (var index1168 = 0; index1168 < aStyles.length; index1168++) {
+                var style = aStyles[index1168];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -1597,8 +1659,8 @@ var framework;
         JSContainer.prototype.setRendered = function (b) {
             this.rendered = b;
             if (!b) {
-                for (var index203 = this.children.iterator(); index203.hasNext();) {
-                    var child = index203.next();
+                for (var index1169 = this.children.iterator(); index1169.hasNext();) {
+                    var child = index1169.next();
                     {
                         child.setRendered(b);
                     }
@@ -1626,12 +1688,12 @@ var framework;
             if (!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for (var index204 = this.renderers.iterator(); index204.hasNext();) {
-                var renderer_1 = index204.next();
+            for (var index1170 = this.renderers.iterator(); index1170.hasNext();) {
+                var renderer_1 = index1170.next();
                 renderer_1.doRender(this, parent);
             }
-            for (var index205 = this.getChildren().iterator(); index205.hasNext();) {
-                var child = index205.next();
+            for (var index1171 = this.getChildren().iterator(); index1171.hasNext();) {
+                var child = index1171.next();
                 {
                     child.render();
                 }
@@ -1671,9 +1733,9 @@ var framework;
                 return null;
             }
             {
-                var array207 = this.parent.getAttribute("class").split(" ");
-                for (var index206 = 0; index206 < array207.length; index206++) {
-                    var s = array207[index206];
+                var array1173 = this.parent.getAttribute("class").split(" ");
+                for (var index1172 = 0; index1172 < array1173.length; index1172++) {
+                    var s = array1173[index1172];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -2118,6 +2180,15 @@ var framework;
         JSInput.prototype.setRawValue = function (value) {
             this.setAttribute("value", value);
         };
+        /**
+         *
+         * @return {*}
+         */
+        JSInput.prototype.getParameters = function () {
+            var parameters = _super.prototype.getParameters.call(this);
+            parameters.add(new framework.design.ValueParameter("value", "Value", "Basic"));
+            return parameters;
+        };
         return JSInput;
     }(framework.JSContainer));
     framework.JSInput = JSInput;
@@ -2175,8 +2246,8 @@ var framework;
          */
         JSSelect.prototype.getValue = function () {
             var val = this.getAttribute("value");
-            for (var index208 = this.getChildren().iterator(); index208.hasNext();) {
-                var opt = index208.next();
+            for (var index1174 = this.getChildren().iterator(); index1174.hasNext();) {
+                var opt = index1174.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -2191,8 +2262,8 @@ var framework;
             return null;
         };
         JSSelect.prototype.setValue$java_lang_String = function (val) {
-            for (var index209 = this.getChildren().iterator(); index209.hasNext();) {
-                var opt = index209.next();
+            for (var index1175 = this.getChildren().iterator(); index1175.hasNext();) {
+                var opt = index1175.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -2271,6 +2342,15 @@ var framework;
          */
         JSTextArea.prototype.setRawValue = function (value) {
             this.setAttribute("value", value);
+        };
+        /**
+         *
+         * @return {*}
+         */
+        JSTextArea.prototype.getParameters = function () {
+            var parameters = _super.prototype.getParameters.call(this);
+            parameters.add(new framework.design.ValueParameter("value", "Value", "Basic"));
+            return parameters;
         };
         return JSTextArea;
     }(framework.JSContainer));
@@ -2505,8 +2585,8 @@ var framework;
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index210 = 0; index210 < Button.states_$LI$().length; index210++) {
-                    var s = Button.states_$LI$()[index210];
+                for (var index1176 = 0; index1176 < Button.states_$LI$().length; index1176++) {
+                    var s = Button.states_$LI$()[index1176];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -3396,8 +3476,8 @@ var framework;
                 return this;
             };
             Tabs.prototype.setActive = function (item) {
-                for (var index211 = this.nav.getChildren().iterator(); index211.hasNext();) {
-                    var c = index211.next();
+                for (var index1177 = this.nav.getChildren().iterator(); index1177.hasNext();) {
+                    var c = index1177.next();
                     {
                         var tab = c;
                         tab.setActive(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
@@ -3582,6 +3662,38 @@ var framework;
     (function (builder) {
         var properties;
         (function (properties) {
+            var AbstractTextAreaPropertyEditor = (function (_super) {
+                __extends(AbstractTextAreaPropertyEditor, _super);
+                function AbstractTextAreaPropertyEditor(name) {
+                    var _this = _super.call(this, name) || this;
+                    _this.designable = null;
+                    _this.parameter = null;
+                    _this.addClass("slds-textarea");
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                AbstractTextAreaPropertyEditor.prototype.setProperty = function (designable, parameter) {
+                    this.parameter = parameter;
+                    this.designable = designable;
+                    this.initEditor(designable, parameter);
+                };
+                return AbstractTextAreaPropertyEditor;
+            }(framework.JSTextArea));
+            properties.AbstractTextAreaPropertyEditor = AbstractTextAreaPropertyEditor;
+            AbstractTextAreaPropertyEditor["__class"] = "framework.builder.properties.AbstractTextAreaPropertyEditor";
+            AbstractTextAreaPropertyEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.EventListener", "framework.design.Designable", "framework.Renderable", "framework.InputField"];
+        })(properties = builder.properties || (builder.properties = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var properties;
+        (function (properties) {
             var EventScriptEditor = (function (_super) {
                 __extends(EventScriptEditor, _super);
                 function EventScriptEditor(name, eventTypeEditor) {
@@ -3655,8 +3767,8 @@ var framework;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index212 = 0; index212 < components.length; index212++) {
-                    var com = components[index212];
+                for (var index1178 = 0; index1178 < components.length; index1178++) {
+                    var com = components[index1178];
                     {
                         var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
                         this.addChild$framework_JSContainer(li);
@@ -3982,8 +4094,8 @@ var framework;
             DescriptionList.prototype.setLayout = function (layout) {
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-                for (var index213 = this.getChildren().iterator(); index213.hasNext();) {
-                    var child = index213.next();
+                for (var index1179 = this.getChildren().iterator(); index1179.hasNext();) {
+                    var child = index1179.next();
                     {
                         child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                         child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -4321,6 +4433,41 @@ var framework;
     (function (builder) {
         var properties;
         (function (properties) {
+            var ValuePropertyEditor = (function (_super) {
+                __extends(ValuePropertyEditor, _super);
+                function ValuePropertyEditor(name) {
+                    return _super.call(this, name) || this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                ValuePropertyEditor.prototype.initEditor = function (designable, parameter) {
+                    this.setValue$java_lang_String(designable.getValue().toString());
+                };
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ValuePropertyEditor.prototype.performAction = function (source, evt) {
+                    var value = this.getValue();
+                    source.setValue(value);
+                };
+                return ValuePropertyEditor;
+            }(framework.builder.properties.AbstractInputPropertyEditor));
+            properties.ValuePropertyEditor = ValuePropertyEditor;
+            ValuePropertyEditor["__class"] = "framework.builder.properties.ValuePropertyEditor";
+            ValuePropertyEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.EventListener", "framework.design.Designable", "framework.Renderable", "framework.InputField"];
+        })(properties = builder.properties || (builder.properties = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var properties;
+        (function (properties) {
             var EventTypeEditor = (function (_super) {
                 __extends(EventTypeEditor, _super);
                 function EventTypeEditor(name) {
@@ -4346,6 +4493,60 @@ var framework;
             properties.EventTypeEditor = EventTypeEditor;
             EventTypeEditor["__class"] = "framework.builder.properties.EventTypeEditor";
             EventTypeEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.EventListener", "framework.design.Designable", "framework.Renderable", "framework.InputField"];
+        })(properties = builder.properties || (builder.properties = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var properties;
+        (function (properties) {
+            var OptionsEditor = (function (_super) {
+                __extends(OptionsEditor, _super);
+                function OptionsEditor(name) {
+                    return _super.call(this, name) || this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                OptionsEditor.prototype.initEditor = function (designable, parameter) {
+                    var value = "";
+                    var select = designable;
+                    for (var index1180 = select.getChildren().iterator(); index1180.hasNext();) {
+                        var c = index1180.next();
+                        {
+                            var opt = c;
+                            value = value + "\n" + opt.getText();
+                        }
+                    }
+                    this.setValue$java_lang_String(value);
+                };
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                OptionsEditor.prototype.performAction = function (source, evt) {
+                    var value = this.getValue();
+                    var options = value.split("\n");
+                    var select = this.designable;
+                    select.getChildren().clear();
+                    select.setRendered(false);
+                    for (var index1181 = 0; index1181 < options.length; index1181++) {
+                        var opt = options[index1181];
+                        {
+                            var option = new framework.JSOption(opt, opt);
+                            select.addOption(option);
+                        }
+                    }
+                };
+                return OptionsEditor;
+            }(framework.builder.properties.AbstractTextAreaPropertyEditor));
+            properties.OptionsEditor = OptionsEditor;
+            OptionsEditor["__class"] = "framework.builder.properties.OptionsEditor";
+            OptionsEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.EventListener", "framework.design.Designable", "framework.Renderable", "framework.InputField"];
         })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -4533,8 +4734,8 @@ var framework;
                 AdvancedPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index214 = this.__framework_builder_properties_BasePropertiesEditor_component.getParameters().iterator(); index214.hasNext();) {
-                        var p = index214.next();
+                    for (var index1182 = this.__framework_builder_properties_BasePropertiesEditor_component.getParameters().iterator(); index1182.hasNext();) {
+                        var p = index1182.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -4571,8 +4772,8 @@ var framework;
                 BasicPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index215 = designable.getParameters().iterator(); index215.hasNext();) {
-                        var param = index215.next();
+                    for (var index1183 = designable.getParameters().iterator(); index1183.hasNext();) {
+                        var param = index1183.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -4612,8 +4813,8 @@ var framework;
                 EventsPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index216 = designable.getParameters().iterator(); index216.hasNext();) {
-                        var param = index216.next();
+                    for (var index1184 = designable.getParameters().iterator(); index1184.hasNext();) {
+                        var param = index1184.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);

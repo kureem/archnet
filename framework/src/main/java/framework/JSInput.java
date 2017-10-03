@@ -1,5 +1,10 @@
 package framework;
 
+import java.util.List;
+
+import framework.design.Parameter;
+import framework.design.ValueParameter;
+
 public class JSInput extends JSContainer implements InputField<String>{
 
 	public JSInput(String name) {
@@ -39,5 +44,16 @@ public class JSInput extends JSContainer implements InputField<String>{
 	public void setRawValue(String value) {
 		setAttribute("value", value);
 	}
+
+
+	@Override
+	public List<Parameter> getParameters() {
+		List<Parameter> parameters= super.getParameters();
+		parameters.add(new ValueParameter("value", "Value", "Basic"));
+		return parameters;
+		
+	}
+	
+	
 
 }

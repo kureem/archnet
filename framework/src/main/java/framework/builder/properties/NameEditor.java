@@ -1,6 +1,8 @@
 package framework.builder.properties;
 
 import framework.JSContainer;
+import framework.design.Designable;
+import framework.design.Parameter;
 import jsweet.dom.Event;
 
 public class NameEditor extends AbstractInputPropertyEditor{
@@ -15,6 +17,12 @@ public class NameEditor extends AbstractInputPropertyEditor{
 		String name = getValue();
 		designable.setParameter("name", name, true);
 		designable.setName(name);
+	}
+
+	@Override
+	public void initEditor(Designable designable, Parameter parameter) {
+		setValue(designable.getName());
+		
 	}
 
 }

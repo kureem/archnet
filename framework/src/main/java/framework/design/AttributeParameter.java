@@ -13,9 +13,7 @@ public class AttributeParameter extends Parameter {
 	public PropertyEditor getEditor(Designable designable) {
 		
 		AttributeEditor editor = new AttributeEditor();
-		editor.setProperty(this);
-		editor.setDesignable(designable);
-		
+		editor.setProperty(designable,this);
 		return editor;
 	}
 	

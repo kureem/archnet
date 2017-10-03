@@ -20,16 +20,16 @@ protected Designable designable;
 		
 	}
 
-	@Override
-	public void setDesignable(Designable designable) {
-		this.designable = designable;
-	}
+	
 
 	@Override
-	public void setProperty(Parameter parameter) {
+	public void setProperty(Designable designable, Parameter parameter) {
 		this.parameter = parameter;
+		this.designable = designable;
+		initEditor(designable, parameter);
 	}
 
+	public abstract void initEditor(Designable designable, Parameter parameter);
 	@Override
 	public abstract void performAction(JSContainer source, Event evt); 
 

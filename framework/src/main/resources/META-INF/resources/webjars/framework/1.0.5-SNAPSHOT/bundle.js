@@ -55,8 +55,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index5852 = 0; index5852 < keys.length; index5852++) {
-                        var key = keys[index5852];
+                    for (var index185 = 0; index185 < keys.length; index185++) {
+                        var key = keys[index185];
                         {
                             var value = component.styles[key];
                             instance.setStyle(key, value);
@@ -65,8 +65,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index5853 = 0; index5853 < keys.length; index5853++) {
-                        var key = keys[index5853];
+                    for (var index186 = 0; index186 < keys.length; index186++) {
+                        var key = keys[index186];
                         {
                             var value = component.parameters[key];
                             instance['setParameter$java_lang_String$java_lang_String$boolean'](key, value, designMode);
@@ -74,8 +74,8 @@ var framework;
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index5854 = 0; index5854 < component.events.length; index5854++) {
-                        var event_1 = component.events[index5854];
+                    for (var index187 = 0; index187 < component.events.length; index187++) {
+                        var event_1 = component.events[index187];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source);
                             instance.addEventListener(listener, event_1.type);
@@ -292,8 +292,8 @@ var framework;
                 this.beans.put(mixxingName, instance);
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
-                for (var index5855 = this.beans.keySet().iterator(); index5855.hasNext();) {
-                    var key = index5855.next();
+                for (var index188 = this.beans.keySet().iterator(); index188.hasNext();) {
+                    var key = index188.next();
                     {
                         var bean = this.beans.get(key);
                         try {
@@ -488,8 +488,8 @@ var framework;
             function ContainerRenderer() {
             }
             ContainerRenderer.prototype.decorate = function (c) {
-                for (var index5856 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index5856.hasNext();) {
-                    var dec = index5856.next();
+                for (var index189 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index189.hasNext();) {
+                    var dec = index189.next();
                     {
                         dec.decorate(c);
                     }
@@ -558,8 +558,8 @@ var framework;
                     throw new Error('invalid overload');
             };
             ContainerRenderer.prototype.execCommands = function (njq, container) {
-                for (var index5857 = container.getCommands().iterator(); index5857.hasNext();) {
-                    var command = index5857.next();
+                for (var index190 = container.getCommands().iterator(); index190.hasNext();) {
+                    var command = index190.next();
                     {
                         var name_1 = command.getName();
                         var params = command.getParameters();
@@ -586,14 +586,14 @@ var framework;
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var _this = this;
-                for (var index5858 = c.getListeners().keySet().iterator(); index5858.hasNext();) {
-                    var key = index5858.next();
+                for (var index191 = c.getListeners().keySet().iterator(); index191.hasNext();) {
+                    var key = index191.next();
                     {
                         var listeners = c.getListeners().get(key);
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
-                                for (var index5859 = listeners.iterator(); index5859.hasNext();) {
-                                    var l = index5859.next();
+                                for (var index192 = listeners.iterator(); index192.hasNext();) {
+                                    var l = index192.next();
                                     {
                                         _this.synchronizeFields(njq, c);
                                         l.performAction(c, evt);
@@ -668,8 +668,8 @@ var framework;
                         inputField.setRawValue(value);
                     }
                 }
-                for (var index5860 = jsfield.getChildren().iterator(); index5860.hasNext();) {
-                    var c = index5860.next();
+                for (var index193 = jsfield.getChildren().iterator(); index193.hasNext();) {
+                    var c = index193.next();
                     {
                         this.synchronizeFields(document.getElementById(c.getId()), c);
                     }
@@ -678,9 +678,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array5862 = c.getChangedAttributes();
-                        for (var index5861 = 0; index5861 < array5862.length; index5861++) {
-                            var key = array5862[index5861];
+                        var array195 = c.getChangedAttributes();
+                        for (var index194 = 0; index194 < array195.length; index194++) {
+                            var key = array195[index194];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -693,8 +693,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index5863 = c.getAttributeNames().iterator(); index5863.hasNext();) {
-                        var key = index5863.next();
+                    for (var index196 = c.getAttributeNames().iterator(); index196.hasNext();) {
+                        var key = index196.next();
                         {
                             if (c.getAttribute(key) != null)
                                 njq.setAttribute(key, c.getAttribute(key));
@@ -721,9 +721,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array5865 = c.getChangedStyles();
-                        for (var index5864 = 0; index5864 < array5865.length; index5864++) {
-                            var key = array5865[index5864];
+                        var array198 = c.getChangedStyles();
+                        for (var index197 = 0; index197 < array198.length; index197++) {
+                            var key = array198[index197];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -731,8 +731,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index5866 = c.getStyleNames().iterator(); index5866.hasNext();) {
-                        var key = index5866.next();
+                    for (var index199 = c.getStyleNames().iterator(); index199.hasNext();) {
+                        var key = index199.next();
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
@@ -886,8 +886,8 @@ var framework;
                 componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.TextComponentFactory(tag, defaultText));
             }
             ;
-            for (var index5867 = 0; index5867 < tags.length; index5867++) {
-                var tag = tags[index5867];
+            for (var index200 = 0; index200 < tags.length; index200++) {
+                var tag = tags[index200];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -968,8 +968,7 @@ var framework;
              */
             AttributeParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.AttributeEditor();
-                editor.setProperty(this);
-                editor.setDesignable(designable);
+                editor.setProperty(designable, this);
                 return editor;
             };
             return AttributeParameter;
@@ -1012,8 +1011,7 @@ var framework;
              */
             EventScriptParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.EventScriptEditor("script", this.eventTypeEditor);
-                editor.setProperty(this);
-                editor.setDesignable(designable);
+                editor.setProperty(designable, this);
                 return editor;
             };
             return EventScriptParameter;
@@ -1037,15 +1035,14 @@ var framework;
              */
             EventTypeParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.EventTypeEditor("eventType");
-                for (var index5868 = this.options.iterator(); index5868.hasNext();) {
-                    var opt = index5868.next();
+                for (var index201 = this.options.iterator(); index201.hasNext();) {
+                    var opt = index201.next();
                     {
                         var o = new framework.JSOption(opt.text, opt.value);
                         editor.addOption(o);
                     }
                 }
-                editor.setDesignable(designable);
-                editor.setProperty(this);
+                editor.setProperty(designable, this);
                 return editor;
             };
             return EventTypeParameter;
@@ -1069,8 +1066,7 @@ var framework;
              */
             NameParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.NameEditor();
-                editor.setProperty(this);
-                editor.setDesignable(designable);
+                editor.setProperty(designable, this);
                 return editor;
             };
             return NameParameter;
@@ -1116,8 +1112,7 @@ var framework;
              */
             StyleParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.StyleEditor();
-                editor.setProperty(this);
-                editor.setDesignable(designable);
+                editor.setProperty(designable, this);
                 return editor;
             };
             return StyleParameter;
@@ -1141,8 +1136,7 @@ var framework;
              */
             TextParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.TextEditor("text");
-                editor.setDesignable(designable);
-                editor.setProperty(this);
+                editor.setProperty(designable, this);
                 return editor;
             };
             return TextParameter;
@@ -1357,8 +1351,8 @@ var framework;
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index5869 = 0; index5869 < aStyles.length; index5869++) {
-                var style = aStyles[index5869];
+            for (var index202 = 0; index202 < aStyles.length; index202++) {
+                var style = aStyles[index202];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -1603,8 +1597,8 @@ var framework;
         JSContainer.prototype.setRendered = function (b) {
             this.rendered = b;
             if (!b) {
-                for (var index5870 = this.children.iterator(); index5870.hasNext();) {
-                    var child = index5870.next();
+                for (var index203 = this.children.iterator(); index203.hasNext();) {
+                    var child = index203.next();
                     {
                         child.setRendered(b);
                     }
@@ -1632,12 +1626,12 @@ var framework;
             if (!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for (var index5871 = this.renderers.iterator(); index5871.hasNext();) {
-                var renderer_1 = index5871.next();
+            for (var index204 = this.renderers.iterator(); index204.hasNext();) {
+                var renderer_1 = index204.next();
                 renderer_1.doRender(this, parent);
             }
-            for (var index5872 = this.getChildren().iterator(); index5872.hasNext();) {
-                var child = index5872.next();
+            for (var index205 = this.getChildren().iterator(); index205.hasNext();) {
+                var child = index205.next();
                 {
                     child.render();
                 }
@@ -1677,9 +1671,9 @@ var framework;
                 return null;
             }
             {
-                var array5874 = this.parent.getAttribute("class").split(" ");
-                for (var index5873 = 0; index5873 < array5874.length; index5873++) {
-                    var s = array5874[index5873];
+                var array207 = this.parent.getAttribute("class").split(" ");
+                for (var index206 = 0; index206 < array207.length; index206++) {
+                    var s = array207[index206];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -2181,8 +2175,8 @@ var framework;
          */
         JSSelect.prototype.getValue = function () {
             var val = this.getAttribute("value");
-            for (var index5875 = this.getChildren().iterator(); index5875.hasNext();) {
-                var opt = index5875.next();
+            for (var index208 = this.getChildren().iterator(); index208.hasNext();) {
+                var opt = index208.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -2197,8 +2191,8 @@ var framework;
             return null;
         };
         JSSelect.prototype.setValue$java_lang_String = function (val) {
-            for (var index5876 = this.getChildren().iterator(); index5876.hasNext();) {
-                var opt = index5876.next();
+            for (var index209 = this.getChildren().iterator(); index209.hasNext();) {
+                var opt = index209.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -2511,8 +2505,8 @@ var framework;
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index5877 = 0; index5877 < Button.states_$LI$().length; index5877++) {
-                    var s = Button.states_$LI$()[index5877];
+                for (var index210 = 0; index210 < Button.states_$LI$().length; index210++) {
+                    var s = Button.states_$LI$()[index210];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -3402,8 +3396,8 @@ var framework;
                 return this;
             };
             Tabs.prototype.setActive = function (item) {
-                for (var index5878 = this.nav.getChildren().iterator(); index5878.hasNext();) {
-                    var c = index5878.next();
+                for (var index211 = this.nav.getChildren().iterator(); index211.hasNext();) {
+                    var c = index211.next();
                     {
                         var tab = c;
                         tab.setActive(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
@@ -3504,19 +3498,10 @@ var framework;
                     _this.addEventListener(_this, "change");
                     return _this;
                 }
-                /**
-                 *
-                 * @param {*} designable
-                 */
-                AbstractCheckBoxPropertyEditor.prototype.setDesignable = function (designable) {
-                    this.designable = designable;
-                };
-                /**
-                 *
-                 * @param {framework.design.Parameter} parameter
-                 */
-                AbstractCheckBoxPropertyEditor.prototype.setProperty = function (parameter) {
+                AbstractCheckBoxPropertyEditor.prototype.setProperty = function (designable, parameter) {
                     this.parameter = parameter;
+                    this.designable = designable;
+                    this.initEditor(designable, parameter);
                 };
                 return AbstractCheckBoxPropertyEditor;
             }(framework.JSCheckBox));
@@ -3544,16 +3529,12 @@ var framework;
                 /**
                  *
                  * @param {*} designable
-                 */
-                AbstractInputPropertyEditor.prototype.setDesignable = function (designable) {
-                    this.designable = designable;
-                };
-                /**
-                 *
                  * @param {framework.design.Parameter} parameter
                  */
-                AbstractInputPropertyEditor.prototype.setProperty = function (parameter) {
+                AbstractInputPropertyEditor.prototype.setProperty = function (designable, parameter) {
                     this.parameter = parameter;
+                    this.designable = designable;
+                    this.initEditor(designable, parameter);
                 };
                 return AbstractInputPropertyEditor;
             }(framework.JSInput));
@@ -3581,16 +3562,12 @@ var framework;
                 /**
                  *
                  * @param {*} designable
-                 */
-                AbstractSelectPropertyEditor.prototype.setDesignable = function (designable) {
-                    this.designable = designable;
-                };
-                /**
-                 *
                  * @param {framework.design.Parameter} parameter
                  */
-                AbstractSelectPropertyEditor.prototype.setProperty = function (parameter) {
+                AbstractSelectPropertyEditor.prototype.setProperty = function (designable, parameter) {
                     this.parameter = parameter;
+                    this.designable = designable;
+                    this.initEditor(designable, parameter);
                 };
                 return AbstractSelectPropertyEditor;
             }(framework.JSSelect));
@@ -3619,16 +3596,11 @@ var framework;
                 /**
                  *
                  * @param {*} designable
-                 */
-                EventScriptEditor.prototype.setDesignable = function (designable) {
-                    this.designable = designable;
-                };
-                /**
-                 *
                  * @param {framework.design.Parameter} parameter
                  */
-                EventScriptEditor.prototype.setProperty = function (parameter) {
+                EventScriptEditor.prototype.setProperty = function (designable, parameter) {
                     this.parameter = parameter;
+                    this.designable = designable;
                 };
                 /**
                  *
@@ -3683,8 +3655,8 @@ var framework;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index5879 = 0; index5879 < components.length; index5879++) {
-                    var com = components[index5879];
+                for (var index212 = 0; index212 < components.length; index212++) {
+                    var com = components[index212];
                     {
                         var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
                         this.addChild$framework_JSContainer(li);
@@ -4010,8 +3982,8 @@ var framework;
             DescriptionList.prototype.setLayout = function (layout) {
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-                for (var index5880 = this.getChildren().iterator(); index5880.hasNext();) {
-                    var child = index5880.next();
+                for (var index213 = this.getChildren().iterator(); index213.hasNext();) {
+                    var child = index213.next();
                     {
                         child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                         child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -4219,6 +4191,16 @@ var framework;
                     var value = this.getValue();
                     this.designable.setAttribute(attr, value);
                 };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                AttributeEditor.prototype.initEditor = function (designable, parameter) {
+                    var attr = parameter.name;
+                    var value = designable.getAttribute(attr);
+                    this.setValue$java_lang_String(value);
+                };
                 return AttributeEditor;
             }(framework.builder.properties.AbstractInputPropertyEditor));
             properties.AttributeEditor = AttributeEditor;
@@ -4246,6 +4228,14 @@ var framework;
                     var name = this.getValue();
                     this.designable['setParameter$java_lang_String$java_lang_String$boolean']("name", name, true);
                     this.designable.setName(name);
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                NameEditor.prototype.initEditor = function (designable, parameter) {
+                    this.setValue$java_lang_String(designable.getName());
                 };
                 return NameEditor;
             }(framework.builder.properties.AbstractInputPropertyEditor));
@@ -4275,6 +4265,14 @@ var framework;
                     var value = this.getValue();
                     this.designable.setStyle(style, value);
                 };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                StyleEditor.prototype.initEditor = function (designable, parameter) {
+                    this.setValue$java_lang_String(designable.getStyle(parameter.name));
+                };
                 return StyleEditor;
             }(framework.builder.properties.AbstractInputPropertyEditor));
             properties.StyleEditor = StyleEditor;
@@ -4302,6 +4300,14 @@ var framework;
                     var text = this.getValue();
                     this.designable.setHtml(text);
                 };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                TextEditor.prototype.initEditor = function (designable, parameter) {
+                    this.setValue$java_lang_String(designable.getHtml());
+                };
                 return TextEditor;
             }(framework.builder.properties.AbstractInputPropertyEditor));
             properties.TextEditor = TextEditor;
@@ -4327,6 +4333,13 @@ var framework;
                  */
                 EventTypeEditor.prototype.performAction = function (source, evt) {
                     console.info("dsfds");
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                EventTypeEditor.prototype.initEditor = function (designable, parameter) {
                 };
                 return EventTypeEditor;
             }(framework.builder.properties.AbstractSelectPropertyEditor));
@@ -4485,13 +4498,13 @@ var framework;
                     if (((typeof label === 'string') || label === null) && ((input != null && input instanceof framework.JSInput) || input === null)) {
                         return this.addProperty$java_lang_String$framework_JSInput(label, input);
                     }
-                    else if (((label != null && label instanceof framework.design.Parameter) || label === null) && input === undefined) {
-                        return this.addProperty$framework_design_Parameter(label);
+                    else if (((label != null && label instanceof framework.design.Parameter) || label === null) && ((input != null && (input["__interfaces"] != null && input["__interfaces"].indexOf("framework.design.Designable") >= 0 || input.constructor != null && input.constructor["__interfaces"] != null && input.constructor["__interfaces"].indexOf("framework.design.Designable") >= 0)) || input === null)) {
+                        return this.addProperty$framework_design_Parameter$framework_design_Designable(label, input);
                     }
                     else
                         throw new Error('invalid overload');
                 };
-                BasePropertiesEditor.prototype.addProperty$framework_design_Parameter = function (parameter) {
+                BasePropertiesEditor.prototype.addProperty$framework_design_Parameter$framework_design_Designable = function (parameter, designable) {
                     var element = new framework.lightning.FormElement("elem", "div");
                     element.setLabel(parameter.label);
                     var editor = parameter.getEditor(this.__framework_builder_properties_BasePropertiesEditor_component);
@@ -4499,20 +4512,11 @@ var framework;
                     this.addFormElement(element);
                     return this;
                 };
-                /**
-                 *
-                 * @param {framework.JSContainer} source
-                 * @param {Event} evt
-                 */
-                BasePropertiesEditor.prototype.performAction = function (source, evt) {
-                    var value = source.getValue().toString();
-                    this.__framework_builder_properties_BasePropertiesEditor_component['setParameter$java_lang_String$java_lang_String$boolean'](source.getName(), value, true);
-                };
                 return BasePropertiesEditor;
             }(framework.lightning.FormLayout));
             properties.BasePropertiesEditor = BasePropertiesEditor;
             BasePropertiesEditor["__class"] = "framework.builder.properties.BasePropertiesEditor";
-            BasePropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
+            BasePropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
         })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -4529,8 +4533,8 @@ var framework;
                 AdvancedPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index5881 = this.__framework_builder_properties_BasePropertiesEditor_component.getParameters().iterator(); index5881.hasNext();) {
-                        var p = index5881.next();
+                    for (var index214 = this.__framework_builder_properties_BasePropertiesEditor_component.getParameters().iterator(); index214.hasNext();) {
+                        var p = index214.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -4538,7 +4542,7 @@ var framework;
                             else {
                                 return o1 === o2;
                             } })(p.category, "advanced"))
-                                this.addProperty$framework_design_Parameter(p);
+                                this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
                         }
                     }
                 };
@@ -4546,7 +4550,7 @@ var framework;
             }(framework.builder.properties.BasePropertiesEditor));
             properties.AdvancedPropertiesEditor = AdvancedPropertiesEditor;
             AdvancedPropertiesEditor["__class"] = "framework.builder.properties.AdvancedPropertiesEditor";
-            AdvancedPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
+            AdvancedPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
         })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -4567,8 +4571,8 @@ var framework;
                 BasicPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index5882 = designable.getParameters().iterator(); index5882.hasNext();) {
-                        var param = index5882.next();
+                    for (var index215 = designable.getParameters().iterator(); index215.hasNext();) {
+                        var param = index215.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -4576,7 +4580,7 @@ var framework;
                             else {
                                 return o1 === o2;
                             } })(param.category, "Basic")) {
-                                this.addProperty$framework_design_Parameter(param);
+                                this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);
                             }
                         }
                     }
@@ -4585,7 +4589,7 @@ var framework;
             }(framework.builder.properties.BasePropertiesEditor));
             properties.BasicPropertiesEditor = BasicPropertiesEditor;
             BasicPropertiesEditor["__class"] = "framework.builder.properties.BasicPropertiesEditor";
-            BasicPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
+            BasicPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
         })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -4608,8 +4612,8 @@ var framework;
                 EventsPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index5883 = designable.getParameters().iterator(); index5883.hasNext();) {
-                        var param = index5883.next();
+                    for (var index216 = designable.getParameters().iterator(); index216.hasNext();) {
+                        var param = index216.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -4617,7 +4621,7 @@ var framework;
                             else {
                                 return o1 === o2;
                             } })(param.category, "event")) {
-                                this.addProperty$framework_design_Parameter(param);
+                                this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);
                             }
                         }
                     }
@@ -4626,7 +4630,7 @@ var framework;
             }(framework.builder.properties.BasePropertiesEditor));
             properties.EventsPropertiesEditor = EventsPropertiesEditor;
             EventsPropertiesEditor["__class"] = "framework.builder.properties.EventsPropertiesEditor";
-            EventsPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
+            EventsPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
         })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));

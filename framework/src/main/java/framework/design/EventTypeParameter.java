@@ -18,8 +18,7 @@ public class EventTypeParameter extends Parameter{
 			JSOption o = new JSOption(opt.text, opt.value);
 			editor.addOption(o);
 		}
-		editor.setDesignable(designable);
-		editor.setProperty(this);
+		editor.setProperty(designable,this);
 		return editor;
 	}
 

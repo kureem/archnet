@@ -7,22 +7,20 @@ import framework.builder.properties.PropertyEditor;
 public class EventScriptParameter extends Parameter {
 
 	EventTypeEditor eventTypeEditor;
-	
+
 	public EventScriptParameter(String name, String label, String category) {
 		super(name, label, "textarea", category);
-		// TODO Auto-generated constructor stub
 	}
-	
-	public void setEventTypeEditor(EventTypeEditor editor){
+
+	public void setEventTypeEditor(EventTypeEditor editor) {
 		this.eventTypeEditor = editor;
 	}
 
 	@Override
 	public PropertyEditor getEditor(Designable designable) {
-		
+
 		EventScriptEditor editor = new EventScriptEditor("script", eventTypeEditor);
-		editor.setProperty(this);
-		editor.setDesignable(designable);
+		editor.setProperty(designable, this);
 		return editor;
 	}
 

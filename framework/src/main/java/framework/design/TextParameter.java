@@ -12,8 +12,7 @@ public class TextParameter extends Parameter{
 	@Override
 	public PropertyEditor getEditor(Designable designable) {
 		TextEditor editor = new TextEditor("text");
-		editor.setDesignable(designable);
-		editor.setProperty(this);
+		editor.setProperty(designable,this);
 		return editor;
 	}
 

@@ -16,7 +16,7 @@ public class EventsPropertiesEditor extends BasePropertiesEditor{
 		clear();
 		for(Parameter param : designable.getParameters()){
 			if(param.category.equals("event")){
-				addProperty(param);
+				addProperty(param, designable);
 			}
 		}
 	}

@@ -13,8 +13,7 @@ public class StyleParameter extends Parameter{
 	@Override
 	public PropertyEditor getEditor(Designable designable) {
 		StyleEditor editor =new StyleEditor();
-		editor.setProperty(this);
-		editor.setDesignable(designable);
+		editor.setProperty(designable,this);
 		return editor;
 	}
 

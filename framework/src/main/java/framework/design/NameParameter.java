@@ -12,8 +12,7 @@ public class NameParameter extends Parameter{
 	@Override
 	public PropertyEditor getEditor(Designable designable) {
 		NameEditor editor = new NameEditor();
-		editor.setProperty(this);
-		editor.setDesignable(designable);
+		editor.setProperty(designable,this);
 		return editor;
 		
 	}

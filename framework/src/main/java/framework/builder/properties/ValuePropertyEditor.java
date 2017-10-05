@@ -12,11 +12,13 @@ public class ValuePropertyEditor extends AbstractInputPropertyEditor{
 		super(name);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void initEditor(Designable designable, Parameter parameter) {
 		setValue( ((InputField)designable).getValue().toString()   );
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void performAction(JSContainer source, Event evt) {
 		String value = getValue();

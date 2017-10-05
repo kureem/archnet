@@ -6,6 +6,7 @@ import def.jqueryui.JQuery;
 import def.jqueryui.jqueryui.JQueryPositionOptions;
 import framework.EventListener;
 import framework.JSContainer;
+import framework.builder.editors.VisualEditor;
 import framework.design.Designable;
 import jsweet.dom.Event;
 

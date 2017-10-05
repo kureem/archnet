@@ -1,10 +1,5 @@
 package framework.builder.libraries;
 
-import def.dom.Event;
-import def.jqueryui.jqueryui.DroppableEvent;
-import def.jqueryui.jqueryui.DroppableEventUIParam;
-import def.jqueryui.jqueryui.DroppableOptions;
-import framework.JSContainer;
 import framework.builder.BuilderEventListener;
 import framework.builder.SelectComponentEvent;
 import framework.builder.Selector;
@@ -13,6 +8,7 @@ import framework.builder.marshalling.Component;
 import framework.builder.marshalling.ComponentFactory;
 import framework.core.BeanFactory;
 import framework.design.Designable;
+import framework.designables.DesignableDelegate;
 import jsweet.lang.Object;
 
 public abstract class AbstractComponentFactory implements ComponentFactory {
@@ -29,9 +25,9 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 		return impl.equals(this.impl);
 	}
 
-	public abstract JSContainer createInstance(boolean designMode);
+	public abstract Designable createInstance(boolean designMode);
 
-	protected void configureStyles(JSContainer instance, Component component) {
+	protected void configureStyles(Designable instance, Component component) {
 		String[] keys = Object.keys(component.styles);
 		for (String key : keys) {
 			String value = (String) component.styles.$get(key);
@@ -47,7 +43,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 		}
 	}
 
-	protected void configureEvents(JSContainer instance, Component component) {
+	protected void configureEvents(Designable instance, Component component) {
 		for (BuilderEvent event : component.events) {
 			BuilderEventListener listener = new BuilderEventListener(event.source);
 			instance.addEventListener(listener, event.type);
@@ -55,8 +51,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 	}
 
 	@Override
-	public JSContainer build(Component component, boolean designMode) {
-		JSContainer instance = createInstance(designMode);
+	public Designable build(Component component, boolean designMode) {
+		Designable instance = createInstance(designMode);
 		configureStyles(instance, component);
 		configureParameters((Designable) instance, component, designMode);
 		configureEvents(instance, component);
@@ -64,19 +60,20 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 		return instance;
 	}
 
-	protected void decorateForDesignMode(JSContainer instance, boolean designMode) {
+	protected void decorateForDesignMode(Designable instance, boolean designMode) {
 
 		decorateDroppable(instance, designMode);
 		decorateCallSelector(instance, designMode);
 	}
 
-	protected void decorateDroppable(JSContainer instance, boolean designMode) {
-		if (designMode) {
-
+	protected void decorateDroppable(Designable instance, boolean designMode) {
+		DesignableDelegate.setDroppableOptions(instance, designMode);
+		/*if (designMode) {
+ 
 			instance.addClass("designing");
 			DroppableOptions options = new DroppableOptions() {
 			};
-			options.greedy = true;
+			options.greedy = false;
 			options.accept = ".designer-component";
 			options.tolerance = "pointer";
 
@@ -88,18 +85,26 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 					String identifier = event.srcElement.getAttribute("identifier");
 					ComponentFactory factory = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class)
 							.getComponentFactory(identifier);
-					JSContainer container = factory.build(new Component(), true);
-					instance.addChild(container);
+					Designable container = factory.build(new Component(), true);
+					try{
+					instance.addDesignable(container);
+					}catch(Exception e){
+						alert(e.getMessage());
+					}
 					container.render();
+					
+					BeanFactory.getInstance().getBeanOfType(Structure.class).reload();
+					BeanFactory.getInstance().getBeanOfType(Structure.class).render();
+					//container.getRoot().get
 
 				}
 			};
-			instance.setDroppableOptions(options);
-		}
+			((JSContainer)instance).setDroppableOptions(options);*/
+		//}
 	}
 	
 	
-	protected void decorateCallSelector(JSContainer container, boolean designMode){
+	protected void decorateCallSelector(Designable container, boolean designMode){
 		if(designMode){
 			container.addEventListener(new SelectComponentEvent(BeanFactory.getInstance().getBeanOfType(Selector.class)), "click");
 		}

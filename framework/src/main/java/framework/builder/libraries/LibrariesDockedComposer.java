@@ -14,7 +14,6 @@ public class LibrariesDockedComposer extends DockedComposer {
 		super(name);
 
 		getTitle().setHtml("Components Library");
-
 		getBody().addChild(componentsTabs);
 		componentsTabs.addItem("Basic", basicComponentLib);
 		componentsTabs.addItem("Lightning", lightningComponentLib);

@@ -2,6 +2,7 @@ package framework.builder;
 
 import framework.EventListener;
 import framework.JSContainer;
+import framework.design.Designable;
 import jsweet.dom.Event;
 
 public class SelectComponentEvent implements EventListener {
@@ -16,7 +17,7 @@ public class SelectComponentEvent implements EventListener {
 	@Override
 	public void performAction(JSContainer source, Event evt) {
 		evt.stopPropagation();
-		selector.select(source);
+		selector.select((Designable)source);
 	}
 
 }

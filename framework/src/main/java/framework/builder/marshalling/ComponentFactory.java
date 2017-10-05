@@ -1,12 +1,12 @@
 package framework.builder.marshalling;
 
-import framework.JSContainer;
+import framework.design.Designable;
 
 public interface ComponentFactory {
 
 	public boolean supports(String impl);
 	
-	public JSContainer build(Component component, boolean designMode);
+	public Designable build(Component component, boolean designMode);
 	
 	
 }

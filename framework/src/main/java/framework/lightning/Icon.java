@@ -20,7 +20,7 @@ public class Icon extends JSContainer {
 
 	public final static String TEXT_LIGHT = "slds-icon-text-light";
 
-	private String assetsUrl = "/lightning/assets/icons";
+	private String assetsUrl = "/webjars/lightning/2.3.2/assets/icons";
 
 	private String type = "utility";
 
@@ -40,7 +40,7 @@ public class Icon extends JSContainer {
 	}
 
 	public void refresh() {
-		String html = "<svg class='slds-button__icon'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/webjars/lightning/2.3.2/assets/icons/utility-sprite/svg/symbols.svg#settings\"></use></svg>";
+		String html = "<svg class='slds-button__icon'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\""+assetsUrl+"/"+type+"-sprite/svg/symbols.svg#"+iconName+"\"></use></svg>";
 		setHtml(html);
 	}
 

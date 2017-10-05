@@ -54,7 +54,7 @@
 
 
 		<!-- https://mvnrepository.com/artifact/org.webjars/jquery-ui -->
-		
+
 
 		<dependency>
 			<groupId>org.jsweet.candies</groupId>
@@ -71,11 +71,19 @@
 			<artifactId>codemirror</artifactId>
 			<version>0.0.0-1.1.0-20160525</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>mustache</artifactId>
+			<version>0.8.2-1.1.0-20160525</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jsweet.candies</groupId>
 			<artifactId>jqueryui</artifactId>
 			<version>1.11.0-20170726</version>
 		</dependency>
+
+
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>

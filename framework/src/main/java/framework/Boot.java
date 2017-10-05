@@ -10,8 +10,11 @@ import framework.builder.libraries.TextComponentFactory;
 import framework.core.BasicDecoratorRegistry;
 import framework.core.BeanFactory;
 import framework.core.DecoratorsRegistry;
+import framework.design.Designable;
+import framework.designables.JSDesignableButton;
+import framework.designables.JSDesignableInput;
+import framework.designables.JSDesignableTextArea;
 import framework.interactions.InteractionsDecorator;
-import framework.lightning.Button;
 
 public class Boot {
 
@@ -48,8 +51,8 @@ public class Boot {
 		componentFactoryRegistry.registerComponentFactory("html:input" , new AbstractComponentFactory("html:input") {
 			
 			@Override
-			public JSContainer createInstance(boolean designMode) {
-				JSInput input = new JSInput("Input");
+			public Designable createInstance(boolean designMode) {
+				JSDesignableInput input = new JSDesignableInput("Input");
 				return input;
 			}
 		});
@@ -58,9 +61,9 @@ public class Boot {
 		componentFactoryRegistry.registerComponentFactory("html:textarea" , new AbstractComponentFactory("html:input") {
 			
 			@Override
-			public JSContainer createInstance(boolean designMode) {
+			public Designable createInstance(boolean designMode) {
 				//JSInput input = new JSInput("Input");
-				JSTextArea input = new JSTextArea("TextArea");
+				JSDesignableTextArea input = new JSDesignableTextArea("TextArea");
 				return input;
 			}
 		});
@@ -69,8 +72,8 @@ public class Boot {
 		componentFactoryRegistry.registerComponentFactory("lgt:btn", new AbstractComponentFactory("lgt:btn") {
 
 			@Override
-			public JSContainer createInstance(boolean designMode) {
-				Button btn = new Button();
+			public Designable createInstance(boolean designMode) {
+				JSDesignableButton btn = new JSDesignableButton("Button");
 				btn.setLabel("Button");
 				return btn;
 			}

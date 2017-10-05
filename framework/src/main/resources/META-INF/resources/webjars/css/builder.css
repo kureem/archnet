@@ -1,5 +1,13 @@
+.composers section{
+	position:absolute;
+}
 .builder .visual-editor{
 	
+}
+
+.builder .visual-editor .drop-active{
+	cursor: crosshair;
+	background: silver;
 }
 
 .builder .designer-selector{

@@ -1,18 +1,11 @@
 package framework.lightning;
 
-import java.util.List;
-
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
-import framework.design.AttributeParameter;
-import framework.design.Designable;
-import framework.design.Option;
-import framework.design.Parameter;
 
-public class Button extends JSContainer implements Designable {
+public class Button extends JSContainer {
 
-	private final static String[] states = new String[] { "neutral", "brand", "destructive", "success" };
-	private final static String[] stateLabels = new String[] { "Neutral", "Brand", "Destructive", "Success" };
+	protected final static String[] states = new String[] { "neutral", "brand", "destructive", "success" };
 
 	public final static String STATE_NEUTRAL = "neutral";
 	public final static String STATE_BRAND = "brand";
@@ -95,36 +88,5 @@ public class Button extends JSContainer implements Designable {
 		}
 	}
 
-	public List<Parameter> getParameters() {
-		List<Parameter> result = super.getParameters();
-		result.add(createParameter("label", "Label", "String"));
-		result.add(createParameter("stateful", "Stateful", "Boolean"));
-		result.add(createParameter("disabled", "Disabled", "Boolean"));
-		result.add(createParameter("inverse", "Inverse", "Boolean"));
-		Parameter paramstates = createParameter("state", "State", "select");
-		for (int i = 0; i < stateLabels.length; i++) {
-			Option opt = new Option();
-			opt.text = stateLabels[i];
-			opt.value = states[i];
-			paramstates.options.add(opt);
-		}
-
-		result.add(paramstates);
-
-		return result;
-
-	}
-
-	private Parameter createParameter(String name, String label, String type) {
-		Parameter p = new AttributeParameter(name,label,"advanced");
-		p.name = name;
-		p.type = type;
-		p.label = label;
-		return p;
-	}
-
-	@Override
-	public Component getComponent() {
-		return component;
-	}
+	
 }

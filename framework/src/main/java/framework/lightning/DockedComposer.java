@@ -13,13 +13,11 @@ public class DockedComposer extends Grid implements Draggable{
 	
 	private JSContainer headerIconContainer = new JSContainer("div").addClass("slds-icon_container");
 	
-	
 	private Icon headerIcon = new Icon("headerIcon").setSize(Icon.EXTRA_SMALL).setTextType(Icon.TEXT_DEFAULT);
 	
 	private Text title = new Text("title", "h2").setTruncate(true);
 	
 	private JSContainer tools= new JSContainer("div").addClass("slds-col_bump-left slds-shrink-none");
-	
 	
 	private IconButton minimize = new IconButton("minimize");
 	

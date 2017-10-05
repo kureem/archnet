@@ -1,7 +1,7 @@
 package framework.builder.libraries;
 
-import framework.JSContainer;
-import framework.TextComponent;
+import framework.design.Designable;
+import framework.designables.JSDesignableTextComponent;
 
 public class TextComponentFactory extends BasicComponentFactory{
 
@@ -13,9 +13,9 @@ public class TextComponentFactory extends BasicComponentFactory{
 	}
 
 	@Override
-	public JSContainer createInstance(boolean designMode) {
+	public Designable createInstance(boolean designMode) {
 		// TODO Auto-generated method stub
-		JSContainer instance=  new TextComponent(tag, tag); //super.createInstance(designMode);
+		Designable instance=  new JSDesignableTextComponent(tag, tag); //super.createInstance(designMode);
 		instance.setHtml(defaultText);
 		return instance;
 		

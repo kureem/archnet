@@ -1,8 +1,5 @@
 package framework.builder.properties;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.InputField;
 import framework.JSInput;
 import framework.design.Designable;
@@ -13,8 +10,6 @@ import framework.lightning.FormLayout;
 public class BasePropertiesEditor extends FormLayout implements PropertiesEditor {
 
 	protected Designable component;
-
-	private List<PropertyEditor> editors = new LinkedList<>();
 
 	public BasePropertiesEditor(String name) {
 		super(name, "div");

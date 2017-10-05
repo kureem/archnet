@@ -20,7 +20,6 @@ public class OptionsEditor extends AbstractTextAreaPropertyEditor{
 		for(JSContainer c : select.getChildren()){
 			JSOption opt = (JSOption)c;
 			value = value + "\n" + opt.getText();
-			
 		}
 		setValue(value);
 	}
@@ -36,8 +35,6 @@ public class OptionsEditor extends AbstractTextAreaPropertyEditor{
 		for(String opt : options){
 			JSOption option = new JSOption(opt, opt);
 			select.addOption(option);
-		}
-		
+		}	
 	}
-
 }

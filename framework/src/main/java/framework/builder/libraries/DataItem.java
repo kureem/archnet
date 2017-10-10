@@ -1,7 +1,5 @@
 package framework.builder.libraries;
 
-import static def.dom.Globals.alert;
-
 import framework.EventListener;
 import framework.JSContainer;
 import framework.JSInput;

@@ -1,7 +1,5 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.alert;
-
 import java.util.List;
 
 import framework.EventListener;
@@ -52,8 +50,7 @@ public class Structure extends JSContainer {
 
 		ul.addChild(liRoot);
 		addNode(root, liRoot, 1);
-
-		// liJS.setHtml("js");
+		
 		liJS.addChild(new TreeItem("", "JS"));
 		ul.addChild(liJS);
 
@@ -73,7 +70,6 @@ public class Structure extends JSContainer {
 
 			@Override
 			public void performAction(JSContainer source, Event evt) {
-				// TODO Auto-generated method stub
 				evt.stopPropagation();
 
 				StructureTreeItem itemS = ((StructureTreeItem) source);
@@ -83,7 +79,6 @@ public class Structure extends JSContainer {
 				}
 				selected = itemS;
 				selected.select(true);
-
 			}
 		}, "click");
 

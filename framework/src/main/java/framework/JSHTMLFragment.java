@@ -30,10 +30,12 @@ public class JSHTMLFragment extends JSContainer {
 		return context;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void render(HTMLElement parent) {
 
 		if (!isRendered()) {
+			
 			String html = $(template).html();
 			Object cxt = context;
 			String rendered = "";

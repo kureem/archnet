@@ -41,8 +41,8 @@ namespace framework.builder.data {
          * @param {framework.builder.data.DataStructure} datastructure
          */
         public saveStructure(datastructure : framework.builder.data.DataStructure) {
-            for(let index2924=BasicDataEnvironment.structures_$LI$().iterator();index2924.hasNext();) {
-                let structure = index2924.next();
+            for(let index3386=BasicDataEnvironment.structures_$LI$().iterator();index3386.hasNext();) {
+                let structure = index3386.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(structure.name,datastructure.name))) {
                         structure.label = datastructure.label;
@@ -59,8 +59,8 @@ namespace framework.builder.data {
          * @param {string} name
          */
         public deleteStructure(name : string) {
-            for(let index2925=BasicDataEnvironment.structures_$LI$().iterator();index2925.hasNext();) {
-                let structure = index2925.next();
+            for(let index3387=BasicDataEnvironment.structures_$LI$().iterator();index3387.hasNext();) {
+                let structure = index3387.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(structure.name,name))) {
                         BasicDataEnvironment.structures_$LI$().remove(structure);
@@ -193,8 +193,8 @@ namespace framework.builder.libraries {
 
         configureStyles(instance : framework.design.Designable, component : framework.builder.marshalling.Component) {
             let keys : string[] = Object.keys(component.styles);
-            for(let index2926=0; index2926 < keys.length; index2926++) {
-                let key = keys[index2926];
+            for(let index3388=0; index3388 < keys.length; index3388++) {
+                let key = keys[index3388];
                 {
                     let value : string = <string>component.styles[key];
                     instance.setStyle(key, value);
@@ -204,8 +204,8 @@ namespace framework.builder.libraries {
 
         configureParameters(instance : framework.design.Designable, component : framework.builder.marshalling.Component, designMode : boolean) {
             let keys : string[] = Object.keys(component.parameters);
-            for(let index2927=0; index2927 < keys.length; index2927++) {
-                let key = keys[index2927];
+            for(let index3389=0; index3389 < keys.length; index3389++) {
+                let key = keys[index3389];
                 {
                     let value : string = <string>component.parameters[key];
                     instance['setParameter$java_lang_String$java_lang_String$boolean'](key, value, designMode);
@@ -214,8 +214,8 @@ namespace framework.builder.libraries {
         }
 
         configureEvents(instance : framework.design.Designable, component : framework.builder.marshalling.Component) {
-            for(let index2928=0; index2928 < component.events.length; index2928++) {
-                let event = component.events[index2928];
+            for(let index3390=0; index3390 < component.events.length; index3390++) {
+                let event = component.events[index3390];
                 {
                     let listener : framework.builder.BuilderEventListener = new framework.builder.BuilderEventListener(event.source);
                     instance.addEventListener(listener, event.type);
@@ -434,8 +434,8 @@ namespace framework.core {
         }
 
         public getBeanOfType<T>(clazz : any) : T {
-            for(let index2929=this.beans.keySet().iterator();index2929.hasNext();) {
-                let key = index2929.next();
+            for(let index3391=this.beans.keySet().iterator();index3391.hasNext();) {
+                let key = index3391.next();
                 {
                     let bean : any = this.beans.get(key);
                     try {
@@ -954,8 +954,8 @@ namespace framework {
 namespace framework.renderer {
     export class ContainerRenderer implements framework.renderer.Renderer<framework.JSContainer> {
         public decorate(c : framework.JSContainer) {
-            for(let index2930=framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.core.DecoratorsRegistry").getDecorators().iterator();index2930.hasNext();) {
-                let dec = index2930.next();
+            for(let index3392=framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.core.DecoratorsRegistry").getDecorators().iterator();index3392.hasNext();) {
+                let dec = index3392.next();
                 {
                     dec.decorate(c);
                 }
@@ -1027,8 +1027,8 @@ namespace framework.renderer {
         }
 
         execCommands(njq : HTMLElement, container : framework.Renderable) {
-            for(let index2931=container.getCommands().iterator();index2931.hasNext();) {
-                let command = index2931.next();
+            for(let index3393=container.getCommands().iterator();index3393.hasNext();) {
+                let command = index3393.next();
                 {
                     let name : string = command.getName();
                     let params : Object = command.getParameters();
@@ -1048,15 +1048,15 @@ namespace framework.renderer {
         }
 
         renderEvents(njq : HTMLElement, c : framework.JSContainer) {
-            for(let index2932=c.getListeners().keySet().iterator();index2932.hasNext();) {
-                let key = index2932.next();
+            for(let index3394=c.getListeners().keySet().iterator();index3394.hasNext();) {
+                let key = index3394.next();
                 {
                     let listeners : java.util.List<framework.EventListener> = c.getListeners().get(key);
                     njq.addEventListener(key, ((listeners) => {
                         return (evt) => {
                             this.synchronizeFields(c.getRoot().getNative(), c.getRoot());
-                            for(let index2933=listeners.iterator();index2933.hasNext();) {
-                                let l = index2933.next();
+                            for(let index3395=listeners.iterator();index3395.hasNext();) {
+                                let l = index3395.next();
                                 {
                                     l.performAction(c, evt);
                                 }
@@ -1104,8 +1104,8 @@ namespace framework.renderer {
                     inputField.setRawValue(value);
                 }
             }
-            for(let index2934=jsfield.getChildren().iterator();index2934.hasNext();) {
-                let c = index2934.next();
+            for(let index3396=jsfield.getChildren().iterator();index3396.hasNext();) {
+                let c = index3396.next();
                 {
                     this.synchronizeFields(document.getElementById(c.getId()), c);
                 }
@@ -1115,9 +1115,9 @@ namespace framework.renderer {
         renderAttributes(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array2936 = c.getChangedAttributes();
-                    for(let index2935=0; index2935 < array2936.length; index2935++) {
-                        let key = array2936[index2935];
+                    let array3398 = c.getChangedAttributes();
+                    for(let index3397=0; index3397 < array3398.length; index3397++) {
+                        let key = array3398[index3397];
                         {
                             if(c.getAttribute(key) == null) {
                                 njq.removeAttribute(key);
@@ -1128,8 +1128,8 @@ namespace framework.renderer {
                     }
                 }
             } else {
-                for(let index2937=c.getAttributeNames().iterator();index2937.hasNext();) {
-                    let key = index2937.next();
+                for(let index3399=c.getAttributeNames().iterator();index3399.hasNext();) {
+                    let key = index3399.next();
                     {
                         if(c.getAttribute(key) != null) njq.setAttribute(key, c.getAttribute(key));
                     }
@@ -1151,17 +1151,17 @@ namespace framework.renderer {
         renderStyles(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array2939 = c.getChangedStyles();
-                    for(let index2938=0; index2938 < array2939.length; index2938++) {
-                        let key = array2939[index2938];
+                    let array3401 = c.getChangedStyles();
+                    for(let index3400=0; index3400 < array3401.length; index3400++) {
+                        let key = array3401[index3400];
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
                     }
                 }
             } else {
-                for(let index2940=c.getStyleNames().iterator();index2940.hasNext();) {
-                    let key = index2940.next();
+                for(let index3402=c.getStyleNames().iterator();index3402.hasNext();) {
+                    let key = index3402.next();
                     {
                         njq.style.setProperty(key, c.getStyle(key));
                     }
@@ -1317,8 +1317,8 @@ namespace framework {
                 let defaultText : string = txtTagsLabels[i];
                 componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.TextComponentFactory(tag, defaultText));
             };
-            for(let index2941=0; index2941 < tags.length; index2941++) {
-                let tag = tags[index2941];
+            for(let index3403=0; index3403 < tags.length; index3403++) {
+                let tag = tags[index3403];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -1491,8 +1491,8 @@ namespace framework.design {
          */
         public getEditor(designable : framework.design.Designable) : framework.builder.properties.PropertyEditor {
             let editor : framework.builder.properties.EventTypeEditor = new framework.builder.properties.EventTypeEditor("eventType");
-            for(let index2942=this.options.iterator();index2942.hasNext();) {
-                let opt = index2942.next();
+            for(let index3404=this.options.iterator();index3404.hasNext();) {
+                let opt = index3404.next();
                 {
                     let o : framework.JSOption = new framework.JSOption(opt.text, opt.value);
                     editor.addOption(o);
@@ -1819,8 +1819,8 @@ namespace framework {
             }
             let aStyles : string[] = styles.split(" ");
             let add : boolean = true;
-            for(let index2943=0; index2943 < aStyles.length; index2943++) {
-                let style = aStyles[index2943];
+            for(let index3405=0; index3405 < aStyles.length; index3405++) {
+                let style = aStyles[index3405];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(style.trim(),styleClass))) {
                         add = false;
@@ -2079,8 +2079,8 @@ namespace framework {
         public setRendered(b : boolean) : JSContainer {
             this.rendered = b;
             if(!b) {
-                for(let index2944=this.children.iterator();index2944.hasNext();) {
-                    let child = index2944.next();
+                for(let index3406=this.children.iterator();index3406.hasNext();) {
+                    let child = index3406.next();
                     {
                         child.setRendered(b);
                     }
@@ -2108,12 +2108,12 @@ namespace framework {
             if(!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for(let index2945=this.renderers.iterator();index2945.hasNext();) {
-                let renderer = index2945.next();
+            for(let index3407=this.renderers.iterator();index3407.hasNext();) {
+                let renderer = index3407.next();
                 renderer.doRender(this, parent)
             }
-            for(let index2946=this.getChildren().iterator();index2946.hasNext();) {
-                let child = index2946.next();
+            for(let index3408=this.getChildren().iterator();index3408.hasNext();) {
+                let child = index3408.next();
                 {
                     child.render();
                 }
@@ -2154,9 +2154,9 @@ namespace framework {
                 return null;
             }
             {
-                let array2948 = this.parent.getAttribute("class").split(" ");
-                for(let index2947=0; index2947 < array2948.length; index2947++) {
-                    let s = array2948[index2947];
+                let array3410 = this.parent.getAttribute("class").split(" ");
+                for(let index3409=0; index3409 < array3410.length; index3409++) {
+                    let s = array3410[index3409];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(s.trim(),cls))) return <T>this.parent;
                     }
@@ -2359,8 +2359,8 @@ namespace framework.builder.editors {
             grid.addChild$framework_JSContainer(colLeft.addClass("slds-col"));
             grid.addChild$framework_JSContainer(colRight.addClass("slds-col"));
             this.root = root;
-            for(let index2949=0; index2949 < framework.builder.editors.EventTypes.events_$LI$().length; index2949++) {
-                let s = framework.builder.editors.EventTypes.events_$LI$()[index2949];
+            for(let index3411=0; index3411 < framework.builder.editors.EventTypes.events_$LI$().length; index3411++) {
+                let s = framework.builder.editors.EventTypes.events_$LI$()[index3411];
                 this.events.addOption(new framework.JSOption(s, s))
             }
             colLeft.addChild$framework_JSContainer(this.component.setStyle("width", "100%"));
@@ -2370,8 +2370,8 @@ namespace framework.builder.editors {
 
         public addComponentOption(designable : framework.design.Designable) {
             this.component.addOption(new framework.JSOption(designable.getName(), designable.getName()));
-            for(let index2950=designable.getDesignables().iterator();index2950.hasNext();) {
-                let des = index2950.next();
+            for(let index3412=designable.getDesignables().iterator();index3412.hasNext();) {
+                let des = index3412.next();
                 {
                     this.addComponentOption(des);
                 }
@@ -2445,8 +2445,8 @@ namespace framework.builder.editors {
                 item.leaf(false);
                 let children : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                 li.addChild$framework_JSContainer(children);
-                for(let index2951=ctn.getDesignables().iterator();index2951.hasNext();) {
-                    let c = index2951.next();
+                for(let index3413=ctn.getDesignables().iterator();index3413.hasNext();) {
+                    let c = index3413.next();
                     {
                         let child : framework.JSContainer = new framework.JSContainer("li");
                         children.addChild$framework_JSContainer(child);
@@ -2740,8 +2740,8 @@ namespace framework.designables {
          */
         public getDesignables() : java.util.List<framework.design.Designable> {
             let result : java.util.List<framework.design.Designable> = <any>(new java.util.LinkedList<any>());
-            for(let index2952=this.getChildren().iterator();index2952.hasNext();) {
-                let child = index2952.next();
+            for(let index3414=this.getChildren().iterator();index3414.hasNext();) {
+                let child = index3414.next();
                 {
                     result.add(<framework.design.Designable><any>child);
                 }
@@ -2994,8 +2994,8 @@ namespace framework {
          */
         public getValue() : string {
             let val : string = this.getAttribute("value");
-            for(let index2953=this.getChildren().iterator();index2953.hasNext();) {
-                let opt = index2953.next();
+            for(let index3415=this.getChildren().iterator();index3415.hasNext();) {
+                let opt = index3415.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         return (<framework.JSOption>opt).getValue();
@@ -3006,8 +3006,8 @@ namespace framework {
         }
 
         public setValue$java_lang_String(val : string) {
-            for(let index2954=this.getChildren().iterator();index2954.hasNext();) {
-                let opt = index2954.next();
+            for(let index3416=this.getChildren().iterator();index3416.hasNext();) {
+                let opt = index3416.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         (<framework.JSOption>opt).setSelected(true);
@@ -3391,8 +3391,8 @@ namespace framework.lightning {
         }
 
         public setState(state : string) : Button {
-            for(let index2955=0; index2955 < Button.states_$LI$().length; index2955++) {
-                let s = Button.states_$LI$()[index2955];
+            for(let index3417=0; index3417 < Button.states_$LI$().length; index3417++) {
+                let s = Button.states_$LI$()[index3417];
                 {
                     this.removeClass("slds-button_" + s);
                 }
@@ -4555,8 +4555,8 @@ namespace framework.lightning {
         }
 
         public setActive(item : framework.lightning.TabItem) : Tabs {
-            for(let index2956=this.nav.getChildren().iterator();index2956.hasNext();) {
-                let c = index2956.next();
+            for(let index3418=this.nav.getChildren().iterator();index3418.hasNext();) {
+                let c = index3418.next();
                 {
                     let tab : framework.lightning.TabItem = <framework.lightning.TabItem>c;
                     tab.setActive(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(tab,item)));
@@ -5350,8 +5350,8 @@ namespace framework.builder.libraries {
             let name : framework.JSInput = new framework.JSInput("name");
             let label : framework.JSInput = new framework.JSInput("label");
             let type : framework.JSSelect = new framework.JSSelect("type");
-            for(let index2957=0; index2957 < framework.builder.data.DataType.Types_$LI$().length; index2957++) {
-                let stype = framework.builder.data.DataType.Types_$LI$()[index2957];
+            for(let index3419=0; index3419 < framework.builder.data.DataType.Types_$LI$().length; index3419++) {
+                let stype = framework.builder.data.DataType.Types_$LI$()[index3419];
                 {
                     type.addOption(new framework.JSOption(stype, stype));
                 }
@@ -5388,8 +5388,8 @@ namespace framework.builder.libraries {
             let name : framework.JSInput = new framework.JSInput("name");
             let label : framework.JSInput = new framework.JSInput("label");
             let type : framework.JSSelect = new framework.JSSelect("type");
-            for(let index2958=0; index2958 < framework.builder.data.DataType.Types_$LI$().length; index2958++) {
-                let stype = framework.builder.data.DataType.Types_$LI$()[index2958];
+            for(let index3420=0; index3420 < framework.builder.data.DataType.Types_$LI$().length; index3420++) {
+                let stype = framework.builder.data.DataType.Types_$LI$()[index3420];
                 {
                     type.addOption(new framework.JSOption(stype, stype));
                 }
@@ -5757,8 +5757,8 @@ namespace framework.builder {
         }
 
         public addComponents(...components : framework.builder.Component[]) : ComponentsLibrary {
-            for(let index2959=0; index2959 < components.length; index2959++) {
-                let com = components[index2959];
+            for(let index3421=0; index3421 < components.length; index3421++) {
+                let com = components[index3421];
                 {
                     let li : framework.JSContainer = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
                     this.addChild$framework_JSContainer(li);
@@ -6158,8 +6158,8 @@ namespace framework.lightning {
         public setLayout(layout : string) : DescriptionList {
             this.currentLayout = layout;
             this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-            for(let index2960=this.getChildren().iterator();index2960.hasNext();) {
-                let child = index2960.next();
+            for(let index3422=this.getChildren().iterator();index3422.hasNext();) {
+                let child = index3422.next();
                 {
                     child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                     child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -6683,8 +6683,8 @@ namespace framework.builder.properties {
         public initEditor(designable : framework.design.Designable, parameter : framework.design.Parameter) {
             let value : string = "";
             let select : framework.JSSelect = <framework.JSSelect><any>designable;
-            for(let index2961=select.getChildren().iterator();index2961.hasNext();) {
-                let c = index2961.next();
+            for(let index3423=select.getChildren().iterator();index3423.hasNext();) {
+                let c = index3423.next();
                 {
                     let opt : framework.JSOption = <framework.JSOption>c;
                     value = value + "\n" + opt.getText();
@@ -6704,8 +6704,8 @@ namespace framework.builder.properties {
             let select : framework.JSSelect = <framework.JSSelect><any>this.designable;
             select.getChildren().clear();
             select.setRendered(false);
-            for(let index2962=0; index2962 < options.length; index2962++) {
-                let opt = options[index2962];
+            for(let index3424=0; index3424 < options.length; index3424++) {
+                let opt = options[index3424];
                 {
                     let option : framework.JSOption = new framework.JSOption(opt, opt);
                     select.addOption(option);
@@ -6882,8 +6882,8 @@ namespace framework.builder.properties {
         public setComponent(designable : framework.design.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index2963=this.component.getParameters().iterator();index2963.hasNext();) {
-                let p = index2963.next();
+            for(let index3425=this.component.getParameters().iterator();index3425.hasNext();) {
+                let p = index3425.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(p.category,"advanced"))) this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
                 }
@@ -6908,8 +6908,8 @@ namespace framework.builder.properties {
         public setComponent(designable : framework.design.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index2964=designable.getParameters().iterator();index2964.hasNext();) {
-                let param = index2964.next();
+            for(let index3426=designable.getParameters().iterator();index3426.hasNext();) {
+                let param = index3426.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(param.category,"Basic"))) {
                         this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);
@@ -6937,8 +6937,8 @@ namespace framework.builder.properties {
         public setComponent(designable : framework.design.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index2965=designable.getParameters().iterator();index2965.hasNext();) {
-                let param = index2965.next();
+            for(let index3427=designable.getParameters().iterator();index3427.hasNext();) {
+                let param = index3427.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(param.category,"event"))) {
                         this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);

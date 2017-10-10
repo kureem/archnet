@@ -1,7 +1,5 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.document;
-
 import framework.JSContainer;
 import framework.JSOption;
 import framework.JSSelect;

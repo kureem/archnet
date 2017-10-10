@@ -2,13 +2,9 @@ package framework.builder.libraries;
 
 import static def.dom.Globals.prompt;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.EventListener;
 import framework.JSContainer;
 import framework.builder.data.DataEnvironment;
-import framework.builder.data.DataField;
 import framework.builder.data.DataStructure;
 import framework.core.BeanFactory;
 import framework.lightning.Button;

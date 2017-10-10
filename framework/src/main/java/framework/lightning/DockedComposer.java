@@ -35,6 +35,7 @@ public class DockedComposer extends Grid implements Draggable{
 		setAttribute("role", "dialog");
 		setOpen(true);
 		addChild(header);
+		headerIcon.setSvgClass("slds-button__icon");
 		header.addChild(headerTitle);
 		headerTitle.getFigureContainer().addClass("slds-m-right_x-small");
 		headerTitle.setCentered(true);

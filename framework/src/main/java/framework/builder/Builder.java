@@ -1,14 +1,19 @@
 package framework.builder;
 
+import framework.EventListener;
 import framework.JSContainer;
 import framework.builder.editors.CSSEditor;
 import framework.builder.editors.JavascriptEditor;
 import framework.builder.editors.VisualEditor;
+import framework.builder.libraries.DataComposer;
 import framework.design.Designable;
+import framework.lightning.Icon;
+import framework.lightning.IconButton;
 import framework.lightning.LTContainer;
 import framework.lightning.TabBody;
 import framework.lightning.TabItem;
 import framework.lightning.Tabs;
+import jsweet.dom.Event;
 
 public class Builder extends LTContainer {
 
@@ -21,15 +26,32 @@ public class Builder extends LTContainer {
 	private CSSEditor cssEditor;
 	
 	private JavascriptEditor jsEditor = new JavascriptEditor("jsEditor");
+	
+	private DataComposer dataComposer = new DataComposer("composer", "div");
 
+	private IconButton saveButton = new IconButton("save");
+	
 	public Builder(String name) {
 		super(name, "div");
 
 		addClass("builder");
-		addChild(editorTabs);
-
-		
+		Icon icon = new Icon("as", "utility", "save");
+		saveButton.setIcon(icon);
+		saveButton.setBorderFilled(true);
+		saveButton.addClass("slds-button_icon-container").addClass("save-button");
+		saveButton.addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				// TODO Auto-generated method stub
 				
+			}
+		}, "click");
+		addChild(saveButton);
+		addChild(editorTabs);
+		
+		
+
 		visualEditor = new VisualEditor(this);
 		//addChild(visualEditor);
 		visualEditor.newProject();
@@ -40,6 +62,8 @@ public class Builder extends LTContainer {
 		openEditor("JS Editor", jsEditor);
 		
 		editorTabs.setActive(item);
+		
+		openEditor("Data Composer", dataComposer);
 		
 	}
 

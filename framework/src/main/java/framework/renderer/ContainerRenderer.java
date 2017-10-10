@@ -1,5 +1,6 @@
 package framework.renderer;
 
+import static def.jquery.Globals.$;
 import static jsweet.dom.Globals.document;
 import static jsweet.lang.Globals.eval;
 
@@ -9,6 +10,7 @@ import framework.EventListener;
 import framework.InputField;
 import framework.JSContainer;
 import framework.JSContainer.JSCommand;
+import framework.JSHTMLFragment;
 import framework.JSInput;
 import framework.Renderable;
 import framework.core.BeanFactory;
@@ -23,16 +25,14 @@ import jsweet.dom.Node;
 
 public class ContainerRenderer implements Renderer<JSContainer> {
 
-	public void decorate(JSContainer c){
-		  for(Decorator dec :BeanFactory.getInstance().getBeanOfType(DecoratorsRegistry.class).getDecorators()){
-			  dec.decorate(c);
-		  }
+	public void decorate(JSContainer c) {
+		for (Decorator dec : BeanFactory.getInstance().getBeanOfType(DecoratorsRegistry.class).getDecorators()) {
+			dec.decorate(c);
+		}
 	}
-	
-	
+
 	public void doRender(JSContainer c, HTMLElement root) {
 		HTMLElement jq = document.getElementById(c.getId());
-		// HTMLElement jq = $("#" + c.getId());
 		String tag = c.getTag();
 		boolean rendered = c.isRendered();
 		String name = c.getName();
@@ -55,23 +55,32 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 					Node body = document.getElementsByTagName("body").$get(0);
 					body.appendChild(njq);
 				} else {
-					root.appendChild(njq);
-				}
-			} else {
-				int index = parent.getChildren().indexOf(c);
-				Renderable nextSib = null;
-				if (index < parent.getChildren().size() - 1) {
-					nextSib = parent.getChildren().get(index + 1);
-					if (!nextSib.isRendered()) {
-						nextSib = null;
+					if (parent instanceof JSHTMLFragment) {
+						$(parent).find("#" + parent.getId() + " [name=" + name + "]").replaceWith(njq);
+					} else {
+						root.appendChild(njq);
 					}
 				}
+			} else {
 
-				if (nextSib != null) {
-					Node p = document.getElementById(parent.getId());
-					p.insertBefore(njq, document.getElementById(nextSib.getId()));
+				if (parent instanceof JSHTMLFragment) {
+					$("#" + parent.getId() + " [name=" + name + "]").replaceWith(njq);
 				} else {
-					document.getElementById(parent.getId()).appendChild(njq);
+					int index = parent.getChildren().indexOf(c);
+					Renderable nextSib = null;
+					if (index < parent.getChildren().size() - 1) {
+						nextSib = parent.getChildren().get(index + 1);
+						if (!nextSib.isRendered()) {
+							nextSib = null;
+						}
+					}
+
+					if (nextSib != null) {
+						Node p = document.getElementById(parent.getId());
+						p.insertBefore(njq, document.getElementById(nextSib.getId()));
+					} else {
+						document.getElementById(parent.getId()).appendChild(njq);
+					}
 				}
 			}
 			renderEvents(njq, c);
@@ -109,23 +118,15 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 		for (String key : c.getListeners().keySet()) {
 			final List<EventListener> listeners = c.getListeners().get(key);
 			njq.addEventListener(key, (evt) -> {
+				synchronizeFields(c.getRoot().getNative(), c.getRoot());
 				for (EventListener l : listeners) {
-
-					// Event<HTMLElementEventObject> evt = new Event<>(e);
-					synchronizeFields(njq, c);
+					
 					l.performAction(c, evt);
 				}
 				c.getRoot().render();
-				// return o;
 			});
-			/*
-			 * njq.on(key, (e, o) -> { for (EventListener l : listeners) {
-			 * Event<HTMLElementEventObject> evt = new Event<>(e);
-			 * synchronizeFields(njq, c); l.performAction(c, evt); }
-			 * c.getRoot().render(); return o; });
-			 */
-		}
 
+		}
 	}
 
 	protected void synchronizeFields(HTMLElement njq, Renderable jsfield) {
@@ -160,8 +161,8 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 				HTMLTextAreaElement field = (HTMLTextAreaElement) document.getElementById(jsfield.getId());
 				String value = field.value;
 				inputField.setRawValue(value);
-			}else{
-				HTMLElement field =  document.getElementById(jsfield.getId());
+			} else {
+				HTMLElement field = document.getElementById(jsfield.getId());
 				String value = field.getAttribute("value");
 				inputField.setRawValue(value);
 			}
@@ -192,14 +193,11 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 	}
 
 	protected void clearAttributes(HTMLElement elem) {
-		// if (jq.length > 0) {
-		// HTMLElement elem = jq.$get(0);
 		NamedNodeMap attrs = elem.attributes;
 		for (double i = 0; i < attrs.length; i++) {
 			if (!attrs.$get(i).name.equals("id"))
 				elem.removeAttribute(attrs.$get(i).name);
 		}
-		// }
 	}
 
 	protected void clearStyles(HTMLElement jq) {
@@ -212,12 +210,10 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 		if (changed) {
 			for (String key : c.getChangedStyles()) {
 				njq.style.setProperty(key, c.getStyle(key));
-				// njq.css(key, c.getStyle(key));
 			}
 		} else {
 			for (String key : c.getStyleNames()) {
 				njq.style.setProperty(key, c.getStyle(key));
-				// njq.css(key, c.getStyle(key));
 			}
 		}
 	}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Testing the framework</title>
-<link rel="stylesheet" type="text/css" href="/webjars/lightning/2.3.2/assets/styles/salesforce-lightning-design-system.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="/webjars/lightning/2.4.3/assets/styles/salesforce-lightning-design-system.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="/webjars/css/builder.css" title="Style">
 <link rel="stylesheet" type="text/css" href="/webjars/codemirror/5.30.0/lib/codemirror.css" title="Style">
 <link rel="stylesheet" type="text/css" href="/webjars/codemirror/5.30.0/addon/hint/show-hint.css">
@@ -11,7 +11,31 @@
 
 </head>
 <body>
+<div style="display:none">
 
+		<div id="accordionSection">
+<section class="slds-accordion__section {{openClass}}">
+  <div class="slds-accordion__summary">
+    <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+      <button aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action">
+        <svg class="slds-accordion__summary-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{iconsLocation}}/{{iconType}}-sprite/svg/symbols.svg#{{iconName}}" />
+        </svg>
+        <span class="slds-truncate" title="{{title}}">{{title}}</span>
+      </button>
+    </h3>
+    <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small slds-shrink-none" aria-haspopup="true">
+      <svg class="slds-button__icon" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{iconsLocation}}/utility-sprite/svg/symbols.svg#down" />
+      </svg>
+      <span class="slds-assistive-text">More Options</span>
+    </button>
+  </div>
+  <div aria-hidden="false" class="slds-accordion__content" name="accordionContent">Accordion details - A</div>
+</section>
+</div>
+
+</div> 
 <script type="text/javascript" src="/webjars/j4ts/0.2.0-SNAPSHOT/bundle.js"></script>
 <script type="text/javascript" src="/webjars/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript" src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
@@ -23,8 +47,13 @@
 <script type="text/javascript" src="/webjars/codemirror/5.30.0/mode/css/css.js"></script>
 <script type="text/javascript" src="/webjars/codemirror/5.30.0/addon/hint/javascript-hint.js"></script>
 <script type="text/javascript" src="/webjars/codemirror/5.30.0/mode/javascript/javascript.js"></script>
-
+<script type="text/javascript" src="/webjars/mustache/2.3.0/mustache.min.js"></script>
 
 <script type="text/javascript" src="/webjars/framework/1.0.5-SNAPSHOT/bundle.js"></script>
+
+
+
+
+
 </body>
 </html>

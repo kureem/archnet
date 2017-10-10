@@ -25,6 +25,8 @@ public class Icon extends JSContainer {
 	private String type = "utility";
 
 	private String iconName = "settings";
+	
+	private String svgClass = "slds-icon";
 
 	public Icon(String name, String type, String iconName) {
 		super(name, "div");
@@ -38,9 +40,14 @@ public class Icon extends JSContainer {
 		super(name, "div");
 		refresh();
 	}
+	
+	public void setSvgClass(String cls){
+		this.svgClass = cls;
+		refresh();
+	}
 
 	public void refresh() {
-		String html = "<svg class='slds-button__icon'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\""+assetsUrl+"/"+type+"-sprite/svg/symbols.svg#"+iconName+"\"></use></svg>";
+		String html = "<svg class='"+svgClass+"'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\""+assetsUrl+"/"+type+"-sprite/svg/symbols.svg#"+iconName+"\"></use></svg>";
 		setHtml(html);
 	}
 

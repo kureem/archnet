@@ -53,10 +53,10 @@ public class DesignableDelegate {
 
 	public static void setDroppableOptions(Designable instance, boolean designMode) {
 		if (designMode) {
-			instance.addClass("designing");
+			//instance.addClass("designing");
 			DroppableOptions options = new DroppableOptions() {
 			};
-			options.greedy = false;
+			options.greedy = true;
 			options.accept = ".designer-component";
 			options.tolerance = "pointer";
 

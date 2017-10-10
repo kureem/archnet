@@ -1,35 +1,60 @@
 package framework.lightning;
 
-import framework.JSContainer;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Accordion extends JSContainer{
+import framework.JSContainer;
+import framework.builder.marshalling.Component;
+import framework.design.Designable;
+import framework.design.Parameter;
+import framework.designables.DesignableDelegate;
+
+public class Accordion extends JSContainer implements Designable {
+
+	private DesignableDelegate delegate = new DesignableDelegate(this);
+
+	private List<Designable> designables = new LinkedList<>();
 
 	public Accordion(String name) {
-		super(name,"ul");
-		
-		
+		super(name, "ul");
+		addClass("slds-accordion");
 	}
 	
-	
-	
-	public class JSAccordionItem extends JSContainer{
-		
-		private JSContainer accordionSection = new JSContainer("section").addClass("slds-accordion__section");
-		
-		private JSContainer accordionSummary = new JSContainer("div").addClass("slds-accordion__summary");
-		
-		private JSContainer accordionSummaryHeading = new JSContainer("h3").addClass("slds-text-heading_small slds-accordion__summary-heading");
-		
-		
-		public JSAccordionItem(String name){
-			super(name,"li");
-			addClass("slds-accordion__list-item");
-			addChild(accordionSection);
-			accordionSection.addChild(accordionSummary);
-			accordionSummary.addChild(accordionSummaryHeading);
-			
+	public Accordion addItem(AccordionItem item){
+		addDesignable(item);
+		return this;
+	}
+
+	@Override
+	public void setParameter(String key, String value, boolean designMode) {
+		delegate.setParameter(key, value, designMode);
+	}
+
+	@Override
+	public List<Designable> getDesignables() {
+		return designables;
+	}
+
+	@Override
+	public Component getComponent() {
+		return delegate.getComponent();
+	}
+
+	@Override
+	public List<Parameter> getParameters() {
+		return delegate.getParameters();
+	}
+
+	@Override
+	public void addDesignable(Designable designable) {
+		JSContainer li =new JSContainer("li").addClass("slds-accordion__list-item");
+		addChild(li);
+		if(designable instanceof AccordionItem){
+			li.addChild((JSContainer)designable);
+		}else{
+			throw new RuntimeException("Can only add Component of type JSAccordionItem in an Accordion Container");
 		}
 	}
-	
 
+	
 }

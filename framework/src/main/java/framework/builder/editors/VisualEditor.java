@@ -56,7 +56,7 @@ public class VisualEditor extends JSContainer {
 		addChild((JSContainer) root);
 		
 		
-		structureDockedComposer = new StructureDockedComposer("strucutru", root);
+		structureDockedComposer = new StructureDockedComposer("strucutru", root,builder);
 		composers.addChild(structureDockedComposer);
 	//	builder.select(root);
 		return root;

@@ -63,7 +63,7 @@ public class Grid extends JSContainer{
 		return toggleClass("slds-grid_align-space", b);
 	}
 	
-	public Grid setAlignSpead(boolean b){
+	public Grid setAlignSpread(boolean b){
 		return toggleClass("slds-grid_align-spread", b);
 	}
 	

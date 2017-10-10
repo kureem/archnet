@@ -15,14 +15,16 @@ public class IconButton extends JSContainer{
 	
 	public IconButton(String name) {
 		super(name, "button");
-		addChild(icon.addClass("slds-button__icon"));
+		icon.setSvgClass("slds-button__icon");
+		addChild(icon);
 		addClass("slds-button").addClass("slds-button_icon");
 	}
 	
 	public IconButton setIcon(Icon icon){
 		this.getChildren().remove(this.icon);
 		this.icon = icon;
-		icon.addClass("slds-button__icon");
+	    icon.setSvgClass("slds-button__icon");
+		//icon.addClass("slds-button__icon");
 		addChild(icon);
 		setRendered(false);
 		return this;

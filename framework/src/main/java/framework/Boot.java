@@ -2,6 +2,8 @@ package framework;
 
 import framework.builder.Builder;
 import framework.builder.Selector;
+import framework.builder.data.BasicDataEnvironment;
+import framework.builder.data.DataEnvironment;
 import framework.builder.libraries.AbstractComponentFactory;
 import framework.builder.libraries.BasicComponentFactory;
 import framework.builder.libraries.BasicComponentFactoryRegistry;
@@ -83,6 +85,9 @@ public class Boot {
 		
 		//-- added singleton bean for Selector--//
 		factory.addBean(Selector.class, new Selector());
+		
+		
+		factory.addBean(DataEnvironment.class,new BasicDataEnvironment());
 
 		new Builder("builder").render();
 

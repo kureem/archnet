@@ -5,6 +5,21 @@
 	
 }
 
+.builder .save-button{
+	position: absolute;
+	right: 1%;
+	top: 3px;
+}
+
+.builder .data-item select,.builder .data-item input{
+	width: 100%;
+}
+
+.builder .data-item{
+	border:1px solid #dddbda;
+	box-shadow:0 2px 0 0 rgba(0, 0, 0, 0.1);
+}
+
 .builder .visual-editor .drop-active{
 	cursor: crosshair;
 	background: silver;

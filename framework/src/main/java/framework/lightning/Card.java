@@ -22,6 +22,9 @@ public class Card extends JSContainer{
 		addChild(body);
 		addChild(footer);
 		
+		headerMedia.addClass("slds-has-flexi-truncate");
+		headerMedia.setCentered(true);
+		
 	}
 
 	public Grid getHeader() {

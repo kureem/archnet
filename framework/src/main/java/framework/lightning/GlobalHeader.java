@@ -6,7 +6,7 @@ public class GlobalHeader  extends Grid{
 
 	public GlobalHeader(String name) {
 		super(name, "div");
-		setAlignSpead(true); 
+		setAlignSpread(true); 
 		addClass("slds-global-header");
 	}
 	

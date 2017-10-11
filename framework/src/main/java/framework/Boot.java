@@ -4,6 +4,7 @@ import framework.builder.Builder;
 import framework.builder.Selector;
 import framework.builder.data.BasicDataEnvironment;
 import framework.builder.data.DataEnvironment;
+import framework.builder.data.ProjectService;
 import framework.builder.libraries.AbstractComponentFactory;
 import framework.builder.libraries.BasicComponentFactory;
 import framework.builder.libraries.BasicComponentFactoryRegistry;
@@ -88,6 +89,8 @@ public class Boot {
 		
 		
 		factory.addBean(DataEnvironment.class,new BasicDataEnvironment());
+		
+		factory.addBean(ProjectService.class, new ProjectService());
 
 		new Builder("builder").render();
 

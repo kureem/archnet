@@ -4,13 +4,17 @@ import framework.JSContainer;
 import framework.builder.BasicComponent;
 import framework.builder.Builder;
 import framework.builder.Selector;
+import framework.builder.data.File;
+import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.libraries.LibrariesDockedComposer;
 import framework.builder.marshalling.Component;
+import framework.builder.marshalling.ComponentFactory;
 import framework.builder.properties.PropertiesDockedComposer;
 import framework.core.BeanFactory;
 import framework.design.Designable;
+import jsweet.lang.JSON;
 
-public class VisualEditor extends JSContainer {
+public class VisualEditor extends AbstractEditor<Component> {
 
 	private Builder builder;
 
@@ -47,21 +51,9 @@ public class VisualEditor extends JSContainer {
 		addChild(selector);
 	}
 
-	public Designable newProject() {
-		BasicComponent rootComponent = new BasicComponent("div", "div", "DIV");
-		root = rootComponent.getFactory().build(new Component(), true);
-		root.setStyle("width", "100%");
-		root.setStyle("height", "200px");
-
-		addChild((JSContainer) root);
-		
-		
-		structureDockedComposer = new StructureDockedComposer("strucutru", root,builder);
-		composers.addChild(structureDockedComposer);
-	//	builder.select(root);
-		return root;
-
-	}
+	
+	
+	
 
 	public Designable getRootItem() {
 		return root;
@@ -78,5 +70,50 @@ public class VisualEditor extends JSContainer {
 	public Builder getBuilder() {
 		return builder;
 	}
+
+	@Override
+	public String getMarshall() {
+		return JSON.stringify(root.getComponent());
+	}
+
+	@Override
+	public Component createNew(File f) {
+		
+		Component component = new Component();
+		component.impl = "html:div";
+		return component;
+	}
+
+	@Override
+	public Component unmarshall(File f) {
+		
+		return (Component)JSON.parse(f.getData());
+		
+		// TODO Auto-generated method stub
+		//return null;
+	}
+
+	@Override
+	public void consume(Component component) {
+		root = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class).getComponentFactory(component.impl).build(component, true);
+		
+		//root = rootComponent.getFactory().build(component, true);
+		root.setStyle("width", "100%");
+		root.setStyle("height", "200px");
+
+		addChild((JSContainer) root);
+		
+		
+		structureDockedComposer = new StructureDockedComposer("strucutru", root,builder);
+		composers.addChild(structureDockedComposer);
+	
+		
+	}
+
+	
+
+	
+
+	
 
 }

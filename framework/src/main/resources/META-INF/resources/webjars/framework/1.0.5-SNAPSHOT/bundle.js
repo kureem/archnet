@@ -53,8 +53,8 @@ var framework;
                  * @param {framework.builder.data.DataStructure} datastructure
                  */
                 BasicDataEnvironment.prototype.saveStructure = function (datastructure) {
-                    for (var index3386 = BasicDataEnvironment.structures_$LI$().iterator(); index3386.hasNext();) {
-                        var structure = index3386.next();
+                    for (var index5149 = BasicDataEnvironment.structures_$LI$().iterator(); index5149.hasNext();) {
+                        var structure = index5149.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -75,8 +75,8 @@ var framework;
                  * @param {string} name
                  */
                 BasicDataEnvironment.prototype.deleteStructure = function (name) {
-                    for (var index3387 = BasicDataEnvironment.structures_$LI$().iterator(); index3387.hasNext();) {
-                        var structure = index3387.next();
+                    for (var index5150 = BasicDataEnvironment.structures_$LI$().iterator(); index5150.hasNext();) {
+                        var structure = index5150.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -166,6 +166,106 @@ var framework;
 (function (framework) {
     var builder;
     (function (builder) {
+        var data;
+        (function (data_1) {
+            var File = (function () {
+                function File(file) {
+                    this.file = null;
+                    this.file = file;
+                }
+                File.prototype.getNative = function () {
+                    return this.file;
+                };
+                File.prototype.getName = function () {
+                    return this.file["name"];
+                };
+                File.prototype.getPath = function () {
+                    return this.file["path"];
+                };
+                File.prototype.getData = function () {
+                    return this.file["data"];
+                };
+                File.prototype.setData = function (data) {
+                    this.file["data"] = data;
+                };
+                File.prototype.getDateCreated = function () {
+                    return this.file["dateCreated"];
+                };
+                File.prototype.getDateModified = function () {
+                    return this.file["dateModified"];
+                };
+                File.prototype.getAuthor = function () {
+                    return this.file["author"];
+                };
+                File.prototype.getType = function () {
+                    return this.file["type"];
+                };
+                File.prototype.getProjectType = function () {
+                    return this.file["projectType"];
+                };
+                File.prototype.getTitle = function () {
+                    return this.file["title"];
+                };
+                File.prototype.getChildren = function () {
+                    var result = (new java.util.LinkedList());
+                    {
+                        var array5152 = this.file["children"];
+                        for (var index5151 = 0; index5151 < array5152.length; index5151++) {
+                            var o = array5152[index5151];
+                            {
+                                result.add(new File(o));
+                            }
+                        }
+                    }
+                    return result;
+                };
+                return File;
+            }());
+            data_1.File = File;
+            File["__class"] = "framework.builder.data.File";
+        })(data = builder.data || (builder.data = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var data;
+        (function (data_2) {
+            var ProjectService = (function () {
+                function ProjectService() {
+                }
+                ProjectService.prototype.createProject = function (name, title, listener) {
+                    var data = new Object();
+                    data["name"] = name;
+                    data["title"] = title;
+                    $.get("/projects/create-project", data, function (t, u, v) {
+                        listener.dataLoaded(t);
+                        return null;
+                    }, "json");
+                };
+                ProjectService.prototype.getProjects = function (listener) {
+                    $.get("/projects/get-projects", function (t, u, v) {
+                        listener.dataLoaded(t);
+                        return null;
+                    }, "json");
+                };
+                ProjectService.prototype.saveFile = function (file, listener) {
+                    $.post("/projects/update-file", file.getNative(), function (t, u, v) {
+                        if (listener != null)
+                            listener.dataLoaded(t);
+                        return t;
+                    });
+                };
+                return ProjectService;
+            }());
+            data_2.ProjectService = ProjectService;
+            ProjectService["__class"] = "framework.builder.data.ProjectService";
+        })(data = builder.data || (builder.data = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
         var editors;
         (function (editors) {
             var EventTypes = (function () {
@@ -206,8 +306,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index3388 = 0; index3388 < keys.length; index3388++) {
-                        var key = keys[index3388];
+                    for (var index5153 = 0; index5153 < keys.length; index5153++) {
+                        var key = keys[index5153];
                         {
                             var value = component.styles[key];
                             instance.setStyle(key, value);
@@ -216,8 +316,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index3389 = 0; index3389 < keys.length; index3389++) {
-                        var key = keys[index3389];
+                    for (var index5154 = 0; index5154 < keys.length; index5154++) {
+                        var key = keys[index5154];
                         {
                             var value = component.parameters[key];
                             instance['setParameter$java_lang_String$java_lang_String$boolean'](key, value, designMode);
@@ -225,8 +325,8 @@ var framework;
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index3390 = 0; index3390 < component.events.length; index3390++) {
-                        var event_1 = component.events[index3390];
+                    for (var index5155 = 0; index5155 < component.events.length; index5155++) {
+                        var event_1 = component.events[index5155];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source);
                             instance.addEventListener(listener, event_1.type);
@@ -429,8 +529,8 @@ var framework;
                 this.beans.put(mixxingName, instance);
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
-                for (var index3391 = this.beans.keySet().iterator(); index3391.hasNext();) {
-                    var key = index3391.next();
+                for (var index5156 = this.beans.keySet().iterator(); index5156.hasNext();) {
+                    var key = index5156.next();
                     {
                         var bean = this.beans.get(key);
                         try {
@@ -793,8 +893,8 @@ var framework;
             function ContainerRenderer() {
             }
             ContainerRenderer.prototype.decorate = function (c) {
-                for (var index3392 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index3392.hasNext();) {
-                    var dec = index3392.next();
+                for (var index5157 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index5157.hasNext();) {
+                    var dec = index5157.next();
                     {
                         dec.decorate(c);
                     }
@@ -873,8 +973,8 @@ var framework;
                     throw new Error('invalid overload');
             };
             ContainerRenderer.prototype.execCommands = function (njq, container) {
-                for (var index3393 = container.getCommands().iterator(); index3393.hasNext();) {
-                    var command = index3393.next();
+                for (var index5158 = container.getCommands().iterator(); index5158.hasNext();) {
+                    var command = index5158.next();
                     {
                         var name_1 = command.getName();
                         var params = command.getParameters();
@@ -901,15 +1001,15 @@ var framework;
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var _this = this;
-                for (var index3394 = c.getListeners().keySet().iterator(); index3394.hasNext();) {
-                    var key = index3394.next();
+                for (var index5159 = c.getListeners().keySet().iterator(); index5159.hasNext();) {
+                    var key = index5159.next();
                     {
                         var listeners = c.getListeners().get(key);
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
                                 _this.synchronizeFields(c.getRoot().getNative(), c.getRoot());
-                                for (var index3395 = listeners.iterator(); index3395.hasNext();) {
-                                    var l = index3395.next();
+                                for (var index5160 = listeners.iterator(); index5160.hasNext();) {
+                                    var l = index5160.next();
                                     {
                                         l.performAction(c, evt);
                                     }
@@ -983,8 +1083,8 @@ var framework;
                         inputField.setRawValue(value);
                     }
                 }
-                for (var index3396 = jsfield.getChildren().iterator(); index3396.hasNext();) {
-                    var c = index3396.next();
+                for (var index5161 = jsfield.getChildren().iterator(); index5161.hasNext();) {
+                    var c = index5161.next();
                     {
                         this.synchronizeFields(document.getElementById(c.getId()), c);
                     }
@@ -993,9 +1093,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array3398 = c.getChangedAttributes();
-                        for (var index3397 = 0; index3397 < array3398.length; index3397++) {
-                            var key = array3398[index3397];
+                        var array5163 = c.getChangedAttributes();
+                        for (var index5162 = 0; index5162 < array5163.length; index5162++) {
+                            var key = array5163[index5162];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -1008,8 +1108,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index3399 = c.getAttributeNames().iterator(); index3399.hasNext();) {
-                        var key = index3399.next();
+                    for (var index5164 = c.getAttributeNames().iterator(); index5164.hasNext();) {
+                        var key = index5164.next();
                         {
                             if (c.getAttribute(key) != null)
                                 njq.setAttribute(key, c.getAttribute(key));
@@ -1036,9 +1136,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array3401 = c.getChangedStyles();
-                        for (var index3400 = 0; index3400 < array3401.length; index3400++) {
-                            var key = array3401[index3400];
+                        var array5166 = c.getChangedStyles();
+                        for (var index5165 = 0; index5165 < array5166.length; index5165++) {
+                            var key = array5166[index5165];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -1046,8 +1146,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index3402 = c.getStyleNames().iterator(); index3402.hasNext();) {
-                        var key = index3402.next();
+                    for (var index5167 = c.getStyleNames().iterator(); index5167.hasNext();) {
+                        var key = index5167.next();
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
@@ -1201,8 +1301,8 @@ var framework;
                 componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.TextComponentFactory(tag, defaultText));
             }
             ;
-            for (var index3403 = 0; index3403 < tags.length; index3403++) {
-                var tag = tags[index3403];
+            for (var index5168 = 0; index5168 < tags.length; index5168++) {
+                var tag = tags[index5168];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -1213,6 +1313,7 @@ var framework;
             factory.addBean("framework.builder.libraries.ComponentFactoryRegistry", componentFactoryRegistry);
             factory.addBean(framework.builder.Selector, new framework.builder.Selector());
             factory.addBean("framework.builder.data.DataEnvironment", new framework.builder.data.BasicDataEnvironment());
+            factory.addBean(framework.builder.data.ProjectService, new framework.builder.data.ProjectService());
             new framework.builder.Builder("builder").render();
         };
         return Boot;
@@ -1389,8 +1490,8 @@ var framework;
              */
             EventTypeParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.EventTypeEditor("eventType");
-                for (var index3404 = this.options.iterator(); index3404.hasNext();) {
-                    var opt = index3404.next();
+                for (var index5169 = this.options.iterator(); index5169.hasNext();) {
+                    var opt = index5169.next();
                     {
                         var o = new framework.JSOption(opt.text, opt.value);
                         editor.addOption(o);
@@ -1726,8 +1827,8 @@ var framework;
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index3405 = 0; index3405 < aStyles.length; index3405++) {
-                var style = aStyles[index3405];
+            for (var index5170 = 0; index5170 < aStyles.length; index5170++) {
+                var style = aStyles[index5170];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -1972,8 +2073,8 @@ var framework;
         JSContainer.prototype.setRendered = function (b) {
             this.rendered = b;
             if (!b) {
-                for (var index3406 = this.children.iterator(); index3406.hasNext();) {
-                    var child = index3406.next();
+                for (var index5171 = this.children.iterator(); index5171.hasNext();) {
+                    var child = index5171.next();
                     {
                         child.setRendered(b);
                     }
@@ -2001,12 +2102,12 @@ var framework;
             if (!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for (var index3407 = this.renderers.iterator(); index3407.hasNext();) {
-                var renderer_1 = index3407.next();
+            for (var index5172 = this.renderers.iterator(); index5172.hasNext();) {
+                var renderer_1 = index5172.next();
                 renderer_1.doRender(this, parent);
             }
-            for (var index3408 = this.getChildren().iterator(); index3408.hasNext();) {
-                var child = index3408.next();
+            for (var index5173 = this.getChildren().iterator(); index5173.hasNext();) {
+                var child = index5173.next();
                 {
                     child.render();
                 }
@@ -2046,9 +2147,9 @@ var framework;
                 return null;
             }
             {
-                var array3410 = this.parent.getAttribute("class").split(" ");
-                for (var index3409 = 0; index3409 < array3410.length; index3409++) {
-                    var s = array3410[index3409];
+                var array5175 = this.parent.getAttribute("class").split(" ");
+                for (var index5174 = 0; index5174 < array5175.length; index5174++) {
+                    var s = array5175[index5174];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -2237,6 +2338,71 @@ var framework;
     (function (builder) {
         var editors;
         (function (editors) {
+            var AbstractEditor = (function (_super) {
+                __extends(AbstractEditor, _super);
+                function AbstractEditor(name, tag) {
+                    var _this = _super.call(this, name, tag) || this;
+                    /*private*/ _this.projectService = (framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService));
+                    _this.file = null;
+                    return _this;
+                }
+                AbstractEditor.prototype.save = function () {
+                    var data = this.getMarshall();
+                    this.file.setData(data);
+                    this.projectService.saveFile(this.file, new AbstractEditor.AbstractEditor$0(this));
+                };
+                /**
+                 *
+                 * @param {framework.builder.marshalling.Component} component
+                 */
+                AbstractEditor.prototype.consume = function (component) {
+                    if (((component != null) || component === null)) {
+                        return this.consume$java_lang_Object(component);
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                AbstractEditor.prototype.consume$java_lang_Object = function (data) { throw new Error('cannot invoke abstract overloaded method... check your argument(s) type(s)'); };
+                AbstractEditor.prototype.open = function (f) {
+                    this.file = f;
+                    if (this.file.getData() != null && this.file.getData().length > 0) {
+                        var unmarshaled = this.unmarshall(this.file);
+                        this.consume(unmarshaled);
+                    }
+                    else {
+                        this.consume(this.createNew(this.file));
+                    }
+                };
+                return AbstractEditor;
+            }(framework.JSContainer));
+            editors.AbstractEditor = AbstractEditor;
+            AbstractEditor["__class"] = "framework.builder.editors.AbstractEditor";
+            AbstractEditor["__interfaces"] = ["framework.builder.editors.Editor", "framework.interactions.Droppable", "framework.Renderable"];
+            (function (AbstractEditor) {
+                var AbstractEditor$0 = (function () {
+                    function AbstractEditor$0(__parent) {
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {*} data
+                     */
+                    AbstractEditor$0.prototype.dataLoaded = function (data) {
+                        alert(JSON.stringify(data));
+                    };
+                    return AbstractEditor$0;
+                }());
+                AbstractEditor.AbstractEditor$0 = AbstractEditor$0;
+                AbstractEditor$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            })(AbstractEditor = editors.AbstractEditor || (editors.AbstractEditor = {}));
+        })(editors = builder.editors || (builder.editors = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var editors;
+        (function (editors) {
             var EventEditor = (function (_super) {
                 __extends(EventEditor, _super);
                 function EventEditor(name, root) {
@@ -2252,8 +2418,8 @@ var framework;
                     grid.addChild$framework_JSContainer(colLeft.addClass("slds-col"));
                     grid.addChild$framework_JSContainer(colRight.addClass("slds-col"));
                     _this.root = root;
-                    for (var index3411 = 0; index3411 < framework.builder.editors.EventTypes.events_$LI$().length; index3411++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index3411];
+                    for (var index5176 = 0; index5176 < framework.builder.editors.EventTypes.events_$LI$().length; index5176++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index5176];
                         _this.events.addOption(new framework.JSOption(s, s));
                     }
                     colLeft.addChild$framework_JSContainer(_this.component.setStyle("width", "100%"));
@@ -2263,8 +2429,8 @@ var framework;
                 }
                 EventEditor.prototype.addComponentOption = function (designable) {
                     this.component.addOption(new framework.JSOption(designable.getName(), designable.getName()));
-                    for (var index3412 = designable.getDesignables().iterator(); index3412.hasNext();) {
-                        var des = index3412.next();
+                    for (var index5177 = designable.getDesignables().iterator(); index5177.hasNext();) {
+                        var des = index5177.next();
                         {
                             this.addComponentOption(des);
                         }
@@ -2309,6 +2475,7 @@ var framework;
                     return _this;
                 }
                 Structure.prototype.reload = function () {
+                    new framework.builder.data.ProjectService().getProjects(new Structure.Structure$0(this));
                     this.ul.getChildren().clear();
                     this.ul.setRendered(false);
                     this.liJS = new framework.JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
@@ -2326,15 +2493,15 @@ var framework;
                 Structure.prototype.addNode = function (ctn, li, level) {
                     var item = new framework.builder.editors.StructureTreeItem(ctn.getName(), ctn);
                     li.addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", level + "");
-                    item.addEventListener(new Structure.Structure$0(this), "click");
-                    item.addEventListener(new Structure.Structure$1(this, item), "dblclick");
+                    item.addEventListener(new Structure.Structure$1(this), "click");
+                    item.addEventListener(new Structure.Structure$2(this, item), "dblclick");
                     var designables = ctn.getDesignables();
                     if (designables != null && designables.size() > 0) {
                         item.leaf(false);
                         var children = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                         li.addChild$framework_JSContainer(children);
-                        for (var index3413 = ctn.getDesignables().iterator(); index3413.hasNext();) {
-                            var c = index3413.next();
+                        for (var index5178 = ctn.getDesignables().iterator(); index5178.hasNext();) {
+                            var c = index5178.next();
                             {
                                 var child = new framework.JSContainer("li");
                                 children.addChild$framework_JSContainer(child);
@@ -2358,25 +2525,17 @@ var framework;
                     }
                     /**
                      *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
+                     * @param {*} data
                      */
-                    Structure$0.prototype.performAction = function (source, evt) {
-                        evt.stopPropagation();
-                        var itemS = source;
-                        if (this.__parent.selected != null) {
-                            this.__parent.selected.select(false);
-                        }
-                        this.__parent.selected = itemS;
-                        this.__parent.selected.select(true);
+                    Structure$0.prototype.dataLoaded = function (data) {
+                        alert(JSON.stringify(data));
                     };
                     return Structure$0;
                 }());
                 Structure.Structure$0 = Structure$0;
-                Structure$0["__interfaces"] = ["framework.EventListener"];
+                Structure$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
                 var Structure$1 = (function () {
-                    function Structure$1(__parent, item) {
-                        this.item = item;
+                    function Structure$1(__parent) {
                         this.__parent = __parent;
                     }
                     /**
@@ -2386,74 +2545,63 @@ var framework;
                      */
                     Structure$1.prototype.performAction = function (source, evt) {
                         evt.stopPropagation();
-                        var editor = new framework.builder.editors.EventEditor("editor", this.__parent.root);
-                        this.__parent.builder.openEditor("Event editor", editor);
-                        editor.setDesignable(this.item.getDesignable());
+                        var itemS = source;
+                        if (this.__parent.selected != null) {
+                            this.__parent.selected.select(false);
+                        }
+                        this.__parent.selected = itemS;
+                        this.__parent.selected.select(true);
                     };
                     return Structure$1;
                 }());
                 Structure.Structure$1 = Structure$1;
                 Structure$1["__interfaces"] = ["framework.EventListener"];
+                var Structure$2 = (function () {
+                    function Structure$2(__parent, item) {
+                        this.item = item;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    Structure$2.prototype.performAction = function (source, evt) {
+                        evt.stopPropagation();
+                        var editor = new framework.builder.editors.EventEditor("editor", this.__parent.root);
+                        this.__parent.builder.openEditor("Event editor", editor);
+                        editor.setDesignable(this.item.getDesignable());
+                    };
+                    return Structure$2;
+                }());
+                Structure.Structure$2 = Structure$2;
+                Structure$2["__interfaces"] = ["framework.EventListener"];
             })(Structure = editors.Structure || (editors.Structure = {}));
         })(editors = builder_1.editors || (builder_1.editors = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
     var builder;
-    (function (builder_2) {
-        var editors;
-        (function (editors) {
-            var VisualEditor = (function (_super) {
-                __extends(VisualEditor, _super);
-                function VisualEditor(builder) {
-                    var _this = _super.call(this, "visualEditor", "div") || this;
-                    /*private*/ _this.composers = new framework.JSContainer("composers", "div");
-                    /*private*/ _this.propertiesDockedComposer = new framework.builder.properties.PropertiesDockedComposer("properties");
-                    /*private*/ _this.libraryDockedComposer = new framework.builder.libraries.LibrariesDockedComposer("library");
-                    _this.builder = null;
-                    _this.selectedItem = null;
-                    _this.root = null;
-                    _this.selector = null;
-                    _this.structureDockedComposer = null;
-                    _this.addClass("visual-editor");
-                    _this.addChild$framework_JSContainer(_this.composers);
-                    _this.composers.addClass("composers");
-                    _this.composers.addChild$framework_JSContainer(_this.propertiesDockedComposer);
-                    _this.composers.addChild$framework_JSContainer(_this.libraryDockedComposer);
-                    _this.builder = builder;
-                    _this.selector = (framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.Selector));
-                    _this.selector.setVisualEditor(_this);
-                    _this.addChild$framework_JSContainer(_this.selector);
-                    return _this;
-                }
-                VisualEditor.prototype.newProject = function () {
-                    var rootComponent = new framework.builder.BasicComponent("div", "div", "DIV");
-                    this.root = rootComponent.getFactory().build(new framework.builder.marshalling.Component(), true);
-                    this.root.setStyle("width", "100%");
-                    this.root.setStyle("height", "200px");
-                    this.addChild$framework_JSContainer(this.root);
-                    this.structureDockedComposer = new framework.builder.editors.StructureDockedComposer("strucutru", this.root, this.builder);
-                    this.composers.addChild$framework_JSContainer(this.structureDockedComposer);
-                    return this.root;
-                };
-                VisualEditor.prototype.getRootItem = function () {
-                    return this.root;
-                };
-                VisualEditor.prototype.getSelectedItem = function () {
-                    return this.selectedItem;
-                };
-                VisualEditor.prototype.selectItem = function (designable) {
-                    this.propertiesDockedComposer.selectComponent(designable);
-                };
-                VisualEditor.prototype.getBuilder = function () {
-                    return this.builder;
-                };
-                return VisualEditor;
-            }(framework.JSContainer));
-            editors.VisualEditor = VisualEditor;
-            VisualEditor["__class"] = "framework.builder.editors.VisualEditor";
-            VisualEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
-        })(editors = builder_2.editors || (builder_2.editors = {}));
+    (function (builder) {
+        var FilesList = (function (_super) {
+            __extends(FilesList, _super);
+            function FilesList(name) {
+                var _this = _super.call(this, name, "ul") || this;
+                _this.addClass("slds-grid slds-grid_pull-padded slds-wrap");
+                return _this;
+            }
+            FilesList.prototype.addFile = function (file) {
+                var li = new framework.JSContainer("li");
+                li.addClass("slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3");
+                this.addChild$framework_JSContainer(li);
+                li.addChild$framework_JSContainer(file);
+                return this;
+            };
+            return FilesList;
+        }(framework.JSContainer));
+        builder.FilesList = FilesList;
+        FilesList["__class"] = "framework.builder.FilesList";
+        FilesList["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -2610,8 +2758,8 @@ var framework;
              */
             JSDesignable.prototype.getDesignables = function () {
                 var result = (new java.util.LinkedList());
-                for (var index3414 = this.getChildren().iterator(); index3414.hasNext();) {
-                    var child = index3414.next();
+                for (var index5179 = this.getChildren().iterator(); index5179.hasNext();) {
+                    var child = index5179.next();
                     {
                         result.add(child);
                     }
@@ -2856,8 +3004,8 @@ var framework;
          */
         JSSelect.prototype.getValue = function () {
             var val = this.getAttribute("value");
-            for (var index3415 = this.getChildren().iterator(); index3415.hasNext();) {
-                var opt = index3415.next();
+            for (var index5180 = this.getChildren().iterator(); index5180.hasNext();) {
+                var opt = index5180.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -2872,8 +3020,8 @@ var framework;
             return null;
         };
         JSSelect.prototype.setValue$java_lang_String = function (val) {
-            for (var index3416 = this.getChildren().iterator(); index3416.hasNext();) {
-                var opt = index3416.next();
+            for (var index5181 = this.getChildren().iterator(); index5181.hasNext();) {
+                var opt = index5181.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -3120,6 +3268,31 @@ var framework;
 (function (framework) {
     var lightning;
     (function (lightning) {
+        var Backdrop = (function (_super) {
+            __extends(Backdrop, _super);
+            function Backdrop(name) {
+                var _this = _super.call(this, name, "div") || this;
+                _this.addClass("slds-backdrop");
+                return _this;
+            }
+            Backdrop.prototype.open = function () {
+                this.addClass("slds-backdrop_open");
+                return this;
+            };
+            Backdrop.prototype.close = function () {
+                this.removeClass("slds-backdrop_open");
+                return this;
+            };
+            return Backdrop;
+        }(framework.JSContainer));
+        lightning.Backdrop = Backdrop;
+        Backdrop["__class"] = "framework.lightning.Backdrop";
+        Backdrop["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
         var Badge = (function (_super) {
             __extends(Badge, _super);
             function Badge(name, tag) {
@@ -3265,8 +3438,8 @@ var framework;
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index3417 = 0; index3417 < Button.states_$LI$().length; index3417++) {
-                    var s = Button.states_$LI$()[index3417];
+                for (var index5182 = 0; index5182 < Button.states_$LI$().length; index5182++) {
+                    var s = Button.states_$LI$()[index5182];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -3935,6 +4108,9 @@ var framework;
                 _this.addClass("slds-button").addClass("slds-button_icon");
                 return _this;
             }
+            IconButton.prototype.getIcon = function () {
+                return this.icon;
+            };
             IconButton.prototype.setIcon = function (icon) {
                 this.getChildren().remove(this.icon);
                 this.icon = icon;
@@ -4135,6 +4311,155 @@ var framework;
         lightning.Media = Media;
         Media["__class"] = "framework.lightning.Media";
         Media["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var Modal = (function (_super) {
+            __extends(Modal, _super);
+            function Modal(name, stitle) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.modalContainer = new framework.JSContainer("div").addClass("slds-modal__container");
+                /*private*/ _this.header = new framework.JSContainer("header").addClass("slds-modal__header");
+                /*private*/ _this.content = new framework.JSContainer("div").addClass("slds-modal__content");
+                /*private*/ _this.footer = new framework.JSContainer("footer").addClass("slds-modal__footer");
+                /*private*/ _this.closeButton = new framework.lightning.IconButton("closeButton");
+                /*private*/ _this.title = new framework.JSContainer("h2").addClass("slds-text-heading_medium slds-hyphenate");
+                /*private*/ _this.backdrop = null;
+                _this.addClass("slds-modal");
+                _this.setAttribute("role", "dialog").setAttribute("tabindex", "-1").setAttribute("aria-modal", "true");
+                _this.addChild$framework_JSContainer(_this.modalContainer);
+                _this.modalContainer.addChild$framework_JSContainer(_this.header);
+                _this.modalContainer.addChild$framework_JSContainer(_this.content);
+                _this.modalContainer.addChild$framework_JSContainer(_this.footer);
+                _this.closeButton.addClass("slds-modal__close");
+                _this.closeButton.setInverse(true);
+                _this.closeButton.getIcon().setIconName("close");
+                _this.header.addChild$framework_JSContainer(_this.closeButton);
+                _this.header.addChild$framework_JSContainer(_this.title);
+                _this.title.setHtml(stitle);
+                _this.closeButton.addEventListener(new Modal.Modal$0(_this), "click");
+                return _this;
+            }
+            Modal.prototype.getBackdrop = function () {
+                return this.backdrop;
+            };
+            Modal.prototype.setBackdrop = function (backdrop) {
+                this.backdrop = backdrop;
+            };
+            Modal.prototype.open = function () {
+                this.addClass("slds-fade-in-open");
+                if (this.backdrop != null) {
+                    this.backdrop.open();
+                }
+            };
+            Modal.prototype.close = function () {
+                this.removeClass("slds-fade-in-open");
+                if (this.backdrop != null) {
+                    this.backdrop.close();
+                }
+            };
+            Modal.prototype.setLarge = function (b) {
+                if (b) {
+                    this.addClass("slds-modal_large");
+                }
+                else {
+                    this.removeClass("slds-modal_large");
+                }
+                return this;
+            };
+            Modal.prototype.setTitle = function (stitle) {
+                this.title.setHtml(stitle);
+            };
+            Modal.prototype.getTitle = function () {
+                return this.title;
+            };
+            Modal.prototype.getModalContainer = function () {
+                return this.modalContainer;
+            };
+            Modal.prototype.getHeader = function () {
+                return this.header;
+            };
+            Modal.prototype.getContent = function () {
+                return this.content;
+            };
+            Modal.prototype.getFooter = function () {
+                return this.footer;
+            };
+            Modal.prototype.getCloseButton = function () {
+                return this.closeButton;
+            };
+            return Modal;
+        }(framework.JSContainer));
+        lightning.Modal = Modal;
+        Modal["__class"] = "framework.lightning.Modal";
+        Modal["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+        (function (Modal) {
+            var Modal$0 = (function () {
+                function Modal$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                Modal$0.prototype.performAction = function (source, evt) {
+                    this.__parent.close();
+                };
+                return Modal$0;
+            }());
+            Modal.Modal$0 = Modal$0;
+            Modal$0["__interfaces"] = ["framework.EventListener"];
+        })(Modal = lightning.Modal || (lightning.Modal = {}));
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var Section = (function (_super) {
+            __extends(Section, _super);
+            function Section(name, title) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.titleContainer = new framework.JSContainer("h3").addClass("slds-section__title");
+                /*private*/ _this.title = new framework.JSContainer("span").addClass("slds-truncate");
+                /*private*/ _this.arrow = new framework.lightning.Icon("arrow", "utility", "switch");
+                /*private*/ _this.content = new framework.JSContainer("div").addClass("slds-section__content");
+                _this.addClass("slds-section");
+                _this.addChild$framework_JSContainer(_this.titleContainer);
+                _this.arrow.setTag("button");
+                _this.arrow.setAttribute("class", "slds-button slds-section__title-action");
+                _this.arrow.setSvgClass("slds-section__title-action-icon slds-button__icon slds-button__icon_left");
+                _this.titleContainer.addChild$framework_JSContainer(_this.arrow);
+                _this.arrow.addChild$framework_JSContainer(_this.title.setHtml(title));
+                _this.addChild$framework_JSContainer(_this.content);
+                _this.open();
+                return _this;
+            }
+            Section.prototype.open = function () {
+                this.addClass("slds-is-open");
+                return this;
+            };
+            Section.prototype.close = function () {
+                this.removeClass("slds-is-open");
+                return this;
+            };
+            Section.prototype.setTitle = function (stitle) {
+                this.title.setHtml(stitle);
+                return this;
+            };
+            Section.prototype.getContent = function () {
+                return this.content;
+            };
+            Section.prototype.getTitleContainer = function () {
+                return this.titleContainer;
+            };
+            return Section;
+        }(framework.JSContainer));
+        lightning.Section = Section;
+        Section["__class"] = "framework.lightning.Section";
+        Section["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -4413,8 +4738,8 @@ var framework;
                 return this;
             };
             Tabs.prototype.setActive = function (item) {
-                for (var index3418 = this.nav.getChildren().iterator(); index3418.hasNext();) {
-                    var c = index3418.next();
+                for (var index5183 = this.nav.getChildren().iterator(); index5183.hasNext();) {
+                    var c = index5183.next();
                     {
                         var tab = c;
                         tab.setActive(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
@@ -4568,6 +4893,101 @@ var framework;
 })(framework || (framework = {}));
 (function (framework) {
     var builder;
+    (function (builder_2) {
+        var editors;
+        (function (editors) {
+            var VisualEditor = (function (_super) {
+                __extends(VisualEditor, _super);
+                function VisualEditor(builder) {
+                    var _this = _super.call(this, "visualEditor", "div") || this;
+                    /*private*/ _this.composers = new framework.JSContainer("composers", "div");
+                    /*private*/ _this.propertiesDockedComposer = new framework.builder.properties.PropertiesDockedComposer("properties");
+                    /*private*/ _this.libraryDockedComposer = new framework.builder.libraries.LibrariesDockedComposer("library");
+                    _this.builder = null;
+                    _this.selectedItem = null;
+                    _this.root = null;
+                    _this.selector = null;
+                    _this.structureDockedComposer = null;
+                    _this.addClass("visual-editor");
+                    _this.addChild$framework_JSContainer(_this.composers);
+                    _this.composers.addClass("composers");
+                    _this.composers.addChild$framework_JSContainer(_this.propertiesDockedComposer);
+                    _this.composers.addChild$framework_JSContainer(_this.libraryDockedComposer);
+                    _this.builder = builder;
+                    _this.selector = (framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.Selector));
+                    _this.selector.setVisualEditor(_this);
+                    _this.addChild$framework_JSContainer(_this.selector);
+                    return _this;
+                }
+                VisualEditor.prototype.getRootItem = function () {
+                    return this.root;
+                };
+                VisualEditor.prototype.getSelectedItem = function () {
+                    return this.selectedItem;
+                };
+                VisualEditor.prototype.selectItem = function (designable) {
+                    this.propertiesDockedComposer.selectComponent(designable);
+                };
+                VisualEditor.prototype.getBuilder = function () {
+                    return this.builder;
+                };
+                /**
+                 *
+                 * @return {string}
+                 */
+                VisualEditor.prototype.getMarshall = function () {
+                    return JSON.stringify(this.root.getComponent());
+                };
+                /**
+                 *
+                 * @param {framework.builder.data.File} f
+                 * @return {framework.builder.marshalling.Component}
+                 */
+                VisualEditor.prototype.createNew = function (f) {
+                    var component = new framework.builder.marshalling.Component();
+                    component.impl = "html:div";
+                    return component;
+                };
+                /**
+                 *
+                 * @param {framework.builder.data.File} f
+                 * @return {framework.builder.marshalling.Component}
+                 */
+                VisualEditor.prototype.unmarshall = function (f) {
+                    return JSON.parse(f.getData());
+                };
+                VisualEditor.prototype.consume$framework_builder_marshalling_Component = function (component) {
+                    this.root = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, true);
+                    this.root.setStyle("width", "100%");
+                    this.root.setStyle("height", "200px");
+                    this.addChild$framework_JSContainer(this.root);
+                    this.structureDockedComposer = new framework.builder.editors.StructureDockedComposer("strucutru", this.root, this.builder);
+                    this.composers.addChild$framework_JSContainer(this.structureDockedComposer);
+                };
+                /**
+                 *
+                 * @param {framework.builder.marshalling.Component} component
+                 */
+                VisualEditor.prototype.consume = function (component) {
+                    if (((component != null && component instanceof framework.builder.marshalling.Component) || component === null)) {
+                        return this.consume$framework_builder_marshalling_Component(component);
+                    }
+                    else if (((component != null) || component === null)) {
+                        return this.consume$java_lang_Object(component);
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                return VisualEditor;
+            }(framework.builder.editors.AbstractEditor));
+            editors.VisualEditor = VisualEditor;
+            VisualEditor["__class"] = "framework.builder.editors.VisualEditor";
+            VisualEditor["__interfaces"] = ["framework.builder.editors.Editor", "framework.interactions.Droppable", "framework.Renderable"];
+        })(editors = builder_2.editors || (builder_2.editors = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
     (function (builder) {
         var properties;
         (function (properties) {
@@ -4591,6 +5011,36 @@ var framework;
             AbstractCheckBoxPropertyEditor["__class"] = "framework.builder.properties.AbstractCheckBoxPropertyEditor";
             AbstractCheckBoxPropertyEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.EventListener", "framework.Renderable", "framework.InputField"];
         })(properties = builder.properties || (builder.properties = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var UIFile = (function (_super) {
+            __extends(UIFile, _super);
+            function UIFile(name) {
+                return _super.call(this, name, "#uiFile") || this;
+            }
+            UIFile.prototype.setTitle = function (title) {
+                this.getContext()["title"] = title;
+                this.setRendered(false);
+                return this;
+            };
+            UIFile.prototype.setAbbr = function (abbr) {
+                this.getContext()["abbr"] = abbr;
+                this.setRendered(false);
+                return this;
+            };
+            UIFile.prototype.setHelp = function (help) {
+                this.getContext()["help"] = help;
+                this.setRendered(false);
+                return this;
+            };
+            return UIFile;
+        }(framework.JSHTMLFragment));
+        builder.UIFile = UIFile;
+        UIFile["__class"] = "framework.builder.UIFile";
+        UIFile["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -5186,8 +5636,8 @@ var framework;
                     var name = new framework.JSInput("name");
                     var label = new framework.JSInput("label");
                     var type = new framework.JSSelect("type");
-                    for (var index3419 = 0; index3419 < framework.builder.data.DataType.Types_$LI$().length; index3419++) {
-                        var stype = framework.builder.data.DataType.Types_$LI$()[index3419];
+                    for (var index5184 = 0; index5184 < framework.builder.data.DataType.Types_$LI$().length; index5184++) {
+                        var stype = framework.builder.data.DataType.Types_$LI$()[index5184];
                         {
                             type.addOption(new framework.JSOption(stype, stype));
                         }
@@ -5223,8 +5673,8 @@ var framework;
                     var name = new framework.JSInput("name");
                     var label = new framework.JSInput("label");
                     var type = new framework.JSSelect("type");
-                    for (var index3420 = 0; index3420 < framework.builder.data.DataType.Types_$LI$().length; index3420++) {
-                        var stype = framework.builder.data.DataType.Types_$LI$()[index3420];
+                    for (var index5185 = 0; index5185 < framework.builder.data.DataType.Types_$LI$().length; index5185++) {
+                        var stype = framework.builder.data.DataType.Types_$LI$()[index5185];
                         {
                             type.addOption(new framework.JSOption(stype, stype));
                         }
@@ -5576,8 +6026,8 @@ var framework;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index3421 = 0; index3421 < components.length; index3421++) {
-                    var com = components[index3421];
+                for (var index5186 = 0; index5186 < components.length; index5186++) {
+                    var com = components[index5186];
                     {
                         var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
                         this.addChild$framework_JSContainer(li);
@@ -5875,11 +6325,13 @@ var framework;
                 var _this = _super.call(this, name, "div") || this;
                 /*private*/ _this.topMenu = new framework.builder.TopMenu("header");
                 /*private*/ _this.editorTabs = new framework.lightning.Tabs("editorTabs");
-                /*private*/ _this.jsEditor = new framework.builder.editors.JavascriptEditor("jsEditor");
-                /*private*/ _this.dataComposer = new framework.builder.libraries.DataComposer("composer", "div");
                 /*private*/ _this.saveButton = new framework.lightning.IconButton("save");
-                _this.visualEditor = null;
-                _this.cssEditor = null;
+                /*private*/ _this.newFileModal = new framework.builder.NewFile("newFile", _this);
+                /*private*/ _this.newFileButtn = new framework.lightning.IconButton("newFile");
+                /*private*/ _this.backdrop = new framework.lightning.Backdrop("backdrop");
+                _this.addChild$framework_JSContainer(_this.newFileModal);
+                _this.addChild$framework_JSContainer(_this.backdrop);
+                _this.newFileModal.setBackdrop(_this.backdrop);
                 _this.addClass("builder");
                 var icon = new framework.lightning.Icon("as", "utility", "save");
                 _this.saveButton.setIcon(icon);
@@ -5887,19 +6339,19 @@ var framework;
                 _this.saveButton.addClass("slds-button_icon-container").addClass("save-button");
                 _this.saveButton.addEventListener(new Builder.Builder$0(_this), "click");
                 _this.addChild$framework_JSContainer(_this.saveButton);
+                var iconNew = new framework.lightning.Icon("as", "utility", "new");
+                _this.newFileButtn.setIcon(iconNew);
+                _this.newFileButtn.setBorderFilled(true);
+                _this.newFileButtn.addClass("slds-button_icon-container").addClass("new-button");
+                _this.newFileButtn.addEventListener(new Builder.Builder$1(_this), "click");
+                _this.addChild$framework_JSContainer(_this.newFileButtn);
                 _this.addChild$framework_JSContainer(_this.editorTabs);
-                _this.visualEditor = new framework.builder.editors.VisualEditor(_this);
-                _this.visualEditor.newProject();
-                var item = _this.openEditor("Visual", _this.visualEditor);
-                _this.cssEditor = new framework.builder.editors.CSSEditor("cssEditor");
-                _this.openEditor("CSS Editor", _this.cssEditor);
-                _this.openEditor("JS Editor", _this.jsEditor);
-                _this.editorTabs.setActive(item);
-                _this.openEditor("Data Composer", _this.dataComposer);
                 return _this;
             }
-            Builder.prototype.getSelectedItem = function () {
-                return this.visualEditor.getSelectedItem();
+            Builder.prototype.openProject = function (file) {
+                var editor = new framework.builder.editors.VisualEditor(this);
+                editor.open(file);
+                this.openEditor(file.getName(), editor);
             };
             Builder.prototype.openEditor = function (title, editor) {
                 var body = new framework.lightning.TabBody("visualEditorBody");
@@ -5930,6 +6382,23 @@ var framework;
             }());
             Builder.Builder$0 = Builder$0;
             Builder$0["__interfaces"] = ["framework.EventListener"];
+            var Builder$1 = (function () {
+                function Builder$1(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                Builder$1.prototype.performAction = function (source, evt) {
+                    this.__parent.newFileModal.open();
+                    this.__parent.backdrop.open();
+                };
+                return Builder$1;
+            }());
+            Builder.Builder$1 = Builder$1;
+            Builder$1["__interfaces"] = ["framework.EventListener"];
         })(Builder = builder.Builder || (builder.Builder = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -5946,8 +6415,8 @@ var framework;
             DescriptionList.prototype.setLayout = function (layout) {
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-                for (var index3422 = this.getChildren().iterator(); index3422.hasNext();) {
-                    var child = index3422.next();
+                for (var index5187 = this.getChildren().iterator(); index5187.hasNext();) {
+                    var child = index5187.next();
                     {
                         child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                         child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -6048,6 +6517,57 @@ var framework;
         FormLayout["__class"] = "framework.lightning.FormLayout";
         FormLayout["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
     })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var ItemSelector = (function (_super) {
+            __extends(ItemSelector, _super);
+            function ItemSelector(name, stitle) {
+                var _this = _super.call(this, name, stitle) || this;
+                /*private*/ _this.input = new framework.JSInput("input");
+                /*private*/ _this.saveButton = new framework.lightning.Button().setLabel("Save");
+                /*private*/ _this.section = new framework.lightning.Section("section", "All Files");
+                /*private*/ _this.filesList = new framework.builder.FilesList("filesList");
+                _this.setTag("section");
+                _this.addClass("slds-modal_large slds-app-launcher");
+                _this.getHeader().addClass("slds-app-launcher__header slds-grid slds-grid_align-spread slds-grid_vertical-align-center");
+                _this.getTitle().setAttribute("class", "slds-text-heading_small");
+                _this.getTitle().setTag("label");
+                var inputElement = new framework.lightning.FormElement("inputElement", "div");
+                inputElement.setLabel("");
+                inputElement.setInput(_this.input);
+                _this.input.addClass("slds-input");
+                var headerInput = new framework.JSContainer("div").addClass("slds-app-launcher__header-search");
+                headerInput.addChild$framework_JSContainer(inputElement);
+                _this.getHeader().addChild$framework_JSContainer(headerInput);
+                _this.saveButton.setState(framework.lightning.Button.STATE_NEUTRAL);
+                _this.getHeader().addChild$framework_JSContainer(_this.saveButton);
+                _this.getContent().addChild$framework_JSContainer(_this.section);
+                _this.getContent().addClass("slds-app-launcher__content slds-p-around_medium");
+                _this.section.getContent().addChild$framework_JSContainer(_this.filesList);
+                _this.setLarge(true);
+                _this.setStyle("width", "80%");
+                return _this;
+            }
+            ItemSelector.prototype.getInput = function () {
+                return this.input;
+            };
+            ItemSelector.prototype.getSaveButton = function () {
+                return this.saveButton;
+            };
+            ItemSelector.prototype.getSection = function () {
+                return this.section;
+            };
+            ItemSelector.prototype.getFilesList = function () {
+                return this.filesList;
+            };
+            return ItemSelector;
+        }(framework.lightning.Modal));
+        builder.ItemSelector = ItemSelector;
+        ItemSelector["__class"] = "framework.builder.ItemSelector";
+        ItemSelector["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
     var builder;
@@ -6544,8 +7064,8 @@ var framework;
                 OptionsEditor.prototype.initEditor = function (designable, parameter) {
                     var value = "";
                     var select = designable;
-                    for (var index3423 = select.getChildren().iterator(); index3423.hasNext();) {
-                        var c = index3423.next();
+                    for (var index5188 = select.getChildren().iterator(); index5188.hasNext();) {
+                        var c = index5188.next();
                         {
                             var opt = c;
                             value = value + "\n" + opt.getText();
@@ -6564,8 +7084,8 @@ var framework;
                     var select = this.designable;
                     select.getChildren().clear();
                     select.setRendered(false);
-                    for (var index3424 = 0; index3424 < options.length; index3424++) {
-                        var opt = options[index3424];
+                    for (var index5189 = 0; index5189 < options.length; index5189++) {
+                        var opt = options[index5189];
                         {
                             var option = new framework.JSOption(opt, opt);
                             select.addOption(option);
@@ -6778,6 +7298,114 @@ var framework;
 (function (framework) {
     var builder;
     (function (builder) {
+        var NewFile = (function (_super) {
+            __extends(NewFile, _super);
+            function NewFile(name, builder_) {
+                var _this = _super.call(this, name, "New File") || this;
+                /*private*/ _this.lightning = new framework.builder.UIFile("lightning").setAbbr("LGT").setTitle("Lightning").setHelp("Salesforce Lightning Project");
+                /*private*/ _this.mobile = new framework.builder.UIFile("mobile").setAbbr("MOB").setTitle("Mobile Application").setHelp("Mobile application using OnsenUI framework");
+                /*private*/ _this.__framework_builder_NewFile_html = new framework.builder.UIFile("html").setAbbr("HTM").setTitle("HTML template").setHelp("Create a fragment of HTML that can be used as template for other components");
+                /*private*/ _this.css = new framework.builder.UIFile("css").setAbbr("CSS").setTitle("CSS sheet").setHelp("Create an cascading stylesheet to be included in project");
+                /*private*/ _this.javascript = new framework.builder.UIFile("js").setAbbr("JS").setTitle("Javascript file").setHelp("Create a new javascript file to be included in project");
+                /*private*/ _this.files = (new java.util.LinkedList());
+                /*private*/ _this.fileType = null;
+                _this.builder = null;
+                _this.builder = builder_;
+                _this.getFilesList().addFile(_this.lightning);
+                _this.getFilesList().addFile(_this.mobile);
+                _this.getFilesList().addFile(_this.__framework_builder_NewFile_html);
+                _this.getFilesList().addFile(_this.css);
+                _this.getFilesList().addFile(_this.javascript);
+                _this.files.add(_this.lightning);
+                _this.files.add(_this.mobile);
+                _this.files.add(_this.__framework_builder_NewFile_html);
+                _this.files.add(_this.css);
+                _this.files.add(_this.javascript);
+                for (var index5190 = _this.files.iterator(); index5190.hasNext();) {
+                    var file = index5190.next();
+                    {
+                        file.addEventListener(new NewFile.NewFile$0(_this), "click");
+                    }
+                }
+                _this.getSaveButton().addEventListener(new NewFile.NewFile$1(_this), "click");
+                return _this;
+            }
+            return NewFile;
+        }(framework.builder.ItemSelector));
+        builder.NewFile = NewFile;
+        NewFile["__class"] = "framework.builder.NewFile";
+        NewFile["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+        (function (NewFile) {
+            var NewFile$0 = (function () {
+                function NewFile$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                NewFile$0.prototype.performAction = function (source, evt) {
+                    this.__parent.fileType = source.getName();
+                };
+                return NewFile$0;
+            }());
+            NewFile.NewFile$0 = NewFile$0;
+            NewFile$0["__interfaces"] = ["framework.EventListener"];
+            var NewFile$1 = (function () {
+                function NewFile$1(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                NewFile$1.prototype.performAction = function (source, evt) {
+                    if (this.__parent.fileType == null) {
+                        alert("Please select a file type");
+                        return;
+                    }
+                    var name = this.__parent.getInput().getValue();
+                    if (name == null || name.trim().length <= 0) {
+                        alert("Please enter a name for the file");
+                        return;
+                    }
+                    framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).createProject(name, name, new NewFile$1.NewFile$1$0(this));
+                };
+                return NewFile$1;
+            }());
+            NewFile.NewFile$1 = NewFile$1;
+            NewFile$1["__interfaces"] = ["framework.EventListener"];
+            (function (NewFile$1) {
+                var NewFile$1$0 = (function () {
+                    function NewFile$1$0(__parent) {
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {*} data
+                     */
+                    NewFile$1$0.prototype.dataLoaded = function (data) {
+                        var project = new framework.builder.data.File(new Object(data));
+                        alert(JSON.stringify(data));
+                        this.__parent.__parent.close();
+                        this.__parent.__parent.render();
+                        this.__parent.__parent.getBackdrop().render();
+                        this.__parent.__parent.builder.openProject(project);
+                        this.__parent.__parent.builder.render();
+                    };
+                    return NewFile$1$0;
+                }());
+                NewFile$1.NewFile$1$0 = NewFile$1$0;
+                NewFile$1$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            })(NewFile$1 = NewFile.NewFile$1 || (NewFile.NewFile$1 = {}));
+        })(NewFile = builder.NewFile || (builder.NewFile = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
         var properties;
         (function (properties) {
             var AdvancedPropertiesEditor = (function (_super) {
@@ -6788,8 +7416,8 @@ var framework;
                 AdvancedPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index3425 = this.component.getParameters().iterator(); index3425.hasNext();) {
-                        var p = index3425.next();
+                    for (var index5191 = this.component.getParameters().iterator(); index5191.hasNext();) {
+                        var p = index5191.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -6826,8 +7454,8 @@ var framework;
                 BasicPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index3426 = designable.getParameters().iterator(); index3426.hasNext();) {
-                        var param = index3426.next();
+                    for (var index5192 = designable.getParameters().iterator(); index5192.hasNext();) {
+                        var param = index5192.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -6867,8 +7495,8 @@ var framework;
                 EventsPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index3427 = designable.getParameters().iterator(); index3427.hasNext();) {
-                        var param = index3427.next();
+                    for (var index5193 = designable.getParameters().iterator(); index5193.hasNext();) {
+                        var param = index5193.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);

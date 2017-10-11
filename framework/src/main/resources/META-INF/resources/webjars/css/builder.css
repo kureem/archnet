@@ -11,6 +11,12 @@
 	top: 3px;
 }
 
+.builder .new-button{
+	position: absolute;
+	right: 3%;
+	top: 3px;
+}
+
 .builder .data-item select,.builder .data-item input{
 	width: 100%;
 }

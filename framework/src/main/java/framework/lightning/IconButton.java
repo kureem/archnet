@@ -20,6 +20,10 @@ public class IconButton extends JSContainer{
 		addClass("slds-button").addClass("slds-button_icon");
 	}
 	
+	public Icon getIcon(){
+		return icon;
+	}
+	
 	public IconButton setIcon(Icon icon){
 		this.getChildren().remove(this.icon);
 		this.icon = icon;

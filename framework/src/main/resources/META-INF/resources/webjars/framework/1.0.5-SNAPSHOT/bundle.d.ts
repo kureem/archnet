@@ -72,14 +72,39 @@ declare namespace framework.builder.data {
         static Types_$LI$(): string[];
     }
 }
+declare namespace framework.builder.data {
+    class File {
+        file: Object;
+        constructor(file: Object);
+        getNative(): Object;
+        getName(): string;
+        getPath(): string;
+        getData(): string;
+        setData(data: string): void;
+        getDateCreated(): number;
+        getDateModified(): number;
+        getAuthor(): string;
+        getType(): string;
+        getProjectType(): string;
+        getTitle(): string;
+        getChildren(): java.util.List<File>;
+    }
+}
+declare namespace framework.builder.data {
+    class ProjectService {
+        createProject(name: string, title: string, listener: framework.builder.data.RemoteDataListener): void;
+        getProjects(listener: framework.builder.data.RemoteDataListener): void;
+        saveFile(file: framework.builder.data.File, listener: framework.builder.data.RemoteDataListener): void;
+    }
+}
+declare namespace framework.builder.data {
+    interface RemoteDataListener {
+        dataLoaded(data: any): any;
+    }
+}
 declare namespace framework.builder.editors {
-    interface Editor extends framework.Renderable {
-        openNew(): any;
-        close(): any;
-        save(): any;
-        undo(): any;
-        redo(): any;
-        open(file: any): any;
+    interface Editor<T> extends framework.Renderable {
+        open(file: framework.builder.data.File): any;
     }
 }
 declare namespace framework.builder.editors {
@@ -1002,6 +1027,35 @@ declare namespace framework.builder {
     }
 }
 declare namespace framework.builder.editors {
+    abstract class AbstractEditor<T> extends framework.JSContainer implements framework.builder.editors.Editor<T> {
+        file: framework.builder.data.File;
+        projectService: framework.builder.data.ProjectService;
+        constructor(name: string, tag: string);
+        abstract getMarshall(): string;
+        save(): void;
+        abstract createNew(f: framework.builder.data.File): T;
+        abstract unmarshall(f: framework.builder.data.File): T;
+        /**
+         *
+         * @param {framework.builder.marshalling.Component} component
+         */
+        consume(component?: any): any;
+        consume$java_lang_Object(data: T): void;
+        open(f: framework.builder.data.File): void;
+    }
+    namespace AbstractEditor {
+        class AbstractEditor$0 implements framework.builder.data.RemoteDataListener {
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any);
+        }
+    }
+}
+declare namespace framework.builder.editors {
     class EventEditor extends framework.JSContainer {
         component: framework.JSSelect;
         events: framework.JSSelect;
@@ -1027,7 +1081,16 @@ declare namespace framework.builder.editors {
         addNode(ctn: framework.design.Designable, li: framework.JSContainer, level: number): void;
     }
     namespace Structure {
-        class Structure$0 implements framework.EventListener {
+        class Structure$0 implements framework.builder.data.RemoteDataListener {
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any);
+        }
+        class Structure$1 implements framework.EventListener {
             __parent: any;
             /**
              *
@@ -1037,7 +1100,7 @@ declare namespace framework.builder.editors {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
-        class Structure$1 implements framework.EventListener {
+        class Structure$2 implements framework.EventListener {
             private item;
             __parent: any;
             /**
@@ -1050,22 +1113,10 @@ declare namespace framework.builder.editors {
         }
     }
 }
-declare namespace framework.builder.editors {
-    class VisualEditor extends framework.JSContainer {
-        builder: framework.builder.Builder;
-        selectedItem: framework.design.Designable;
-        root: framework.design.Designable;
-        selector: framework.builder.Selector;
-        composers: framework.JSContainer;
-        propertiesDockedComposer: framework.builder.properties.PropertiesDockedComposer;
-        libraryDockedComposer: framework.builder.libraries.LibrariesDockedComposer;
-        structureDockedComposer: framework.builder.editors.StructureDockedComposer;
-        constructor(builder: framework.builder.Builder);
-        newProject(): framework.design.Designable;
-        getRootItem(): framework.design.Designable;
-        getSelectedItem(): framework.design.Designable;
-        selectItem(designable: framework.design.Designable): void;
-        getBuilder(): framework.builder.Builder;
+declare namespace framework.builder {
+    class FilesList extends framework.JSContainer {
+        constructor(name: string);
+        addFile(file: framework.builder.UIFile): FilesList;
     }
 }
 declare namespace framework.builder.libraries {
@@ -1325,6 +1376,13 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning {
+    class Backdrop extends framework.JSContainer {
+        constructor(name: string);
+        open(): Backdrop;
+        close(): Backdrop;
+    }
+}
+declare namespace framework.lightning {
     class Badge extends framework.JSContainer {
         constructor(name: string, tag: string);
     }
@@ -1572,6 +1630,7 @@ declare namespace framework.lightning {
         static EXTRA_SMALL: string;
         static EXTRA_EXTRA_SMALL: string;
         constructor(name: string);
+        getIcon(): framework.lightning.Icon;
         setIcon(icon: framework.lightning.Icon): IconButton;
         toggleClass(cls: string, b: boolean): IconButton;
         setContainer(b: boolean): IconButton;
@@ -1627,6 +1686,56 @@ declare namespace framework.lightning {
         setCentered(b: boolean): Media;
         setFigureReversed(b: boolean): Media;
         setResponseve(b: boolean): Media;
+    }
+}
+declare namespace framework.lightning {
+    class Modal extends framework.JSContainer {
+        modalContainer: framework.JSContainer;
+        header: framework.JSContainer;
+        content: framework.JSContainer;
+        footer: framework.JSContainer;
+        closeButton: framework.lightning.IconButton;
+        title: framework.JSContainer;
+        backdrop: framework.lightning.Backdrop;
+        constructor(name: string, stitle: string);
+        getBackdrop(): framework.lightning.Backdrop;
+        setBackdrop(backdrop: framework.lightning.Backdrop): void;
+        open(): void;
+        close(): void;
+        setLarge(b: boolean): Modal;
+        setTitle(stitle: string): void;
+        getTitle(): framework.JSContainer;
+        getModalContainer(): framework.JSContainer;
+        getHeader(): framework.JSContainer;
+        getContent(): framework.JSContainer;
+        getFooter(): framework.JSContainer;
+        getCloseButton(): framework.lightning.IconButton;
+    }
+    namespace Modal {
+        class Modal$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+    }
+}
+declare namespace framework.lightning {
+    class Section extends framework.JSContainer {
+        titleContainer: framework.JSContainer;
+        title: framework.JSContainer;
+        arrow: framework.lightning.Icon;
+        content: framework.JSContainer;
+        constructor(name: string, title: string);
+        open(): Section;
+        close(): Section;
+        setTitle(stitle: string): Section;
+        getContent(): framework.JSContainer;
+        getTitleContainer(): framework.JSContainer;
     }
 }
 declare namespace framework.lightning {
@@ -1740,6 +1849,46 @@ declare namespace framework.builder {
         constructor(name: string, initial: string, label: string);
     }
 }
+declare namespace framework.builder.editors {
+    class VisualEditor extends framework.builder.editors.AbstractEditor<framework.builder.marshalling.Component> {
+        builder: framework.builder.Builder;
+        selectedItem: framework.design.Designable;
+        root: framework.design.Designable;
+        selector: framework.builder.Selector;
+        composers: framework.JSContainer;
+        propertiesDockedComposer: framework.builder.properties.PropertiesDockedComposer;
+        libraryDockedComposer: framework.builder.libraries.LibrariesDockedComposer;
+        structureDockedComposer: framework.builder.editors.StructureDockedComposer;
+        constructor(builder: framework.builder.Builder);
+        getRootItem(): framework.design.Designable;
+        getSelectedItem(): framework.design.Designable;
+        selectItem(designable: framework.design.Designable): void;
+        getBuilder(): framework.builder.Builder;
+        /**
+         *
+         * @return {string}
+         */
+        getMarshall(): string;
+        /**
+         *
+         * @param {framework.builder.data.File} f
+         * @return {framework.builder.marshalling.Component}
+         */
+        createNew(f: framework.builder.data.File): framework.builder.marshalling.Component;
+        /**
+         *
+         * @param {framework.builder.data.File} f
+         * @return {framework.builder.marshalling.Component}
+         */
+        unmarshall(f: framework.builder.data.File): framework.builder.marshalling.Component;
+        consume$framework_builder_marshalling_Component(component: framework.builder.marshalling.Component): void;
+        /**
+         *
+         * @param {framework.builder.marshalling.Component} component
+         */
+        consume(component?: any): any;
+    }
+}
 declare namespace framework.builder.properties {
     abstract class AbstractCheckBoxPropertyEditor extends framework.JSCheckBox implements framework.builder.properties.PropertyEditor, framework.EventListener {
         designable: framework.design.Designable;
@@ -1753,6 +1902,14 @@ declare namespace framework.builder.properties {
          * @param {Event} evt
          */
         abstract performAction(source: framework.JSContainer, evt: Event): any;
+    }
+}
+declare namespace framework.builder {
+    class UIFile extends framework.JSHTMLFragment {
+        constructor(name: string);
+        setTitle(title: string): UIFile;
+        setAbbr(abbr: string): UIFile;
+        setHelp(help: string): UIFile;
     }
 }
 declare namespace framework.lightning {
@@ -2246,17 +2403,26 @@ declare namespace framework.builder {
     class Builder extends framework.lightning.LTContainer {
         topMenu: framework.builder.TopMenu;
         editorTabs: framework.lightning.Tabs;
-        visualEditor: framework.builder.editors.VisualEditor;
-        cssEditor: framework.builder.editors.CSSEditor;
-        jsEditor: framework.builder.editors.JavascriptEditor;
-        dataComposer: framework.builder.libraries.DataComposer;
         saveButton: framework.lightning.IconButton;
+        newFileModal: framework.builder.NewFile;
+        newFileButtn: framework.lightning.IconButton;
+        backdrop: framework.lightning.Backdrop;
         constructor(name: string);
-        getSelectedItem(): framework.design.Designable;
+        openProject(file: framework.builder.data.File): void;
         openEditor(title: string, editor: framework.JSContainer): framework.lightning.TabItem;
     }
     namespace Builder {
         class Builder$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class Builder$1 implements framework.EventListener {
             __parent: any;
             /**
              *
@@ -2289,6 +2455,19 @@ declare namespace framework.lightning {
         setHorizontal(b: boolean): FormLayout;
         addFormElement(element: framework.lightning.FormElement): FormLayout;
         clear(): FormLayout;
+    }
+}
+declare namespace framework.builder {
+    class ItemSelector extends framework.lightning.Modal {
+        input: framework.JSInput;
+        saveButton: framework.lightning.Button;
+        section: framework.lightning.Section;
+        filesList: framework.builder.FilesList;
+        constructor(name: string, stitle: string);
+        getInput(): framework.JSInput;
+        getSaveButton(): framework.lightning.Button;
+        getSection(): framework.lightning.Section;
+        getFilesList(): framework.builder.FilesList;
     }
 }
 declare namespace framework.builder {
@@ -2530,6 +2709,52 @@ declare namespace framework.builder.properties {
         addProperty$java_lang_String$framework_JSInput(label: string, input: framework.JSInput): BasePropertiesEditor;
         addProperty(label?: any, input?: any): any;
         addProperty$framework_design_Parameter$framework_design_Designable(parameter: framework.design.Parameter, designable: framework.design.Designable): BasePropertiesEditor;
+    }
+}
+declare namespace framework.builder {
+    class NewFile extends framework.builder.ItemSelector {
+        lightning: framework.builder.UIFile;
+        mobile: framework.builder.UIFile;
+        __framework_builder_NewFile_html: framework.builder.UIFile;
+        css: framework.builder.UIFile;
+        javascript: framework.builder.UIFile;
+        files: java.util.List<framework.builder.UIFile>;
+        fileType: string;
+        builder: framework.builder.Builder;
+        constructor(name: string, builder_: framework.builder.Builder);
+    }
+    namespace NewFile {
+        class NewFile$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class NewFile$1 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        namespace NewFile$1 {
+            class NewFile$1$0 implements framework.builder.data.RemoteDataListener {
+                __parent: any;
+                /**
+                 *
+                 * @param {*} data
+                 */
+                dataLoaded(data: any): void;
+                constructor(__parent: any);
+            }
+        }
     }
 }
 declare namespace framework.builder.properties {

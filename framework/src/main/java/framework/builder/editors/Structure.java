@@ -1,13 +1,18 @@
 package framework.builder.editors;
 
+import static def.dom.Globals.alert;
+
 import java.util.List;
 
 import framework.EventListener;
 import framework.JSContainer;
 import framework.TreeItem;
 import framework.builder.Builder;
+import framework.builder.data.ProjectService;
+import framework.builder.data.RemoteDataListener;
 import framework.design.Designable;
 import jsweet.dom.Event;
+import jsweet.lang.JSON;
 
 public class Structure extends JSContainer {
 
@@ -38,6 +43,17 @@ public class Structure extends JSContainer {
 	}
 
 	public void reload() {
+		
+		new ProjectService().getProjects(new RemoteDataListener() {
+			
+			@Override
+			public void dataLoaded(Object data) {
+				alert(JSON.stringify(data));
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		ul.getChildren().clear();
 
 		ul.setRendered(false);

@@ -30,7 +30,7 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 
 		getContext().$set("openClass", "");
 		getContext().$set("iconType", "utility");
-		getContext().$set("iconsLocation", "/webjars/lightning/2.3.2/assets/icons");
+		getContext().$set("iconsLocation", "/webjars/salesforce-lightning-design-system/2.4.1/assets/icons");
 		getContext().$set("iconName", "switch");
 		getContext().$set("title", title);
 	}

@@ -42,6 +42,7 @@ public class Modal extends JSContainer {
 				close();
 			}
 		}, "click");
+		close();
 
 	}
 	
@@ -59,6 +60,7 @@ public class Modal extends JSContainer {
 		if(backdrop != null){
 			backdrop.open();
 		}
+		setVisible(true);
 	}
 	
 	public void close(){
@@ -66,6 +68,7 @@ public class Modal extends JSContainer {
 		if(backdrop != null){
 			backdrop.close();
 		}
+		setVisible(false);
 	}
 	
 	public Modal setLarge(boolean b){

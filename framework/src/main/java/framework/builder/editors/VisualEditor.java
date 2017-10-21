@@ -1,14 +1,13 @@
 package framework.builder.editors;
 
 import framework.JSContainer;
-import framework.builder.BasicComponent;
 import framework.builder.Builder;
 import framework.builder.Selector;
 import framework.builder.data.File;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.libraries.LibrariesDockedComposer;
 import framework.builder.marshalling.Component;
-import framework.builder.marshalling.ComponentFactory;
+import framework.builder.marshalling.MarshallUtil;
 import framework.builder.properties.PropertiesDockedComposer;
 import framework.core.BeanFactory;
 import framework.design.Designable;
@@ -41,8 +40,8 @@ public class VisualEditor extends AbstractEditor<Component> {
 		composers.addClass("composers");
 		composers.addChild(propertiesDockedComposer);
 		composers.addChild(libraryDockedComposer);
-		
-		
+		propertiesDockedComposer.setStyle("left", "1017px");
+		libraryDockedComposer.setStyle("left", "1017px").setStyle("top", "500px");
 		
 		this.builder = builder;
 
@@ -73,7 +72,8 @@ public class VisualEditor extends AbstractEditor<Component> {
 
 	@Override
 	public String getMarshall() {
-		return JSON.stringify(root.getComponent());
+		
+		return JSON.stringify(MarshallUtil.extract(root));
 	}
 
 	@Override
@@ -106,6 +106,7 @@ public class VisualEditor extends AbstractEditor<Component> {
 		
 		structureDockedComposer = new StructureDockedComposer("strucutru", root,builder);
 		composers.addChild(structureDockedComposer);
+		structureDockedComposer.setStyle("left", "0px");
 	
 		
 	}

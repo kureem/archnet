@@ -3,6 +3,7 @@ package framework.builder.data;
 import java.util.LinkedList;
 import java.util.List;
 
+import framework.core.BeanFactory;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
@@ -18,6 +19,64 @@ public class File {
 	public Object getNative(){
 		return file;
 	}
+	
+	public List<File> getStylesheets(){
+		return getChild("stylesheets").getChildren();
+	}
+	
+	public List<File> getScripts(){
+		return getChild("scripts").getChildren();
+	}
+	
+	public List<File> getTemplates(){
+		return getChild("templates").getChildren();
+		
+	}
+	
+	public List<File> getDataEnvironment(){
+		return getChild("data").getChildren();		
+	}
+	
+	
+	public File getChild(String name){
+		for(File f : getChildren()){
+			if(f.getName().equalsIgnoreCase(name)){
+				return f;
+			}
+		}
+		return null;
+	}
+	
+	public void createCss(String name, RemoteDataListener listener){
+		createFile(name, name, "stylesheets", listener);
+	}
+	
+	public void createTemplate(String name, RemoteDataListener listener){
+		createFile(name, name, "templates", listener);
+	}
+	
+	public void createScript(String name, RemoteDataListener listener){
+		createFile(name, name, "scripts", listener);
+	}
+	
+	public void createFile(String name, String type, RemoteDataListener listener){
+		createFile(name,name, type, listener);
+	}
+	
+	public void createFile(String name, String title, String dir, RemoteDataListener listener){
+		String path = getPath() + "/" + dir;
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createFile(name, title, path, new RemoteDataListener() {
+			
+			@Override
+			public void dataLoaded(java.lang.Object data) {
+				((Array<Object>)getChild(dir).getNative().$get("children")).push((Object)data);
+				// TODO Auto-generated method stub
+				
+				listener.dataLoaded(data);
+			}
+		});
+	}
+	
 
 	public String getName() {
 		return (String) file.$get("name");

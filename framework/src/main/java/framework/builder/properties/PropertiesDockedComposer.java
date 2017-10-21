@@ -8,7 +8,7 @@ public class PropertiesDockedComposer extends DockedComposer {
 	private ProtertiesEditorTabs mainEditor = new ProtertiesEditorTabs("mainEditor");
 	private PropertiesEditor basicEditorBody = new BasicPropertiesEditor("basic");
 	private PropertiesEditor advancedPropertiesEditorBody = new AdvancedPropertiesEditor();
-	private PropertiesEditor eventEditor = new EventsPropertiesEditor();
+	//private PropertiesEditor eventEditor = new EventsPropertiesEditor();
 
 	public PropertiesDockedComposer(String name) {
 		super(name);
@@ -16,9 +16,9 @@ public class PropertiesDockedComposer extends DockedComposer {
 
 		addClass("properties-composer");
 		mainEditor.addItem("Basic", basicEditorBody).setActive(true);
-		mainEditor.addItem("Advanced", advancedPropertiesEditorBody).setActive(false);
-		mainEditor.addItem("Events", eventEditor).setActive(false);
-
+		mainEditor.addItem("Advanced", advancedPropertiesEditorBody);
+		//mainEditor.addItem("Events", eventEditor);
+		
 		getBody().addChild(mainEditor);
 	}
 
@@ -26,6 +26,7 @@ public class PropertiesDockedComposer extends DockedComposer {
 	
 		basicEditorBody.setComponent(designable);
 		advancedPropertiesEditorBody.setComponent(designable);
-		eventEditor.setComponent(designable);
+		//eventEditor.setComponent(designable);
+		mainEditor.getItems().get(0).setActive(true);
 	}
 }

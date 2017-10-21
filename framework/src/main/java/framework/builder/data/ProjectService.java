@@ -31,7 +31,7 @@ public class ProjectService {
 				listener.dataLoaded(t);
 				return null;
 			}
-		}, "json");
+		});
 	}
 	
 	public void saveFile(File file, RemoteDataListener listener){
@@ -49,6 +49,24 @@ public class ProjectService {
 		});
 	}
 	
-	
+	public void createFile(String name,String title, String dir, RemoteDataListener listener){
+		
+		jsweet.lang.Object data = new jsweet.lang.Object();
+		data.$set("name", name);
+		data.$set("title", title);
+		data.$set("dir", dir);
+		
+		$.post("/projects/create-file", data, new TriFunction<Object, String, JQueryXHR, Object>() {
+
+			@Override
+			public Object apply(Object t, String u, JQueryXHR v) {
+				if(listener != null)
+					listener.dataLoaded(t);
+				return t;
+			}
+			
+			
+		});
+	}
 
 }

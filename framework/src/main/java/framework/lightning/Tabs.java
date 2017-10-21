@@ -1,5 +1,7 @@
 package framework.lightning;
 
+import java.util.List;
+
 import framework.JSContainer;
 
 public class Tabs extends JSContainer {
@@ -21,10 +23,15 @@ public class Tabs extends JSContainer {
 	public Tabs setActive(TabItem item){
 		for(JSContainer c : nav.getChildren()){
 			TabItem tab = (TabItem)c;
-			tab.setActive(tab.equals(item));
+			tab.setActive(false);
 		}
 		item.setActive(true);
 		return this;
+	}
+	
+	
+	public List<TabItem> getItems(){
+		return (List)nav.getChildren();
 	}
 	
 	

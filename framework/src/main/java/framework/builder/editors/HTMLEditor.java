@@ -3,13 +3,11 @@ package framework.builder.editors;
 import def.codemirror.codemirror.EditorConfiguration;
 import jsweet.lang.Object;
 
-public class JavascriptEditor extends CodeMirrorEditor {
+public class HTMLEditor extends CodeMirrorEditor {
 
-	//Editor editor = null;
-
-	public JavascriptEditor(String name) {
+	public HTMLEditor(String name) {
 		super(name);
-
+		
 		EditorConfiguration config = new EditorConfiguration() {
 		};
 
@@ -22,8 +20,8 @@ public class JavascriptEditor extends CodeMirrorEditor {
 								// \"autocomplete\"}");
 
 		Object mode = new Object();
-		mode.$set("name", "javascript");
-		mode.$set("globalVars", true);
+		mode.$set("name", "html");
+		//mode.$set("globalVars", true);
 		config.mode = mode;
 
 		setConfig(config);

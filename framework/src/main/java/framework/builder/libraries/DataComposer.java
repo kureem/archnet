@@ -11,7 +11,7 @@ import framework.lightning.Button;
 import framework.lightning.GlobalHeader;
 import jsweet.dom.Event;
 
-public class DataComposer extends JSContainer{
+public class DataComposer extends JSContainer {
 	
 	//private JSHTMLFragment fragment = new JSHTMLFragment("card", "#card");
 	

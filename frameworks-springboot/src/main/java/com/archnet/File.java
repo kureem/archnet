@@ -100,6 +100,8 @@ public class File {
 	public File getParent() {
 		return parent;
 	}
+	
+	
 
 	public void addFile(File file) {
 

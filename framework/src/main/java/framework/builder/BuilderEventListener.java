@@ -9,10 +9,21 @@ import jsweet.dom.Event;
 public class BuilderEventListener implements EventListener {
 
 	private String jsSource;
+	
+	
+	
 
 	public BuilderEventListener(String jsSource) {
 		super();
 		this.jsSource = jsSource;
+	}
+	
+	public String getSource(){
+		return jsSource;
+	}
+	
+	public void setSource(String s){
+		jsSource = s;
 	}
 
 	@Override

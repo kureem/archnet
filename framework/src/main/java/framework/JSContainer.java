@@ -337,6 +337,7 @@ public class JSContainer implements Renderable, Droppable {
 	public JSContainer setAttribute(String key, String value) {
 		changedAttributes.add(key);
 		attributes.put(key, value);
+		
 		return this;
 	}
 

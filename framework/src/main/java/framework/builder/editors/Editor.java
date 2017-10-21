@@ -9,7 +9,7 @@ public interface Editor<T> extends Renderable {
 
 	//public void close();
 
-	//public void save();
+	public void save();
 
 	//public void undo();
 

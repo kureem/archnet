@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/projects") 
 public class ProjectController {
 	
 	@Autowired
@@ -21,7 +21,7 @@ public class ProjectController {
 		return projectService.createProject(title, name);
 	}
 	
-	@RequestMapping(path="/create-file", method=RequestMethod.GET)
+	@RequestMapping(path="/create-file", method=RequestMethod.POST)
 	public File createFile(@RequestParam("name") String name, @RequestParam("title") String title, @RequestParam("dir") String directory){
 		return projectService.createNewFile(name, title, directory);
 	}

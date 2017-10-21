@@ -18,6 +18,7 @@ public class TabBody extends JSContainer{
 			removeClass("slds-show");
 			addClass("slds-hide");
 		}
+		setVisible(b);
 		return this;
 	}
 	

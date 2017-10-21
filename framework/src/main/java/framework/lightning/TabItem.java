@@ -1,10 +1,15 @@
 package framework.lightning;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import framework.EventListener;
 import framework.JSContainer;
 import jsweet.dom.Event;
 
 public class TabItem extends JSContainer implements EventListener{
+	
+	private List<TabActionListener> listeners = new ArrayList<>();
 	
 	public TabBody body;
 	private JSContainer title = new JSContainer("a").addClass("slds-tabs_default__link").setAttribute("href", "javascript:void(0)").setAttribute("role", "tab");
@@ -20,10 +25,17 @@ public class TabItem extends JSContainer implements EventListener{
 		setActive(false);
 	}
 	
+	public void addTabActionListener(TabActionListener listene){
+		listeners.add(listene);
+	}
+	
 	public TabItem setActive(boolean b){
 		if(b){
 			addClass("slds-active");
 			title.setAttribute("aria-selected", "true");
+			for(TabActionListener li : listeners){
+				li.onActivate(this);
+			}
 		}else{
 			removeClass("slds-active");
 			title.setAttribute("aria-selected", "false");

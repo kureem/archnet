@@ -7,6 +7,8 @@ import jsweet.lang.Object;
 public class CSSEditor extends CodeMirrorEditor {
 
 	Editor editor = null;
+	
+	
 
 	public CSSEditor(String name) {
 		super(name);
@@ -23,4 +25,6 @@ public class CSSEditor extends CodeMirrorEditor {
 
 		setConfig(config);
 	}
+
+	
 }

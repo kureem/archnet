@@ -1,18 +1,14 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.alert;
-
 import java.util.List;
 
 import framework.EventListener;
 import framework.JSContainer;
 import framework.TreeItem;
 import framework.builder.Builder;
-import framework.builder.data.ProjectService;
-import framework.builder.data.RemoteDataListener;
+import framework.builder.data.File;
 import framework.design.Designable;
 import jsweet.dom.Event;
-import jsweet.lang.JSON;
 
 public class Structure extends JSContainer {
 
@@ -21,6 +17,10 @@ public class Structure extends JSContainer {
 	private JSContainer ul = new JSContainer("ul");
 
 	private JSContainer liJS;
+	
+	private JSContainer liData;
+	
+	private JSContainer liTemplates;
 
 	private JSContainer liCss = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
 
@@ -44,23 +44,19 @@ public class Structure extends JSContainer {
 
 	public void reload() {
 		
-		new ProjectService().getProjects(new RemoteDataListener() {
-			
-			@Override
-			public void dataLoaded(Object data) {
-				alert(JSON.stringify(data));
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		ul.getChildren().clear();
 
 		ul.setRendered(false);
+		
 
 		liJS = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
 
 		liCss = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
+		
+		liData = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
+		
+		liTemplates = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
 
 		liRoot = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
 
@@ -72,11 +68,78 @@ public class Structure extends JSContainer {
 
 		liCss.addChild(new TreeItem("", "CSS"));
 		ul.addChild(liCss);
+		
+		liTemplates.addChild(new TreeItem("", "Templates"));
+		ul.addChild(liTemplates);
+		
+		liData.addChild(new TreeItem("", "Data"));
+		ul.addChild(liData);
+		renderFiles();
 	}
 
 	public void unselect(JSContainer c) {
-
+		
 	}
+	
+	
+	public void renderFiles(){
+		
+		EventListener listener = new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				// TODO Auto-generated method stub
+				File f = (File)source.getData();
+				if(f.getName().endsWith("html")){
+					HTMLEditor editor = new HTMLEditor(f.getName());
+					builder.openEditor(f.getName(), editor);
+					editor.open(f);
+				}else if(f.getName().endsWith("css")){
+					CSSEditor editor = new CSSEditor(f.getName());
+					builder.openEditor(f.getName(), editor);
+					editor.open(f);
+				}else if(f.getName().endsWith("js")){
+					JavascriptEditor editor = new JavascriptEditor(f.getName());
+					builder.openEditor(f.getName(), editor);
+					editor.open(f);
+				}
+				
+			}
+		};
+		
+		for(File f : builder.getProject().getStylesheets()){
+			TreeItem item = new TreeItem(f.getName(), f.getTitle());
+			item.setData(f);
+			item.addEventListener(listener, "click");
+			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
+			liCss.addChild(li);
+		}
+		
+		for(File f : builder.getProject().getScripts()){
+			TreeItem item = new TreeItem(f.getName(), f.getTitle());
+			item.setData(f);
+			item.addEventListener(listener, "click");
+			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
+			liJS.addChild(li);
+		}
+		
+		for(File f : builder.getProject().getDataEnvironment()){
+			TreeItem item = new TreeItem(f.getName(), f.getTitle());
+			item.setData(f);
+			item.addEventListener(listener, "click");
+			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
+			liData.addChild(li);
+		}
+		
+		for(File f : builder.getProject().getTemplates()){
+			TreeItem item = new TreeItem(f.getName(), f.getTitle());
+			item.setData(f);
+			item.addEventListener(listener, "click");
+			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
+			liTemplates.addChild(li);
+		}
+	}
+	
 
 	public void addNode(Designable ctn, JSContainer li, int level) {
 		// li.setHtml(ctn.getName());

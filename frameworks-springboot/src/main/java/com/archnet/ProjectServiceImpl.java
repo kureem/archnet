@@ -49,6 +49,13 @@ public class ProjectServiceImpl implements ProjectService{
 		project.addFile(data);
 		fileRepository.save(data);
 		
+		
+		File templates = new File();
+		templates.setName("templates");
+		templates.setTitle("Templates");
+		project.addFile(templates);
+		fileRepository.save(templates);
+		
 		fileRepository.save(project);
 		
 		return project;
@@ -60,8 +67,10 @@ public class ProjectServiceImpl implements ProjectService{
 		File f = new File();
 		f.setTitle(title);
 		f.setName(name);
+		
 		File dir = fileRepository.findOne(directory);
 		dir.addFile(f);
+		fileRepository.save(f);
 		fileRepository.save(dir);
 		return f;
 	}

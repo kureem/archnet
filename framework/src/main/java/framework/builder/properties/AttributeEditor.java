@@ -17,6 +17,7 @@ public class AttributeEditor extends AbstractInputPropertyEditor{
 		String attr = parameter.name;
 		String value = getValue();
 		designable.setAttribute(attr, value);
+		//designable.setParameter(attr, value, true);
 	}
 
 

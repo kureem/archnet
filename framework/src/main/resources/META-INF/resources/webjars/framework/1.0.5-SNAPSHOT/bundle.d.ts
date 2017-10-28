@@ -298,7 +298,7 @@ declare namespace framework.core {
 }
 declare namespace framework.design {
     interface Designable extends framework.Renderable {
-        setParameter(key?: any, value?: any, designMode?: any): any;
+        applyParam(key: string, value: string): any;
         getDesignables(): java.util.List<Designable>;
         getComponent(): framework.builder.marshalling.Component;
         getParameters(): java.util.List<framework.design.Parameter>;
@@ -408,6 +408,7 @@ declare namespace framework.interactions {
 declare namespace framework.lightning {
     interface TabActionListener {
         onActivate(item: framework.lightning.TabItem): any;
+        onDeactivate(item: framework.lightning.TabItem): any;
         onClose(item: framework.lightning.TabItem): any;
     }
 }
@@ -510,8 +511,6 @@ declare namespace framework {
         setStyle(key: string, value: string): Renderable;
         getStyle(key: string): string;
         setAttribute(key: string, value: string): Renderable;
-        exec(name?: any, parameter?: any): any;
-        getCommands(): java.lang.Iterable<framework.JSContainer.JSCommand>;
         getAttribute(key: string): string;
         getName(): string;
         setName(name: string): any;
@@ -803,7 +802,6 @@ declare namespace framework {
         renderers: java.util.List<framework.renderer.Renderer<any>>;
         changedAttributes: java.util.List<string>;
         changedStyles: java.util.List<string>;
-        commands: java.util.List<JSContainer.JSCommand>;
         constructor(name?: any, tag?: any);
         /**
          *
@@ -903,20 +901,6 @@ declare namespace framework {
          * @return {framework.JSContainer}
          */
         setAttribute(key: string, value: string): JSContainer;
-        exec$java_lang_String$jsweet_lang_Object(name: string, parameter: Object): void;
-        /**
-         *
-         * @param {string} name
-         * @param {Object} parameter
-         */
-        exec(name?: any, parameter?: any): any;
-        exec$java_lang_String$java_lang_String(name: string, variable: string): void;
-        exec$java_lang_String(name: string): void;
-        /**
-         *
-         * @return {*}
-         */
-        getCommands(): java.lang.Iterable<JSContainer.JSCommand>;
         /**
          *
          * @param {string} key
@@ -1022,20 +1006,6 @@ declare namespace framework {
         getDroppableOptions(): JQueryUI.DroppableOptions;
         setDroppableOptions(options: JQueryUI.DroppableOptions): void;
     }
-    namespace JSContainer {
-        class JSCommand {
-            __parent: any;
-            name: string;
-            parameters: Object;
-            variable: string;
-            constructor(__parent: any, name: string, vari: string);
-            getVariable(): string;
-            getName(): string;
-            setName(name: string): void;
-            getParameters(): Object;
-            setParameters(parameters: Object): void;
-        }
-    }
 }
 declare namespace framework.builder.libraries {
     class TextComponentFactory extends framework.builder.libraries.BasicComponentFactory {
@@ -1050,19 +1020,22 @@ declare namespace framework.builder.libraries {
     }
 }
 declare namespace framework.builder {
-    class Component extends framework.JSContainer implements framework.interactions.Draggable {
+    class Component extends framework.JSContainer implements framework.EventListener {
         titleFigure: framework.JSContainer;
         avatar: framework.JSContainer;
         initial: framework.JSContainer;
         title: framework.JSContainer;
         componentFactoryRegistry: framework.builder.libraries.ComponentFactoryRegistry;
+        identifier: string;
         constructor(identifier: string, initial: string, label: string);
         getFactory(): framework.builder.marshalling.ComponentFactory;
+        getDraggableOptions(): JQueryUI.DraggableOptions;
         /**
          *
-         * @return {*}
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
          */
-        getDraggableOptions(): JQueryUI.DraggableOptions;
+        performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
 declare namespace framework.builder.editors {
@@ -1106,7 +1079,13 @@ declare namespace framework.builder.editors {
         selected: framework.TreeItem;
         builder: framework.builder.Builder;
         constructor(name: string, root: framework.design.Designable, builder: framework.builder.Builder);
-        reload(): void;
+        reload$(): void;
+        getItem$framework_design_Designable$framework_JSContainer(designable: framework.design.Designable, currentNode: framework.JSContainer): framework.builder.editors.StructureTreeItem;
+        getItem(designable?: any, currentNode?: any): any;
+        getItem$java_lang_String(type: string): framework.TreeItem;
+        reload$java_lang_String(type: string): void;
+        reload(type?: any): any;
+        reload$framework_design_Designable(designable: framework.design.Designable): void;
         unselect(c: framework.JSContainer): void;
         renderFiles(): void;
         addNode(ctn: framework.design.Designable, li: framework.JSContainer, level: number): void;
@@ -1195,9 +1174,8 @@ declare namespace framework.designables {
          *
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        setParameter(key: string, value: string, designMode: boolean): void;
+        applyParam(key: string, value: string): void;
         /**
          *
          * @return {framework.builder.marshalling.Component}
@@ -1369,9 +1347,8 @@ declare namespace framework.lightning {
          *
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        setParameter(key: string, value: string, designMode: boolean): void;
+        applyParam(key: string, value: string): void;
         /**
          *
          * @return {*}
@@ -1459,14 +1436,7 @@ declare namespace framework.lightning {
         setInverse(b: boolean): Button;
         setDisabled(b: boolean): Button;
         setStateful(b: boolean): Button;
-        /**
-         *
-         * @param {string} key
-         * @param {string} value
-         * @param {boolean} designMode
-         */
-        setParameter(key?: any, value?: any, designMode?: any): any;
-        setParameter$java_lang_String$java_lang_String(key: string, value: string): void;
+        setParameter(key: string, value: string): void;
     }
 }
 declare namespace framework.lightning {
@@ -1782,8 +1752,16 @@ declare namespace framework.lightning {
         __framework_lightning_TabItem_listeners: java.util.List<framework.lightning.TabActionListener>;
         body: framework.lightning.TabBody;
         title: framework.JSContainer;
+        closeButton: framework.lightning.Icon;
         constructor(name: string, body: framework.lightning.TabBody);
+        setClosable(b: boolean): TabItem;
         addTabActionListener(listene: framework.lightning.TabActionListener): void;
+        close(): TabItem;
+        active: boolean;
+        isActive(): boolean;
+        fireClose(): void;
+        fireActivate(): void;
+        fireDeActivate(): void;
         setActive(b: boolean): TabItem;
         setTitle(title: string): TabItem;
         /**
@@ -1864,7 +1842,10 @@ declare namespace framework {
         iconDown: string;
         title: framework.JSContainer;
         __open: boolean;
+        buttons: java.util.List<framework.lightning.IconButton>;
+        buttonsCtn: framework.JSContainer;
         constructor(name: string, title: string);
+        addIcon(name: string, type: string): void;
         getButton(): framework.JSContainer;
         open(): void;
         close(): void;
@@ -1937,6 +1918,10 @@ declare namespace framework.builder.editors {
         getRootItem(): framework.design.Designable;
         getSelectedItem(): framework.design.Designable;
         selectItem(designable: framework.design.Designable): void;
+        willAdd: framework.builder.Component;
+        setWillAddComponent(component: framework.builder.Component): void;
+        addNewComponent(component: framework.builder.Component, designable: framework.design.Designable): void;
+        getWillAddComponent(): framework.builder.Component;
         getBuilder(): framework.builder.Builder;
         /**
          *
@@ -1955,6 +1940,8 @@ declare namespace framework.builder.editors {
          * @return {framework.builder.marshalling.Component}
          */
         unmarshall(f: framework.builder.data.File): framework.builder.marshalling.Component;
+        doUnMarsh(o: Object): framework.builder.marshalling.Component;
+        cona(component: framework.builder.marshalling.Component): framework.design.Designable;
         consume$framework_builder_marshalling_Component(component: framework.builder.marshalling.Component): void;
         /**
          *
@@ -2000,9 +1987,8 @@ declare namespace framework.lightning {
          *
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        setParameter(key: string, value: string, designMode: boolean): void;
+        applyParam(key: string, value: string): void;
         /**
          *
          * @return {*}
@@ -2060,9 +2046,8 @@ declare namespace framework.designables {
          *
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        setParameter(key: string, value: string, designMode: boolean): void;
+        applyParam(key: string, value: string): void;
         /**
          *
          * @return {*}
@@ -2198,9 +2183,8 @@ declare namespace framework.designables {
          *
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        setParameter(key: string, value: string, designMode: boolean): void;
+        applyParam(key: string, value: string): void;
         /**
          *
          * @return {framework.builder.marshalling.Component}
@@ -2229,14 +2213,12 @@ declare namespace framework.designables {
         static stateLabels_$LI$(): string[];
         delegate: framework.designables.DesignableDelegate;
         constructor(name: string);
-        setParameter$java_lang_String$java_lang_String$boolean(key: string, value: string, designMode: boolean): void;
         /**
          *
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        setParameter(key?: any, value?: any, designMode?: any): any;
+        applyParam(key: string, value: string): void;
         /**
          *
          * @return {*}
@@ -2552,6 +2534,7 @@ declare namespace framework.builder {
             constructor(__parent: any);
         }
         class Builder$3 implements framework.lightning.TabActionListener {
+            private editor;
             __parent: any;
             /**
              *
@@ -2563,7 +2546,12 @@ declare namespace framework.builder {
              * @param {framework.lightning.TabItem} item
              */
             onActivate(item: framework.lightning.TabItem): void;
-            constructor(__parent: any);
+            /**
+             *
+             * @param {framework.lightning.TabItem} item
+             */
+            onDeactivate(item: framework.lightning.TabItem): void;
+            constructor(__parent: any, editor: any);
         }
     }
 }
@@ -2622,14 +2610,12 @@ declare namespace framework.designables {
     class JSDesignableTextComponent extends framework.TextComponent implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
         constructor(name: string, tag: string);
-        setParameter$java_lang_String$java_lang_String$boolean(key: string, value: string, designMode: boolean): void;
         /**
          *
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        setParameter(key?: any, value?: any, designMode?: any): any;
+        applyParam(key: string, value: string): void;
         /**
          *
          * @return {*}
@@ -2883,13 +2869,14 @@ declare namespace framework.builder {
             constructor(__parent: any);
         }
         class NewFile$2 implements framework.builder.data.RemoteDataListener {
+            private type;
             __parent: any;
             /**
              *
              * @param {*} data
              */
             dataLoaded(data: any): void;
-            constructor(__parent: any);
+            constructor(__parent: any, type: any);
         }
         class NewFile$3 implements framework.builder.data.RemoteDataListener {
             __parent: any;

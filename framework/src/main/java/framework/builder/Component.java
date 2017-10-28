@@ -1,13 +1,15 @@
 package framework.builder;
 
 import def.jqueryui.jqueryui.DraggableOptions;
+import framework.EventListener;
 import framework.JSContainer;
+import framework.builder.editors.VisualEditor;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.ComponentFactory;
 import framework.core.BeanFactory;
-import framework.interactions.Draggable;
+import jsweet.dom.Event;
 
-public class Component extends JSContainer implements Draggable{
+public class Component extends JSContainer implements EventListener{
 
 	private JSContainer titleFigure = new JSContainer("div").addClass("slds-app-launcher__tile-figure");
 
@@ -20,10 +22,13 @@ public class Component extends JSContainer implements Draggable{
 	
 	private ComponentFactoryRegistry  componentFactoryRegistry = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class);
 	 
+	private String identifier;
 	
 	public Component(String identifier, String initial, String label) {
 		super(identifier, "div");
+		addClass("component-design basic");
 		setAttribute("identifier", identifier);
+		this.identifier = identifier;
 		//addClass("slds-app-launcher__tile");
 		addClass("designer-component");
 		addChild(titleFigure.setAttribute("identifier", identifier));
@@ -33,13 +38,13 @@ public class Component extends JSContainer implements Draggable{
 		this.initial.setHtml(initial);
 		titleFigure.addChild(title.setAttribute("identifier", identifier));
 		title.setHtml(label);
+		addEventListener(this, "click");
 	}
 	
 	public ComponentFactory getFactory(){
 		return componentFactoryRegistry.getComponentFactory(getName());
 	}
 
-	@Override
 	public DraggableOptions getDraggableOptions() {
 		DraggableOptions opts = new DraggableOptions() {
 		};
@@ -48,6 +53,15 @@ public class Component extends JSContainer implements Draggable{
 		opts.zIndex=1000;
 		opts.helper = "clone";
 		return opts;
+	}
+
+	@Override
+	public void performAction(JSContainer source, Event evt) {
+		
+		VisualEditor editor =getAncestorWithClass("visual-editor");
+		editor.setWillAddComponent(this);
+		
+		//.setStyle("cursor", "crosshair");
 	}
 
 

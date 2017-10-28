@@ -49,8 +49,8 @@ namespace framework.builder.data {
          * @param {framework.builder.data.DataStructure} datastructure
          */
         public saveStructure(datastructure : framework.builder.data.DataStructure) {
-            for(let index4132=BasicDataEnvironment.structures_$LI$().iterator();index4132.hasNext();) {
-                let structure = index4132.next();
+            for(let index3696=BasicDataEnvironment.structures_$LI$().iterator();index3696.hasNext();) {
+                let structure = index3696.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(structure.name,datastructure.name))) {
                         structure.label = datastructure.label;
@@ -67,8 +67,8 @@ namespace framework.builder.data {
          * @param {string} name
          */
         public deleteStructure(name : string) {
-            for(let index4133=BasicDataEnvironment.structures_$LI$().iterator();index4133.hasNext();) {
-                let structure = index4133.next();
+            for(let index3697=BasicDataEnvironment.structures_$LI$().iterator();index3697.hasNext();) {
+                let structure = index3697.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(structure.name,name))) {
                         BasicDataEnvironment.structures_$LI$().remove(structure);
@@ -187,8 +187,8 @@ namespace framework.builder.data {
         }
 
         public getChild(name : string) : File {
-            for(let index4134=this.getChildren().iterator();index4134.hasNext();) {
-                let f = index4134.next();
+            for(let index3698=this.getChildren().iterator();index3698.hasNext();) {
+                let f = index3698.next();
                 {
                     if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(f.getName(), name)) {
                         return f;
@@ -270,9 +270,9 @@ namespace framework.builder.data {
         public getChildren() : java.util.List<File> {
             let result : java.util.List<File> = <any>(new java.util.LinkedList<any>());
             {
-                let array4136 = <Array<Object>>this.file["children"];
-                for(let index4135=0; index4135 < array4136.length; index4135++) {
-                    let o = array4136[index4135];
+                let array3700 = <Array<Object>>this.file["children"];
+                for(let index3699=0; index3699 < array3700.length; index3699++) {
+                    let o = array3700[index3699];
                     {
                         result.add(new File(o));
                     }
@@ -388,10 +388,10 @@ namespace framework.builder.libraries {
 
         configureStyles(instance : framework.design.Designable, component : framework.builder.marshalling.Component) {
             let keys : string[] = Object.keys(component.styles);
-            for(let index4137=0; index4137 < keys.length; index4137++) {
-                let key = keys[index4137];
+            for(let index3701=0; index3701 < keys.length; index3701++) {
+                let key = keys[index3701];
                 {
-                    let value : string = <string>component.styles[key];
+                    let value : string = component.styles[key].toString();
                     instance.setStyle(key, value);
                 }
             }
@@ -399,18 +399,18 @@ namespace framework.builder.libraries {
 
         configureParameters(instance : framework.design.Designable, component : framework.builder.marshalling.Component, designMode : boolean) {
             let keys : string[] = Object.keys(component.parameters);
-            for(let index4138=0; index4138 < keys.length; index4138++) {
-                let key = keys[index4138];
+            for(let index3702=0; index3702 < keys.length; index3702++) {
+                let key = keys[index3702];
                 {
-                    let value : string = <string>component.parameters[key];
-                    instance['setParameter$java_lang_String$java_lang_String$boolean'](key, value, designMode);
+                    let value : string = component.parameters[key].toString();
+                    instance.applyParam(key, value);
                 }
             }
         }
 
         configureEvents(instance : framework.design.Designable, component : framework.builder.marshalling.Component) {
-            for(let index4139=0; index4139 < component.events.length; index4139++) {
-                let event = component.events[index4139];
+            for(let index3703=0; index3703 < component.events.length; index3703++) {
+                let event = component.events[index3703];
                 {
                     let listener : framework.builder.BuilderEventListener = new framework.builder.BuilderEventListener(event.source);
                     instance.addEventListener(listener, event.type);
@@ -425,12 +425,13 @@ namespace framework.builder.libraries {
          * @return {*}
          */
         public build(component : framework.builder.marshalling.Component, designMode : boolean) : framework.design.Designable {
-            let instance : framework.design.Designable = this.createInstance(designMode);
-            this.configureStyles(instance, component);
-            this.configureParameters(<framework.design.Designable><any>instance, component, designMode);
-            this.configureEvents(instance, component);
-            this.decorateForDesignMode(instance, designMode);
-            return instance;
+            let thIns : framework.design.Designable = this.createInstance(designMode);
+            thIns.setAttribute("identifier", this.impl);
+            this.configureStyles(thIns, component);
+            this.configureParameters(thIns, component, designMode);
+            this.configureEvents(thIns, component);
+            this.decorateForDesignMode(thIns, designMode);
+            return thIns;
         }
 
         decorateForDesignMode(instance : framework.design.Designable, designMode : boolean) {
@@ -542,23 +543,24 @@ namespace framework.builder.marshalling {
     export class MarshallUtil {
         public static extract(designable : framework.design.Designable) : framework.builder.marshalling.Component {
             let c : framework.builder.marshalling.Component = new framework.builder.marshalling.Component();
-            for(let index4140=designable.getStyleNames().iterator();index4140.hasNext();) {
-                let s = index4140.next();
+            c.impl = designable.getAttribute("identifier");
+            for(let index3704=designable.getStyleNames().iterator();index3704.hasNext();) {
+                let s = index3704.next();
                 {
                     c.styles[s] = designable.getStyle(s);
                 }
             }
-            for(let index4141=designable.getAttributeNames().iterator();index4141.hasNext();) {
-                let s = index4141.next();
+            for(let index3705=designable.getAttributeNames().iterator();index3705.hasNext();) {
+                let s = index3705.next();
                 {
                     c.parameters[s] = designable.getAttribute(s);
                 }
             }
-            for(let index4142=designable.getListeners().keySet().iterator();index4142.hasNext();) {
-                let key = index4142.next();
+            for(let index3706=designable.getListeners().keySet().iterator();index3706.hasNext();) {
+                let key = index3706.next();
                 {
-                    for(let index4143=designable.getListeners().get(key).iterator();index4143.hasNext();) {
-                        let l = index4143.next();
+                    for(let index3707=designable.getListeners().get(key).iterator();index3707.hasNext();) {
+                        let l = index3707.next();
                         {
                             if(l != null && l instanceof <any>framework.builder.BuilderEventListener) {
                                 let bel : framework.builder.BuilderEventListener = <framework.builder.BuilderEventListener><any>l;
@@ -571,8 +573,8 @@ namespace framework.builder.marshalling {
                     }
                 }
             }
-            for(let index4144=designable.getDesignables().iterator();index4144.hasNext();) {
-                let child = index4144.next();
+            for(let index3708=designable.getDesignables().iterator();index3708.hasNext();) {
+                let child = index3708.next();
                 {
                     let childC : framework.builder.marshalling.Component = MarshallUtil.extract(child);
                     c.children.push(childC);
@@ -608,8 +610,14 @@ namespace framework.builder {
          * @param {Event} evt
          */
         public performAction(source : framework.JSContainer, evt : Event) {
-            evt.stopPropagation();
-            this.selector.select(<framework.design.Designable><any>source);
+            let editor : framework.builder.editors.VisualEditor = <any>(source.getAncestorWithClass<any>("visual-editor"));
+            if(editor != null && editor.getWillAddComponent() != null) {
+                let willAdd : framework.builder.Component = editor.getWillAddComponent();
+                editor.addNewComponent(willAdd, <framework.design.Designable><any>source);
+            } else {
+                evt.stopPropagation();
+                this.selector.select(<framework.design.Designable><any>source);
+            }
         }
     }
     SelectComponentEvent["__class"] = "framework.builder.SelectComponentEvent";
@@ -675,8 +683,8 @@ namespace framework.core {
         }
 
         public getBeanOfType<T>(clazz : any) : T {
-            for(let index4145=this.beans.keySet().iterator();index4145.hasNext();) {
-                let key = index4145.next();
+            for(let index3709=this.beans.keySet().iterator();index3709.hasNext();) {
+                let key = index3709.next();
                 {
                     let bean : any = this.beans.get(key);
                     try {
@@ -732,7 +740,7 @@ namespace framework.core {
 }
 namespace framework.design {
     export interface Designable extends framework.Renderable {
-        setParameter(key? : any, value? : any, designMode? : any) : any;
+        applyParam(key : string, value : string);
 
         getDesignables() : java.util.List<Designable>;
 
@@ -831,30 +839,6 @@ namespace framework.designables {
         }
 
         public static setDroppableOptions(instance : framework.design.Designable, designMode : boolean) {
-            if(designMode) {
-                let options : JQueryUI.DroppableOptions = <any>Object.defineProperty({
-
-                }, '__interfaces', { configurable: true, value: ["def.jqueryui.jqueryui.DroppableOptions","def.jqueryui.jqueryui.DroppableEvents"] });
-                options.greedy = true;
-                options.accept = ".designer-component";
-                options.tolerance = "pointer";
-                options.activeClass = "drop-active";
-                options.drop = (event : Event, param : JQueryUI.DroppableEventUIParam) => {
-                    event.stopPropagation();
-                    let identifier : string = event.srcElement.getAttribute("identifier");
-                    let factory : framework.builder.marshalling.ComponentFactory = framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(identifier);
-                    let container : framework.design.Designable = factory.build(new framework.builder.marshalling.Component(), true);
-                    try {
-                        instance.addDesignable(container);
-                    } catch(e) {
-                        alert(e.message);
-                    };
-                    container.render();
-                    framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).reload();
-                    framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).render();
-                };
-                (<framework.JSContainer><any>instance).setDroppableOptions(options);
-            }
         }
     }
     DesignableDelegate["__class"] = "framework.designables.DesignableDelegate";
@@ -983,6 +967,8 @@ namespace framework.interactions {
 namespace framework.lightning {
     export interface TabActionListener {
         onActivate(item : framework.lightning.TabItem);
+
+        onDeactivate(item : framework.lightning.TabItem);
 
         onClose(item : framework.lightning.TabItem);
     }
@@ -1152,10 +1138,6 @@ namespace framework {
 
         setAttribute(key : string, value : string) : Renderable;
 
-        exec(name? : any, parameter? : any) : any;
-
-        getCommands() : java.lang.Iterable<framework.JSContainer.JSCommand>;
-
         getAttribute(key : string) : string;
 
         getName() : string;
@@ -1202,8 +1184,8 @@ namespace framework {
 namespace framework.renderer {
     export class ContainerRenderer implements framework.renderer.Renderer<framework.JSContainer> {
         public decorate(c : framework.JSContainer) {
-            for(let index4146=framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.core.DecoratorsRegistry").getDecorators().iterator();index4146.hasNext();) {
-                let dec = index4146.next();
+            for(let index3710=framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.core.DecoratorsRegistry").getDecorators().iterator();index3710.hasNext();) {
+                let dec = index3710.next();
                 {
                     dec.decorate(c);
                 }
@@ -1275,36 +1257,18 @@ namespace framework.renderer {
         }
 
         execCommands(njq : HTMLElement, container : framework.Renderable) {
-            for(let index4147=container.getCommands().iterator();index4147.hasNext();) {
-                let command = index4147.next();
-                {
-                    let name : string = command.getName();
-                    let params : Object = command.getParameters();
-                    let variable : string = command.getVariable();
-                    if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("null",variable))) {
-                        variable = null;
-                    }
-                    if(params == null && variable == null) {
-                        eval("njq." + name + "()");
-                    } else if(params != null) {
-                        eval("njq." + name + "(params)");
-                    } else if(variable != null) {
-                        eval("njq." + name + "(" + variable + ")");
-                    }
-                }
-            }
         }
 
         renderEvents(njq : HTMLElement, c : framework.JSContainer) {
-            for(let index4148=c.getListeners().keySet().iterator();index4148.hasNext();) {
-                let key = index4148.next();
+            for(let index3711=c.getListeners().keySet().iterator();index3711.hasNext();) {
+                let key = index3711.next();
                 {
                     let listeners : java.util.List<framework.EventListener> = c.getListeners().get(key);
                     njq.addEventListener(key, ((listeners) => {
                         return (evt) => {
                             this.synchronizeFields(c.getRoot().getNative(), c.getRoot());
-                            for(let index4149=listeners.iterator();index4149.hasNext();) {
-                                let l = index4149.next();
+                            for(let index3712=listeners.iterator();index3712.hasNext();) {
+                                let l = index3712.next();
                                 {
                                     l.performAction(c, evt);
                                 }
@@ -1348,12 +1312,14 @@ namespace framework.renderer {
                     inputField.setRawValue(value);
                 } else {
                     let field : HTMLElement = document.getElementById(jsfield.getId());
-                    let value : string = field.getAttribute("value");
-                    inputField.setRawValue(value);
+                    if(field != null) {
+                        let value : string = field.getAttribute("value");
+                        inputField.setRawValue(value);
+                    }
                 }
             }
-            for(let index4150=jsfield.getChildren().iterator();index4150.hasNext();) {
-                let c = index4150.next();
+            for(let index3713=jsfield.getChildren().iterator();index3713.hasNext();) {
+                let c = index3713.next();
                 {
                     this.synchronizeFields(document.getElementById(c.getId()), c);
                 }
@@ -1363,9 +1329,9 @@ namespace framework.renderer {
         renderAttributes(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array4152 = c.getChangedAttributes();
-                    for(let index4151=0; index4151 < array4152.length; index4151++) {
-                        let key = array4152[index4151];
+                    let array3715 = c.getChangedAttributes();
+                    for(let index3714=0; index3714 < array3715.length; index3714++) {
+                        let key = array3715[index3714];
                         {
                             if(c.getAttribute(key) == null) {
                                 njq.removeAttribute(key);
@@ -1376,8 +1342,8 @@ namespace framework.renderer {
                     }
                 }
             } else {
-                for(let index4153=c.getAttributeNames().iterator();index4153.hasNext();) {
-                    let key = index4153.next();
+                for(let index3716=c.getAttributeNames().iterator();index3716.hasNext();) {
+                    let key = index3716.next();
                     {
                         if(c.getAttribute(key) != null) njq.setAttribute(key, c.getAttribute(key));
                     }
@@ -1399,17 +1365,17 @@ namespace framework.renderer {
         renderStyles(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array4155 = c.getChangedStyles();
-                    for(let index4154=0; index4154 < array4155.length; index4154++) {
-                        let key = array4155[index4154];
+                    let array3718 = c.getChangedStyles();
+                    for(let index3717=0; index3717 < array3718.length; index3717++) {
+                        let key = array3718[index3717];
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
                     }
                 }
             } else {
-                for(let index4156=c.getStyleNames().iterator();index4156.hasNext();) {
-                    let key = index4156.next();
+                for(let index3719=c.getStyleNames().iterator();index3719.hasNext();) {
+                    let key = index3719.next();
                     {
                         njq.style.setProperty(key, c.getStyle(key));
                     }
@@ -1565,8 +1531,8 @@ namespace framework {
                 let defaultText : string = txtTagsLabels[i];
                 componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.TextComponentFactory(tag, defaultText));
             };
-            for(let index4157=0; index4157 < tags.length; index4157++) {
-                let tag = tags[index4157];
+            for(let index3720=0; index3720 < tags.length; index3720++) {
+                let tag = tags[index3720];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -1740,8 +1706,8 @@ namespace framework.design {
          */
         public getEditor(designable : framework.design.Designable) : framework.builder.properties.PropertyEditor {
             let editor : framework.builder.properties.EventTypeEditor = new framework.builder.properties.EventTypeEditor("eventType");
-            for(let index4158=this.options.iterator();index4158.hasNext();) {
-                let opt = index4158.next();
+            for(let index3721=this.options.iterator();index3721.hasNext();) {
+                let opt = index3721.next();
                 {
                     let o : framework.JSOption = new framework.JSOption(opt.text, opt.value);
                     editor.addOption(o);
@@ -1927,8 +1893,6 @@ namespace framework {
 
         /*private*/ changedStyles : java.util.List<string> = <any>(new java.util.LinkedList<any>());
 
-        /*private*/ commands : java.util.List<JSContainer.JSCommand> = <any>(new java.util.LinkedList<any>());
-
         public constructor(name? : any, tag? : any) {
             if(((typeof name === 'string') || name === null) && ((typeof tag === 'string') || tag === null)) {
                 let __args = Array.prototype.slice.call(arguments);
@@ -1947,7 +1911,6 @@ namespace framework {
                 this.renderers = <any>(new java.util.ArrayList<any>());
                 this.changedAttributes = <any>(new java.util.LinkedList<any>());
                 this.changedStyles = <any>(new java.util.LinkedList<any>());
-                this.commands = <any>(new java.util.LinkedList<any>());
                 this.id = null;
                 this.data = null;
                 this.parent = null;
@@ -1973,7 +1936,6 @@ namespace framework {
                 this.renderers = <any>(new java.util.ArrayList<any>());
                 this.changedAttributes = <any>(new java.util.LinkedList<any>());
                 this.changedStyles = <any>(new java.util.LinkedList<any>());
-                this.commands = <any>(new java.util.LinkedList<any>());
                 this.id = null;
                 this.data = null;
                 this.parent = null;
@@ -2012,7 +1974,6 @@ namespace framework {
             if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(s,"a28n12l10"))) {
                 this.changedAttributes.clear();
                 this.changedStyles.clear();
-                this.commands.clear();
             }
         }
 
@@ -2068,8 +2029,8 @@ namespace framework {
             }
             let aStyles : string[] = styles.split(" ");
             let add : boolean = true;
-            for(let index4159=0; index4159 < aStyles.length; index4159++) {
-                let style = aStyles[index4159];
+            for(let index3722=0; index3722 < aStyles.length; index3722++) {
+                let style = aStyles[index3722];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(style.trim(),styleClass))) {
                         add = false;
@@ -2200,41 +2161,6 @@ namespace framework {
             return this;
         }
 
-        public exec$java_lang_String$jsweet_lang_Object(name : string, parameter : Object) {
-            this.commands.add(new JSContainer.JSCommand(this, name, JSON.stringify(parameter)));
-        }
-
-        /**
-         * 
-         * @param {string} name
-         * @param {Object} parameter
-         */
-        public exec(name? : any, parameter? : any) : any {
-            if(((typeof name === 'string') || name === null) && ((parameter != null && parameter instanceof <any>Object) || parameter === null)) {
-                return <any>this.exec$java_lang_String$jsweet_lang_Object(name, parameter);
-            } else if(((typeof name === 'string') || name === null) && ((typeof parameter === 'string') || parameter === null)) {
-                return <any>this.exec$java_lang_String$java_lang_String(name, parameter);
-            } else if(((typeof name === 'string') || name === null) && parameter === undefined) {
-                return <any>this.exec$java_lang_String(name);
-            } else throw new Error('invalid overload');
-        }
-
-        public exec$java_lang_String$java_lang_String(name : string, variable : string) {
-            this.commands.add(new JSContainer.JSCommand(this, name, variable));
-        }
-
-        public exec$java_lang_String(name : string) {
-            this.exec$java_lang_String$java_lang_String(name, <string>null);
-        }
-
-        /**
-         * 
-         * @return {*}
-         */
-        public getCommands() : java.lang.Iterable<JSContainer.JSCommand> {
-            return this.commands;
-        }
-
         /**
          * 
          * @param {string} key
@@ -2328,8 +2254,8 @@ namespace framework {
         public setRendered(b : boolean) : JSContainer {
             this.rendered = b;
             if(!b) {
-                for(let index4160=this.children.iterator();index4160.hasNext();) {
-                    let child = index4160.next();
+                for(let index3723=this.children.iterator();index3723.hasNext();) {
+                    let child = index3723.next();
                     {
                         child.setRendered(b);
                     }
@@ -2357,12 +2283,12 @@ namespace framework {
             if(!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for(let index4161=this.renderers.iterator();index4161.hasNext();) {
-                let renderer = index4161.next();
+            for(let index3724=this.renderers.iterator();index3724.hasNext();) {
+                let renderer = index3724.next();
                 renderer.doRender(this, parent)
             }
-            for(let index4162=this.getChildren().iterator();index4162.hasNext();) {
-                let child = index4162.next();
+            for(let index3725=this.getChildren().iterator();index3725.hasNext();) {
+                let child = index3725.next();
                 {
                     child.render();
                 }
@@ -2403,9 +2329,9 @@ namespace framework {
                 return null;
             }
             {
-                let array4164 = this.parent.getAttribute("class").split(" ");
-                for(let index4163=0; index4163 < array4164.length; index4163++) {
-                    let s = array4164[index4163];
+                let array3727 = this.parent.getAttribute("class").split(" ");
+                for(let index3726=0; index3726 < array3727.length; index3726++) {
+                    let s = array3727[index3726];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(s.trim(),cls))) return <T>this.parent;
                     }
@@ -2468,50 +2394,6 @@ namespace framework {
     JSContainer["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
 
 
-
-    export namespace JSContainer {
-
-        export class JSCommand {
-            public __parent: any;
-            name : string;
-
-            parameters : Object;
-
-            variable : string;
-
-            public constructor(__parent: any, name : string, vari : string) {
-                this.__parent = __parent;
-                this.name = null;
-                this.parameters = null;
-                this.variable = null;
-                __parent.name = name;
-                this.variable = vari;
-            }
-
-            public getVariable() : string {
-                return this.variable;
-            }
-
-            public getName() : string {
-                return this.__parent.name;
-            }
-
-            public setName(name : string) {
-                this.__parent.name = name;
-            }
-
-            public getParameters() : Object {
-                return this.parameters;
-            }
-
-            public setParameters(parameters : Object) {
-                this.parameters = parameters;
-            }
-        }
-        JSCommand["__class"] = "framework.JSContainer.JSCommand";
-
-    }
-
 }
 namespace framework.builder.libraries {
     export class TextComponentFactory extends framework.builder.libraries.BasicComponentFactory {
@@ -2540,7 +2422,7 @@ namespace framework.builder.libraries {
 
 }
 namespace framework.builder {
-    export class Component extends framework.JSContainer implements framework.interactions.Draggable {
+    export class Component extends framework.JSContainer implements framework.EventListener {
         /*private*/ titleFigure : framework.JSContainer = new framework.JSContainer("div").addClass("slds-app-launcher__tile-figure");
 
         /*private*/ avatar : framework.JSContainer = new framework.JSContainer("span").addClass("slds-avatar slds-avatar_large");
@@ -2551,9 +2433,14 @@ namespace framework.builder {
 
         /*private*/ componentFactoryRegistry : framework.builder.libraries.ComponentFactoryRegistry = <any>(framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry"));
 
+        /*private*/ identifier : string;
+
         public constructor(identifier : string, initial : string, label : string) {
             super(identifier, "div");
+            this.identifier = null;
+            this.addClass("component-design basic");
             this.setAttribute("identifier", identifier);
+            this.identifier = identifier;
             this.addClass("designer-component");
             this.addChild$framework_JSContainer(this.titleFigure.setAttribute("identifier", identifier));
             this.titleFigure.addChild$framework_JSContainer(this.avatar.setAttribute("identifier", identifier));
@@ -2562,16 +2449,13 @@ namespace framework.builder {
             this.initial.setHtml(initial);
             this.titleFigure.addChild$framework_JSContainer(this.title.setAttribute("identifier", identifier));
             this.title.setHtml(label);
+            this.addEventListener(this, "click");
         }
 
         public getFactory() : framework.builder.marshalling.ComponentFactory {
             return this.componentFactoryRegistry.getComponentFactory(this.getName());
         }
 
-        /**
-         * 
-         * @return {*}
-         */
         public getDraggableOptions() : JQueryUI.DraggableOptions {
             let opts : JQueryUI.DraggableOptions = <any>Object.defineProperty({
 
@@ -2582,9 +2466,19 @@ namespace framework.builder {
             opts.helper = "clone";
             return opts;
         }
+
+        /**
+         * 
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        public performAction(source : framework.JSContainer, evt : Event) {
+            let editor : framework.builder.editors.VisualEditor = <any>(this.getAncestorWithClass<any>("visual-editor"));
+            editor.setWillAddComponent(this);
+        }
     }
     Component["__class"] = "framework.builder.Component";
-    Component["__interfaces"] = ["framework.interactions.Droppable","framework.interactions.Draggable","framework.Renderable"];
+    Component["__interfaces"] = ["framework.interactions.Droppable","framework.EventListener","framework.Renderable"];
 
 
 }
@@ -2647,7 +2541,6 @@ namespace framework.builder.editors {
              * @param {*} data
              */
             public dataLoaded(data : any) {
-                alert(JSON.stringify(data));
             }
 
             constructor(__parent: any) {
@@ -2694,7 +2587,7 @@ namespace framework.builder.editors {
             this.reload();
         }
 
-        public reload() {
+        public reload$() {
             this.ul.getChildren().clear();
             this.ul.setRendered(false);
             this.liJS = new framework.JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
@@ -2715,49 +2608,127 @@ namespace framework.builder.editors {
             this.renderFiles();
         }
 
+        public getItem$framework_design_Designable$framework_JSContainer(designable : framework.design.Designable, currentNode : framework.JSContainer) : framework.builder.editors.StructureTreeItem {
+            for(let index3728=currentNode.getChildren().iterator();index3728.hasNext();) {
+                let des = index3728.next();
+                {
+                    if(des != null && des instanceof <any>framework.builder.editors.StructureTreeItem) {
+                        let titem : framework.builder.editors.StructureTreeItem = <framework.builder.editors.StructureTreeItem>des;
+                        if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(designable.getId(),titem.getDesignable().getId()))) {
+                            return titem;
+                        }
+                    }
+                    let child : framework.builder.editors.StructureTreeItem = this.getItem$framework_design_Designable$framework_JSContainer(designable, des);
+                    if(child != null) {
+                        return child;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public getItem(designable? : any, currentNode? : any) : any {
+            if(((designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.design.Designable") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.design.Designable") >= 0)) || designable === null) && ((currentNode != null && currentNode instanceof <any>framework.JSContainer) || currentNode === null)) {
+                return <any>this.getItem$framework_design_Designable$framework_JSContainer(designable, currentNode);
+            } else if(((typeof designable === 'string') || designable === null) && currentNode === undefined) {
+                return <any>this.getItem$java_lang_String(designable);
+            } else throw new Error('invalid overload');
+        }
+
+        public getItem$java_lang_String(type : string) : framework.TreeItem {
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(type,"stylesheets"))) {
+                return <framework.TreeItem>this.liCss.getChildren().get(0);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(type,"templates"))) {
+                return <framework.TreeItem>this.liTemplates.getChildren().get(0);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(type,"scripts"))) {
+                return <framework.TreeItem>this.liJS.getChildren().get(0);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(type,"data"))) {
+                return <framework.TreeItem>this.liData.getChildren().get(0);
+            }
+            return null;
+        }
+
+        public reload$java_lang_String(type : string) {
+            this.reload();
+            let item : framework.TreeItem = this.getItem$java_lang_String(type);
+            item.open();
+        }
+
+        public reload(type? : any) : any {
+            if(((typeof type === 'string') || type === null)) {
+                return <any>this.reload$java_lang_String(type);
+            } else if(((type != null && (type["__interfaces"] != null && type["__interfaces"].indexOf("framework.design.Designable") >= 0 || type.constructor != null && type.constructor["__interfaces"] != null && type.constructor["__interfaces"].indexOf("framework.design.Designable") >= 0)) || type === null)) {
+                return <any>this.reload$framework_design_Designable(type);
+            } else if(type === undefined) {
+                return <any>this.reload$();
+            } else throw new Error('invalid overload');
+        }
+
+        public reload$framework_design_Designable(designable : framework.design.Designable) {
+            let item : framework.builder.editors.StructureTreeItem = this.getItem$framework_design_Designable$framework_JSContainer(designable, this.liRoot);
+            if(item != null) {
+                let level : number = javaemul.internal.IntegerHelper.parseInt(item.getParent().getAttribute("aria-level"));
+                let li : framework.JSContainer = item.getParent();
+                li.getChildren().clear();
+                li.setRendered(false);
+                this.addNode(designable, li, level);
+                item.open();
+            }
+        }
+
         public unselect(c : framework.JSContainer) {
         }
 
         public renderFiles() {
             let listener : framework.EventListener = new Structure.Structure$0(this);
-            for(let index4165=this.builder.getProject().getStylesheets().iterator();index4165.hasNext();) {
-                let f = index4165.next();
+            let cstylesheets : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+            for(let index3729=this.builder.getProject().getStylesheets().iterator();index3729.hasNext();) {
+                let f = index3729.next();
                 {
                     let item : framework.TreeItem = new framework.TreeItem(f.getName(), f.getTitle());
+                    item.addIcon("delete", "utility");
+                    item.addIcon("up", "utility");
+                    item.addIcon("down", "utility");
+                    item.addIcon("copy", "utility");
+                    item.addIcon("cut", "utility");
+                    item.addIcon("paste", "utility");
                     item.setData(f);
                     item.addEventListener(listener, "click");
                     let li : framework.JSContainer = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                    this.liCss.addChild$framework_JSContainer(li);
+                    this.liCss.addChild$framework_JSContainer(cstylesheets.addChild$framework_JSContainer(li));
                 }
             }
-            for(let index4166=this.builder.getProject().getScripts().iterator();index4166.hasNext();) {
-                let f = index4166.next();
+            let cscripts : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+            for(let index3730=this.builder.getProject().getScripts().iterator();index3730.hasNext();) {
+                let f = index3730.next();
                 {
                     let item : framework.TreeItem = new framework.TreeItem(f.getName(), f.getTitle());
                     item.setData(f);
                     item.addEventListener(listener, "click");
                     let li : framework.JSContainer = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                    this.liJS.addChild$framework_JSContainer(li);
+                    this.liJS.addChild$framework_JSContainer(cscripts.addChild$framework_JSContainer(li));
                 }
             }
-            for(let index4167=this.builder.getProject().getDataEnvironment().iterator();index4167.hasNext();) {
-                let f = index4167.next();
+            let cdata : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+            for(let index3731=this.builder.getProject().getDataEnvironment().iterator();index3731.hasNext();) {
+                let f = index3731.next();
                 {
                     let item : framework.TreeItem = new framework.TreeItem(f.getName(), f.getTitle());
                     item.setData(f);
                     item.addEventListener(listener, "click");
                     let li : framework.JSContainer = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                    this.liData.addChild$framework_JSContainer(li);
+                    this.liData.addChild$framework_JSContainer(cdata.addChild$framework_JSContainer(li));
                 }
             }
-            for(let index4168=this.builder.getProject().getTemplates().iterator();index4168.hasNext();) {
-                let f = index4168.next();
+            let chtml : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+            for(let index3732=this.builder.getProject().getTemplates().iterator();index3732.hasNext();) {
+                let f = index3732.next();
                 {
                     let item : framework.TreeItem = new framework.TreeItem(f.getName(), f.getTitle());
                     item.setData(f);
                     item.addEventListener(listener, "click");
                     let li : framework.JSContainer = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                    this.liTemplates.addChild$framework_JSContainer(li);
+                    this.liTemplates.addChild$framework_JSContainer(chtml.addChild$framework_JSContainer(li));
                 }
             }
         }
@@ -2772,8 +2743,8 @@ namespace framework.builder.editors {
                 item.leaf(false);
                 let children : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                 li.addChild$framework_JSContainer(children);
-                for(let index4169=ctn.getDesignables().iterator();index4169.hasNext();) {
-                    let c = index4169.next();
+                for(let index3733=ctn.getDesignables().iterator();index3733.hasNext();) {
+                    let c = index3733.next();
                     {
                         let child : framework.JSContainer = new framework.JSContainer("li");
                         children.addChild$framework_JSContainer(child);
@@ -2833,12 +2804,19 @@ namespace framework.builder.editors {
              */
             public performAction(source : framework.JSContainer, evt : Event) {
                 evt.stopPropagation();
-                let itemS : framework.builder.editors.StructureTreeItem = (<framework.builder.editors.StructureTreeItem>source);
-                if(this.__parent.selected != null) {
-                    this.__parent.selected.select(false);
+                let editor : framework.builder.editors.VisualEditor = <any>((<framework.JSContainer><any>this.__parent.root).getAncestorWithClass<any>("visual-editor"));
+                let willAdd : framework.builder.Component = editor.getWillAddComponent();
+                if(willAdd != null) {
+                    let itemS : framework.builder.editors.StructureTreeItem = (<framework.builder.editors.StructureTreeItem>source);
+                    editor.addNewComponent(willAdd, itemS.getDesignable());
+                } else {
+                    let itemS : framework.builder.editors.StructureTreeItem = (<framework.builder.editors.StructureTreeItem>source);
+                    if(this.__parent.selected != null) {
+                        this.__parent.selected.select(false);
+                    }
+                    this.__parent.selected = itemS;
+                    this.__parent.selected.select(true);
                 }
-                this.__parent.selected = itemS;
-                this.__parent.selected.select(true);
             }
 
             constructor(__parent: any) {
@@ -3012,9 +2990,8 @@ namespace framework.designables {
          * 
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        public setParameter(key : string, value : string, designMode : boolean) {
+        public applyParam(key : string, value : string) {
             this.component.parameters[key] = value;
         }
 
@@ -3051,8 +3028,8 @@ namespace framework.designables {
          */
         public getDesignables() : java.util.List<framework.design.Designable> {
             let result : java.util.List<framework.design.Designable> = <any>(new java.util.LinkedList<any>());
-            for(let index4170=this.getChildren().iterator();index4170.hasNext();) {
-                let child = index4170.next();
+            for(let index3734=this.getChildren().iterator();index3734.hasNext();) {
+                let child = index3734.next();
                 {
                     result.add(<framework.design.Designable><any>child);
                 }
@@ -3305,8 +3282,8 @@ namespace framework {
          */
         public getValue() : string {
             let val : string = this.getAttribute("value");
-            for(let index4171=this.getChildren().iterator();index4171.hasNext();) {
-                let opt = index4171.next();
+            for(let index3735=this.getChildren().iterator();index3735.hasNext();) {
+                let opt = index3735.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         return (<framework.JSOption>opt).getValue();
@@ -3317,8 +3294,8 @@ namespace framework {
         }
 
         public setValue$java_lang_String(val : string) {
-            for(let index4172=this.getChildren().iterator();index4172.hasNext();) {
-                let opt = index4172.next();
+            for(let index3736=this.getChildren().iterator();index3736.hasNext();) {
+                let opt = index3736.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
                         (<framework.JSOption>opt).setSelected(true);
@@ -3473,10 +3450,9 @@ namespace framework.lightning {
          * 
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        public setParameter(key : string, value : string, designMode : boolean) {
-            this.delegate.setParameter(key, value, designMode);
+        public applyParam(key : string, value : string) {
+            this.delegate.setParameter(key, value, true);
         }
 
         /**
@@ -3724,8 +3700,8 @@ namespace framework.lightning {
         }
 
         public setState(state : string) : Button {
-            for(let index4173=0; index4173 < Button.states_$LI$().length; index4173++) {
-                let s = Button.states_$LI$()[index4173];
+            for(let index3737=0; index3737 < Button.states_$LI$().length; index3737++) {
+                let s = Button.states_$LI$()[index3737];
                 {
                     this.removeClass("slds-button_" + s);
                 }
@@ -3761,19 +3737,7 @@ namespace framework.lightning {
             return this;
         }
 
-        /**
-         * 
-         * @param {string} key
-         * @param {string} value
-         * @param {boolean} designMode
-         */
-        public setParameter(key? : any, value? : any, designMode? : any) : any {
-            if(((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && designMode === undefined) {
-                return <any>this.setParameter$java_lang_String$java_lang_String(key, value);
-            } else throw new Error('invalid overload');
-        }
-
-        public setParameter$java_lang_String$java_lang_String(key : string, value : string) {
+        public setParameter(key : string, value : string) {
             this.component.parameters[key] = value;
             if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"state"))) {
                 this.setState(value);
@@ -4821,6 +4785,8 @@ namespace framework.lightning {
 
         /*private*/ title : framework.JSContainer = new framework.JSContainer("a").addClass("slds-tabs_default__link").setAttribute("href", "javascript:void(0)").setAttribute("role", "tab");
 
+        /*private*/ closeButton : framework.lightning.Icon = new framework.lightning.Icon("close", "utility", "close");
+
         public constructor(name : string, body : framework.lightning.TabBody) {
             super(name, "li");
             this.body = null;
@@ -4829,27 +4795,78 @@ namespace framework.lightning {
             this.addChild$framework_JSContainer(this.title);
             this.title.setAttribute("aria-controls", body.getId());
             this.addClass("slds-tabs_default__item");
+            this.addChild$framework_JSContainer(this.closeButton);
+            this.closeButton.setSvgClass("slds-button__icon");
+            this.closeButton.addClass("tab-close-button");
+            this.closeButton.addEventListener(this, "click");
             this.title.addEventListener(this, "click");
             this.setActive(false);
+            this.setClosable(false);
+        }
+
+        public setClosable(b : boolean) : TabItem {
+            this.closeButton.setVisible(b);
+            return this;
         }
 
         public addTabActionListener(listene : framework.lightning.TabActionListener) {
             this.__framework_lightning_TabItem_listeners.add(listene);
         }
 
+        public close() : TabItem {
+            this.fireClose();
+            this.active = false;
+            this.body.getParent().getChildren().remove(this.body);
+            this.body.show(false);
+            this.getParent().getChildren().remove(this);
+            this.getParent().setRendered(false);
+            this.body.getParent().setRendered(false);
+            return this;
+        }
+
+        /*private*/ active : boolean = false;
+
+        public isActive() : boolean {
+            return this.active;
+        }
+
+        public fireClose() {
+            for(let index3738=this.__framework_lightning_TabItem_listeners.iterator();index3738.hasNext();) {
+                let li = index3738.next();
+                {
+                    li.onClose(this);
+                }
+            }
+        }
+
+        public fireActivate() {
+            for(let index3739=this.__framework_lightning_TabItem_listeners.iterator();index3739.hasNext();) {
+                let li = index3739.next();
+                {
+                    li.onActivate(this);
+                }
+            }
+        }
+
+        public fireDeActivate() {
+            for(let index3740=this.__framework_lightning_TabItem_listeners.iterator();index3740.hasNext();) {
+                let li = index3740.next();
+                {
+                    li.onDeactivate(this);
+                }
+            }
+        }
+
         public setActive(b : boolean) : TabItem {
+            this.active = b;
             if(b) {
                 this.addClass("slds-active");
                 this.title.setAttribute("aria-selected", "true");
-                for(let index4174=this.__framework_lightning_TabItem_listeners.iterator();index4174.hasNext();) {
-                    let li = index4174.next();
-                    {
-                        li.onActivate(this);
-                    }
-                }
+                this.fireActivate();
             } else {
                 this.removeClass("slds-active");
                 this.title.setAttribute("aria-selected", "false");
+                this.fireDeActivate();
             }
             this.body.show(b);
             return this;
@@ -4867,6 +4884,10 @@ namespace framework.lightning {
          * @param {Event} evt
          */
         public performAction(source : framework.JSContainer, evt : Event) {
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(source,this.closeButton))) {
+                this.close();
+                return;
+            }
             let tabs : framework.lightning.Tabs = <any>(source.getAncestorWithClass<any>("slds-tabs_default"));
             tabs.setActive(this);
         }
@@ -5079,14 +5100,20 @@ namespace framework.lightning {
         }
 
         public setActive(item : framework.lightning.TabItem) : Tabs {
-            for(let index4175=this.nav.getChildren().iterator();index4175.hasNext();) {
-                let c = index4175.next();
+            for(let index3741=this.getItems().iterator();index3741.hasNext();) {
+                let tab = index3741.next();
                 {
-                    let tab : framework.lightning.TabItem = <framework.lightning.TabItem>c;
-                    tab.setActive(false);
+                    if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(item.getId(),tab.getId()))) {
+                        if(!tab.isActive()) {
+                            tab.setActive(true);
+                        }
+                    } else {
+                        if(tab.isActive()) {
+                            tab.setActive(false);
+                        }
+                    }
                 }
             }
-            item.setActive(true);
             return this;
         }
 
@@ -5146,6 +5173,10 @@ namespace framework {
 
         /*private*/ __open : boolean = false;
 
+        /*private*/ buttons : java.util.List<framework.lightning.IconButton> = <any>(new java.util.LinkedList<any>());
+
+        /*private*/ buttonsCtn : framework.JSContainer = new framework.JSContainer("div").addClass("buttons-ctn");
+
         public constructor(name : string, title : string) {
             super(name, "div");
             this.addClass("slds-tree__item");
@@ -5153,6 +5184,14 @@ namespace framework {
             this.button.setHtml(this.iconRight);
             this.addChild$framework_JSContainer(this.title.setHtml(title));
             this.button.addEventListener(this, "click");
+            this.addChild$framework_JSContainer(this.buttonsCtn);
+        }
+
+        public addIcon(name : string, type : string) {
+            let minimize : framework.lightning.IconButton = new framework.lightning.IconButton(name);
+            minimize.setIcon(new framework.lightning.Icon(name, type, name));
+            this.buttonsCtn.addChild$framework_JSContainer(minimize);
+            this.buttons.add(minimize);
         }
 
         public getButton() : framework.JSContainer {
@@ -5221,7 +5260,7 @@ namespace framework.builder {
         }
     }
     BasicComponent["__class"] = "framework.builder.BasicComponent";
-    BasicComponent["__interfaces"] = ["framework.interactions.Droppable","framework.interactions.Draggable","framework.Renderable"];
+    BasicComponent["__interfaces"] = ["framework.interactions.Droppable","framework.EventListener","framework.Renderable"];
 
 
 }
@@ -5245,8 +5284,8 @@ namespace framework.builder.editors {
             grid.addChild$framework_JSContainer(colLeft.addClass("slds-col"));
             grid.addChild$framework_JSContainer(colRight.addClass("slds-col"));
             this.root = root;
-            for(let index4176=0; index4176 < framework.builder.editors.EventTypes.events_$LI$().length; index4176++) {
-                let s = framework.builder.editors.EventTypes.events_$LI$()[index4176];
+            for(let index3742=0; index3742 < framework.builder.editors.EventTypes.events_$LI$().length; index3742++) {
+                let s = framework.builder.editors.EventTypes.events_$LI$()[index3742];
                 this.events.addOption(new framework.JSOption(s, s))
             }
             colLeft.addChild$framework_JSContainer(this.component.setStyle("width", "100%"));
@@ -5256,8 +5295,8 @@ namespace framework.builder.editors {
 
         public addComponentOption(designable : framework.design.Designable) {
             this.component.addOption(new framework.JSOption(designable.getName(), designable.getId()));
-            for(let index4177=designable.getDesignables().iterator();index4177.hasNext();) {
-                let des = index4177.next();
+            for(let index3743=designable.getDesignables().iterator();index3743.hasNext();) {
+                let des = index3743.next();
                 {
                     this.addComponentOption(des);
                 }
@@ -5275,8 +5314,8 @@ namespace framework.builder.editors {
             if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(parent.getId(),id))) {
                 return parent;
             }
-            for(let index4178=parent.getDesignables().iterator();index4178.hasNext();) {
-                let des = index4178.next();
+            for(let index3744=parent.getDesignables().iterator();index3744.hasNext();) {
+                let des = index3744.next();
                 {
                     let res : framework.design.Designable = this.findDesignableById(des, id);
                     if(res != null) {
@@ -5297,8 +5336,8 @@ namespace framework.builder.editors {
             let des : framework.design.Designable = this.findDesignableById(this.root, componentId);
             if(des != null) {
                 let listeners : java.util.List<framework.EventListener> = des.getListeners().get(type);
-                for(let index4179=listeners.iterator();index4179.hasNext();) {
-                    let l = index4179.next();
+                for(let index3745=listeners.iterator();index3745.hasNext();) {
+                    let l = index3745.next();
                     {
                         if(l != null && l instanceof <any>framework.builder.BuilderEventListener) {
                             let evt : framework.builder.BuilderEventListener = <framework.builder.BuilderEventListener><any>l;
@@ -5408,6 +5447,35 @@ namespace framework.builder.editors {
             this.propertiesDockedComposer.selectComponent(designable);
         }
 
+        /*private*/ willAdd : framework.builder.Component = null;
+
+        public setWillAddComponent(component : framework.builder.Component) {
+            this.willAdd = component;
+            if(component == null) {
+                this.removeClass("add-mode");
+            } else {
+                this.addClass("add-mode");
+            }
+        }
+
+        public addNewComponent(component : framework.builder.Component, designable : framework.design.Designable) {
+            let factory : framework.builder.marshalling.ComponentFactory = component.getFactory();
+            let container : framework.design.Designable = factory.build(new framework.builder.marshalling.Component(), true);
+            try {
+                designable.addDesignable(container);
+            } catch(e) {
+                alert(e.message);
+            };
+            container.render();
+            this.setWillAddComponent(null);
+            framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).reload$framework_design_Designable(designable);
+            framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).render();
+        }
+
+        public getWillAddComponent() : framework.builder.Component {
+            return this.willAdd;
+        }
+
         public getBuilder() : framework.builder.Builder {
             return this.builder;
         }
@@ -5417,7 +5485,8 @@ namespace framework.builder.editors {
          * @return {string}
          */
         public getMarshall() : string {
-            return JSON.stringify(framework.builder.marshalling.MarshallUtil.extract(this.root));
+            let marshall : string = JSON.stringify(framework.builder.marshalling.MarshallUtil.extract(this.root));
+            return marshall;
         }
 
         /**
@@ -5437,13 +5506,60 @@ namespace framework.builder.editors {
          * @return {framework.builder.marshalling.Component}
          */
         public unmarshall(f : framework.builder.data.File) : framework.builder.marshalling.Component {
-            return <framework.builder.marshalling.Component>JSON.parse(f.getData());
+            let c : Object = <Object>JSON.parse(f.getData());
+            let cc : framework.builder.marshalling.Component = this.doUnMarsh(c);
+            return cc;
+        }
+
+        public doUnMarsh(o : Object) : framework.builder.marshalling.Component {
+            let cc : framework.builder.marshalling.Component = new framework.builder.marshalling.Component();
+            cc.impl = o["impl"].toString();
+            cc.styles = <Object>o["styles"];
+            cc.parameters = <Object>o["parameters"];
+            let events : Array<Object> = <Array<Object>>o["events"];
+            if(events != null && events.length > 0) {
+                let bevents : Array<framework.builder.marshalling.BuilderEvent> = <any>(new Array<framework.builder.marshalling.BuilderEvent>());
+                for(let index3746=0; index3746 < events.length; index3746++) {
+                    let e = events[index3746];
+                    {
+                        let event : framework.builder.marshalling.BuilderEvent = new framework.builder.marshalling.BuilderEvent();
+                        event.source = e["source"].toString();
+                        event.type = e["type"].toString();
+                        bevents.push(event);
+                    }
+                }
+                cc.events = bevents;
+            }
+            let bchildren : Array<framework.builder.marshalling.Component> = <any>(new Array<framework.builder.marshalling.Component>());
+            let children : Array<Object> = <Array<Object>>o["children"];
+            if(children != null && children.length > 0) {
+                for(let index3747=0; index3747 < children.length; index3747++) {
+                    let c = children[index3747];
+                    {
+                        bchildren.push(this.doUnMarsh(c));
+                    }
+                }
+                cc.children = bchildren;
+            }
+            return cc;
+        }
+
+        public cona(component : framework.builder.marshalling.Component) : framework.design.Designable {
+            let des : framework.design.Designable = framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, true);
+            if(component.children != null) {
+                for(let index3748=0; index3748 < component.children.length; index3748++) {
+                    let c = component.children[index3748];
+                    {
+                        let child : framework.design.Designable = this.cona(c);
+                        des.addDesignable(child);
+                    }
+                }
+            }
+            return des;
         }
 
         public consume$framework_builder_marshalling_Component(component : framework.builder.marshalling.Component) {
-            this.root = framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, true);
-            this.root.setStyle("width", "100%");
-            this.root.setStyle("height", "200px");
+            this.root = this.cona(component);
             this.addChild$framework_JSContainer(<framework.JSContainer><any>this.root);
             this.structureDockedComposer = new framework.builder.editors.StructureDockedComposer("strucutru", this.root, this.builder);
             this.composers.addChild$framework_JSContainer(this.structureDockedComposer);
@@ -5568,10 +5684,9 @@ namespace framework.lightning {
          * 
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        public setParameter(key : string, value : string, designMode : boolean) {
-            this.delegate.setParameter(key, value, designMode);
+        public applyParam(key : string, value : string) {
+            this.delegate.setParameter(key, value, true);
         }
 
         /**
@@ -5699,10 +5814,9 @@ namespace framework.designables {
          * 
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        public setParameter(key : string, value : string, designMode : boolean) {
-            this.delegate.setParameter(key, value, designMode);
+        public applyParam(key : string, value : string) {
+            this.delegate.setParameter(key, value, true);
         }
 
         /**
@@ -5797,6 +5911,7 @@ namespace framework.builder.editors {
             super(name);
             this.config = null;
             this.addRenderer(this);
+            this.setStyle("position", "absolute");
         }
 
         public setConfig(config : CodeMirror.EditorConfiguration) {
@@ -5836,7 +5951,11 @@ namespace framework.builder.editors {
          * 
          */
         public save() {
+            if(this.editor == null) {
+                return;
+            }
             let data : string = this.editor.getValue();
+            this.value = data;
             this.file.setData(data);
             framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.data.ProjectService).saveFile(this.file, new CodeMirrorEditor.CodeMirrorEditor$0(this));
         }
@@ -5962,7 +6081,7 @@ namespace framework.builder.properties {
         public performAction(source : framework.JSContainer, evt : Event) {
             let script : string = this.getValue();
             let type : string = this.eventTypeEditor.getValue();
-            this.designable['setParameter$java_lang_String$java_lang_String$boolean'](type, script, true);
+            this.designable.applyParam(type, script);
         }
     }
     EventScriptEditor["__class"] = "framework.builder.properties.EventScriptEditor";
@@ -5982,10 +6101,9 @@ namespace framework.designables {
          * 
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        public setParameter(key : string, value : string, designMode : boolean) {
-            this.delegate.setParameter(key, value, designMode);
+        public applyParam(key : string, value : string) {
+            this.delegate.setParameter(key, value, true);
         }
 
         /**
@@ -6038,22 +6156,13 @@ namespace framework.designables {
             super(name);
         }
 
-        public setParameter$java_lang_String$java_lang_String$boolean(key : string, value : string, designMode : boolean) {
-            this.delegate.setParameter(key, value, designMode);
-        }
-
         /**
          * 
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        public setParameter(key? : any, value? : any, designMode? : any) : any {
-            if(((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && ((typeof designMode === 'boolean') || designMode === null)) {
-                return <any>this.setParameter$java_lang_String$java_lang_String$boolean(key, value, designMode);
-            } else if(((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && designMode === undefined) {
-                return <any>this.setParameter$java_lang_String$java_lang_String(key, value);
-            } else throw new Error('invalid overload');
+        public applyParam(key : string, value : string) {
+            this.delegate.setParameter(key, value, true);
         }
 
         /**
@@ -6216,8 +6325,8 @@ namespace framework.builder.libraries {
             let name : framework.JSInput = new framework.JSInput("name");
             let label : framework.JSInput = new framework.JSInput("label");
             let type : framework.JSSelect = new framework.JSSelect("type");
-            for(let index4180=0; index4180 < framework.builder.data.DataType.Types_$LI$().length; index4180++) {
-                let stype = framework.builder.data.DataType.Types_$LI$()[index4180];
+            for(let index3749=0; index3749 < framework.builder.data.DataType.Types_$LI$().length; index3749++) {
+                let stype = framework.builder.data.DataType.Types_$LI$()[index3749];
                 {
                     type.addOption(new framework.JSOption(stype, stype));
                 }
@@ -6254,8 +6363,8 @@ namespace framework.builder.libraries {
             let name : framework.JSInput = new framework.JSInput("name");
             let label : framework.JSInput = new framework.JSInput("label");
             let type : framework.JSSelect = new framework.JSSelect("type");
-            for(let index4181=0; index4181 < framework.builder.data.DataType.Types_$LI$().length; index4181++) {
-                let stype = framework.builder.data.DataType.Types_$LI$()[index4181];
+            for(let index3750=0; index3750 < framework.builder.data.DataType.Types_$LI$().length; index3750++) {
+                let stype = framework.builder.data.DataType.Types_$LI$()[index3750];
                 {
                     type.addOption(new framework.JSOption(stype, stype));
                 }
@@ -6623,10 +6732,10 @@ namespace framework.builder {
         }
 
         public addComponents(...components : framework.builder.Component[]) : ComponentsLibrary {
-            for(let index4182=0; index4182 < components.length; index4182++) {
-                let com = components[index4182];
+            for(let index3751=0; index3751 < components.length; index3751++) {
+                let com = components[index3751];
                 {
-                    let li : framework.JSContainer = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
+                    let li : framework.JSContainer = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-4");
                     this.addChild$framework_JSContainer(li);
                     li.addChild$framework_JSContainer(com);
                 }
@@ -6993,11 +7102,21 @@ namespace framework.builder {
         }
 
         public openEditor(title : string, editor : framework.builder.editors.Editor<any>) : framework.lightning.TabItem {
-            let l : framework.lightning.TabActionListener = new Builder.Builder$3(this);
+            for(let index3752=this.editorTabs.getItems().iterator();index3752.hasNext();) {
+                let item = index3752.next();
+                {
+                    if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(item.getName(),"editor_" + editor.getName()))) {
+                        this.editorTabs.setActive(item);
+                        return item;
+                    }
+                }
+            }
+            let l : framework.lightning.TabActionListener = new Builder.Builder$3(this, editor);
             let body : framework.lightning.TabBody = new framework.lightning.TabBody("editorBody");
             body.addChild$framework_JSContainer(<framework.JSContainer><any>editor);
-            let item : framework.lightning.TabItem = new framework.lightning.TabItem("visualEditor", body);
+            let item : framework.lightning.TabItem = new framework.lightning.TabItem("editor_" + editor.getName(), body);
             item.setTitle(title);
+            item.setClosable(true);
             this.editorTabs.addItem$framework_lightning_TabItem(item);
             this.activeEditor = editor;
             item.addTabActionListener(l);
@@ -7081,6 +7200,7 @@ namespace framework.builder {
              * @param {framework.lightning.TabItem} item
              */
             public onClose(item : framework.lightning.TabItem) {
+                if(this.editor != null) this.editor.save();
             }
 
             /**
@@ -7088,10 +7208,17 @@ namespace framework.builder {
              * @param {framework.lightning.TabItem} item
              */
             public onActivate(item : framework.lightning.TabItem) {
-                this.__parent.activeEditor.setRendered(false);
             }
 
-            constructor(__parent: any) {
+            /**
+             * 
+             * @param {framework.lightning.TabItem} item
+             */
+            public onDeactivate(item : framework.lightning.TabItem) {
+                if(this.editor != null) this.editor.save();
+            }
+
+            constructor(__parent: any, private editor: any) {
                 this.__parent = __parent;
             }
         }
@@ -7118,8 +7245,8 @@ namespace framework.lightning {
         public setLayout(layout : string) : DescriptionList {
             this.currentLayout = layout;
             this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-            for(let index4183=this.getChildren().iterator();index4183.hasNext();) {
-                let child = index4183.next();
+            for(let index3753=this.getChildren().iterator();index3753.hasNext();) {
+                let child = index3753.next();
                 {
                     child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                     child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -7344,20 +7471,13 @@ namespace framework.designables {
             super(name, tag);
         }
 
-        public setParameter$java_lang_String$java_lang_String$boolean(key : string, value : string, designMode : boolean) {
-            this.delegate.setParameter(key, value, designMode);
-        }
-
         /**
          * 
          * @param {string} key
          * @param {string} value
-         * @param {boolean} designMode
          */
-        public setParameter(key? : any, value? : any, designMode? : any) : any {
-            if(((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && ((typeof designMode === 'boolean') || designMode === null)) {
-                return <any>this.setParameter$java_lang_String$java_lang_String$boolean(key, value, designMode);
-            } else throw new Error('invalid overload');
+        public applyParam(key : string, value : string) {
+            this.delegate.setParameter(key, value, true);
         }
 
         /**
@@ -7408,29 +7528,7 @@ namespace framework.builder.editors {
             super(name, designable.getName());
             this.designable = null;
             this.designable = designable;
-            framework.designables.DesignableDelegate.setDroppableOptions(designable, true);
-            let options : JQueryUI.DroppableOptions = <any>Object.defineProperty({
-
-            }, '__interfaces', { configurable: true, value: ["def.jqueryui.jqueryui.DroppableOptions","def.jqueryui.jqueryui.DroppableEvents"] });
-            options.greedy = true;
-            options.accept = ".designer-component";
-            options.tolerance = "pointer";
-            options.activeClass = "drop-active";
-            options.drop = (event : Event, param : JQueryUI.DroppableEventUIParam) => {
-                event.stopPropagation();
-                let identifier : string = event.srcElement.getAttribute("identifier");
-                let factory : framework.builder.marshalling.ComponentFactory = framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(identifier);
-                let container : framework.design.Designable = factory.build(new framework.builder.marshalling.Component(), true);
-                try {
-                    designable.addDesignable(container);
-                } catch(e) {
-                    alert(e.message);
-                };
-                container.render();
-                framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).reload();
-                framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).render();
-            };
-            this.setDroppableOptions(options);
+            this.addClass("structure-tree-item");
         }
 
         public getDesignable() : framework.design.Designable {
@@ -7497,7 +7595,7 @@ namespace framework.builder.properties {
          */
         public performAction(source : framework.JSContainer, evt : Event) {
             let name : string = this.getValue();
-            this.designable['setParameter$java_lang_String$java_lang_String$boolean']("name", name, true);
+            this.designable.applyParam("name", name);
             this.designable.setName(name);
         }
 
@@ -7718,8 +7816,8 @@ namespace framework.builder.properties {
         public initEditor(designable : framework.design.Designable, parameter : framework.design.Parameter) {
             let value : string = "";
             let select : framework.JSSelect = <framework.JSSelect><any>designable;
-            for(let index4184=select.getChildren().iterator();index4184.hasNext();) {
-                let c = index4184.next();
+            for(let index3754=select.getChildren().iterator();index3754.hasNext();) {
+                let c = index3754.next();
                 {
                     let opt : framework.JSOption = <framework.JSOption>c;
                     value = value + "\n" + opt.getText();
@@ -7739,8 +7837,8 @@ namespace framework.builder.properties {
             let select : framework.JSSelect = <framework.JSSelect><any>this.designable;
             select.getChildren().clear();
             select.setRendered(false);
-            for(let index4185=0; index4185 < options.length; index4185++) {
-                let opt = options[index4185];
+            for(let index3755=0; index3755 < options.length; index3755++) {
+                let opt = options[index3755];
                 {
                     let option : framework.JSOption = new framework.JSOption(opt, opt);
                     select.addOption(option);
@@ -7938,8 +8036,8 @@ namespace framework.builder {
             this.files.add(this.__framework_builder_NewFile_html);
             this.files.add(this.css);
             this.files.add(this.javascript);
-            for(let index4186=this.files.iterator();index4186.hasNext();) {
-                let file = index4186.next();
+            for(let index3756=this.files.iterator();index3756.hasNext();) {
+                let file = index3756.next();
                 {
                     file.addEventListener(new NewFile.NewFile$0(this), "click");
                 }
@@ -7966,7 +8064,7 @@ namespace framework.builder {
                 }
             }
             let project : framework.builder.data.File = this.builder.getProject();
-            project.createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name, type, new NewFile.NewFile$2(this));
+            project.createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name, type, new NewFile.NewFile$2(this, type));
         }
 
         public createLightning(name : string) {
@@ -8042,10 +8140,14 @@ namespace framework.builder {
              * @param {*} data
              */
             public dataLoaded(data : any) {
-                alert(JSON.stringify(data));
+                this.__parent.close();
+                this.__parent.render();
+                this.__parent.getBackdrop().render();
+                framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).reload$java_lang_String(this.type);
+                framework.core.BeanFactory.getInstance().getBeanOfType<any>(framework.builder.editors.Structure).render();
             }
 
-            constructor(__parent: any) {
+            constructor(__parent: any, private type: any) {
                 this.__parent = __parent;
             }
         }
@@ -8114,8 +8216,8 @@ namespace framework.builder {
          */
         public dataLoaded(data : any) {
             let nprojects : Array<Object> = <Array<Object>>data;
-            for(let index4187=0; index4187 < nprojects.length; index4187++) {
-                let p = nprojects[index4187];
+            for(let index3757=0; index3757 < nprojects.length; index3757++) {
+                let p = nprojects[index3757];
                 {
                     let project : framework.builder.data.File = new framework.builder.data.File(p);
                     let file : framework.builder.UIFile = new framework.builder.UIFile(project.getName());
@@ -8149,8 +8251,8 @@ namespace framework.builder.properties {
         public setComponent(designable : framework.design.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index4188=this.component.getParameters().iterator();index4188.hasNext();) {
-                let p = index4188.next();
+            for(let index3758=this.component.getParameters().iterator();index3758.hasNext();) {
+                let p = index3758.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(p.category,"advanced"))) this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
                 }
@@ -8175,8 +8277,8 @@ namespace framework.builder.properties {
         public setComponent(designable : framework.design.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index4189=designable.getParameters().iterator();index4189.hasNext();) {
-                let param = index4189.next();
+            for(let index3759=designable.getParameters().iterator();index3759.hasNext();) {
+                let param = index3759.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(param.category,"Basic"))) {
                         this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);
@@ -8204,8 +8306,8 @@ namespace framework.builder.properties {
         public setComponent(designable : framework.design.Designable) {
             super.setComponent(designable);
             this.clear();
-            for(let index4190=designable.getParameters().iterator();index4190.hasNext();) {
-                let param = index4190.next();
+            for(let index3760=designable.getParameters().iterator();index3760.hasNext();) {
+                let param = index3760.next();
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(param.category,"event"))) {
                         this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);

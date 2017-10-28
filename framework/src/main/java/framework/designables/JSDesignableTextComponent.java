@@ -18,8 +18,8 @@ public class JSDesignableTextComponent extends TextComponent implements Designab
 	}
 
 	@Override
-	public void setParameter(String key, String value, boolean designMode) {
-		delegate.setParameter(key, value, designMode);
+	public void applyParam(String key, String value) {
+		delegate.setParameter(key, value,true);
 	}
 
 	

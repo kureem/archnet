@@ -59,8 +59,8 @@ var framework;
                  * @param {framework.builder.data.DataStructure} datastructure
                  */
                 BasicDataEnvironment.prototype.saveStructure = function (datastructure) {
-                    for (var index4132 = BasicDataEnvironment.structures_$LI$().iterator(); index4132.hasNext();) {
-                        var structure = index4132.next();
+                    for (var index3696 = BasicDataEnvironment.structures_$LI$().iterator(); index3696.hasNext();) {
+                        var structure = index3696.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -81,8 +81,8 @@ var framework;
                  * @param {string} name
                  */
                 BasicDataEnvironment.prototype.deleteStructure = function (name) {
-                    for (var index4133 = BasicDataEnvironment.structures_$LI$().iterator(); index4133.hasNext();) {
-                        var structure = index4133.next();
+                    for (var index3697 = BasicDataEnvironment.structures_$LI$().iterator(); index3697.hasNext();) {
+                        var structure = index3697.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -195,8 +195,8 @@ var framework;
                     return this.getChild("data").getChildren();
                 };
                 File.prototype.getChild = function (name) {
-                    for (var index4134 = this.getChildren().iterator(); index4134.hasNext();) {
-                        var f = index4134.next();
+                    for (var index3698 = this.getChildren().iterator(); index3698.hasNext();) {
+                        var f = index3698.next();
                         {
                             if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(f.getName(), name)) {
                                 return f;
@@ -264,9 +264,9 @@ var framework;
                 File.prototype.getChildren = function () {
                     var result = (new java.util.LinkedList());
                     {
-                        var array4136 = this.file["children"];
-                        for (var index4135 = 0; index4135 < array4136.length; index4135++) {
-                            var o = array4136[index4135];
+                        var array3700 = this.file["children"];
+                        for (var index3699 = 0; index3699 < array3700.length; index3699++) {
+                            var o = array3700[index3699];
                             {
                                 result.add(new File(o));
                             }
@@ -392,27 +392,27 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index4137 = 0; index4137 < keys.length; index4137++) {
-                        var key = keys[index4137];
+                    for (var index3701 = 0; index3701 < keys.length; index3701++) {
+                        var key = keys[index3701];
                         {
-                            var value = component.styles[key];
+                            var value = component.styles[key].toString();
                             instance.setStyle(key, value);
                         }
                     }
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index4138 = 0; index4138 < keys.length; index4138++) {
-                        var key = keys[index4138];
+                    for (var index3702 = 0; index3702 < keys.length; index3702++) {
+                        var key = keys[index3702];
                         {
-                            var value = component.parameters[key];
-                            instance['setParameter$java_lang_String$java_lang_String$boolean'](key, value, designMode);
+                            var value = component.parameters[key].toString();
+                            instance.applyParam(key, value);
                         }
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index4139 = 0; index4139 < component.events.length; index4139++) {
-                        var event_1 = component.events[index4139];
+                    for (var index3703 = 0; index3703 < component.events.length; index3703++) {
+                        var event_1 = component.events[index3703];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source);
                             instance.addEventListener(listener, event_1.type);
@@ -426,12 +426,13 @@ var framework;
                  * @return {*}
                  */
                 AbstractComponentFactory.prototype.build = function (component, designMode) {
-                    var instance = this.createInstance(designMode);
-                    this.configureStyles(instance, component);
-                    this.configureParameters(instance, component, designMode);
-                    this.configureEvents(instance, component);
-                    this.decorateForDesignMode(instance, designMode);
-                    return instance;
+                    var thIns = this.createInstance(designMode);
+                    thIns.setAttribute("identifier", this.impl);
+                    this.configureStyles(thIns, component);
+                    this.configureParameters(thIns, component, designMode);
+                    this.configureEvents(thIns, component);
+                    this.decorateForDesignMode(thIns, designMode);
+                    return thIns;
                 };
                 AbstractComponentFactory.prototype.decorateForDesignMode = function (instance, designMode) {
                     this.decorateDroppable(instance, designMode);
@@ -543,23 +544,24 @@ var framework;
                 }
                 MarshallUtil.extract = function (designable) {
                     var c = new framework.builder.marshalling.Component();
-                    for (var index4140 = designable.getStyleNames().iterator(); index4140.hasNext();) {
-                        var s = index4140.next();
+                    c.impl = designable.getAttribute("identifier");
+                    for (var index3704 = designable.getStyleNames().iterator(); index3704.hasNext();) {
+                        var s = index3704.next();
                         {
                             c.styles[s] = designable.getStyle(s);
                         }
                     }
-                    for (var index4141 = designable.getAttributeNames().iterator(); index4141.hasNext();) {
-                        var s = index4141.next();
+                    for (var index3705 = designable.getAttributeNames().iterator(); index3705.hasNext();) {
+                        var s = index3705.next();
                         {
                             c.parameters[s] = designable.getAttribute(s);
                         }
                     }
-                    for (var index4142 = designable.getListeners().keySet().iterator(); index4142.hasNext();) {
-                        var key = index4142.next();
+                    for (var index3706 = designable.getListeners().keySet().iterator(); index3706.hasNext();) {
+                        var key = index3706.next();
                         {
-                            for (var index4143 = designable.getListeners().get(key).iterator(); index4143.hasNext();) {
-                                var l = index4143.next();
+                            for (var index3707 = designable.getListeners().get(key).iterator(); index3707.hasNext();) {
+                                var l = index3707.next();
                                 {
                                     if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                         var bel = l;
@@ -572,8 +574,8 @@ var framework;
                             }
                         }
                     }
-                    for (var index4144 = designable.getDesignables().iterator(); index4144.hasNext();) {
-                        var child = index4144.next();
+                    for (var index3708 = designable.getDesignables().iterator(); index3708.hasNext();) {
+                        var child = index3708.next();
                         {
                             var childC = MarshallUtil.extract(child);
                             c.children.push(childC);
@@ -602,8 +604,15 @@ var framework;
              * @param {Event} evt
              */
             SelectComponentEvent.prototype.performAction = function (source, evt) {
-                evt.stopPropagation();
-                this.selector.select(source);
+                var editor = (source.getAncestorWithClass("visual-editor"));
+                if (editor != null && editor.getWillAddComponent() != null) {
+                    var willAdd = editor.getWillAddComponent();
+                    editor.addNewComponent(willAdd, source);
+                }
+                else {
+                    evt.stopPropagation();
+                    this.selector.select(source);
+                }
             };
             return SelectComponentEvent;
         }());
@@ -670,8 +679,8 @@ var framework;
                 this.beans.put(mixxingName, instance);
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
-                for (var index4145 = this.beans.keySet().iterator(); index4145.hasNext();) {
-                    var key = index4145.next();
+                for (var index3709 = this.beans.keySet().iterator(); index3709.hasNext();) {
+                    var key = index3709.next();
                     {
                         var bean = this.beans.get(key);
                         try {
@@ -793,30 +802,6 @@ var framework;
                 return params;
             };
             DesignableDelegate.setDroppableOptions = function (instance, designMode) {
-                if (designMode) {
-                    var options = Object.defineProperty({}, '__interfaces', { configurable: true, value: ["def.jqueryui.jqueryui.DroppableOptions", "def.jqueryui.jqueryui.DroppableEvents"] });
-                    options.greedy = true;
-                    options.accept = ".designer-component";
-                    options.tolerance = "pointer";
-                    options.activeClass = "drop-active";
-                    options.drop = function (event, param) {
-                        event.stopPropagation();
-                        var identifier = event.srcElement.getAttribute("identifier");
-                        var factory = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(identifier);
-                        var container = factory.build(new framework.builder.marshalling.Component(), true);
-                        try {
-                            instance.addDesignable(container);
-                        }
-                        catch (e) {
-                            alert(e.message);
-                        }
-                        ;
-                        container.render();
-                        framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).reload();
-                        framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).render();
-                    };
-                    instance.setDroppableOptions(options);
-                }
             };
             return DesignableDelegate;
         }());
@@ -1034,8 +1019,8 @@ var framework;
             function ContainerRenderer() {
             }
             ContainerRenderer.prototype.decorate = function (c) {
-                for (var index4146 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index4146.hasNext();) {
-                    var dec = index4146.next();
+                for (var index3710 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index3710.hasNext();) {
+                    var dec = index3710.next();
                     {
                         dec.decorate(c);
                     }
@@ -1114,43 +1099,18 @@ var framework;
                     throw new Error('invalid overload');
             };
             ContainerRenderer.prototype.execCommands = function (njq, container) {
-                for (var index4147 = container.getCommands().iterator(); index4147.hasNext();) {
-                    var command = index4147.next();
-                    {
-                        var name_1 = command.getName();
-                        var params = command.getParameters();
-                        var variable = command.getVariable();
-                        if ((function (o1, o2) { if (o1 && o1.equals) {
-                            return o1.equals(o2);
-                        }
-                        else {
-                            return o1 === o2;
-                        } })("null", variable)) {
-                            variable = null;
-                        }
-                        if (params == null && variable == null) {
-                            eval("njq." + name_1 + "()");
-                        }
-                        else if (params != null) {
-                            eval("njq." + name_1 + "(params)");
-                        }
-                        else if (variable != null) {
-                            eval("njq." + name_1 + "(" + variable + ")");
-                        }
-                    }
-                }
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var _this = this;
-                for (var index4148 = c.getListeners().keySet().iterator(); index4148.hasNext();) {
-                    var key = index4148.next();
+                for (var index3711 = c.getListeners().keySet().iterator(); index3711.hasNext();) {
+                    var key = index3711.next();
                     {
                         var listeners = c.getListeners().get(key);
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
                                 _this.synchronizeFields(c.getRoot().getNative(), c.getRoot());
-                                for (var index4149 = listeners.iterator(); index4149.hasNext();) {
-                                    var l = index4149.next();
+                                for (var index3712 = listeners.iterator(); index3712.hasNext();) {
+                                    var l = index3712.next();
                                     {
                                         l.performAction(c, evt);
                                     }
@@ -1220,12 +1180,14 @@ var framework;
                     }
                     else {
                         var field = document.getElementById(jsfield.getId());
-                        var value = field.getAttribute("value");
-                        inputField.setRawValue(value);
+                        if (field != null) {
+                            var value = field.getAttribute("value");
+                            inputField.setRawValue(value);
+                        }
                     }
                 }
-                for (var index4150 = jsfield.getChildren().iterator(); index4150.hasNext();) {
-                    var c = index4150.next();
+                for (var index3713 = jsfield.getChildren().iterator(); index3713.hasNext();) {
+                    var c = index3713.next();
                     {
                         this.synchronizeFields(document.getElementById(c.getId()), c);
                     }
@@ -1234,9 +1196,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array4152 = c.getChangedAttributes();
-                        for (var index4151 = 0; index4151 < array4152.length; index4151++) {
-                            var key = array4152[index4151];
+                        var array3715 = c.getChangedAttributes();
+                        for (var index3714 = 0; index3714 < array3715.length; index3714++) {
+                            var key = array3715[index3714];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -1249,8 +1211,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index4153 = c.getAttributeNames().iterator(); index4153.hasNext();) {
-                        var key = index4153.next();
+                    for (var index3716 = c.getAttributeNames().iterator(); index3716.hasNext();) {
+                        var key = index3716.next();
                         {
                             if (c.getAttribute(key) != null)
                                 njq.setAttribute(key, c.getAttribute(key));
@@ -1277,9 +1239,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array4155 = c.getChangedStyles();
-                        for (var index4154 = 0; index4154 < array4155.length; index4154++) {
-                            var key = array4155[index4154];
+                        var array3718 = c.getChangedStyles();
+                        for (var index3717 = 0; index3717 < array3718.length; index3717++) {
+                            var key = array3718[index3717];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -1287,8 +1249,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index4156 = c.getStyleNames().iterator(); index4156.hasNext();) {
-                        var key = index4156.next();
+                    for (var index3719 = c.getStyleNames().iterator(); index3719.hasNext();) {
+                        var key = index3719.next();
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
@@ -1442,8 +1404,8 @@ var framework;
                 componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.TextComponentFactory(tag, defaultText));
             }
             ;
-            for (var index4157 = 0; index4157 < tags.length; index4157++) {
-                var tag = tags[index4157];
+            for (var index3720 = 0; index3720 < tags.length; index3720++) {
+                var tag = tags[index3720];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -1631,8 +1593,8 @@ var framework;
              */
             EventTypeParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.EventTypeEditor("eventType");
-                for (var index4158 = this.options.iterator(); index4158.hasNext();) {
-                    var opt = index4158.next();
+                for (var index3721 = this.options.iterator(); index3721.hasNext();) {
+                    var opt = index3721.next();
                     {
                         var o = new framework.JSOption(opt.text, opt.value);
                         editor.addOption(o);
@@ -1826,7 +1788,6 @@ var framework;
             /*private*/ this.renderers = (new java.util.ArrayList());
             /*private*/ this.changedAttributes = (new java.util.LinkedList());
             /*private*/ this.changedStyles = (new java.util.LinkedList());
-            /*private*/ this.commands = (new java.util.LinkedList());
             if (((typeof name === 'string') || name === null) && ((typeof tag === 'string') || tag === null)) {
                 var __args = Array.prototype.slice.call(arguments);
                 this.id = null;
@@ -1844,7 +1805,6 @@ var framework;
                 this.renderers = (new java.util.ArrayList());
                 this.changedAttributes = (new java.util.LinkedList());
                 this.changedStyles = (new java.util.LinkedList());
-                this.commands = (new java.util.LinkedList());
                 this.id = null;
                 this.data = null;
                 this.parent = null;
@@ -1871,7 +1831,6 @@ var framework;
                 this.renderers = (new java.util.ArrayList());
                 this.changedAttributes = (new java.util.LinkedList());
                 this.changedStyles = (new java.util.LinkedList());
-                this.commands = (new java.util.LinkedList());
                 this.id = null;
                 this.data = null;
                 this.parent = null;
@@ -1917,7 +1876,6 @@ var framework;
             } })(s, "a28n12l10")) {
                 this.changedAttributes.clear();
                 this.changedStyles.clear();
-                this.commands.clear();
             }
         };
         /**
@@ -1968,8 +1926,8 @@ var framework;
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index4159 = 0; index4159 < aStyles.length; index4159++) {
-                var style = aStyles[index4159];
+            for (var index3722 = 0; index3722 < aStyles.length; index3722++) {
+                var style = aStyles[index3722];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -2097,40 +2055,6 @@ var framework;
             this.attributes.put(key, value);
             return this;
         };
-        JSContainer.prototype.exec$java_lang_String$jsweet_lang_Object = function (name, parameter) {
-            this.commands.add(new JSContainer.JSCommand(this, name, JSON.stringify(parameter)));
-        };
-        /**
-         *
-         * @param {string} name
-         * @param {Object} parameter
-         */
-        JSContainer.prototype.exec = function (name, parameter) {
-            if (((typeof name === 'string') || name === null) && ((parameter != null && parameter instanceof Object) || parameter === null)) {
-                return this.exec$java_lang_String$jsweet_lang_Object(name, parameter);
-            }
-            else if (((typeof name === 'string') || name === null) && ((typeof parameter === 'string') || parameter === null)) {
-                return this.exec$java_lang_String$java_lang_String(name, parameter);
-            }
-            else if (((typeof name === 'string') || name === null) && parameter === undefined) {
-                return this.exec$java_lang_String(name);
-            }
-            else
-                throw new Error('invalid overload');
-        };
-        JSContainer.prototype.exec$java_lang_String$java_lang_String = function (name, variable) {
-            this.commands.add(new JSContainer.JSCommand(this, name, variable));
-        };
-        JSContainer.prototype.exec$java_lang_String = function (name) {
-            this.exec$java_lang_String$java_lang_String(name, null);
-        };
-        /**
-         *
-         * @return {*}
-         */
-        JSContainer.prototype.getCommands = function () {
-            return this.commands;
-        };
         /**
          *
          * @param {string} key
@@ -2214,8 +2138,8 @@ var framework;
         JSContainer.prototype.setRendered = function (b) {
             this.rendered = b;
             if (!b) {
-                for (var index4160 = this.children.iterator(); index4160.hasNext();) {
-                    var child = index4160.next();
+                for (var index3723 = this.children.iterator(); index3723.hasNext();) {
+                    var child = index3723.next();
                     {
                         child.setRendered(b);
                     }
@@ -2243,12 +2167,12 @@ var framework;
             if (!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for (var index4161 = this.renderers.iterator(); index4161.hasNext();) {
-                var renderer_1 = index4161.next();
+            for (var index3724 = this.renderers.iterator(); index3724.hasNext();) {
+                var renderer_1 = index3724.next();
                 renderer_1.doRender(this, parent);
             }
-            for (var index4162 = this.getChildren().iterator(); index4162.hasNext();) {
-                var child = index4162.next();
+            for (var index3725 = this.getChildren().iterator(); index3725.hasNext();) {
+                var child = index3725.next();
                 {
                     child.render();
                 }
@@ -2288,9 +2212,9 @@ var framework;
                 return null;
             }
             {
-                var array4164 = this.parent.getAttribute("class").split(" ");
-                for (var index4163 = 0; index4163 < array4164.length; index4163++) {
-                    var s = array4164[index4163];
+                var array3727 = this.parent.getAttribute("class").split(" ");
+                for (var index3726 = 0; index3726 < array3727.length; index3726++) {
+                    var s = array3727[index3726];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -2367,36 +2291,6 @@ var framework;
     framework.JSContainer = JSContainer;
     JSContainer["__class"] = "framework.JSContainer";
     JSContainer["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
-    (function (JSContainer) {
-        var JSCommand = (function () {
-            function JSCommand(__parent, name, vari) {
-                this.__parent = __parent;
-                this.name = null;
-                this.parameters = null;
-                this.variable = null;
-                __parent.name = name;
-                this.variable = vari;
-            }
-            JSCommand.prototype.getVariable = function () {
-                return this.variable;
-            };
-            JSCommand.prototype.getName = function () {
-                return this.__parent.name;
-            };
-            JSCommand.prototype.setName = function (name) {
-                this.__parent.name = name;
-            };
-            JSCommand.prototype.getParameters = function () {
-                return this.parameters;
-            };
-            JSCommand.prototype.setParameters = function (parameters) {
-                this.parameters = parameters;
-            };
-            return JSCommand;
-        }());
-        JSContainer.JSCommand = JSCommand;
-        JSCommand["__class"] = "framework.JSContainer.JSCommand";
-    })(JSContainer = framework.JSContainer || (framework.JSContainer = {}));
 })(framework || (framework = {}));
 (function (framework) {
     var builder;
@@ -2441,7 +2335,10 @@ var framework;
                 /*private*/ _this.initial = new framework.JSContainer("abbr").addClass("slds-avatar__initials slds-icon-custom-27");
                 /*private*/ _this.title = new framework.JSContainer("span").addClass("slds-app-launcher__title-label");
                 /*private*/ _this.componentFactoryRegistry = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry"));
+                _this.identifier = null;
+                _this.addClass("component-design basic");
                 _this.setAttribute("identifier", identifier);
+                _this.identifier = identifier;
                 _this.addClass("designer-component");
                 _this.addChild$framework_JSContainer(_this.titleFigure.setAttribute("identifier", identifier));
                 _this.titleFigure.addChild$framework_JSContainer(_this.avatar.setAttribute("identifier", identifier));
@@ -2450,15 +2347,12 @@ var framework;
                 _this.initial.setHtml(initial);
                 _this.titleFigure.addChild$framework_JSContainer(_this.title.setAttribute("identifier", identifier));
                 _this.title.setHtml(label);
+                _this.addEventListener(_this, "click");
                 return _this;
             }
             Component.prototype.getFactory = function () {
                 return this.componentFactoryRegistry.getComponentFactory(this.getName());
             };
-            /**
-             *
-             * @return {*}
-             */
             Component.prototype.getDraggableOptions = function () {
                 var opts = Object.defineProperty({}, '__interfaces', { configurable: true, value: ["def.jqueryui.jqueryui.DraggableOptions", "def.jqueryui.jqueryui.DraggableEvents"] });
                 opts.appendTo = "body";
@@ -2467,11 +2361,20 @@ var framework;
                 opts.helper = "clone";
                 return opts;
             };
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            Component.prototype.performAction = function (source, evt) {
+                var editor = (this.getAncestorWithClass("visual-editor"));
+                editor.setWillAddComponent(this);
+            };
             return Component;
         }(framework.JSContainer));
         builder.Component = Component;
         Component["__class"] = "framework.builder.Component";
-        Component["__interfaces"] = ["framework.interactions.Droppable", "framework.interactions.Draggable", "framework.Renderable"];
+        Component["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.Renderable"];
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -2529,7 +2432,6 @@ var framework;
                      * @param {*} data
                      */
                     AbstractEditor$0.prototype.dataLoaded = function (data) {
-                        alert(JSON.stringify(data));
                     };
                     return AbstractEditor$0;
                 }());
@@ -2565,7 +2467,7 @@ var framework;
                     _this.reload();
                     return _this;
                 }
-                Structure.prototype.reload = function () {
+                Structure.prototype.reload$ = function () {
                     this.ul.getChildren().clear();
                     this.ul.setRendered(false);
                     this.liJS = new framework.JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
@@ -2585,48 +2487,155 @@ var framework;
                     this.ul.addChild$framework_JSContainer(this.liData);
                     this.renderFiles();
                 };
+                Structure.prototype.getItem$framework_design_Designable$framework_JSContainer = function (designable, currentNode) {
+                    for (var index3728 = currentNode.getChildren().iterator(); index3728.hasNext();) {
+                        var des = index3728.next();
+                        {
+                            if (des != null && des instanceof framework.builder.editors.StructureTreeItem) {
+                                var titem = des;
+                                if ((function (o1, o2) { if (o1 && o1.equals) {
+                                    return o1.equals(o2);
+                                }
+                                else {
+                                    return o1 === o2;
+                                } })(designable.getId(), titem.getDesignable().getId())) {
+                                    return titem;
+                                }
+                            }
+                            var child = this.getItem$framework_design_Designable$framework_JSContainer(designable, des);
+                            if (child != null) {
+                                return child;
+                            }
+                        }
+                    }
+                    return null;
+                };
+                Structure.prototype.getItem = function (designable, currentNode) {
+                    if (((designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.design.Designable") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.design.Designable") >= 0)) || designable === null) && ((currentNode != null && currentNode instanceof framework.JSContainer) || currentNode === null)) {
+                        return this.getItem$framework_design_Designable$framework_JSContainer(designable, currentNode);
+                    }
+                    else if (((typeof designable === 'string') || designable === null) && currentNode === undefined) {
+                        return this.getItem$java_lang_String(designable);
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                Structure.prototype.getItem$java_lang_String = function (type) {
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(type, "stylesheets")) {
+                        return this.liCss.getChildren().get(0);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(type, "templates")) {
+                        return this.liTemplates.getChildren().get(0);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(type, "scripts")) {
+                        return this.liJS.getChildren().get(0);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(type, "data")) {
+                        return this.liData.getChildren().get(0);
+                    }
+                    return null;
+                };
+                Structure.prototype.reload$java_lang_String = function (type) {
+                    this.reload();
+                    var item = this.getItem$java_lang_String(type);
+                    item.open();
+                };
+                Structure.prototype.reload = function (type) {
+                    if (((typeof type === 'string') || type === null)) {
+                        return this.reload$java_lang_String(type);
+                    }
+                    else if (((type != null && (type["__interfaces"] != null && type["__interfaces"].indexOf("framework.design.Designable") >= 0 || type.constructor != null && type.constructor["__interfaces"] != null && type.constructor["__interfaces"].indexOf("framework.design.Designable") >= 0)) || type === null)) {
+                        return this.reload$framework_design_Designable(type);
+                    }
+                    else if (type === undefined) {
+                        return this.reload$();
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                Structure.prototype.reload$framework_design_Designable = function (designable) {
+                    var item = this.getItem$framework_design_Designable$framework_JSContainer(designable, this.liRoot);
+                    if (item != null) {
+                        var level = javaemul.internal.IntegerHelper.parseInt(item.getParent().getAttribute("aria-level"));
+                        var li = item.getParent();
+                        li.getChildren().clear();
+                        li.setRendered(false);
+                        this.addNode(designable, li, level);
+                        item.open();
+                    }
+                };
                 Structure.prototype.unselect = function (c) {
                 };
                 Structure.prototype.renderFiles = function () {
                     var listener = new Structure.Structure$0(this);
-                    for (var index4165 = this.builder.getProject().getStylesheets().iterator(); index4165.hasNext();) {
-                        var f = index4165.next();
+                    var cstylesheets = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+                    for (var index3729 = this.builder.getProject().getStylesheets().iterator(); index3729.hasNext();) {
+                        var f = index3729.next();
                         {
                             var item = new framework.TreeItem(f.getName(), f.getTitle());
+                            item.addIcon("delete", "utility");
+                            item.addIcon("up", "utility");
+                            item.addIcon("down", "utility");
+                            item.addIcon("copy", "utility");
+                            item.addIcon("cut", "utility");
+                            item.addIcon("paste", "utility");
                             item.setData(f);
                             item.addEventListener(listener, "click");
                             var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                            this.liCss.addChild$framework_JSContainer(li);
+                            this.liCss.addChild$framework_JSContainer(cstylesheets.addChild$framework_JSContainer(li));
                         }
                     }
-                    for (var index4166 = this.builder.getProject().getScripts().iterator(); index4166.hasNext();) {
-                        var f = index4166.next();
+                    var cscripts = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+                    for (var index3730 = this.builder.getProject().getScripts().iterator(); index3730.hasNext();) {
+                        var f = index3730.next();
                         {
                             var item = new framework.TreeItem(f.getName(), f.getTitle());
                             item.setData(f);
                             item.addEventListener(listener, "click");
                             var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                            this.liJS.addChild$framework_JSContainer(li);
+                            this.liJS.addChild$framework_JSContainer(cscripts.addChild$framework_JSContainer(li));
                         }
                     }
-                    for (var index4167 = this.builder.getProject().getDataEnvironment().iterator(); index4167.hasNext();) {
-                        var f = index4167.next();
+                    var cdata = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+                    for (var index3731 = this.builder.getProject().getDataEnvironment().iterator(); index3731.hasNext();) {
+                        var f = index3731.next();
                         {
                             var item = new framework.TreeItem(f.getName(), f.getTitle());
                             item.setData(f);
                             item.addEventListener(listener, "click");
                             var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                            this.liData.addChild$framework_JSContainer(li);
+                            this.liData.addChild$framework_JSContainer(cdata.addChild$framework_JSContainer(li));
                         }
                     }
-                    for (var index4168 = this.builder.getProject().getTemplates().iterator(); index4168.hasNext();) {
-                        var f = index4168.next();
+                    var chtml = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+                    for (var index3732 = this.builder.getProject().getTemplates().iterator(); index3732.hasNext();) {
+                        var f = index3732.next();
                         {
                             var item = new framework.TreeItem(f.getName(), f.getTitle());
                             item.setData(f);
                             item.addEventListener(listener, "click");
                             var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-                            this.liTemplates.addChild$framework_JSContainer(li);
+                            this.liTemplates.addChild$framework_JSContainer(chtml.addChild$framework_JSContainer(li));
                         }
                     }
                 };
@@ -2640,8 +2649,8 @@ var framework;
                         item.leaf(false);
                         var children = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                         li.addChild$framework_JSContainer(children);
-                        for (var index4169 = ctn.getDesignables().iterator(); index4169.hasNext();) {
-                            var c = index4169.next();
+                        for (var index3733 = ctn.getDesignables().iterator(); index3733.hasNext();) {
+                            var c = index3733.next();
                             {
                                 var child = new framework.JSContainer("li");
                                 children.addChild$framework_JSContainer(child);
@@ -2701,12 +2710,20 @@ var framework;
                      */
                     Structure$1.prototype.performAction = function (source, evt) {
                         evt.stopPropagation();
-                        var itemS = source;
-                        if (this.__parent.selected != null) {
-                            this.__parent.selected.select(false);
+                        var editor = (this.__parent.root.getAncestorWithClass("visual-editor"));
+                        var willAdd = editor.getWillAddComponent();
+                        if (willAdd != null) {
+                            var itemS = source;
+                            editor.addNewComponent(willAdd, itemS.getDesignable());
                         }
-                        this.__parent.selected = itemS;
-                        this.__parent.selected.select(true);
+                        else {
+                            var itemS = source;
+                            if (this.__parent.selected != null) {
+                                this.__parent.selected.select(false);
+                            }
+                            this.__parent.selected = itemS;
+                            this.__parent.selected.select(true);
+                        }
                     };
                     return Structure$1;
                 }());
@@ -2878,9 +2895,8 @@ var framework;
              *
              * @param {string} key
              * @param {string} value
-             * @param {boolean} designMode
              */
-            JSDesignable.prototype.setParameter = function (key, value, designMode) {
+            JSDesignable.prototype.applyParam = function (key, value) {
                 this.component.parameters[key] = value;
             };
             /**
@@ -2914,8 +2930,8 @@ var framework;
              */
             JSDesignable.prototype.getDesignables = function () {
                 var result = (new java.util.LinkedList());
-                for (var index4170 = this.getChildren().iterator(); index4170.hasNext();) {
-                    var child = index4170.next();
+                for (var index3734 = this.getChildren().iterator(); index3734.hasNext();) {
+                    var child = index3734.next();
                     {
                         result.add(child);
                     }
@@ -3160,8 +3176,8 @@ var framework;
          */
         JSSelect.prototype.getValue = function () {
             var val = this.getAttribute("value");
-            for (var index4171 = this.getChildren().iterator(); index4171.hasNext();) {
-                var opt = index4171.next();
+            for (var index3735 = this.getChildren().iterator(); index3735.hasNext();) {
+                var opt = index3735.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -3176,8 +3192,8 @@ var framework;
             return null;
         };
         JSSelect.prototype.setValue$java_lang_String = function (val) {
-            for (var index4172 = this.getChildren().iterator(); index4172.hasNext();) {
-                var opt = index4172.next();
+            for (var index3736 = this.getChildren().iterator(); index3736.hasNext();) {
+                var opt = index3736.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -3334,10 +3350,9 @@ var framework;
              *
              * @param {string} key
              * @param {string} value
-             * @param {boolean} designMode
              */
-            Accordion.prototype.setParameter = function (key, value, designMode) {
-                this.delegate.setParameter(key, value, designMode);
+            Accordion.prototype.applyParam = function (key, value) {
+                this.delegate.setParameter(key, value, true);
             };
             /**
              *
@@ -3569,8 +3584,8 @@ var framework;
                     var __args = Array.prototype.slice.call(arguments);
                     {
                         var __args_1 = Array.prototype.slice.call(arguments);
-                        var name_2 = "Button";
-                        _this = _super.call(this, name_2, "button") || this;
+                        var name_1 = "Button";
+                        _this = _super.call(this, name_1, "button") || this;
                         _this.component = new framework.builder.marshalling.Component();
                         (function () {
                             _this.addClass("slds-button");
@@ -3594,8 +3609,8 @@ var framework;
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index4173 = 0; index4173 < Button.states_$LI$().length; index4173++) {
-                    var s = Button.states_$LI$()[index4173];
+                for (var index3737 = 0; index3737 < Button.states_$LI$().length; index3737++) {
+                    var s = Button.states_$LI$()[index3737];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -3630,20 +3645,7 @@ var framework;
                 }
                 return this;
             };
-            /**
-             *
-             * @param {string} key
-             * @param {string} value
-             * @param {boolean} designMode
-             */
-            Button.prototype.setParameter = function (key, value, designMode) {
-                if (((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && designMode === undefined) {
-                    return this.setParameter$java_lang_String$java_lang_String(key, value);
-                }
-                else
-                    throw new Error('invalid overload');
-            };
-            Button.prototype.setParameter$java_lang_String$java_lang_String = function (key, value) {
+            Button.prototype.setParameter = function (key, value) {
                 this.component.parameters[key] = value;
                 if ((function (o1, o2) { if (o1 && o1.equals) {
                     return o1.equals(o2);
@@ -4663,33 +4665,78 @@ var framework;
                 var _this = _super.call(this, name, "li") || this;
                 /*private*/ _this.__framework_lightning_TabItem_listeners = (new java.util.ArrayList());
                 /*private*/ _this.title = new framework.JSContainer("a").addClass("slds-tabs_default__link").setAttribute("href", "javascript:void(0)").setAttribute("role", "tab");
+                /*private*/ _this.closeButton = new framework.lightning.Icon("close", "utility", "close");
+                /*private*/ _this.active = false;
                 _this.body = null;
                 _this.body = body;
                 body.setAttribute("aria-labelledby", _this.getId());
                 _this.addChild$framework_JSContainer(_this.title);
                 _this.title.setAttribute("aria-controls", body.getId());
                 _this.addClass("slds-tabs_default__item");
+                _this.addChild$framework_JSContainer(_this.closeButton);
+                _this.closeButton.setSvgClass("slds-button__icon");
+                _this.closeButton.addClass("tab-close-button");
+                _this.closeButton.addEventListener(_this, "click");
                 _this.title.addEventListener(_this, "click");
                 _this.setActive(false);
+                _this.setClosable(false);
                 return _this;
             }
+            TabItem.prototype.setClosable = function (b) {
+                this.closeButton.setVisible(b);
+                return this;
+            };
             TabItem.prototype.addTabActionListener = function (listene) {
                 this.__framework_lightning_TabItem_listeners.add(listene);
             };
+            TabItem.prototype.close = function () {
+                this.fireClose();
+                this.active = false;
+                this.body.getParent().getChildren().remove(this.body);
+                this.body.show(false);
+                this.getParent().getChildren().remove(this);
+                this.getParent().setRendered(false);
+                this.body.getParent().setRendered(false);
+                return this;
+            };
+            TabItem.prototype.isActive = function () {
+                return this.active;
+            };
+            TabItem.prototype.fireClose = function () {
+                for (var index3738 = this.__framework_lightning_TabItem_listeners.iterator(); index3738.hasNext();) {
+                    var li = index3738.next();
+                    {
+                        li.onClose(this);
+                    }
+                }
+            };
+            TabItem.prototype.fireActivate = function () {
+                for (var index3739 = this.__framework_lightning_TabItem_listeners.iterator(); index3739.hasNext();) {
+                    var li = index3739.next();
+                    {
+                        li.onActivate(this);
+                    }
+                }
+            };
+            TabItem.prototype.fireDeActivate = function () {
+                for (var index3740 = this.__framework_lightning_TabItem_listeners.iterator(); index3740.hasNext();) {
+                    var li = index3740.next();
+                    {
+                        li.onDeactivate(this);
+                    }
+                }
+            };
             TabItem.prototype.setActive = function (b) {
+                this.active = b;
                 if (b) {
                     this.addClass("slds-active");
                     this.title.setAttribute("aria-selected", "true");
-                    for (var index4174 = this.__framework_lightning_TabItem_listeners.iterator(); index4174.hasNext();) {
-                        var li = index4174.next();
-                        {
-                            li.onActivate(this);
-                        }
-                    }
+                    this.fireActivate();
                 }
                 else {
                     this.removeClass("slds-active");
                     this.title.setAttribute("aria-selected", "false");
+                    this.fireDeActivate();
                 }
                 this.body.show(b);
                 return this;
@@ -4705,6 +4752,15 @@ var framework;
              * @param {Event} evt
              */
             TabItem.prototype.performAction = function (source, evt) {
+                if ((function (o1, o2) { if (o1 && o1.equals) {
+                    return o1.equals(o2);
+                }
+                else {
+                    return o1 === o2;
+                } })(source, this.closeButton)) {
+                    this.close();
+                    return;
+                }
                 var tabs = (source.getAncestorWithClass("slds-tabs_default"));
                 tabs.setActive(this);
             };
@@ -4908,14 +4964,26 @@ var framework;
                 return this;
             };
             Tabs.prototype.setActive = function (item) {
-                for (var index4175 = this.nav.getChildren().iterator(); index4175.hasNext();) {
-                    var c = index4175.next();
+                for (var index3741 = this.getItems().iterator(); index3741.hasNext();) {
+                    var tab = index3741.next();
                     {
-                        var tab = c;
-                        tab.setActive(false);
+                        if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(item.getId(), tab.getId())) {
+                            if (!tab.isActive()) {
+                                tab.setActive(true);
+                            }
+                        }
+                        else {
+                            if (tab.isActive()) {
+                                tab.setActive(false);
+                            }
+                        }
                     }
                 }
-                item.setActive(true);
                 return this;
             };
             Tabs.prototype.getItems = function () {
@@ -4977,13 +5045,22 @@ var framework;
             /*private*/ _this.iconDown = "<svg class=\"slds-button__icon slds-button__icon_small\" aria-hidden=\"true\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/webjars/salesforce-lightning-design-system/2.4.1/assets/icons/utility-sprite/svg/symbols.svg#chevrondown\"></use></svg>";
             /*private*/ _this.title = new framework.JSContainer("span").addClass("slds-truncate");
             /*private*/ _this.__open = false;
+            /*private*/ _this.buttons = (new java.util.LinkedList());
+            /*private*/ _this.buttonsCtn = new framework.JSContainer("div").addClass("buttons-ctn");
             _this.addClass("slds-tree__item");
             _this.addChild$framework_JSContainer(_this.button);
             _this.button.setHtml(_this.iconRight);
             _this.addChild$framework_JSContainer(_this.title.setHtml(title));
             _this.button.addEventListener(_this, "click");
+            _this.addChild$framework_JSContainer(_this.buttonsCtn);
             return _this;
         }
+        TreeItem.prototype.addIcon = function (name, type) {
+            var minimize = new framework.lightning.IconButton(name);
+            minimize.setIcon(new framework.lightning.Icon(name, type, name));
+            this.buttonsCtn.addChild$framework_JSContainer(minimize);
+            this.buttons.add(minimize);
+        };
         TreeItem.prototype.getButton = function () {
             return this.button;
         };
@@ -5056,7 +5133,7 @@ var framework;
         }(framework.builder.Component));
         builder.BasicComponent = BasicComponent;
         BasicComponent["__class"] = "framework.builder.BasicComponent";
-        BasicComponent["__interfaces"] = ["framework.interactions.Droppable", "framework.interactions.Draggable", "framework.Renderable"];
+        BasicComponent["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.Renderable"];
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -5079,8 +5156,8 @@ var framework;
                     grid.addChild$framework_JSContainer(colLeft.addClass("slds-col"));
                     grid.addChild$framework_JSContainer(colRight.addClass("slds-col"));
                     _this.root = root;
-                    for (var index4176 = 0; index4176 < framework.builder.editors.EventTypes.events_$LI$().length; index4176++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index4176];
+                    for (var index3742 = 0; index3742 < framework.builder.editors.EventTypes.events_$LI$().length; index3742++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index3742];
                         _this.events.addOption(new framework.JSOption(s, s));
                     }
                     colLeft.addChild$framework_JSContainer(_this.component.setStyle("width", "100%"));
@@ -5090,8 +5167,8 @@ var framework;
                 }
                 EventEditor.prototype.addComponentOption = function (designable) {
                     this.component.addOption(new framework.JSOption(designable.getName(), designable.getId()));
-                    for (var index4177 = designable.getDesignables().iterator(); index4177.hasNext();) {
-                        var des = index4177.next();
+                    for (var index3743 = designable.getDesignables().iterator(); index3743.hasNext();) {
+                        var des = index3743.next();
                         {
                             this.addComponentOption(des);
                         }
@@ -5112,8 +5189,8 @@ var framework;
                     } })(parent.getId(), id)) {
                         return parent;
                     }
-                    for (var index4178 = parent.getDesignables().iterator(); index4178.hasNext();) {
-                        var des = index4178.next();
+                    for (var index3744 = parent.getDesignables().iterator(); index3744.hasNext();) {
+                        var des = index3744.next();
                         {
                             var res = this.findDesignableById(des, id);
                             if (res != null) {
@@ -5133,8 +5210,8 @@ var framework;
                     var des = this.findDesignableById(this.root, componentId);
                     if (des != null) {
                         var listeners = des.getListeners().get(type);
-                        for (var index4179 = listeners.iterator(); index4179.hasNext();) {
-                            var l_1 = index4179.next();
+                        for (var index3745 = listeners.iterator(); index3745.hasNext();) {
+                            var l_1 = index3745.next();
                             {
                                 if (l_1 != null && l_1 instanceof framework.builder.BuilderEventListener) {
                                     var evt = l_1;
@@ -5206,6 +5283,7 @@ var framework;
                     /*private*/ _this.composers = new framework.JSContainer("composers", "div");
                     /*private*/ _this.propertiesDockedComposer = new framework.builder.properties.PropertiesDockedComposer("properties");
                     /*private*/ _this.libraryDockedComposer = new framework.builder.libraries.LibrariesDockedComposer("library");
+                    /*private*/ _this.willAdd = null;
                     _this.builder = null;
                     _this.selectedItem = null;
                     _this.root = null;
@@ -5233,6 +5311,33 @@ var framework;
                 VisualEditor.prototype.selectItem = function (designable) {
                     this.propertiesDockedComposer.selectComponent(designable);
                 };
+                VisualEditor.prototype.setWillAddComponent = function (component) {
+                    this.willAdd = component;
+                    if (component == null) {
+                        this.removeClass("add-mode");
+                    }
+                    else {
+                        this.addClass("add-mode");
+                    }
+                };
+                VisualEditor.prototype.addNewComponent = function (component, designable) {
+                    var factory = component.getFactory();
+                    var container = factory.build(new framework.builder.marshalling.Component(), true);
+                    try {
+                        designable.addDesignable(container);
+                    }
+                    catch (e) {
+                        alert(e.message);
+                    }
+                    ;
+                    container.render();
+                    this.setWillAddComponent(null);
+                    framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).reload$framework_design_Designable(designable);
+                    framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).render();
+                };
+                VisualEditor.prototype.getWillAddComponent = function () {
+                    return this.willAdd;
+                };
                 VisualEditor.prototype.getBuilder = function () {
                     return this.builder;
                 };
@@ -5241,7 +5346,8 @@ var framework;
                  * @return {string}
                  */
                 VisualEditor.prototype.getMarshall = function () {
-                    return JSON.stringify(framework.builder.marshalling.MarshallUtil.extract(this.root));
+                    var marshall = JSON.stringify(framework.builder.marshalling.MarshallUtil.extract(this.root));
+                    return marshall;
                 };
                 /**
                  *
@@ -5259,12 +5365,57 @@ var framework;
                  * @return {framework.builder.marshalling.Component}
                  */
                 VisualEditor.prototype.unmarshall = function (f) {
-                    return JSON.parse(f.getData());
+                    var c = JSON.parse(f.getData());
+                    var cc = this.doUnMarsh(c);
+                    return cc;
+                };
+                VisualEditor.prototype.doUnMarsh = function (o) {
+                    var cc = new framework.builder.marshalling.Component();
+                    cc.impl = o["impl"].toString();
+                    cc.styles = o["styles"];
+                    cc.parameters = o["parameters"];
+                    var events = o["events"];
+                    if (events != null && events.length > 0) {
+                        var bevents = (new Array());
+                        for (var index3746 = 0; index3746 < events.length; index3746++) {
+                            var e = events[index3746];
+                            {
+                                var event_2 = new framework.builder.marshalling.BuilderEvent();
+                                event_2.source = e["source"].toString();
+                                event_2.type = e["type"].toString();
+                                bevents.push(event_2);
+                            }
+                        }
+                        cc.events = bevents;
+                    }
+                    var bchildren = (new Array());
+                    var children = o["children"];
+                    if (children != null && children.length > 0) {
+                        for (var index3747 = 0; index3747 < children.length; index3747++) {
+                            var c = children[index3747];
+                            {
+                                bchildren.push(this.doUnMarsh(c));
+                            }
+                        }
+                        cc.children = bchildren;
+                    }
+                    return cc;
+                };
+                VisualEditor.prototype.cona = function (component) {
+                    var des = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, true);
+                    if (component.children != null) {
+                        for (var index3748 = 0; index3748 < component.children.length; index3748++) {
+                            var c = component.children[index3748];
+                            {
+                                var child = this.cona(c);
+                                des.addDesignable(child);
+                            }
+                        }
+                    }
+                    return des;
                 };
                 VisualEditor.prototype.consume$framework_builder_marshalling_Component = function (component) {
-                    this.root = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, true);
-                    this.root.setStyle("width", "100%");
-                    this.root.setStyle("height", "200px");
+                    this.root = this.cona(component);
                     this.addChild$framework_JSContainer(this.root);
                     this.structureDockedComposer = new framework.builder.editors.StructureDockedComposer("strucutru", this.root, this.builder);
                     this.composers.addChild$framework_JSContainer(this.structureDockedComposer);
@@ -5384,10 +5535,9 @@ var framework;
              *
              * @param {string} key
              * @param {string} value
-             * @param {boolean} designMode
              */
-            AccordionItem.prototype.setParameter = function (key, value, designMode) {
-                this.delegate.setParameter(key, value, designMode);
+            AccordionItem.prototype.applyParam = function (key, value) {
+                this.delegate.setParameter(key, value, true);
             };
             /**
              *
@@ -5510,10 +5660,9 @@ var framework;
              *
              * @param {string} key
              * @param {string} value
-             * @param {boolean} designMode
              */
-            JSDesignableInput.prototype.setParameter = function (key, value, designMode) {
-                this.delegate.setParameter(key, value, designMode);
+            JSDesignableInput.prototype.applyParam = function (key, value) {
+                this.delegate.setParameter(key, value, true);
             };
             /**
              *
@@ -5599,6 +5748,7 @@ var framework;
                     /*private*/ _this.value = "";
                     _this.config = null;
                     _this.addRenderer(_this);
+                    _this.setStyle("position", "absolute");
                     return _this;
                 }
                 CodeMirrorEditor.prototype.setConfig = function (config) {
@@ -5635,7 +5785,11 @@ var framework;
                  *
                  */
                 CodeMirrorEditor.prototype.save = function () {
+                    if (this.editor == null) {
+                        return;
+                    }
                     var data = this.editor.getValue();
+                    this.value = data;
                     this.file.setData(data);
                     framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).saveFile(this.file, new CodeMirrorEditor.CodeMirrorEditor$0(this));
                 };
@@ -5748,7 +5902,7 @@ var framework;
                 EventScriptEditor.prototype.performAction = function (source, evt) {
                     var script = this.getValue();
                     var type = this.eventTypeEditor.getValue();
-                    this.designable['setParameter$java_lang_String$java_lang_String$boolean'](type, script, true);
+                    this.designable.applyParam(type, script);
                 };
                 return EventScriptEditor;
             }(framework.JSTextArea));
@@ -5772,10 +5926,9 @@ var framework;
              *
              * @param {string} key
              * @param {string} value
-             * @param {boolean} designMode
              */
-            JSDesignableTextArea.prototype.setParameter = function (key, value, designMode) {
-                this.delegate.setParameter(key, value, designMode);
+            JSDesignableTextArea.prototype.applyParam = function (key, value) {
+                this.delegate.setParameter(key, value, true);
             };
             /**
              *
@@ -5828,24 +5981,13 @@ var framework;
             JSDesignableButton.stateLabels_$LI$ = function () { if (JSDesignableButton.stateLabels == null)
                 JSDesignableButton.stateLabels = ["Neutral", "Brand", "Destructive", "Success"]; return JSDesignableButton.stateLabels; };
             ;
-            JSDesignableButton.prototype.setParameter$java_lang_String$java_lang_String$boolean = function (key, value, designMode) {
-                this.delegate.setParameter(key, value, designMode);
-            };
             /**
              *
              * @param {string} key
              * @param {string} value
-             * @param {boolean} designMode
              */
-            JSDesignableButton.prototype.setParameter = function (key, value, designMode) {
-                if (((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && ((typeof designMode === 'boolean') || designMode === null)) {
-                    return this.setParameter$java_lang_String$java_lang_String$boolean(key, value, designMode);
-                }
-                else if (((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && designMode === undefined) {
-                    return this.setParameter$java_lang_String$java_lang_String(key, value);
-                }
-                else
-                    throw new Error('invalid overload');
+            JSDesignableButton.prototype.applyParam = function (key, value) {
+                this.delegate.setParameter(key, value, true);
             };
             /**
              *
@@ -5962,12 +6104,12 @@ var framework;
                 DataItem.prototype.save = function (row) {
                     if (row === -1) {
                         var tr = this.fields.getBody().getChildren().get(this.fields.getBody().getChildren().size() - 1);
-                        var name_3 = tr.getChildren().get(0).getChildren().get(0);
+                        var name_2 = tr.getChildren().get(0).getChildren().get(0);
                         var label = tr.getChildren().get(1).getChildren().get(0);
                         var type = tr.getChildren().get(2).getChildren().get(0);
                         var field = new framework.builder.data.DataField();
                         field.label = label.getValue();
-                        field.name = name_3.getValue();
+                        field.name = name_2.getValue();
                         field.type = type.getValue();
                         this.dataStructure.fields.add(field);
                         this.setDataStructure(this.dataStructure);
@@ -5977,12 +6119,12 @@ var framework;
                     }
                     else {
                         var tr = this.fields.getBody().getChildren().get(row);
-                        var name_4 = tr.getChildren().get(0).getChildren().get(0);
+                        var name_3 = tr.getChildren().get(0).getChildren().get(0);
                         var label = tr.getChildren().get(1).getChildren().get(0);
                         var type = tr.getChildren().get(2).getChildren().get(0);
                         var field = this.dataStructure.fields.get(row);
                         field.label = label.getValue();
-                        field.name = name_4.getValue();
+                        field.name = name_3.getValue();
                         field.type = type.getValue();
                         this.setDataStructure(this.dataStructure);
                         this.dataEnvironment.saveStructure(this.dataStructure);
@@ -5997,8 +6139,8 @@ var framework;
                     var name = new framework.JSInput("name");
                     var label = new framework.JSInput("label");
                     var type = new framework.JSSelect("type");
-                    for (var index4180 = 0; index4180 < framework.builder.data.DataType.Types_$LI$().length; index4180++) {
-                        var stype = framework.builder.data.DataType.Types_$LI$()[index4180];
+                    for (var index3749 = 0; index3749 < framework.builder.data.DataType.Types_$LI$().length; index3749++) {
+                        var stype = framework.builder.data.DataType.Types_$LI$()[index3749];
                         {
                             type.addOption(new framework.JSOption(stype, stype));
                         }
@@ -6034,8 +6176,8 @@ var framework;
                     var name = new framework.JSInput("name");
                     var label = new framework.JSInput("label");
                     var type = new framework.JSSelect("type");
-                    for (var index4181 = 0; index4181 < framework.builder.data.DataType.Types_$LI$().length; index4181++) {
-                        var stype = framework.builder.data.DataType.Types_$LI$()[index4181];
+                    for (var index3750 = 0; index3750 < framework.builder.data.DataType.Types_$LI$().length; index3750++) {
+                        var stype = framework.builder.data.DataType.Types_$LI$()[index3750];
                         {
                             type.addOption(new framework.JSOption(stype, stype));
                         }
@@ -6387,10 +6529,10 @@ var framework;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index4182 = 0; index4182 < components.length; index4182++) {
-                    var com = components[index4182];
+                for (var index3751 = 0; index3751 < components.length; index3751++) {
+                    var com = components[index3751];
                     {
-                        var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
+                        var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-4");
                         this.addChild$framework_JSContainer(li);
                         li.addChild$framework_JSContainer(com);
                     }
@@ -6731,11 +6873,26 @@ var framework;
                 return this.project;
             };
             Builder.prototype.openEditor = function (title, editor) {
-                var l = new Builder.Builder$3(this);
+                for (var index3752 = this.editorTabs.getItems().iterator(); index3752.hasNext();) {
+                    var item_1 = index3752.next();
+                    {
+                        if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(item_1.getName(), "editor_" + editor.getName())) {
+                            this.editorTabs.setActive(item_1);
+                            return item_1;
+                        }
+                    }
+                }
+                var l = new Builder.Builder$3(this, editor);
                 var body = new framework.lightning.TabBody("editorBody");
                 body.addChild$framework_JSContainer(editor);
-                var item = new framework.lightning.TabItem("visualEditor", body);
+                var item = new framework.lightning.TabItem("editor_" + editor.getName(), body);
                 item.setTitle(title);
+                item.setClosable(true);
                 this.editorTabs.addItem$framework_lightning_TabItem(item);
                 this.activeEditor = editor;
                 item.addTabActionListener(l);
@@ -6802,7 +6959,8 @@ var framework;
             Builder.Builder$2 = Builder$2;
             Builder$2["__interfaces"] = ["framework.EventListener"];
             var Builder$3 = (function () {
-                function Builder$3(__parent) {
+                function Builder$3(__parent, editor) {
+                    this.editor = editor;
                     this.__parent = __parent;
                 }
                 /**
@@ -6810,13 +6968,22 @@ var framework;
                  * @param {framework.lightning.TabItem} item
                  */
                 Builder$3.prototype.onClose = function (item) {
+                    if (this.editor != null)
+                        this.editor.save();
                 };
                 /**
                  *
                  * @param {framework.lightning.TabItem} item
                  */
                 Builder$3.prototype.onActivate = function (item) {
-                    this.__parent.activeEditor.setRendered(false);
+                };
+                /**
+                 *
+                 * @param {framework.lightning.TabItem} item
+                 */
+                Builder$3.prototype.onDeactivate = function (item) {
+                    if (this.editor != null)
+                        this.editor.save();
                 };
                 return Builder$3;
             }());
@@ -6838,8 +7005,8 @@ var framework;
             DescriptionList.prototype.setLayout = function (layout) {
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-                for (var index4183 = this.getChildren().iterator(); index4183.hasNext();) {
-                    var child = index4183.next();
+                for (var index3753 = this.getChildren().iterator(); index3753.hasNext();) {
+                    var child = index3753.next();
                     {
                         child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                         child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -7088,21 +7255,13 @@ var framework;
                 /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
                 return _this;
             }
-            JSDesignableTextComponent.prototype.setParameter$java_lang_String$java_lang_String$boolean = function (key, value, designMode) {
-                this.delegate.setParameter(key, value, designMode);
-            };
             /**
              *
              * @param {string} key
              * @param {string} value
-             * @param {boolean} designMode
              */
-            JSDesignableTextComponent.prototype.setParameter = function (key, value, designMode) {
-                if (((typeof key === 'string') || key === null) && ((typeof value === 'string') || value === null) && ((typeof designMode === 'boolean') || designMode === null)) {
-                    return this.setParameter$java_lang_String$java_lang_String$boolean(key, value, designMode);
-                }
-                else
-                    throw new Error('invalid overload');
+            JSDesignableTextComponent.prototype.applyParam = function (key, value) {
+                this.delegate.setParameter(key, value, true);
             };
             /**
              *
@@ -7153,29 +7312,7 @@ var framework;
                     var _this = _super.call(this, name, designable.getName()) || this;
                     _this.designable = null;
                     _this.designable = designable;
-                    framework.designables.DesignableDelegate.setDroppableOptions(designable, true);
-                    var options = Object.defineProperty({}, '__interfaces', { configurable: true, value: ["def.jqueryui.jqueryui.DroppableOptions", "def.jqueryui.jqueryui.DroppableEvents"] });
-                    options.greedy = true;
-                    options.accept = ".designer-component";
-                    options.tolerance = "pointer";
-                    options.activeClass = "drop-active";
-                    options.drop = function (event, param) {
-                        event.stopPropagation();
-                        var identifier = event.srcElement.getAttribute("identifier");
-                        var factory = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(identifier);
-                        var container = factory.build(new framework.builder.marshalling.Component(), true);
-                        try {
-                            designable.addDesignable(container);
-                        }
-                        catch (e) {
-                            alert(e.message);
-                        }
-                        ;
-                        container.render();
-                        framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).reload();
-                        framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).render();
-                    };
-                    _this.setDroppableOptions(options);
+                    _this.addClass("structure-tree-item");
                     return _this;
                 }
                 StructureTreeItem.prototype.getDesignable = function () {
@@ -7252,7 +7389,7 @@ var framework;
                  */
                 NameEditor.prototype.performAction = function (source, evt) {
                     var name = this.getValue();
-                    this.designable['setParameter$java_lang_String$java_lang_String$boolean']("name", name, true);
+                    this.designable.applyParam("name", name);
                     this.designable.setName(name);
                 };
                 /**
@@ -7515,8 +7652,8 @@ var framework;
                 OptionsEditor.prototype.initEditor = function (designable, parameter) {
                     var value = "";
                     var select = designable;
-                    for (var index4184 = select.getChildren().iterator(); index4184.hasNext();) {
-                        var c = index4184.next();
+                    for (var index3754 = select.getChildren().iterator(); index3754.hasNext();) {
+                        var c = index3754.next();
                         {
                             var opt = c;
                             value = value + "\n" + opt.getText();
@@ -7535,8 +7672,8 @@ var framework;
                     var select = this.designable;
                     select.getChildren().clear();
                     select.setRendered(false);
-                    for (var index4185 = 0; index4185 < options.length; index4185++) {
-                        var opt = options[index4185];
+                    for (var index3755 = 0; index3755 < options.length; index3755++) {
+                        var opt = options[index3755];
                         {
                             var option = new framework.JSOption(opt, opt);
                             select.addOption(option);
@@ -7771,8 +7908,8 @@ var framework;
                 _this.files.add(_this.__framework_builder_NewFile_html);
                 _this.files.add(_this.css);
                 _this.files.add(_this.javascript);
-                for (var index4186 = _this.files.iterator(); index4186.hasNext();) {
-                    var file = index4186.next();
+                for (var index3756 = _this.files.iterator(); index3756.hasNext();) {
+                    var file = index3756.next();
                     {
                         file.addEventListener(new NewFile.NewFile$0(_this), "click");
                     }
@@ -7802,7 +7939,7 @@ var framework;
                     }
                 }
                 var project = this.builder.getProject();
-                project.createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name, type, new NewFile.NewFile$2(this));
+                project.createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name, type, new NewFile.NewFile$2(this, type));
             };
             NewFile.prototype.createLightning = function (name) {
                 if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".prj")) {
@@ -7865,7 +8002,8 @@ var framework;
             NewFile.NewFile$1 = NewFile$1;
             NewFile$1["__interfaces"] = ["framework.EventListener"];
             var NewFile$2 = (function () {
-                function NewFile$2(__parent) {
+                function NewFile$2(__parent, type) {
+                    this.type = type;
                     this.__parent = __parent;
                 }
                 /**
@@ -7873,7 +8011,11 @@ var framework;
                  * @param {*} data
                  */
                 NewFile$2.prototype.dataLoaded = function (data) {
-                    alert(JSON.stringify(data));
+                    this.__parent.close();
+                    this.__parent.render();
+                    this.__parent.getBackdrop().render();
+                    framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).reload$java_lang_String(this.type);
+                    framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.editors.Structure).render();
                 };
                 return NewFile$2;
             }());
@@ -7938,8 +8080,8 @@ var framework;
              */
             OpenProject.prototype.dataLoaded = function (data) {
                 var nprojects = data;
-                for (var index4187 = 0; index4187 < nprojects.length; index4187++) {
-                    var p = nprojects[index4187];
+                for (var index3757 = 0; index3757 < nprojects.length; index3757++) {
+                    var p = nprojects[index3757];
                     {
                         var project = new framework.builder.data.File(p);
                         var file = new framework.builder.UIFile(project.getName());
@@ -7977,8 +8119,8 @@ var framework;
                 AdvancedPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index4188 = this.component.getParameters().iterator(); index4188.hasNext();) {
-                        var p = index4188.next();
+                    for (var index3758 = this.component.getParameters().iterator(); index3758.hasNext();) {
+                        var p = index3758.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -8015,8 +8157,8 @@ var framework;
                 BasicPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index4189 = designable.getParameters().iterator(); index4189.hasNext();) {
-                        var param = index4189.next();
+                    for (var index3759 = designable.getParameters().iterator(); index3759.hasNext();) {
+                        var param = index3759.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -8056,8 +8198,8 @@ var framework;
                 EventsPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index4190 = designable.getParameters().iterator(); index4190.hasNext();) {
-                        var param = index4190.next();
+                    for (var index3760 = designable.getParameters().iterator(); index3760.hasNext();) {
+                        var param = index3760.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);

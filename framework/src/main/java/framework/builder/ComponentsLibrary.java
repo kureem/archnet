@@ -15,7 +15,7 @@ public class ComponentsLibrary extends Grid {
 	public ComponentsLibrary addComponents(Component... components) {
 
 		for (Component com : components) {
-			JSContainer li = new JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-3");
+			JSContainer li = new JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-4");
 
 			addChild(li);
 			li.addChild(com);

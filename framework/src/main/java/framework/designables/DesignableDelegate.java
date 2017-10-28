@@ -52,7 +52,7 @@ public class DesignableDelegate {
 	}
 
 	public static void setDroppableOptions(Designable instance, boolean designMode) {
-		if (designMode) {
+		/*if (designMode) {
 			//instance.addClass("designing");
 			DroppableOptions options = new DroppableOptions() {
 			};
@@ -86,7 +86,7 @@ public class DesignableDelegate {
 				}
 			};
 			((JSContainer) instance).setDroppableOptions(options);
-		}
+		}*/
 	}
 
 }

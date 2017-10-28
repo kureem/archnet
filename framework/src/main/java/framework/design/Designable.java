@@ -7,7 +7,7 @@ import framework.builder.marshalling.Component;
 
 public interface Designable extends Renderable {
 
-	public void setParameter(String key, String value, boolean designMode);
+	public void applyParam(String key, String value);
 	
 	public List<Designable> getDesignables();
 	

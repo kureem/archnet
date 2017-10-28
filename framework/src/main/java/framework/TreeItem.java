@@ -1,5 +1,10 @@
 package framework;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import framework.lightning.Icon;
+import framework.lightning.IconButton;
 import jsweet.dom.Event;
 
 public class TreeItem extends JSContainer implements EventListener{
@@ -16,6 +21,10 @@ public class TreeItem extends JSContainer implements EventListener{
 	
 	private boolean open = false;
 	
+	private List<IconButton> buttons = new LinkedList<>();
+	
+	private JSContainer buttonsCtn = new JSContainer("div").addClass("buttons-ctn");
+	
 	public TreeItem(String name, String title) {
 		super(name, "div");
 		addClass("slds-tree__item");
@@ -23,7 +32,21 @@ public class TreeItem extends JSContainer implements EventListener{
 		button.setHtml(iconRight);
 		addChild(this.title.setHtml(title));
 		button.addEventListener(this, "click");
+		addChild(buttonsCtn);
+	}
+	
+	
+	public void addIcon(String name, String type){
+		IconButton minimize = new IconButton(name);
+		minimize.setIcon(new Icon(name, type, name));
+		buttonsCtn.addChild(minimize);
 		
+		
+		//minimize.setStyle("position", "relative");
+		//minimize.setStyle("top", "-27px");
+		//minimize.setStyle("right", (buttons.size()*16 + 3) + "px");
+		
+		buttons.add(minimize);
 	}
 	
 	public JSContainer getButton(){

@@ -15,7 +15,6 @@ import framework.interactions.Droppable;
 import framework.renderer.ContainerRenderer;
 import framework.renderer.Renderer;
 import jsweet.dom.HTMLElement;
-import jsweet.lang.JSON;
 import jsweet.lang.Optional;
 
 /**
@@ -75,8 +74,8 @@ public class JSContainer implements Renderable, Droppable {
 	@Optional
 	private List<String> changedStyles = new LinkedList<>();
 
-	@Optional
-	private List<JSCommand> commands = new LinkedList<>();
+	//@Optional
+//	private List<JSCommand> commands = new LinkedList<>();
 
 	public JSContainer(String name, String tag) {
 		super();
@@ -123,7 +122,7 @@ public class JSContainer implements Renderable, Droppable {
 		if (s.equals("a28n12l10")) {
 			changedAttributes.clear();
 			changedStyles.clear();
-			commands.clear();
+		//	commands.clear();
 		}
 	}
 
@@ -345,42 +344,42 @@ public class JSContainer implements Renderable, Droppable {
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#exec(java.lang.String, jsweet.lang.Object)
-	 */
+	 
 	@Override
 	public void exec(String name, jsweet.lang.Object parameter) {
 		commands.add(new JSCommand(name, JSON.stringify(parameter)));
 	}
 
-	/*
+	
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#exec(java.lang.String, java.lang.String)
-	 */
+	 
 	@Override
 	public void exec(String name, String variable) {
 		commands.add(new JSCommand(name, variable));
 	}
 
-	/*
+*//*	
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#exec(java.lang.String)
-	 */
+	 
 	@Override
 	public void exec(String name) {
 		exec(name, (String) null);
 	}
-
+*/
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#getCommands()
-	 */
+	 
 	@Override
 	public Iterable<JSCommand> getCommands() {
 		return commands;
 	}
-
+*/
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -633,41 +632,7 @@ public class JSContainer implements Renderable, Droppable {
 		}
 	}
 
-	public class JSCommand {
-		private String name;
-
-		private jsweet.lang.Object parameters;
-
-		private String variable;
-
-		public JSCommand(String name, String vari) {
-			super();
-			this.name = name;
-			this.variable = vari;
-		}
-
-		public String getVariable() {
-			return this.variable;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public jsweet.lang.Object getParameters() {
-			return parameters;
-		}
-
-		public void setParameters(jsweet.lang.Object parameters) {
-			this.parameters = parameters;
-		}
-
-	}
-
+	
 	@Override
 	public DroppableOptions getDroppableOptions() {
 		return droppableOptions;

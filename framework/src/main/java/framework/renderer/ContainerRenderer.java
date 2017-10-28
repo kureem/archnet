@@ -2,14 +2,12 @@ package framework.renderer;
 
 import static def.jquery.Globals.$;
 import static jsweet.dom.Globals.document;
-import static jsweet.lang.Globals.eval;
 
 import java.util.List;
 
 import framework.EventListener;
 import framework.InputField;
 import framework.JSContainer;
-import framework.JSContainer.JSCommand;
 import framework.JSHTMLFragment;
 import framework.JSInput;
 import framework.Renderable;
@@ -96,7 +94,7 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 	}
 
 	protected void execCommands(HTMLElement njq, Renderable container) {
-		for (JSCommand command : container.getCommands()) {
+		/*for (JSCommand command : container.getCommands()) {
 			String name = command.getName();
 			jsweet.lang.Object params = command.getParameters();
 			String variable = command.getVariable();
@@ -110,7 +108,7 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 			} else if (variable != null) {
 				eval("njq." + name + "(" + variable + ")");
 			}
-		}
+		}*/
 	}
 
 	protected void renderEvents(HTMLElement njq, JSContainer c) {
@@ -163,8 +161,10 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 				inputField.setRawValue(value);
 			} else {
 				HTMLElement field = document.getElementById(jsfield.getId());
-				String value = field.getAttribute("value");
-				inputField.setRawValue(value);
+				if(field != null){
+					String value = field.getAttribute("value");
+					inputField.setRawValue(value);
+				}
 			}
 		}
 

@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,7 +26,8 @@ public class File {
 	private String title;
 
 	private String name;
-
+	
+	@Column(length=600000000)
 	private String data;
 
 	private Date dateCreated = new Date();

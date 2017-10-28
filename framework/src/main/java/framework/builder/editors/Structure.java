@@ -1,11 +1,14 @@
 package framework.builder.editors;
 
+import static def.dom.Globals.alert;
+
 import java.util.List;
 
 import framework.EventListener;
 import framework.JSContainer;
 import framework.TreeItem;
 import framework.builder.Builder;
+import framework.builder.Component;
 import framework.builder.data.File;
 import framework.design.Designable;
 import jsweet.dom.Event;
@@ -76,6 +79,57 @@ public class Structure extends JSContainer {
 		ul.addChild(liData);
 		renderFiles();
 	}
+	
+	public StructureTreeItem getItem(Designable designable, JSContainer currentNode){
+		for(JSContainer des : currentNode.getChildren()){
+			if(des instanceof StructureTreeItem){
+				StructureTreeItem titem = (StructureTreeItem)des;
+				if(designable.getId().equals(titem.getDesignable().getId())){
+					return titem;
+				}
+			}
+			StructureTreeItem child = getItem(designable, des);
+			if(child != null){
+				return child;
+			}
+		}
+		
+		return null;
+	}
+	
+	public TreeItem getItem(String type){
+		if(type.equals("stylesheets")){
+			return (TreeItem)liCss.getChildren().get(0);
+		}else if(type.equals("templates")){
+			return (TreeItem)liTemplates.getChildren().get(0);
+		}else if(type.equals("scripts")){
+			return (TreeItem)liJS.getChildren().get(0);
+		}else if(type.equals("data")){
+			return (TreeItem)liData.getChildren().get(0);
+		}
+		return null;
+	}
+	
+	
+	public void reload(String type){
+		reload();
+		TreeItem item = getItem(type);
+		item.open();
+	}
+	
+	public void reload(Designable designable){
+		StructureTreeItem item = getItem(designable, liRoot);
+		//alert(item);
+		if(item != null){
+			Integer level = Integer.parseInt(item.getParent().getAttribute("aria-level"));
+			JSContainer li = item.getParent();
+			li.getChildren().clear();
+			li.setRendered(false);
+			addNode(designable, li, level);
+			item.open();
+			
+		}
+	}
 
 	public void unselect(JSContainer c) {
 		
@@ -107,36 +161,46 @@ public class Structure extends JSContainer {
 			}
 		};
 		
+		JSContainer cstylesheets = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
 		for(File f : builder.getProject().getStylesheets()){
 			TreeItem item = new TreeItem(f.getName(), f.getTitle());
+			item.addIcon("delete", "utility");
+			item.addIcon("up", "utility");
+			item.addIcon("down", "utility");
+			item.addIcon("copy", "utility");
+			item.addIcon("cut", "utility");
+			item.addIcon("paste", "utility");
 			item.setData(f);
 			item.addEventListener(listener, "click");
 			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-			liCss.addChild(li);
+			liCss.addChild(cstylesheets.addChild(li));
 		}
 		
+		JSContainer cscripts = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
 		for(File f : builder.getProject().getScripts()){
 			TreeItem item = new TreeItem(f.getName(), f.getTitle());
 			item.setData(f);
 			item.addEventListener(listener, "click");
 			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-			liJS.addChild(li);
+			liJS.addChild(cscripts.addChild(li));
 		}
 		
+		JSContainer cdata = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
 		for(File f : builder.getProject().getDataEnvironment()){
 			TreeItem item = new TreeItem(f.getName(), f.getTitle());
 			item.setData(f);
 			item.addEventListener(listener, "click");
 			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-			liData.addChild(li);
+			liData.addChild(cdata.addChild(li));
 		}
 		
+		JSContainer chtml = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
 		for(File f : builder.getProject().getTemplates()){
 			TreeItem item = new TreeItem(f.getName(), f.getTitle());
 			item.setData(f);
 			item.addEventListener(listener, "click");
 			JSContainer li =new JSContainer("li").addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
-			liTemplates.addChild(li);
+			liTemplates.addChild(chtml.addChild(li));
 		}
 	}
 	
@@ -150,14 +214,26 @@ public class Structure extends JSContainer {
 			@Override
 			public void performAction(JSContainer source, Event evt) {
 				evt.stopPropagation();
-
-				StructureTreeItem itemS = ((StructureTreeItem) source);
-
-				if (selected != null) {
-					selected.select(false);
+				
+				VisualEditor editor = ((JSContainer)root).getAncestorWithClass("visual-editor");
+				Component willAdd = editor.getWillAddComponent();
+				if(willAdd != null){
+					//source.setStyle("cursor", "")
+					StructureTreeItem itemS = ((StructureTreeItem) source);
+					//itemS.getDesignable();
+					editor.addNewComponent(willAdd,itemS.getDesignable());
+				}else{
+					
+					StructureTreeItem itemS = ((StructureTreeItem) source);
+	
+					if (selected != null) {
+						selected.select(false);
+					}
+					
+					
+					selected = itemS;
+					selected.select(true);
 				}
-				selected = itemS;
-				selected.select(true);
 			}
 		}, "click");
 

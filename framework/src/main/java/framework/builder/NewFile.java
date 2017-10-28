@@ -11,6 +11,7 @@ import framework.JSContainer;
 import framework.builder.data.File;
 import framework.builder.data.ProjectService;
 import framework.builder.data.RemoteDataListener;
+import framework.builder.editors.Structure;
 import framework.core.BeanFactory;
 import jsweet.dom.Event;
 
@@ -113,7 +114,15 @@ public class NewFile extends ItemSelector {
 			
 			@Override
 			public void dataLoaded(Object data) {
-				alert(JSON.stringify(data));
+				//alert(JSON.stringify(data));
+				//alert("sdfsdfsd pops");
+				close();
+				render();
+				getBackdrop().render();
+				
+				BeanFactory.getInstance().getBeanOfType(Structure.class).reload(type);
+				BeanFactory.getInstance().getBeanOfType(Structure.class).render();
+				
 			}
 		});
 		

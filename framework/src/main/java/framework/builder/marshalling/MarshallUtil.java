@@ -8,6 +8,7 @@ public class MarshallUtil {
 	
 	public static Component extract(Designable designable){
 		Component c = new Component();
+		c.impl = designable.getAttribute("identifier");
 		for(String s : designable.getStyleNames()){
 			c.styles.$set(s, designable.getStyle(s));
 		}

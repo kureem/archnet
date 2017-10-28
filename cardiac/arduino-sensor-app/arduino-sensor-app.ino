@@ -1,10 +1,10 @@
 #include <ESP8266WiFi.h>
 #include <WebSocketClient.h>
 
-const char* ssid     = "SSID HERE";
-const char* password = "PASSWORD HERE";
-char path[] = "/";
-char host[] = "echo.websocket.org";
+const char* ssid     = "HUAWEI-B310-0704";
+const char* password = "264YD7D9AA5";
+char path[] = "/cardiac";
+char host[] = "192.168.8.104:8080";
   
 WebSocketClient webSocketClient;
 
@@ -38,7 +38,7 @@ void setup() {
   
 
   // Connect to the websocket server
-  if (client.connect("echo.websocket.org", 80)) {
+  if (client.connect("192.168.8.104", 8080)) {
     Serial.println("Connected");
   } else {
     Serial.println("Connection failed.");

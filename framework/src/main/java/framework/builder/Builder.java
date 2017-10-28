@@ -3,6 +3,7 @@ package framework.builder;
 import framework.EventListener;
 import framework.JSContainer;
 import framework.builder.data.File;
+import framework.builder.editors.CodeMirrorEditor;
 import framework.builder.editors.Editor;
 import framework.builder.editors.VisualEditor;
 import framework.lightning.Backdrop;
@@ -134,23 +135,40 @@ public class Builder extends LTContainer {
 	
 	public TabItem openEditor(String title,Editor<?> editor){
 		
+		for(TabItem item : editorTabs.getItems()){
+			if(item.getName().equals("editor_" + editor.getName())){
+				editorTabs.setActive(item);
+				return item;
+			}
+		}
+		
+		
 		TabActionListener l = new TabActionListener() {
 			
 			@Override
 			public void onClose(TabItem item) {
 				// TODO Auto-generated method stub
-				
+				if(editor != null)
+					editor.save();
 			}
 			
 			@Override
 			public void onActivate(TabItem item) {
-				activeEditor.setRendered(false);
+				//activeEditor.setRendered(false);
+			}
+
+			@Override
+			public void onDeactivate(TabItem item) {
+				
+				if(editor != null)
+					editor.save();
 			}
 		};
 		TabBody body = new TabBody("editorBody");
 		body.addChild((JSContainer)editor);
-		TabItem item = new TabItem("visualEditor", body);
+		TabItem item = new TabItem("editor_" + editor.getName(), body);
 		item.setTitle(title);
+		item.setClosable(true);
 		editorTabs.addItem(item);
 		this.activeEditor = editor;
 		item.addTabActionListener(l);

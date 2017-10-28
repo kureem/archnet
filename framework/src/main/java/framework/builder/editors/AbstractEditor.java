@@ -28,7 +28,7 @@ public abstract class AbstractEditor<T> extends JSContainer implements Editor<T>
 			
 			@Override
 			public void dataLoaded(Object data) {
-				alert(JSON.stringify(data));
+				//alert(JSON.stringify(data));
 			}
 		});
 	}

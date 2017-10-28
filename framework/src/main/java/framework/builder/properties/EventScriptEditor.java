@@ -33,7 +33,7 @@ public class EventScriptEditor extends JSTextArea implements PropertyEditor, Eve
 	public void performAction(JSContainer source, Event evt) {
 		String script = getValue();
 		String type = eventTypeEditor.getValue();
-		designable.setParameter(type, script, true);
+		designable.applyParam(type, script);
 	}
 
 }

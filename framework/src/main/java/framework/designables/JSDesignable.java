@@ -24,7 +24,7 @@ public class JSDesignable extends JSContainer implements Designable{
 
 	
 	@Override
-	public void setParameter(String key, String value, boolean designMode) {
+	public void applyParam(String key, String value) {
 		component.parameters.$set(key, value);
 	}
 

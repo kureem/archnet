@@ -21,15 +21,21 @@ public class Tabs extends JSContainer {
 	}
 	
 	public Tabs setActive(TabItem item){
-		for(JSContainer c : nav.getChildren()){
-			TabItem tab = (TabItem)c;
-			tab.setActive(false);
+		for(TabItem tab : getItems()){
+			if(item.getId().equals(tab.getId())){
+				if(!tab.isActive()){
+					tab.setActive(true);
+				}
+			}else{
+				if(tab.isActive()){
+					tab.setActive(false);
+				}
+			}
 		}
-		item.setActive(true);
 		return this;
 	}
 	
-	
+	 
 	public List<TabItem> getItems(){
 		return (List)nav.getChildren();
 	}

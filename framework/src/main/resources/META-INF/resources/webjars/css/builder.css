@@ -5,6 +5,37 @@
 	
 }
 
+
+
+.visual-editor.add-mode , .visual-editor.add-mode .structure-tree-item{
+	cursor: crosshair; 
+}
+
+
+.visual-editor .component-design.basic .slds-app-launcher__title-label{
+	display: none;
+}
+
+.visual-editor .component-design.basic .slds-app-launcher__tile-figure{
+	padding: .75rem 0 0;
+}
+
+.builder .slds-tabs_default__link{
+	text-transform: none;
+}
+
+.builder .slds-tabs_default__content{
+	padding: 0px;
+}
+
+.builder .tab-close-button{
+	
+    float: left;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+	
+}
 .builder .save-button{
 	position: absolute;
 	right: 1%;

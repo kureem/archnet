@@ -30,7 +30,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 	protected void configureStyles(Designable instance, Component component) {
 		String[] keys = Object.keys(component.styles);
 		for (String key : keys) {
-			String value = (String) component.styles.$get(key);
+			String value = component.styles.$get(key).toString();
 			instance.setStyle(key, value);
 		}
 	}
@@ -38,8 +38,8 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 	protected void configureParameters(Designable instance, Component component, boolean designMode) {
 		String[] keys = Object.keys(component.parameters);
 		for (String key : keys) {
-			String value = (String) component.parameters.$get(key);
-			instance.setParameter(key, value, designMode);
+			String value = component.parameters.$get(key).toString();
+			instance.applyParam(key, value);
 		}
 	}
 
@@ -52,12 +52,13 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 
 	@Override
 	public Designable build(Component component, boolean designMode) {
-		Designable instance = createInstance(designMode);
-		configureStyles(instance, component);
-		configureParameters((Designable) instance, component, designMode);
-		configureEvents(instance, component);
-		decorateForDesignMode(instance, designMode);
-		return instance;
+		Designable thIns = createInstance(designMode);
+		thIns.setAttribute("identifier", impl);
+		configureStyles(thIns, component);
+		configureParameters( thIns, component, designMode);
+		configureEvents(thIns, component);
+		decorateForDesignMode(thIns, designMode);
+		return thIns;
 	}
 
 	protected void decorateForDesignMode(Designable instance, boolean designMode) {

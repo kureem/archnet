@@ -1,5 +1,7 @@
 package framework.builder.editors;
 
+import static def.dom.Globals.alert;
+
 import def.codemirror.codemirror.Editor;
 import def.codemirror.codemirror.EditorConfiguration;
 import framework.JSContainer;
@@ -24,6 +26,7 @@ public class CodeMirrorEditor extends JSTextArea implements Renderer<CodeMirrorE
 	public CodeMirrorEditor(String name) {
 		super(name);
 		addRenderer(this);
+		setStyle("position", "absolute");
 	}
 
 	public void setConfig(EditorConfiguration config) {
@@ -52,7 +55,12 @@ public class CodeMirrorEditor extends JSTextArea implements Renderer<CodeMirrorE
 	
 	@Override
 	public void save(){
+		if(editor == null){
+			return;
+		}
 		String data = editor.getValue();
+		this.value = data;
+		//alert(data);
 		file.setData(data);
 		BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(file, new RemoteDataListener() {
 			

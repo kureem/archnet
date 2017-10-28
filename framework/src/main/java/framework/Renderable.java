@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import framework.JSContainer.JSCommand;
 import framework.renderer.Renderer;
 import jsweet.dom.HTMLElement;
 
@@ -46,13 +45,12 @@ public interface Renderable {
 
 	Renderable setAttribute(String key, String value);
 
-	void exec(String name, jsweet.lang.Object parameter);
+/*	void exec(String name, jsweet.lang.Object parameter);
 
 	void exec(String name, String variable);
 
 	void exec(String name);
-
-	Iterable<JSCommand> getCommands();
+*/
 
 	String getAttribute(String key);
 

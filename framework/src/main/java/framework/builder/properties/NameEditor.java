@@ -15,7 +15,7 @@ public class NameEditor extends AbstractInputPropertyEditor{
 	@Override
 	public void performAction(JSContainer source, Event evt) {
 		String name = getValue();
-		designable.setParameter("name", name, true);
+		designable.applyParam("name", name);
 		designable.setName(name);
 	}
 

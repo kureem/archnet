@@ -2,6 +2,8 @@ package framework;
 
 public class JSSelect extends JSContainer implements InputField<String> {
 
+	
+	private String previousValue;
 	public JSSelect(String name) {
 		super(name, "select");
 	}
@@ -24,11 +26,17 @@ public class JSSelect extends JSContainer implements InputField<String> {
 
 	@Override
 	public void setValue(String val) {
+		previousValue = getValue();
+		setAttribute("value", val);
 		for (JSContainer opt : getChildren()) {
 			if (opt.getAttribute("value").equals(val)) {
 				((JSOption) opt).setSelected(true);
 			}
 		}
+	}
+	
+	public String getPreviousValue(){
+		return previousValue;
 	}
 
 	@Override

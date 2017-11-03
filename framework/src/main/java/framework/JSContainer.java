@@ -277,9 +277,9 @@ public class JSContainer implements Renderable, Droppable {
 			listeners.put(type, new ArrayList<>());
 		}
 
-		if (!listeners.get(type).contains(listener)) {
+		//if (!listeners.get(type).contains(listener)) {
 			listeners.get(type).add(listener);
-		}
+		//}
 		return this;
 	}
 
@@ -574,9 +574,12 @@ public class JSContainer implements Renderable, Droppable {
 		if (parent == null) {
 			return null;
 		}
-		for (String s : parent.getAttribute("class").split(" ")) {
-			if (s.trim().equals(cls))
-				return (T) parent;
+		String clsss = parent.getAttribute("class");
+		if(clsss != null){
+			for (String s : parent.getAttribute("class").split(" ")) {
+				if (s.trim().equals(cls))
+					return (T) parent;
+			}
 		}
 
 		return ((JSContainer) parent).getAncestorWithClass(cls);

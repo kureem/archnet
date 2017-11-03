@@ -36,11 +36,11 @@ public class TreeItem extends JSContainer implements EventListener{
 	}
 	
 	
-	public void addIcon(String name, String type){
+	public void addIcon(String name, String type, EventListener listener){
 		IconButton minimize = new IconButton(name);
 		minimize.setIcon(new Icon(name, type, name));
 		buttonsCtn.addChild(minimize);
-		
+		minimize.addEventListener(listener, "click");
 		
 		//minimize.setStyle("position", "relative");
 		//minimize.setStyle("top", "-27px");

@@ -43,6 +43,9 @@ public class CodeMirrorEditor extends JSTextArea implements Renderer<CodeMirrorE
 		}
 	}
 	
+	public void setValue(String s){
+		this.value = s;
+	}
 	public void destroy(){
 		if(editor != null){
 			editor = null;

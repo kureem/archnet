@@ -18,7 +18,6 @@ import framework.design.Designable;
 import jsweet.lang.Array;
 import jsweet.lang.JSON;
 import jsweet.lang.Object;
-import jsweet.util.StringTypes.b;
 
 public class VisualEditor extends AbstractEditor<Component> {
 
@@ -122,7 +121,7 @@ public class VisualEditor extends AbstractEditor<Component> {
 		
 		Component component = new Component();
 		component.impl = "html:div";
-		return component;
+		return component; 
 	}
 
 	@Override
@@ -140,6 +139,7 @@ public class VisualEditor extends AbstractEditor<Component> {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public Component doUnMarsh(Object o){
 		Component cc = new Component();
 		cc.impl = o.$get("impl").toString();

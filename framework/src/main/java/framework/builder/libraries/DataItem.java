@@ -150,7 +150,7 @@ public class DataItem extends Card implements TableModel, TableCellRenderer{
 	}
 	
 	public void deleteField(int row){
-		dataStructure.fields.remove(row);
+		dataStructure.fields.$delete(row+"");
 		dataEnvironment.saveStructure(dataStructure);;
 		setDataStructure(dataStructure);
 	}
@@ -166,7 +166,7 @@ public class DataItem extends Card implements TableModel, TableCellRenderer{
 			field.label = label.getValue();
 			field.name = name.getValue();
 			field.type = type.getValue();
-			dataStructure.fields.add(field);
+			dataStructure.fields.push(field);
 			setDataStructure(dataStructure);
 			addNewMode = false;
 			addNew.setDisabled(false);
@@ -177,7 +177,7 @@ public class DataItem extends Card implements TableModel, TableCellRenderer{
 			JSInput label = (JSInput)tr.getChildren().get(1).getChildren().get(0);
 			JSSelect type = (JSSelect)tr.getChildren().get(2).getChildren().get(0);
 			
-			DataField field = dataStructure.fields.get(row); // new DataField();
+			DataField field = dataStructure.fields.$get(row); // new DataField();
 			field.label = label.getValue();
 			field.name = name.getValue();
 			field.type = type.getValue();
@@ -274,9 +274,9 @@ public class DataItem extends Card implements TableModel, TableCellRenderer{
 				
 			}
 		}, "click");
-		name.setValue(dataStructure.fields.get(row).name);
-		label.setValue(dataStructure.fields.get(row).label);
-		type.setValue(dataStructure.fields.get(row).type);
+		name.setValue(dataStructure.fields.$get(row).name);
+		label.setValue(dataStructure.fields.$get(row).label);
+		type.setValue(dataStructure.fields.$get(row).type);
 		
 		JSContainer tr= fields.getRow(row);
 		tr.getChildren().clear();
@@ -334,8 +334,8 @@ public class DataItem extends Card implements TableModel, TableCellRenderer{
 
 	@Override
 	public int getRowCount() {
-		
-		return dataStructure.fields.size();
+		Double d = dataStructure.fields.length;
+		return d.intValue();
 	}
 
 
@@ -366,13 +366,13 @@ public class DataItem extends Card implements TableModel, TableCellRenderer{
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if(columnIndex == 0){
-			return dataStructure.fields.get(rowIndex).name;
+			return dataStructure.fields.$get(rowIndex).name;
 		}else if(columnIndex == 1){
-			return dataStructure.fields.get(rowIndex).label;
+			return dataStructure.fields.$get(rowIndex).label;
 		}else if(columnIndex == 2){
-			return dataStructure.fields.get(rowIndex).type;
+			return dataStructure.fields.$get(rowIndex).type;
 		}else{
-			return dataStructure.fields.get(rowIndex).name;
+			return dataStructure.fields.$get(rowIndex).name;
 		}
 	}
 

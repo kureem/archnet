@@ -36,5 +36,9 @@ public class ProjectController {
 		return projectService.getProjects();
 	}
 	
+	@RequestMapping(path="/delete-file", method=RequestMethod.GET)
+	public void deleteFile(@RequestParam("path") String path){
+		projectService.deleteFile(path);
+	}
 
 }

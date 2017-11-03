@@ -1,7 +1,6 @@
 package framework.builder.data;
 
-import java.util.LinkedList;
-import java.util.List;
+import jsweet.lang.Array;
 
 public class DataStructure {
 	
@@ -9,6 +8,9 @@ public class DataStructure {
 	
 	public String label;
 	
-	public List<DataField> fields = new LinkedList<>();
+	public Array<DataField> fields = new Array<>();
 
+	
+	
+	
 }

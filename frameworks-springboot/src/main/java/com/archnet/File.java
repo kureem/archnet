@@ -6,13 +6,16 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.Type;
+import org.springframework.context.annotation.Lazy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,8 +44,9 @@ public class File {
 	@JsonIgnore
 	@OneToOne
 	private File parent;
-
-	@OneToMany
+	
+	
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<File> children = new LinkedList<>();
 
 	public String getName() {

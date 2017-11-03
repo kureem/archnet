@@ -1,6 +1,10 @@
 package framework;
 
+import static def.dom.Globals.alert;
+import static def.dom.Globals.window;
+
 import framework.builder.Builder;
+import framework.builder.Previewer;
 import framework.builder.Selector;
 import framework.builder.data.BasicDataEnvironment;
 import framework.builder.data.DataEnvironment;
@@ -92,7 +96,18 @@ public class Boot {
 		
 		factory.addBean(ProjectService.class, new ProjectService());
 
-		new Builder("builder").render();
+		
+		//alert(window.location.href);
+		
+		//new Previewer("aaa.prj").render();;
+		//new Pre
+		if(window.location.href.contains("preview.html")){
+			
+			String name = window.location.href.split("#")[1];
+			new Previewer(name).render();
+		}else{
+			new Builder("builder").render();
+		}
 
 	}
 

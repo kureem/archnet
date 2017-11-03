@@ -6,6 +6,7 @@ public interface ProjectService {
 	
 	public Project createProject(String name, String title);
 	
+	public void deleteFile(String path);
 	
 	public List<Project> getProjects();
 	

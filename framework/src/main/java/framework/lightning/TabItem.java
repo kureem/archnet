@@ -95,6 +95,10 @@ public class TabItem extends JSContainer implements EventListener{
 		return this;
 	}
 	
+	public TabBody getBody(){
+		return body;
+	}
+	
 	public TabItem setTitle(String title){
 		setAttribute("title", title);
 		this.title.setHtml(title);

@@ -1,15 +1,14 @@
 package framework.builder.data;
 
-import java.util.LinkedList;
-import java.util.List;
+import jsweet.lang.Array;
 
 public class BasicDataEnvironment implements DataEnvironment{
 
-	private static List<DataStructure> structures = new LinkedList<>();
+	public static Array<DataStructure> structures = new Array<>();
 	
 	
 	@Override
-	public List<DataStructure> getDataStructures() {
+	public Array<DataStructure> getDataStructures() {
 		return structures;
 	}
 
@@ -22,18 +21,21 @@ public class BasicDataEnvironment implements DataEnvironment{
 				return;
 			}
 		}
-		structures.add(datastructure);
+		structures.push(datastructure);
 		//document.set
 	}
 
 	@Override
 	public void deleteStructure(String name) {
+		
+		 Array<DataStructure> tmp = new Array<>();
 		for(DataStructure structure : structures){
-			if(structure.name.equals(name)){
-				structures.remove(structure);
-				return;
+			if(!structure.name.equals(name)){
+				tmp.push(structure);
 			}
 		}
+		
+		structures = tmp;
 	}
 
 }

@@ -1,5 +1,7 @@
 package framework.builder.libraries;
 
+import static def.dom.Globals.alert;
+
 import framework.builder.BuilderEventListener;
 import framework.builder.SelectComponentEvent;
 import framework.builder.Selector;
@@ -45,6 +47,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 
 	protected void configureEvents(Designable instance, Component component) {
 		for (BuilderEvent event : component.events) {
+			//alert("evnt found");
 			BuilderEventListener listener = new BuilderEventListener(event.source);
 			instance.addEventListener(listener, event.type);
 		}

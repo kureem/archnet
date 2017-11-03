@@ -1,5 +1,7 @@
 package framework.builder.data;
 
+import static def.dom.Globals.alert;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,6 +37,30 @@ public class File {
 	
 	public List<File> getDataEnvironment(){
 		return getChild("data").getChildren();		
+	}
+	
+	
+	public File getFile(String name, String type){
+		return getChild(type).getChild(name);
+	}
+	
+	
+	public void deleteFile(String name, String type, RemoteDataListener l){
+		
+		File f = getFile(name, type);
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).deleteFile(f.getPath(), new RemoteDataListener() {
+			
+
+			@Override
+			public void dataLoaded(java.lang.Object data) {
+				//getChild(type).getChildren().remove(f);
+				l.dataLoaded(data);
+				alert("delete file");				
+			}
+		});
+		
+		
+		
 	}
 	
 	
@@ -119,6 +145,15 @@ public class File {
 		return (String) file.$get("title");
 	}
 
+	public void removeFile(File f){
+		Array<Object> children = new Array<Object>();
+		for (Object o : (Array<Object>) file.$get("children")) {
+			if(!o.$get("name").equals(f.getName())){
+				children.push(o);
+			}
+		}
+		file.$set("children",children);
+	}
 	public List<File> getChildren() {
 		List<File> result = new LinkedList<>();
 		for (Object o : (Array<Object>) file.$get("children")) {

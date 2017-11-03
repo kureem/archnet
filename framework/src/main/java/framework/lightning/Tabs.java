@@ -36,6 +36,7 @@ public class Tabs extends JSContainer {
 	}
 	
 	 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<TabItem> getItems(){
 		return (List)nav.getChildren();
 	}

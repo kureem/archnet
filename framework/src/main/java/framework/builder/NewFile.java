@@ -31,6 +31,10 @@ public class NewFile extends ItemSelector {
 
 	private UIFile javascript = new UIFile("scripts").setAbbr("JS").setTitle("Javascript file")
 			.setHelp("Create a new javascript file to be included in project");
+	
+	
+	private UIFile data = new UIFile("data").setAbbr("DAT").setTitle("Data Environment")
+			.setHelp("Creates a new data environment to be included inn the project");
 
 	private List<UIFile> files = new LinkedList<>();
 
@@ -46,12 +50,14 @@ public class NewFile extends ItemSelector {
 		getFilesList().addFile(html);
 		getFilesList().addFile(css);
 		getFilesList().addFile(javascript);
+		getFilesList().addFile(data);
 
 		files.add(lightning);
 		files.add(mobile);
 		files.add(html);
 		files.add(css);
 		files.add(javascript);
+		files.add(data);
 
 		for (UIFile file : files) {
 			file.addEventListener(new EventListener() {

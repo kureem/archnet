@@ -6,6 +6,11 @@
 }
 
 
+.builder .buttons-ctn{
+	position: absolute;
+	right:8px;
+}
+
 
 .visual-editor.add-mode , .visual-editor.add-mode .structure-tree-item{
 	cursor: crosshair; 
@@ -46,6 +51,17 @@
 	position: absolute;
 	right: 3%;
 	top: 3px;
+}
+
+.builder .preview-btn{
+	position: absolute;
+	right: 20%;
+	top: 3px;
+}
+
+.builder .preview-btn div{
+	top:6px;
+	position: relative;
 }
 
 .builder .data-item select,.builder .data-item input{

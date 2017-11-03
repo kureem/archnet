@@ -14,13 +14,13 @@ declare namespace framework.builder {
 }
 declare namespace framework.builder.data {
     class BasicDataEnvironment implements framework.builder.data.DataEnvironment {
-        static structures: java.util.List<framework.builder.data.DataStructure>;
-        static structures_$LI$(): java.util.List<framework.builder.data.DataStructure>;
+        static structures: Array<framework.builder.data.DataStructure>;
+        static structures_$LI$(): Array<framework.builder.data.DataStructure>;
         /**
          *
-         * @return {*}
+         * @return {framework.builder.data.DataStructure[]}
          */
-        getDataStructures(): java.util.List<framework.builder.data.DataStructure>;
+        getDataStructures(): Array<framework.builder.data.DataStructure>;
         /**
          *
          * @param {framework.builder.data.DataStructure} datastructure
@@ -36,7 +36,7 @@ declare namespace framework.builder.data {
 }
 declare namespace framework.builder.data {
     interface DataEnvironment {
-        getDataStructures(): java.util.List<framework.builder.data.DataStructure>;
+        getDataStructures(): Array<framework.builder.data.DataStructure>;
         saveStructure(datastructure: framework.builder.data.DataStructure): any;
         deleteStructure(name: string): any;
     }
@@ -55,7 +55,7 @@ declare namespace framework.builder.data {
     class DataStructure {
         name: string;
         label: string;
-        fields: java.util.List<framework.builder.data.DataField>;
+        fields: Array<framework.builder.data.DataField>;
         constructor();
     }
 }
@@ -83,6 +83,8 @@ declare namespace framework.builder.data {
         getScripts(): java.util.List<File>;
         getTemplates(): java.util.List<File>;
         getDataEnvironment(): java.util.List<File>;
+        getFile(name: string, type: string): File;
+        deleteFile(name: string, type: string, l: framework.builder.data.RemoteDataListener): void;
         getChild(name: string): File;
         createCss(name: string, listener: framework.builder.data.RemoteDataListener): void;
         createTemplate(name: string, listener: framework.builder.data.RemoteDataListener): void;
@@ -100,10 +102,21 @@ declare namespace framework.builder.data {
         getType(): string;
         getProjectType(): string;
         getTitle(): string;
+        removeFile(f: File): void;
         getChildren(): java.util.List<File>;
     }
     namespace File {
         class File$0 implements framework.builder.data.RemoteDataListener {
+            private l;
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any, l: any);
+        }
+        class File$1 implements framework.builder.data.RemoteDataListener {
             private dir;
             private listener;
             __parent: any;
@@ -122,6 +135,7 @@ declare namespace framework.builder.data {
         getProjects(listener: framework.builder.data.RemoteDataListener): void;
         saveFile(file: framework.builder.data.File, listener: framework.builder.data.RemoteDataListener): void;
         createFile(name: string, title: string, dir: string, listener: framework.builder.data.RemoteDataListener): void;
+        deleteFile(path: string, listener: framework.builder.data.RemoteDataListener): void;
     }
 }
 declare namespace framework.builder.data {
@@ -131,7 +145,7 @@ declare namespace framework.builder.data {
 }
 declare namespace framework.builder.editors {
     interface Editor<T> extends framework.Renderable {
-        save(): any;
+        save(type?: any): any;
         open(file: framework.builder.data.File): any;
     }
 }
@@ -1044,12 +1058,13 @@ declare namespace framework.builder.editors {
         projectService: framework.builder.data.ProjectService;
         constructor(name: string, tag: string);
         abstract getMarshall(): string;
-        save(): void;
+        save(type?: any): any;
+        save$(): void;
         abstract createNew(f: framework.builder.data.File): T;
         abstract unmarshall(f: framework.builder.data.File): T;
         /**
          *
-         * @param {framework.builder.marshalling.BuilderEvent} data
+         * @param {framework.builder.marshalling.Component} data
          */
         consume(data?: any): any;
         consume$java_lang_Object(data: T): void;
@@ -1065,6 +1080,16 @@ declare namespace framework.builder.editors {
             dataLoaded(data: any): void;
             constructor(__parent: any);
         }
+    }
+}
+declare namespace framework.builder.editors {
+    class Preview extends framework.JSContainer {
+        root: framework.design.Designable;
+        constructor(file: framework.builder.data.File);
+        unmarshall(f: framework.builder.data.File): framework.builder.marshalling.Component;
+        doUnMarsh(o: Object): framework.builder.marshalling.Component;
+        cona(component: framework.builder.marshalling.Component): framework.design.Designable;
+        consume(component: framework.builder.marshalling.Component): void;
     }
 }
 declare namespace framework.builder.editors {
@@ -1102,6 +1127,30 @@ declare namespace framework.builder.editors {
             constructor(__parent: any);
         }
         class Structure$1 implements framework.EventListener {
+            private type;
+            private f;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, type: any, f: any);
+        }
+        namespace Structure$1 {
+            class Structure$1$0 implements framework.builder.data.RemoteDataListener {
+                private stype;
+                __parent: any;
+                /**
+                 *
+                 * @param {*} data
+                 */
+                dataLoaded(data: any): void;
+                constructor(__parent: any, stype: any);
+            }
+        }
+        class Structure$2 implements framework.EventListener {
             __parent: any;
             /**
              *
@@ -1111,7 +1160,37 @@ declare namespace framework.builder.editors {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
-        class Structure$2 implements framework.EventListener {
+        class Structure$3 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class Structure$4 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class Structure$5 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class Structure$6 implements framework.EventListener {
             private item;
             __parent: any;
             /**
@@ -1130,24 +1209,9 @@ declare namespace framework.builder {
         addFile(file: framework.builder.UIFile): FilesList;
     }
 }
-declare namespace framework.builder.libraries {
-    class DataComposer extends framework.JSContainer {
-        header: framework.lightning.GlobalHeader;
-        addNew: framework.lightning.Button;
-        dataEnvironment: framework.builder.data.DataEnvironment;
-        constructor(name: string, tag: string);
-    }
-    namespace DataComposer {
-        class DataComposer$0 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
+declare namespace framework.builder {
+    class Previewer extends framework.JSContainer {
+        constructor(name: string);
     }
 }
 declare namespace framework.builder {
@@ -1273,6 +1337,7 @@ declare namespace framework {
 }
 declare namespace framework {
     class JSSelect extends framework.JSContainer implements framework.InputField<string> {
+        previousValue: string;
         constructor(name: string);
         addOption(option: framework.JSOption): JSSelect;
         /**
@@ -1286,6 +1351,7 @@ declare namespace framework {
          * @param {string} val
          */
         setValue(val?: any): any;
+        getPreviousValue(): string;
         /**
          *
          * @param {string} value
@@ -1763,6 +1829,7 @@ declare namespace framework.lightning {
         fireActivate(): void;
         fireDeActivate(): void;
         setActive(b: boolean): TabItem;
+        getBody(): framework.lightning.TabBody;
         setTitle(title: string): TabItem;
         /**
          *
@@ -1845,7 +1912,7 @@ declare namespace framework {
         buttons: java.util.List<framework.lightning.IconButton>;
         buttonsCtn: framework.JSContainer;
         constructor(name: string, title: string);
-        addIcon(name: string, type: string): void;
+        addIcon(name: string, type: string, listener: framework.EventListener): void;
         getButton(): framework.JSContainer;
         open(): void;
         close(): void;
@@ -1866,19 +1933,21 @@ declare namespace framework.builder {
     }
 }
 declare namespace framework.builder.editors {
-    class EventEditor extends framework.builder.editors.AbstractEditor<framework.builder.marshalling.BuilderEvent> {
-        component: framework.JSSelect;
+    class EventEditor extends framework.builder.editors.AbstractEditor<framework.builder.marshalling.Component> {
+        component: framework.JSContainer;
         events: framework.JSSelect;
         root: framework.design.Designable;
         editor: framework.builder.editors.JavascriptEditor;
+        justSaved: string;
         constructor(name: string, root: framework.design.Designable);
-        addComponentOption(designable: framework.design.Designable): void;
+        fillValue(des: framework.design.Designable, updEvtSelect: boolean): void;
+        getSource(des: framework.design.Designable, type: string): string;
+        reactivate(): void;
         setDesignable(designable: framework.design.Designable): void;
         findDesignableById(parent: framework.design.Designable, id: string): framework.design.Designable;
-        /**
-         *
-         */
-        save(): void;
+        save$(): void;
+        save$java_lang_String(type: string): void;
+        save(type?: any): any;
         /**
          *
          * @return {string}
@@ -1887,21 +1956,44 @@ declare namespace framework.builder.editors {
         /**
          *
          * @param {framework.builder.data.File} f
-         * @return {framework.builder.marshalling.BuilderEvent}
+         * @return {framework.builder.marshalling.Component}
          */
-        createNew(f: framework.builder.data.File): framework.builder.marshalling.BuilderEvent;
+        createNew(f: framework.builder.data.File): framework.builder.marshalling.Component;
         /**
          *
          * @param {framework.builder.data.File} f
-         * @return {framework.builder.marshalling.BuilderEvent}
+         * @return {framework.builder.marshalling.Component}
          */
-        unmarshall(f: framework.builder.data.File): framework.builder.marshalling.BuilderEvent;
-        consume$framework_builder_marshalling_BuilderEvent(data: framework.builder.marshalling.BuilderEvent): void;
+        unmarshall(f: framework.builder.data.File): framework.builder.marshalling.Component;
+        consume$framework_builder_marshalling_Component(data: framework.builder.marshalling.Component): void;
         /**
          *
-         * @param {framework.builder.marshalling.BuilderEvent} data
+         * @param {framework.builder.marshalling.Component} data
          */
         consume(data?: any): any;
+    }
+    namespace EventEditor {
+        class EventEditor$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class EventEditor$1 implements framework.EventListener {
+            private root;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, root: any);
+        }
     }
 }
 declare namespace framework.builder.editors {
@@ -1948,6 +2040,52 @@ declare namespace framework.builder.editors {
          * @param {framework.builder.marshalling.Component} component
          */
         consume(component?: any): any;
+    }
+}
+declare namespace framework.builder.libraries {
+    class DataComposer extends framework.builder.editors.AbstractEditor<string> {
+        header: framework.lightning.GlobalHeader;
+        addNew: framework.lightning.Button;
+        structures: Array<framework.builder.data.DataStructure>;
+        constructor(name: string);
+        createNewFile$(): void;
+        createNewFile$java_lang_String(name: string): void;
+        createNewFile(name?: any): any;
+        /**
+         *
+         * @return {string}
+         */
+        getMarshall(): string;
+        /**
+         *
+         * @param {framework.builder.data.File} f
+         * @return {string}
+         */
+        createNew(f: framework.builder.data.File): string;
+        /**
+         *
+         * @param {framework.builder.data.File} f
+         * @return {string}
+         */
+        unmarshall(f: framework.builder.data.File): string;
+        consume$java_lang_String(data: string): void;
+        /**
+         *
+         * @param {string} data
+         */
+        consume(data?: any): any;
+    }
+    namespace DataComposer {
+        class DataComposer$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
     }
 }
 declare namespace framework.builder.properties {
@@ -2105,12 +2243,12 @@ declare namespace framework.builder.editors {
          * @param {HTMLElement} root
          */
         doRender(c?: any, root?: any): any;
+        setValue$java_lang_String(s: string): void;
+        setValue(s?: any): any;
         destroy(): void;
         getEditor(): CodeMirror.Editor;
-        /**
-         *
-         */
-        save(): void;
+        save(type?: any): any;
+        save$(): void;
         /**
          *
          * @param {boolean} b
@@ -2495,12 +2633,17 @@ declare namespace framework.builder {
         openProjectModal: framework.builder.OpenProject;
         newFileButtn: framework.lightning.IconButton;
         openProjectBtn: framework.lightning.IconButton;
+        previewBtn: framework.lightning.IconButton;
         backdrop: framework.lightning.Backdrop;
         activeEditor: framework.builder.editors.Editor<any>;
+        static websocket: WebSocket;
+        static websocket_$LI$(): WebSocket;
         constructor(name: string);
         openProject(file: framework.builder.data.File): void;
         getProject(): framework.builder.data.File;
-        openEditor(title: string, editor: framework.builder.editors.Editor<any>): framework.lightning.TabItem;
+        isOpen(editorName: string): boolean;
+        activateEditor(editorName: string): framework.builder.editors.Editor<any>;
+        openEditor(title: string, editor: framework.builder.editors.Editor<any>): framework.builder.editors.Editor<any>;
     }
     namespace Builder {
         class Builder$0 implements framework.EventListener {
@@ -2534,7 +2677,6 @@ declare namespace framework.builder {
             constructor(__parent: any);
         }
         class Builder$3 implements framework.lightning.TabActionListener {
-            private editor;
             __parent: any;
             /**
              *
@@ -2551,7 +2693,7 @@ declare namespace framework.builder {
              * @param {framework.lightning.TabItem} item
              */
             onDeactivate(item: framework.lightning.TabItem): void;
-            constructor(__parent: any, editor: any);
+            constructor(__parent: any);
         }
     }
 }
@@ -2840,6 +2982,7 @@ declare namespace framework.builder {
         __framework_builder_NewFile_html: framework.builder.UIFile;
         css: framework.builder.UIFile;
         javascript: framework.builder.UIFile;
+        __framework_builder_NewFile_data: framework.builder.UIFile;
         files: java.util.List<framework.builder.UIFile>;
         fileType: string;
         builder: framework.builder.Builder;

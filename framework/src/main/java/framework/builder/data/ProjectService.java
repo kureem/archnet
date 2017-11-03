@@ -68,5 +68,23 @@ public class ProjectService {
 			
 		});
 	}
+	
+	public void deleteFile(String path, RemoteDataListener listener){
+		jsweet.lang.Object data = new jsweet.lang.Object();
+		data.$set("path", path);
+		
+		$.get("/projects/delete-file", data, new TriFunction<Object, String, JQueryXHR, Object>() {
+
+			@Override
+			public Object apply(Object t, String u, JQueryXHR v) {
+				if(listener != null)
+					listener.dataLoaded(t);
+				return t;
+			}
+			
+			
+		});
+		
+	}
 
 }

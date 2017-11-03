@@ -153,12 +153,17 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 				}
 			} else if (jsfield.getTag().equalsIgnoreCase("select")) {
 				HTMLSelectElement field = (HTMLSelectElement) document.getElementById(jsfield.getId());
-				String value = field.value;
-				inputField.setRawValue(value);
+				if(field != null){
+					String value = field.value;
+					inputField.setRawValue(value);
+				}
+				
 			} else if (jsfield.getTag().equalsIgnoreCase("textarea")) {
 				HTMLTextAreaElement field = (HTMLTextAreaElement) document.getElementById(jsfield.getId());
-				String value = field.value;
-				inputField.setRawValue(value);
+				if(field != null){
+					String value = field.value;
+					inputField.setRawValue(value);
+				}
 			} else {
 				HTMLElement field = document.getElementById(jsfield.getId());
 				if(field != null){

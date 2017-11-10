@@ -1,7 +1,5 @@
 package framework.builder.data;
 
-import static def.dom.Globals.alert;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,6 +37,10 @@ public class File {
 		return getChild("data").getChildren();		
 	}
 	
+	public List<File> getComponents(){
+		return getChild("components").getChildren();
+	}
+	
 	
 	public File getFile(String name, String type){
 		return getChild(type).getChild(name);
@@ -55,7 +57,6 @@ public class File {
 			public void dataLoaded(java.lang.Object data) {
 				//getChild(type).getChildren().remove(f);
 				l.dataLoaded(data);
-				alert("delete file");				
 			}
 		});
 		
@@ -93,10 +94,10 @@ public class File {
 		String path = getPath() + "/" + dir;
 		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createFile(name, title, path, new RemoteDataListener() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void dataLoaded(java.lang.Object data) {
 				((Array<Object>)getChild(dir).getNative().$get("children")).push((Object)data);
-				// TODO Auto-generated method stub
 				
 				listener.dataLoaded(data);
 			}
@@ -145,6 +146,7 @@ public class File {
 		return (String) file.$get("title");
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeFile(File f){
 		Array<Object> children = new Array<Object>();
 		for (Object o : (Array<Object>) file.$get("children")) {
@@ -154,6 +156,7 @@ public class File {
 		}
 		file.$set("children",children);
 	}
+	@SuppressWarnings("unchecked")
 	public List<File> getChildren() {
 		List<File> result = new LinkedList<>();
 		for (Object o : (Array<Object>) file.$get("children")) {

@@ -15,14 +15,14 @@ public class ItemSelector extends Modal {
 
 	private Section section = new Section("section", "All Files");
 
-	private FilesList filesList = new FilesList("filesList");// .addClass("slds-grid
+	private FilesList filesList = new FilesList("filesList",this);// .addClass("slds-grid
 																// slds-grid_pull-padded
 																// slds-wrap");
 
 	public ItemSelector(String name, String stitle) {
 		super(name, stitle);
 		setTag("section");
-		addClass("slds-modal_large slds-app-launcher");
+		addClass("slds-modal_large slds-app-launcher item-selector");
 		getHeader()
 				.addClass("slds-app-launcher__header slds-grid slds-grid_align-spread slds-grid_vertical-align-center");
 		getTitle().setAttribute("class", "slds-text-heading_small");

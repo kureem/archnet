@@ -1,21 +1,15 @@
 package framework.designables;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
-import framework.design.AttributeParameter;
 import framework.design.Designable;
-import framework.design.EventScriptParameter;
-import framework.design.EventTypeParameter;
-import framework.design.NameParameter;
-import framework.design.Option;
 import framework.design.Parameter;
-import framework.design.StyleParameter;
 
 public class JSDesignable extends JSContainer implements Designable{
 
+	protected DesignableDelegate delegate = new DesignableDelegate(this);
 	protected Component component = new Component();
 	
 	public JSDesignable(String name, String tag) {
@@ -25,7 +19,7 @@ public class JSDesignable extends JSContainer implements Designable{
 	
 	@Override
 	public void applyParam(String key, String value) {
-		component.parameters.$set(key, value);
+		delegate.applyParameter(key, value, true);
 	}
 
 	@Override
@@ -35,37 +29,39 @@ public class JSDesignable extends JSContainer implements Designable{
 
 	@Override
 	public List<Parameter> getParameters() {
-		List<Parameter> params = new LinkedList<>();
-		params.add(new NameParameter("Name","Basic"));
-		params.add(new AttributeParameter("class", "Style class", "Basic"));
-		//params.add(new Parameter("style", "Style", "String", "Basic"));
-		params.add(new StyleParameter("width", "Width", "Basic"));
-		params.add(new StyleParameter("height", "Height",  "Basic"));
-		EventTypeParameter eventTypes = new EventTypeParameter("eventType", "Event",  "event");
-		eventTypes.options.add(new Option("Click", "click"));
-		eventTypes.options.add(new Option("Double click", "dblclick"));
-		params.add(eventTypes);
-		EventScriptParameter script = new EventScriptParameter("script", "Script", "event");
-		params.add(script);
-		return params;
+		return delegate.getParameters();
 	}
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<Designable> getDesignables() {
-		List<Designable> result = new LinkedList<>();
-		for(JSContainer child : getChildren()){
-			result.add((Designable)child);
-		}
 		
-		return result;
+		List l = getChildren();
+		return l;		
 	}
 
 
 	@Override
 	public void addDesignable(Designable designable) {
-		addChild((JSContainer) designable);
 		
+		delegate.addDesignable(designable);
+	}
+	
+	
+
+
+	@Override
+	public void removeDesignable(Designable designable) {
+		
+		delegate.removeDesignable(designable);
+		
+	}
+
+
+	@Override
+	public void moveDesignable(Designable designable, int steps) {
+		delegate.moveDesignable(designable, steps);
 	}
 
 }

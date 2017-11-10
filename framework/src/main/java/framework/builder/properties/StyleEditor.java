@@ -1,6 +1,7 @@
 package framework.builder.properties;
 
 import framework.JSContainer;
+import framework.builder.editors.VisualEditor;
 import framework.design.Designable;
 import framework.design.Parameter;
 import jsweet.dom.Event;
@@ -16,6 +17,8 @@ public class StyleEditor extends AbstractInputPropertyEditor{
 		String style = parameter.name;
 		String value = getValue();
 		designable.setStyle(style, value);
+		VisualEditor veditor = getAncestorWithClass("visual-editor");
+		veditor.dirty();
 		
 	}
 

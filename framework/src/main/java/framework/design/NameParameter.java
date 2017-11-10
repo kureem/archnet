@@ -17,4 +17,9 @@ public class NameParameter extends Parameter{
 		
 	}
 
+	@Override
+	public String extractValue(Designable designable) {
+		return designable.getName();
+	}
+
 }

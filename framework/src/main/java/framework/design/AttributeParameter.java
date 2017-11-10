@@ -1,6 +1,7 @@
 package framework.design;
 
 import framework.builder.properties.AttributeEditor;
+import framework.builder.properties.AttributeWithOptionsEditor;
 import framework.builder.properties.PropertyEditor;
 
 public class AttributeParameter extends Parameter {
@@ -12,9 +13,20 @@ public class AttributeParameter extends Parameter {
 	@Override
 	public PropertyEditor getEditor(Designable designable) {
 		
-		AttributeEditor editor = new AttributeEditor();
-		editor.setProperty(designable,this);
-		return editor;
+		if(options.size() == 0){
+			AttributeEditor editor = new AttributeEditor();
+			editor.setProperty(designable,this);
+			return editor;
+		}else{
+			AttributeWithOptionsEditor editor = new AttributeWithOptionsEditor();
+			editor.setProperty(designable,this);
+			return editor;
+		}
+	}
+
+	@Override
+	public String extractValue(Designable designable) {
+		return designable.getAttribute(name);
 	}
 	
 

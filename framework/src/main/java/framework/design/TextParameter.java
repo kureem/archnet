@@ -16,4 +16,9 @@ public class TextParameter extends Parameter{
 		return editor;
 	}
 
+	@Override
+	public String extractValue(Designable designable) {
+		return designable.getHtml();
+	}
+
 }

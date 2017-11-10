@@ -7,5 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface FileRepository extends CrudRepository<File, String>{	
 	
 	public List<File> findByType(String type);
+	
+	public File findOneByTypeAndName(String type, String name);
 
 }

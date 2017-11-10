@@ -1,6 +1,5 @@
 package framework.builder;
 
-import static def.dom.Globals.alert;
 import static def.dom.Globals.document;
 
 import java.util.function.Function;
@@ -8,16 +7,17 @@ import java.util.function.Function;
 import def.dom.Event;
 import def.dom.HTMLElement;
 import def.dom.MessageEvent;
-import def.dom.Node;
 import def.dom.WebSocket;
 import framework.JSContainer;
 import framework.builder.data.File;
 import framework.builder.editors.Preview;
-import jsweet.dom.CSSStyleDeclaration;
 import jsweet.lang.JSON;
 
 public class Previewer extends JSContainer{
 
+	public static File project;
+	
+	
 	public Previewer(String name) {
 		super("div");
 		
@@ -43,20 +43,33 @@ public class Previewer extends JSContainer{
 				
 				document.body.innerHTML="";
 				Object o = JSON.parse(t.data.toString());
+				HTMLElement template = document.createElement("div");
+				template.style.display= "none";
+				template.setAttribute("id", "templates");
+				document.body.appendChild(template);
 				File f = new File((jsweet.lang.Object)o);
+				project = f;
 			 	Preview preview = new Preview(f);
 				for(File sc : f.getStylesheets()){
 					HTMLElement elem = document.createElement("style");
 					elem.textContent =sc.getData(); 
 					document.body.appendChild(elem);
-					//CSSStyleDeclaration dec = new CSSStyleDeclaration();
-					
-				//	preview.addChild( new JSContainer("style").setHtml(sc.getData()));
+				}
+				for(File sc : f.getScripts()){
+					HTMLElement elem = document.createElement("script");
+					elem.textContent =sc.getData(); 
+					document.body.appendChild(elem);
 				}
 				
-				preview.render();;
+				for(File sc : f.getTemplates()){
+					HTMLElement elem = document.createElement("div");
+					elem.setAttribute("id", sc.getName().replace(".html", ""));
+					elem.innerHTML = sc.getData();
+					//elem.style.display = "none";
+					template.appendChild(elem);
+				}
 				
-				// TODO Auto-generated method stub
+				preview.render();
 				return null;
 			}
 			

@@ -1,5 +1,7 @@
 package framework.lightning;
 
+import static def.dom.Globals.alert;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,15 +21,15 @@ public class Accordion extends JSContainer implements Designable {
 		super(name, "ul");
 		addClass("slds-accordion");
 	}
-	
-	public Accordion addItem(AccordionItem item){
+
+	public Accordion addItem(AccordionItem item) {
 		addDesignable(item);
 		return this;
 	}
 
 	@Override
 	public void applyParam(String key, String value) {
-		delegate.setParameter(key, value, true);
+		delegate.applyParameter(key, value, true);
 	}
 
 	@Override
@@ -47,14 +49,30 @@ public class Accordion extends JSContainer implements Designable {
 
 	@Override
 	public void addDesignable(Designable designable) {
-		JSContainer li =new JSContainer("li").addClass("slds-accordion__list-item");
-		addChild(li);
-		if(designable instanceof AccordionItem){
-			li.addChild((JSContainer)designable);
-		}else{
+		if (designable instanceof AccordionItem) {
+			JSContainer li = new JSContainer("li").addClass("slds-accordion__list-item");
+			addChild(li);
+
+			li.addChild((JSContainer) designable);
+		} else {
 			throw new RuntimeException("Can only add Component of type JSAccordionItem in an Accordion Container");
 		}
 	}
 
+	@Override
+	public void removeDesignable(Designable designable) {
+		// TODO Auto-generated method stub
+		getChildren().remove(designable.getParent());
+		setRendered(false);
+		
+	}
+
+	@Override
+	public void moveDesignable(Designable designable, int steps) {
+		// TODO Auto-generated method stub
+		alert("under construction");
+	}
 	
+	
+
 }

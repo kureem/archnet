@@ -23,6 +23,8 @@ public class ProjectService {
 	}
 	
 	
+	
+	
 	public void getProjects(RemoteDataListener listener){
 		$.get("/projects/get-projects", new TriFunction<Object, String, JQueryXHR, Object>() {
 

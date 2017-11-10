@@ -20,6 +20,7 @@ public class OpenProject extends ItemSelector implements EventListener, RemoteDa
 		this.builder_ = builder;
 		getSaveButton().addEventListener(this, "click");
 		getInput().setVisible(false);
+		getSaveButton().setLabel("Open");
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class OpenProject extends ItemSelector implements EventListener, RemoteDa
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void dataLoaded(Object data) {
 		Array<jsweet.lang.Object> nprojects = (Array<jsweet.lang.Object>) data;

@@ -301,6 +301,7 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public JSContainer setTag(String tag) {
 		this.tag = tag;
+		setRendered(false);
 		return this;
 	}
 

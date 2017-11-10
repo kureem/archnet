@@ -1,16 +1,10 @@
 package framework.builder.libraries;
 
-import static def.dom.Globals.alert;
-
 import framework.builder.BuilderEventListener;
-import framework.builder.SelectComponentEvent;
-import framework.builder.Selector;
 import framework.builder.marshalling.BuilderEvent;
 import framework.builder.marshalling.Component;
 import framework.builder.marshalling.ComponentFactory;
-import framework.core.BeanFactory;
 import framework.design.Designable;
-import framework.designables.DesignableDelegate;
 import jsweet.lang.Object;
 
 public abstract class AbstractComponentFactory implements ComponentFactory {
@@ -40,8 +34,10 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 	protected void configureParameters(Designable instance, Component component, boolean designMode) {
 		String[] keys = Object.keys(component.parameters);
 		for (String key : keys) {
-			String value = component.parameters.$get(key).toString();
-			instance.applyParam(key, value);
+			if(component.parameters.$get(key) != null){
+				String value = component.parameters.$get(key).toString();
+				instance.applyParam(key, value);
+			}
 		}
 	}
 
@@ -66,51 +62,18 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 
 	protected void decorateForDesignMode(Designable instance, boolean designMode) {
 
-		decorateDroppable(instance, designMode);
+		//decorateDroppable(instance, designMode);
 		decorateCallSelector(instance, designMode);
 	}
 
-	protected void decorateDroppable(Designable instance, boolean designMode) {
+	/*protected void decorateDroppable(Designable instance, boolean designMode) {
 		DesignableDelegate.setDroppableOptions(instance, designMode);
-		/*if (designMode) {
- 
-			instance.addClass("designing");
-			DroppableOptions options = new DroppableOptions() {
-			};
-			options.greedy = false;
-			options.accept = ".designer-component";
-			options.tolerance = "pointer";
-
-			options.drop = new DroppableEvent() {
-
-				@Override
-				public void $apply(Event event, DroppableEventUIParam param) {
-
-					String identifier = event.srcElement.getAttribute("identifier");
-					ComponentFactory factory = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class)
-							.getComponentFactory(identifier);
-					Designable container = factory.build(new Component(), true);
-					try{
-					instance.addDesignable(container);
-					}catch(Exception e){
-						alert(e.getMessage());
-					}
-					container.render();
-					
-					BeanFactory.getInstance().getBeanOfType(Structure.class).reload();
-					BeanFactory.getInstance().getBeanOfType(Structure.class).render();
-					//container.getRoot().get
-
-				}
-			};
-			((JSContainer)instance).setDroppableOptions(options);*/
-		//}
-	}
+	}*/
 	
 	
 	protected void decorateCallSelector(Designable container, boolean designMode){
 		if(designMode){
-			container.addEventListener(new SelectComponentEvent(BeanFactory.getInstance().getBeanOfType(Selector.class)), "click");
+			
 		}
 	}
 

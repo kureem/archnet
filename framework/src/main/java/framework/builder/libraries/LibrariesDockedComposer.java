@@ -12,7 +12,7 @@ public class LibrariesDockedComposer extends DockedComposer {
 
 	public LibrariesDockedComposer(String name) {
 		super(name);
-
+addClass("library-composer");
 		getTitle().setHtml("Components Library");
 		getBody().addChild(componentsTabs);
 		componentsTabs.addItem("Basic", basicComponentLib);

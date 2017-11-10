@@ -2,11 +2,11 @@ package framework.lightning;
 
 import static def.jquery.Globals.$;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
 import def.jquery.JQueryEventObject;
+import framework.JSContainer;
 import framework.JSHTMLFragment;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
@@ -17,7 +17,7 @@ import jsweet.dom.HTMLElement;
 
 public class AccordionItem extends JSHTMLFragment implements Designable {
 
-	private JSDesignable accordionContent = (JSDesignable) new JSDesignable("accordionContent", "div")
+	private JSContainer accordionContent = (JSDesignable) new JSContainer("accordionContent", "div")
 			.addClass("slds-accordion__content");
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
@@ -54,15 +54,14 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 
 	@Override
 	public void applyParam(String key, String value) {
-		delegate.setParameter(key, value, true);
+		delegate.applyParameter(key, value, true);
 
 	}
 
 	@Override
 	public List<Designable> getDesignables() {
-		List<Designable> result = new LinkedList<>();
-		result.add(accordionContent);
-		return result;
+		List l = accordionContent.getChildren();
+		return l;
 	}
 
 	@Override
@@ -77,10 +76,10 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 
 	@Override
 	public void addDesignable(Designable designable) {
-		accordionContent.addDesignable(designable);
+		accordionContent.addChild((JSContainer)designable);
 	}
 
-	public Designable getContent() {
+	public JSContainer getContent() {
 		return accordionContent;
 	}
 
@@ -110,6 +109,18 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 
 		configured = true;
 
+	}
+
+	@Override
+	public void removeDesignable(Designable designable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveDesignable(Designable designable, int steps) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

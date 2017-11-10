@@ -5,8 +5,8 @@ import jsweet.lang.Object;
 
 public class HTMLEditor extends CodeMirrorEditor {
 
-	public HTMLEditor(String name) {
-		super(name);
+	public HTMLEditor(String name, VisualEditor editor) {
+		super(name,editor);
 		
 		EditorConfiguration config = new EditorConfiguration() {
 		};

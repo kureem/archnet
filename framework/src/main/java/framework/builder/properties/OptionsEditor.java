@@ -3,6 +3,7 @@ package framework.builder.properties;
 import framework.JSContainer;
 import framework.JSOption;
 import framework.JSSelect;
+import framework.builder.editors.VisualEditor;
 import framework.design.Designable;
 import framework.design.Parameter;
 import jsweet.dom.Event;
@@ -35,6 +36,8 @@ public class OptionsEditor extends AbstractTextAreaPropertyEditor{
 		for(String opt : options){
 			JSOption option = new JSOption(opt, opt);
 			select.addOption(option);
-		}	
+		}
+		VisualEditor veditor = getAncestorWithClass("visual-editor");
+		veditor.dirty();
 	}
 }

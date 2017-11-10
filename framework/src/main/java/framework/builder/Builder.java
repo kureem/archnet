@@ -1,14 +1,21 @@
 package framework.builder;
 
 import static def.dom.Globals.alert;
+import static def.dom.Globals.console;
+import static def.dom.Globals.window;
+import static def.jquery.Globals.$;
+
+import java.util.function.Function;
 
 import def.dom.WebSocket;
+import def.jquery.JQueryKeyEventObject;
 import framework.EventListener;
 import framework.JSContainer;
 import framework.builder.data.File;
 import framework.builder.editors.Editor;
 import framework.builder.editors.EventEditor;
 import framework.builder.editors.VisualEditor;
+import framework.core.BeanFactory;
 import framework.lightning.Backdrop;
 import framework.lightning.Icon;
 import framework.lightning.IconButton;
@@ -26,14 +33,6 @@ public class Builder extends LTContainer {
 	private Tabs editorTabs = new Tabs("editorTabs");
 
 	private File project;
-
-	// private VisualEditor visualEditor;
-
-	// private CSSEditor cssEditor;
-
-	// private JavascriptEditor jsEditor = new JavascriptEditor("jsEditor");
-
-	// private DataComposer dataComposer = new DataComposer("composer", "div");
 
 	private IconButton saveButton = new IconButton("save");
 
@@ -53,10 +52,15 @@ public class Builder extends LTContainer {
 
 	public static WebSocket websocket = new WebSocket("ws:localhost:8080/preview");
 
+	private boolean projectOpen = false;
+
+	// private VisualEditor projectEditor;
+
 	public Builder(String name) {
 		super(name, "div");
 
 		addChild(openProjectModal);
+		editorTabs.addClass("editor-tabs");
 		addChild(newFileModal);
 		addChild(backdrop);
 		newFileModal.setBackdrop(backdrop);
@@ -104,6 +108,11 @@ public class Builder extends LTContainer {
 			@Override
 			public void performAction(JSContainer source, Event evt) {
 				newFileModal.open();
+				if (activeEditor != null) {
+					newFileModal.init(activeEditor.getStructure());
+				} else {
+					newFileModal.init(null);
+				}
 				backdrop.open();
 			}
 		}, "click");
@@ -113,26 +122,66 @@ public class Builder extends LTContainer {
 		previewBtn.setTag("a").setAttribute("target", "_blank");
 		addChild(previewBtn);
 		addChild(editorTabs);
+		BeanFactory.getInstance().addBean(Builder.class, this);
+
+		$(window).keydown(new Function<JQueryKeyEventObject, Object>() {
+
+			@Override
+			public Object apply(JQueryKeyEventObject event) {
+
+				if (event.ctrlKey || event.metaKey) {
+					console.log(event.which);
+					if (event.which == 83) {
+						event.preventDefault();
+						if(activeEditor != null){
+							activeEditor.save();
+						}
+					}
+				}
+
+				return true;
+
+			}
+		});
+	}
+
+	public static Builder getInstance() {
+		try {
+			return BeanFactory.getInstance().getBeanOfType(Builder.class);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public boolean isProjectOpen() {
+		return projectOpen;
 	}
 
 	public void openProject(File file) {
 		this.project = file;
+		this.projectOpen = true;
 		previewBtn.setAttribute("href", "/preview.html#" + getProject().getName());
-		String editorName = "visualEditor";
-		if(!isOpen(editorName)){
-		
-			VisualEditor editor = new VisualEditor(this);
-			editor.open(file);
-			
-			
-			openEditor(file.getName(), editor);
-		}else{
+		String editorName = file.getName();
+		if (!isOpen(editorName)) {
+
+			VisualEditor projectEditor = new VisualEditor(editorName);
+			projectEditor.open(file);
+
+			openEditor(file.getName(), projectEditor);
+		} else {
 			activateEditor(editorName);
 		}
 	}
 
 	public File getProject() {
-		return project;
+
+		if (activeEditor == null) {
+			return project;
+		} else {
+			return activeEditor.getRootEditor().getProject();
+		}
+
+		// return project;
 	}
 
 	public boolean isOpen(String editorName) {
@@ -150,7 +199,7 @@ public class Builder extends LTContainer {
 			if (item.getName().equals("editor_" + editorName)) {
 				editorTabs.setActive(item);
 				activeEditor = (Editor<?>) item.getBody().getChildren().get(0);
-				
+
 				return activeEditor;
 			}
 		}
@@ -158,45 +207,46 @@ public class Builder extends LTContainer {
 	}
 
 	public Editor<?> openEditor(String title, Editor<?> editor) {
-		
-		if(isOpen(editor.getName())){
+
+		if (isOpen(editor.getName())) {
 			return activateEditor(editor.getName());
 		}
-		
+
 		editor.setAttribute("title", title);
 		TabActionListener l = new TabActionListener() {
 
 			@Override
 			public void onClose(TabItem item) {
-				//alert("close:" + item.getName());
+				// alert("close:" + item.getName());
 				Editor<?> edi = (Editor<?>) item.getBody().getChildren().get(0);
-				if (edi != null){
-					//alert("close:" + edi.getName() + ":" + item.getName());
+				if (edi != null) {
+					// alert("close:" + edi.getName() + ":" + item.getName());
 					edi.save();
-					if(activeEditor != null && edi.equals(activeEditor)){
+					if (activeEditor != null && edi.equals(activeEditor)) {
 						activeEditor = null;
 					}
 				}
 			}
- 
+
 			@Override
 			public void onActivate(TabItem item) {
-				
+
 				activeEditor = (Editor<?>) item.getBody().getChildren().get(0);
-				if(activeEditor instanceof EventEditor){
-					alert("reactivate");
-					((EventEditor)activeEditor).reactivate();
+				if (activeEditor instanceof EventEditor) {
+					// alert("reactivate");
+					((EventEditor) activeEditor).reactivate();
 				}
-				
-				//alert("activate:" + activeEditor.getName() + ":" + item.getName());
+
+				// alert("activate:" + activeEditor.getName() + ":" +
+				// item.getName());
 			}
 
 			@Override
 			public void onDeactivate(TabItem item) {
-				alert("deact:" + item.getName());
+				// alert("deact:" + item.getName());
 				Editor<?> edi = (Editor<?>) item.getBody().getChildren().get(0);
 				if (edi != null) {
-					//alert("deact:" + edi.getName() + ":" + item.getName());
+					// alert("deact:" + edi.getName() + ":" + item.getName());
 					edi.save();
 				}
 			}

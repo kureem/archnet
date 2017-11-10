@@ -148,8 +148,10 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 						inputField.setRawValue("false");
 					}
 				} else {
-					String value = field.value;
-					inputField.setRawValue(value);
+					if(field != null){
+						String value = field.value;
+						inputField.setRawValue(value);
+					}
 				}
 			} else if (jsfield.getTag().equalsIgnoreCase("select")) {
 				HTMLSelectElement field = (HTMLSelectElement) document.getElementById(jsfield.getId());

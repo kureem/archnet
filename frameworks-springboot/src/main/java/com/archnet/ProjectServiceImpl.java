@@ -14,15 +14,8 @@ public class ProjectServiceImpl implements ProjectService{
 
 	@Autowired
 	private FileRepository fileRepository;
-
-	@Override
-	public Project createProject(String name, String title) {
-		Project project = new Project();
-		project.setName(name);
-		project.setPath("/" + name);
-		project.setTitle(title);
-		fileRepository.save(project);
-		
+	
+	private void addProjectStructure(File project){
 		File stylesheets = new File();
 		stylesheets.setName("stylesheets");
 		stylesheets.setTitle("Stylesheets");
@@ -56,6 +49,24 @@ public class ProjectServiceImpl implements ProjectService{
 		project.addFile(templates);
 		fileRepository.save(templates);
 		
+		
+		File components = new File();
+		components.setName("components");
+		components.setTitle("Components");
+		project.addFile(components);
+		fileRepository.save(components);
+		
+	}
+
+	@Override
+	public Project createProject(String name, String title) {
+		Project project = new Project();
+		project.setName(name);
+		project.setPath("/" + name);
+		project.setTitle(title);
+		fileRepository.save(project);
+		
+		addProjectStructure(project);
 		fileRepository.save(project);
 		
 		return project;
@@ -67,11 +78,17 @@ public class ProjectServiceImpl implements ProjectService{
 		File f = new File();
 		f.setTitle(title);
 		f.setName(name);
-		
 		File dir = fileRepository.findOne(directory);
 		dir.addFile(f);
 		fileRepository.save(f);
 		fileRepository.save(dir);
+		
+		if(directory.endsWith("/components")){
+			addProjectStructure(f);
+		}
+		fileRepository.save(f);
+		
+		
 		return f;
 	}
 
@@ -92,6 +109,12 @@ public class ProjectServiceImpl implements ProjectService{
 			 result.add((Project)f);
 		 }
 		 return result;
+	}
+	
+	
+	@Override
+	public Project getProject(String name) {
+		return (Project)fileRepository.findOneByTypeAndName(Project.class.getName(), name);
 	}
 
 	@Override

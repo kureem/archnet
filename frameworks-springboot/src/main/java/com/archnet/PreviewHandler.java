@@ -47,7 +47,8 @@ public class PreviewHandler extends TextWebSocketHandler{
 					String result = mapper.writeValueAsString(p);
 					
 					for(WebSocketSession s : sessions){
-						s.sendMessage(new TextMessage(result.getBytes()));
+						if(s!=null)
+							s.sendMessage(new TextMessage(result.getBytes()));
 					}
 				 	
 				}

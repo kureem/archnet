@@ -44,7 +44,7 @@ public class DockedComposer extends Grid implements Draggable{
 		headerTitle.getBodyContainer().addChild(title);
 		header.addChild(tools);
 		tools.addChild(minimize).addChild(expand).addChild(close);
-		
+		tools.setVisible(false);
 		addChild(body);
 		addChild(footer);
 		addClass("slds-docked-composer");

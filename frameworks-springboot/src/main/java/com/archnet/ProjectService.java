@@ -10,6 +10,8 @@ public interface ProjectService {
 	
 	public List<Project> getProjects();
 	
+	public Project getProject(String name);
+	
 	public File createNewFile(String name, String title, String directory);
 	
 	public File updateFile(String title,String data, String path);

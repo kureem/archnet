@@ -8,8 +8,8 @@ public class CSSEditor extends CodeMirrorEditor {
 
 	Editor editor = null;
 
-	public CSSEditor(String name) {
-		super(name);
+	public CSSEditor(String name, VisualEditor editor) {
+		super(name,editor);
 
 		EditorConfiguration config = new EditorConfiguration() {
 		};

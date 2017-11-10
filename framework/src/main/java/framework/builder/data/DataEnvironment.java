@@ -1,7 +1,5 @@
 package framework.builder.data;
 
-import java.util.List;
-
 import jsweet.lang.Array;
 
 public interface DataEnvironment {

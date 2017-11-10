@@ -15,14 +15,13 @@ public class BasicDataEnvironment implements DataEnvironment{
 	@Override
 	public void saveStructure(DataStructure datastructure) {
 		for(DataStructure structure : structures){
-			if(structure.name.equals(datastructure.name)){
+			/*if(structure.name.equals(datastructure.name)){
 				structure.label = datastructure.label;
 				structure.fields = datastructure.fields;
 				return;
-			}
+			}*/
 		}
 		structures.push(datastructure);
-		//document.set
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class BasicDataEnvironment implements DataEnvironment{
 		
 		 Array<DataStructure> tmp = new Array<>();
 		for(DataStructure structure : structures){
-			if(!structure.name.equals(name)){
+			if(!structure.getName().equals(name)){
 				tmp.push(structure);
 			}
 		}

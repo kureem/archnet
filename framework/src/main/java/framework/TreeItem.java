@@ -25,14 +25,25 @@ public class TreeItem extends JSContainer implements EventListener{
 	
 	private JSContainer buttonsCtn = new JSContainer("div").addClass("buttons-ctn");
 	
+	private IconButton leftIcon = new IconButton("leftIcon");
+	
 	public TreeItem(String name, String title) {
 		super(name, "div");
 		addClass("slds-tree__item");
-		addChild(button);
+		addChild(button.setStyle("margin", "0px"));
 		button.setHtml(iconRight);
+		//IconButton minimize = new IconButton(name);
+		addChild(leftIcon.addClass("left-icon"));
+		leftIcon.setStyle("margin-right", "0.25rem");
 		addChild(this.title.setHtml(title));
 		button.addEventListener(this, "click");
 		addChild(buttonsCtn);
+		setLeftIcon("file", "utility");
+	}
+	
+	
+	public void setLeftIcon(String name, String type){
+		leftIcon.setIcon(new Icon(name, type, name));
 	}
 	
 	

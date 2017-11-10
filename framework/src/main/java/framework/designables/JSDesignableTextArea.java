@@ -20,7 +20,7 @@ public class JSDesignableTextArea extends JSTextArea implements Designable {
 
 	@Override
 	public void applyParam(String key, String value) {
-		delegate.setParameter(key, value, true);
+		delegate.applyParameter(key, value, true);
 	}
 
 	@Override
@@ -46,8 +46,21 @@ public class JSDesignableTextArea extends JSTextArea implements Designable {
 	public void addDesignable(Designable designable) {
 		
 		throw new RuntimeException("Cannot add children to this component");
-		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void removeDesignable(Designable designable) {
+		
+		delegate.removeDesignable(designable);
+		
+	}
+
+
+	@Override
+	public void moveDesignable(Designable designable, int steps) {
+		delegate.moveDesignable(designable, steps);
+	}
+
 
 }

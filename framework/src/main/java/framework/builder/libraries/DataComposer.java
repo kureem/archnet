@@ -1,15 +1,15 @@
 package framework.builder.libraries;
 
+import static def.dom.Globals.alert;
 import static def.dom.Globals.prompt;
 
 import framework.EventListener;
 import framework.JSContainer;
-import framework.builder.data.DataEnvironment;
 import framework.builder.data.DataField;
 import framework.builder.data.DataStructure;
 import framework.builder.data.File;
 import framework.builder.editors.AbstractEditor;
-import framework.core.BeanFactory;
+import framework.builder.editors.VisualEditor;
 import framework.lightning.Button;
 import framework.lightning.GlobalHeader;
 import jsweet.dom.Event;
@@ -18,8 +18,6 @@ import jsweet.lang.JSON;
 
 public class DataComposer extends AbstractEditor<String> {
 	
-	//private JSHTMLFragment fragment = new JSHTMLFragment("card", "#card");
-	
 	private GlobalHeader header = new GlobalHeader("header");
 	
 	private Button addNew = new Button();
@@ -27,13 +25,8 @@ public class DataComposer extends AbstractEditor<String> {
 	
 	private Array<DataStructure> structures = new Array<DataStructure>();
 	
-	//private DataEnvironment dataEnvironment;
-	
-	
-	public DataComposer(String name) { 
-		super(name, "div");
-		
-		//dataEnvironment = BeanFactory.getInstance().getBeanOfType(DataEnvironment.class);
+	public DataComposer(String name, VisualEditor editor) { 
+		super(name, "div",editor);
 		
 		addNew.setLabel("Add New");
 		header.addChild(addNew);
@@ -80,7 +73,6 @@ public class DataComposer extends AbstractEditor<String> {
 	@Override
 	public String createNew(File f) {
 		
-		//createNewFile(f.getName());
 		return getMarshall();
 	}
 
@@ -92,9 +84,12 @@ public class DataComposer extends AbstractEditor<String> {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void consume(String data) {
+		//alert("consume datacomposer");
 		Array<jsweet.lang.Object> odata = (Array<jsweet.lang.Object>)JSON.parse(data);
+		this.getChildren().clear();
 		if(odata != null && odata.length > 0){
 			for(jsweet.lang.Object oline : odata){
 				DataStructure st = new DataStructure();
@@ -114,12 +109,13 @@ public class DataComposer extends AbstractEditor<String> {
 				}
 				structures.push(st);
 				DataItem item = new DataItem(st.name, st);
-				//dataEnvironment.saveStructure(st);
+				addChild(item);
 			}
 			
-			
-			
 		}
+		
+		
+		
 	}
 
 }

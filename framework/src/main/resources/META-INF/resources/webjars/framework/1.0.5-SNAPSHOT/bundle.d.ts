@@ -83,6 +83,7 @@ declare namespace framework.builder.data {
         getScripts(): java.util.List<File>;
         getTemplates(): java.util.List<File>;
         getDataEnvironment(): java.util.List<File>;
+        getComponents(): java.util.List<File>;
         getFile(name: string, type: string): File;
         deleteFile(name: string, type: string, l: framework.builder.data.RemoteDataListener): void;
         getChild(name: string): File;
@@ -146,13 +147,22 @@ declare namespace framework.builder.data {
 declare namespace framework.builder.editors {
     interface Editor<T> extends framework.Renderable {
         save(type?: any): any;
+        dirty(): any;
+        clean(): any;
         open(file: framework.builder.data.File): any;
+        getStructure(): framework.builder.editors.Structure;
+        getRootEditor(): framework.builder.editors.VisualEditor;
     }
 }
 declare namespace framework.builder.editors {
     class EventTypes {
         static events: string[];
         static events_$LI$(): string[];
+    }
+}
+declare namespace framework.builder {
+    interface ItemSelectedListener {
+        itemSelected(file: framework.builder.UIFile, selector: framework.builder.ItemSelector): any;
     }
 }
 declare namespace framework.builder.libraries {
@@ -177,7 +187,6 @@ declare namespace framework.builder.libraries {
          */
         build(component: framework.builder.marshalling.Component, designMode: boolean): framework.design.Designable;
         decorateForDesignMode(instance: framework.design.Designable, designMode: boolean): void;
-        decorateDroppable(instance: framework.design.Designable, designMode: boolean): void;
         decorateCallSelector(container: framework.design.Designable, designMode: boolean): void;
     }
 }
@@ -231,6 +240,11 @@ declare namespace framework.builder.marshalling {
 declare namespace framework.builder.marshalling {
     class MarshallUtil {
         static extract(designable: framework.design.Designable): framework.builder.marshalling.Component;
+        static toDesignable(component: framework.builder.marshalling.Component): framework.design.Designable;
+        static build(s: string): framework.design.Designable;
+        static toComponent$java_lang_String(s: string): framework.builder.marshalling.Component;
+        static toComponent(s?: any): any;
+        static toComponent$jsweet_lang_Object(o: Object): framework.builder.marshalling.Component;
     }
 }
 declare namespace framework.builder.properties {
@@ -317,6 +331,8 @@ declare namespace framework.design {
         getComponent(): framework.builder.marshalling.Component;
         getParameters(): java.util.List<framework.design.Parameter>;
         addDesignable(designable: Designable): any;
+        removeDesignable(designable: Designable): any;
+        moveDesignable(designable: Designable, steps: number): any;
     }
 }
 declare namespace framework.design {
@@ -333,6 +349,7 @@ declare namespace framework.design {
         type: string;
         options: java.util.List<framework.design.Option>;
         category: string;
+        abstract extractValue(designable: framework.design.Designable): string;
         constructor(name: string, label: string, type: string, category: string);
         abstract getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
     }
@@ -343,10 +360,15 @@ declare namespace framework.designables {
         component: framework.builder.marshalling.Component;
         constructor(ui: framework.design.Designable);
         getDesignable(): framework.design.Designable;
-        setParameter(key: string, value: string, designMode: boolean): void;
+        applyParameter(key: string, value: string, designMode: boolean): void;
+        containsName(name: string): boolean;
+        addDesignable(designable: framework.design.Designable): void;
         getComponent(): framework.builder.marshalling.Component;
         getParameters(): java.util.List<framework.design.Parameter>;
-        static setDroppableOptions(instance: framework.design.Designable, designMode: boolean): void;
+        removeDesignable(designable: framework.design.Designable): void;
+        moveDesignable$framework_design_Designable$int(designable: framework.design.Designable, steps: number): void;
+        moveDesignable(designable?: any, steps?: any): any;
+        moveDesignable$framework_JSContainer$int(designable: framework.JSContainer, steps: number): void;
     }
 }
 declare namespace framework {
@@ -664,6 +686,69 @@ declare namespace framework {
             createInstance(designMode: boolean): framework.design.Designable;
             constructor(__arg0: any);
         }
+        class Boot$3 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$4 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$5 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$6 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$7 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$8 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$9 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
     }
 }
 declare namespace framework.builder.libraries {
@@ -692,30 +777,12 @@ declare namespace framework.design {
          * @return {*}
          */
         getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
-    }
-}
-declare namespace framework.design {
-    class EventScriptParameter extends framework.design.Parameter {
-        eventTypeEditor: framework.builder.properties.EventTypeEditor;
-        constructor(name: string, label: string, category: string);
-        setEventTypeEditor(editor: framework.builder.properties.EventTypeEditor): void;
         /**
          *
          * @param {*} designable
-         * @return {*}
+         * @return {string}
          */
-        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
-    }
-}
-declare namespace framework.design {
-    class EventTypeParameter extends framework.design.Parameter {
-        constructor(name: string, label: string, category: string);
-        /**
-         *
-         * @param {*} designable
-         * @return {*}
-         */
-        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+        extractValue(designable: framework.design.Designable): string;
     }
 }
 declare namespace framework.design {
@@ -727,17 +794,12 @@ declare namespace framework.design {
          * @return {*}
          */
         getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
-    }
-}
-declare namespace framework.design {
-    class SelectParameter extends framework.design.Parameter {
-        constructor(name: string, label: string, category: string);
         /**
          *
          * @param {*} designable
-         * @return {*}
+         * @return {string}
          */
-        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+        extractValue(designable: framework.design.Designable): string;
     }
 }
 declare namespace framework.design {
@@ -749,6 +811,29 @@ declare namespace framework.design {
          * @return {*}
          */
         getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+        /**
+         *
+         * @param {*} designable
+         * @return {string}
+         */
+        extractValue(designable: framework.design.Designable): string;
+    }
+}
+declare namespace framework.design {
+    class TagParameter extends framework.design.Parameter {
+        constructor();
+        /**
+         *
+         * @param {*} designable
+         * @return {*}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+        /**
+         *
+         * @param {*} designable
+         * @return {string}
+         */
+        extractValue(designable: framework.design.Designable): string;
     }
 }
 declare namespace framework.design {
@@ -760,6 +845,12 @@ declare namespace framework.design {
          * @return {*}
          */
         getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+        /**
+         *
+         * @param {*} designable
+         * @return {string}
+         */
+        extractValue(designable: framework.design.Designable): string;
     }
 }
 declare namespace framework.design {
@@ -771,6 +862,12 @@ declare namespace framework.design {
          * @return {*}
          */
         getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
+        /**
+         *
+         * @param {*} designable
+         * @return {string}
+         */
+        extractValue(designable: framework.design.Designable): string;
     }
 }
 declare namespace framework.interactions {
@@ -1056,7 +1153,13 @@ declare namespace framework.builder.editors {
     abstract class AbstractEditor<T> extends framework.JSContainer implements framework.builder.editors.Editor<T> {
         file: framework.builder.data.File;
         projectService: framework.builder.data.ProjectService;
-        constructor(name: string, tag: string);
+        rootEditor: framework.builder.editors.VisualEditor;
+        constructor(name: string, tag: string, rootEditor: framework.builder.editors.VisualEditor);
+        setRootEditor(root: framework.builder.editors.VisualEditor): void;
+        getStructure(): framework.builder.editors.Structure;
+        dirty(): void;
+        clean(): void;
+        getRootEditor(): framework.builder.editors.VisualEditor;
         abstract getMarshall(): string;
         save(type?: any): any;
         save$(): void;
@@ -1083,12 +1186,18 @@ declare namespace framework.builder.editors {
     }
 }
 declare namespace framework.builder.editors {
+    class JSTemplate extends framework.JSContainer {
+        fileName: string;
+        constructor(f: framework.builder.data.File);
+        getId(): string;
+    }
+}
+declare namespace framework.builder.editors {
     class Preview extends framework.JSContainer {
         root: framework.design.Designable;
         constructor(file: framework.builder.data.File);
         unmarshall(f: framework.builder.data.File): framework.builder.marshalling.Component;
-        doUnMarsh(o: Object): framework.builder.marshalling.Component;
-        cona(component: framework.builder.marshalling.Component): framework.design.Designable;
+        build(component: framework.builder.marshalling.Component): framework.design.Designable;
         consume(component: framework.builder.marshalling.Component): void;
     }
 }
@@ -1099,11 +1208,27 @@ declare namespace framework.builder.editors {
         liJS: framework.JSContainer;
         liData: framework.JSContainer;
         liTemplates: framework.JSContainer;
+        liComponents: framework.JSContainer;
         liCss: framework.JSContainer;
         liRoot: framework.JSContainer;
         selected: framework.TreeItem;
-        builder: framework.builder.Builder;
-        constructor(name: string, root: framework.design.Designable, builder: framework.builder.Builder);
+        file: framework.builder.data.File;
+        selector: framework.builder.Selector;
+        __cut: boolean;
+        clipboardItem: framework.design.Designable;
+        toggleSelect: framework.EventListener;
+        constructor(name: string, root: framework.design.Designable, f: framework.builder.data.File, selector: framework.builder.Selector);
+        copy(des: framework.design.Designable): void;
+        cut(des: framework.design.Designable): void;
+        isCut(): boolean;
+        getClipBoard(): framework.design.Designable;
+        clearClipboard(): void;
+        getFile(): framework.builder.data.File;
+        getSelector(): framework.builder.Selector;
+        getRootUINode(): framework.design.Designable;
+        select(designable: framework.design.Designable): void;
+        setSelected(item: framework.TreeItem): void;
+        getSelected(): framework.TreeItem;
         reload$(): void;
         getItem$framework_design_Designable$framework_JSContainer(designable: framework.design.Designable, currentNode: framework.JSContainer): framework.builder.editors.StructureTreeItem;
         getItem(designable?: any, currentNode?: any): any;
@@ -1113,7 +1238,7 @@ declare namespace framework.builder.editors {
         reload$framework_design_Designable(designable: framework.design.Designable): void;
         unselect(c: framework.JSContainer): void;
         renderFiles(): void;
-        addNode(ctn: framework.design.Designable, li: framework.JSContainer, level: number): void;
+        addNode(ctn: framework.design.Designable, li: framework.JSContainer, level: number, parent: framework.design.Designable): framework.builder.editors.StructureTreeItem;
     }
     namespace Structure {
         class Structure$0 implements framework.EventListener {
@@ -1126,101 +1251,45 @@ declare namespace framework.builder.editors {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
-        class Structure$1 implements framework.EventListener {
-            private type;
-            private f;
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any, type: any, f: any);
-        }
-        namespace Structure$1 {
-            class Structure$1$0 implements framework.builder.data.RemoteDataListener {
-                private stype;
-                __parent: any;
-                /**
-                 *
-                 * @param {*} data
-                 */
-                dataLoaded(data: any): void;
-                constructor(__parent: any, stype: any);
-            }
-        }
-        class Structure$2 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class Structure$3 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class Structure$4 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class Structure$5 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class Structure$6 implements framework.EventListener {
-            private item;
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any, item: any);
-        }
     }
 }
 declare namespace framework.builder {
     class FilesList extends framework.JSContainer {
-        constructor(name: string);
+        itemSelectedListeners: java.util.List<framework.builder.ItemSelectedListener>;
+        selector: framework.builder.ItemSelector;
+        click: framework.EventListener;
+        constructor(name: string, selector: framework.builder.ItemSelector);
         addFile(file: framework.builder.UIFile): FilesList;
+        addItemSelectedListener(l: framework.builder.ItemSelectedListener): void;
+        fireItemSelectedListeners(file: framework.builder.UIFile, selector: framework.builder.ItemSelector): void;
+        select(file: framework.builder.UIFile): void;
+    }
+    namespace FilesList {
+        class FilesList$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
     }
 }
 declare namespace framework.builder {
     class Previewer extends framework.JSContainer {
+        static project: framework.builder.data.File;
         constructor(name: string);
     }
 }
 declare namespace framework.builder {
     class Selector extends framework.JSContainer implements framework.EventListener {
-        selected: framework.JSContainer;
+        selected: framework.design.Designable;
         visualEditor: framework.builder.editors.VisualEditor;
         constructor();
         setVisualEditor(editor: framework.builder.editors.VisualEditor): void;
-        getSelected(): framework.JSContainer;
+        getSelected(): framework.design.Designable;
         select(component: framework.design.Designable): void;
         /**
          *
@@ -1232,6 +1301,7 @@ declare namespace framework.builder {
 }
 declare namespace framework.designables {
     class JSDesignable extends framework.JSContainer implements framework.design.Designable {
+        delegate: framework.designables.DesignableDelegate;
         component: framework.builder.marshalling.Component;
         constructor(name: string, tag: string);
         /**
@@ -1260,6 +1330,62 @@ declare namespace framework.designables {
          * @param {*} designable
          */
         addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.designables {
+    class JSDesignableList extends framework.JSContainer implements framework.design.Designable {
+        designables: java.util.List<framework.design.Designable>;
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        decorate(): void;
+        /**
+         *
+         * @return {*}
+         */
+        getDesignables(): java.util.List<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework {
@@ -1284,22 +1410,6 @@ declare namespace framework {
         setRawValue(value: string): void;
         isChecked(): boolean;
         setChecked(b: boolean): void;
-    }
-}
-declare namespace framework {
-    class JSHTMLFragment extends framework.JSContainer {
-        template: string;
-        context: Object;
-        constructor(name: string, template: string);
-        getTemplate(): string;
-        setTemplate(template: string): void;
-        getContext(): Object;
-        render$jsweet_dom_HTMLElement(parent: HTMLElement): void;
-        /**
-         *
-         * @param {HTMLElement} parent
-         */
-        render(parent?: any): any;
     }
 }
 declare namespace framework {
@@ -1435,6 +1545,17 @@ declare namespace framework.lightning {
          * @param {*} designable
          */
         addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.lightning {
@@ -1598,8 +1719,10 @@ declare namespace framework.lightning {
 }
 declare namespace framework.lightning {
     class DropDownItem extends framework.JSContainer {
-        label: framework.JSContainer;
+        label: framework.lightning.Icon;
+        txt: framework.JSContainer;
         constructor(name: string, label: string);
+        setIcon(name: string, type: string): void;
         setLabel(label: string): void;
     }
 }
@@ -1819,11 +1942,11 @@ declare namespace framework.lightning {
         body: framework.lightning.TabBody;
         title: framework.JSContainer;
         closeButton: framework.lightning.Icon;
+        active: boolean;
         constructor(name: string, body: framework.lightning.TabBody);
         setClosable(b: boolean): TabItem;
         addTabActionListener(listene: framework.lightning.TabActionListener): void;
         close(): TabItem;
-        active: boolean;
         isActive(): boolean;
         fireClose(): void;
         fireActivate(): void;
@@ -1887,6 +2010,8 @@ declare namespace framework.lightning {
         addItem(label?: any, list?: any): any;
         addItem$framework_lightning_TabItem(item: framework.lightning.TabItem): Tabs;
         setActive(item: framework.lightning.TabItem): Tabs;
+        getTab(body: framework.lightning.TabBody): framework.lightning.TabItem;
+        getActiveTab(): framework.lightning.TabItem;
         getItems(): java.util.List<framework.lightning.TabItem>;
     }
 }
@@ -1911,7 +2036,9 @@ declare namespace framework {
         __open: boolean;
         buttons: java.util.List<framework.lightning.IconButton>;
         buttonsCtn: framework.JSContainer;
+        leftIcon: framework.lightning.IconButton;
         constructor(name: string, title: string);
+        setLeftIcon(name: string, type: string): void;
         addIcon(name: string, type: string, listener: framework.EventListener): void;
         getButton(): framework.JSContainer;
         open(): void;
@@ -1939,7 +2066,7 @@ declare namespace framework.builder.editors {
         root: framework.design.Designable;
         editor: framework.builder.editors.JavascriptEditor;
         justSaved: string;
-        constructor(name: string, root: framework.design.Designable);
+        constructor(name: string, root: framework.design.Designable, veditor: framework.builder.editors.VisualEditor);
         fillValue(des: framework.design.Designable, updEvtSelect: boolean): void;
         getSource(des: framework.design.Designable, type: string): string;
         reactivate(): void;
@@ -1998,7 +2125,6 @@ declare namespace framework.builder.editors {
 }
 declare namespace framework.builder.editors {
     class VisualEditor extends framework.builder.editors.AbstractEditor<framework.builder.marshalling.Component> {
-        builder: framework.builder.Builder;
         selectedItem: framework.design.Designable;
         root: framework.design.Designable;
         selector: framework.builder.Selector;
@@ -2006,15 +2132,18 @@ declare namespace framework.builder.editors {
         propertiesDockedComposer: framework.builder.properties.PropertiesDockedComposer;
         libraryDockedComposer: framework.builder.libraries.LibrariesDockedComposer;
         structureDockedComposer: framework.builder.editors.StructureDockedComposer;
-        constructor(builder: framework.builder.Builder);
+        templates: framework.JSContainer;
+        constructor(name: string);
         getRootItem(): framework.design.Designable;
         getSelectedItem(): framework.design.Designable;
         selectItem(designable: framework.design.Designable): void;
         willAdd: framework.builder.Component;
         setWillAddComponent(component: framework.builder.Component): void;
-        addNewComponent(component: framework.builder.Component, designable: framework.design.Designable): void;
+        addNewComponent$framework_builder_Component$framework_design_Designable(component: framework.builder.Component, designable: framework.design.Designable): void;
+        addNewComponent(component?: any, designable?: any): any;
+        addNewComponent$framework_design_Designable$framework_design_Designable(container: framework.design.Designable, designable: framework.design.Designable): void;
         getWillAddComponent(): framework.builder.Component;
-        getBuilder(): framework.builder.Builder;
+        getProject(): framework.builder.data.File;
         /**
          *
          * @return {string}
@@ -2032,7 +2161,6 @@ declare namespace framework.builder.editors {
          * @return {framework.builder.marshalling.Component}
          */
         unmarshall(f: framework.builder.data.File): framework.builder.marshalling.Component;
-        doUnMarsh(o: Object): framework.builder.marshalling.Component;
         cona(component: framework.builder.marshalling.Component): framework.design.Designable;
         consume$framework_builder_marshalling_Component(component: framework.builder.marshalling.Component): void;
         /**
@@ -2040,6 +2168,8 @@ declare namespace framework.builder.editors {
          * @param {framework.builder.marshalling.Component} component
          */
         consume(component?: any): any;
+        getStructure(): framework.builder.editors.Structure;
+        getSelector(): framework.builder.Selector;
     }
 }
 declare namespace framework.builder.libraries {
@@ -2047,7 +2177,7 @@ declare namespace framework.builder.libraries {
         header: framework.lightning.GlobalHeader;
         addNew: framework.lightning.Button;
         structures: Array<framework.builder.data.DataStructure>;
-        constructor(name: string);
+        constructor(name: string, editor: framework.builder.editors.VisualEditor);
         createNewFile$(): void;
         createNewFile$java_lang_String(name: string): void;
         createNewFile(name?: any): any;
@@ -2088,39 +2218,20 @@ declare namespace framework.builder.libraries {
         }
     }
 }
-declare namespace framework.builder.properties {
-    abstract class AbstractCheckBoxPropertyEditor extends framework.JSCheckBox implements framework.builder.properties.PropertyEditor, framework.EventListener {
-        designable: framework.design.Designable;
-        parameter: framework.design.Parameter;
-        constructor(name: string);
-        setProperty(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
-        abstract initEditor(designable: framework.design.Designable, parameter: framework.design.Parameter): any;
+declare namespace framework.designables {
+    class JSDesignableBlockComponent extends framework.designables.JSDesignable {
+        constructor(name: string, tag: string);
         /**
          *
-         * @param {framework.JSContainer} source
-         * @param {Event} evt
+         * @return {*}
          */
-        abstract performAction(source: framework.JSContainer, evt: Event): any;
+        getParameters(): java.util.List<framework.design.Parameter>;
     }
 }
-declare namespace framework.builder {
-    class UIFile extends framework.JSHTMLFragment {
+declare namespace framework.designables {
+    class JSDesignableBuilderComponent extends framework.designables.JSDesignable {
+        content: framework.design.Designable;
         constructor(name: string);
-        setTitle(title: string): UIFile;
-        setAbbr(abbr: string): UIFile;
-        setHelp(help: string): UIFile;
-    }
-}
-declare namespace framework.lightning {
-    class AccordionItem extends framework.JSHTMLFragment implements framework.design.Designable {
-        accordionContent: framework.designables.JSDesignable;
-        delegate: framework.designables.DesignableDelegate;
-        configured: boolean;
-        constructor(name: string, title: string);
-        open(): void;
-        close(): void;
-        setTitle(title: string): void;
-        setIcon(iconType: string, iconName: string): void;
         /**
          *
          * @param {string} key
@@ -2134,26 +2245,66 @@ declare namespace framework.lightning {
         getDesignables(): java.util.List<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {*} designable
          */
-        getComponent(): framework.builder.marshalling.Component;
+        removeDesignable(designable: framework.design.Designable): void;
         /**
          *
-         * @return {*}
+         * @param {*} designable
+         * @param {number} steps
          */
-        getParameters(): java.util.List<framework.design.Parameter>;
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
         /**
          *
          * @param {*} designable
          */
         addDesignable(designable: framework.design.Designable): void;
-        getContent(): framework.design.Designable;
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.design.Parameter>;
+    }
+}
+declare namespace framework {
+    class JSHTMLFragment extends framework.designables.JSDesignable {
+        context: Object;
+        constructor(name: string, template: string);
+        getTemplate(): string;
+        setTemplate(template: string): void;
+        getContext(): Object;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.design.Parameter>;
         render$jsweet_dom_HTMLElement(parent: HTMLElement): void;
         /**
          *
          * @param {HTMLElement} parent
          */
         render(parent?: any): any;
+    }
+}
+declare namespace framework.builder.properties {
+    abstract class AbstractCheckBoxPropertyEditor extends framework.JSCheckBox implements framework.builder.properties.PropertyEditor, framework.EventListener {
+        designable: framework.design.Designable;
+        parameter: framework.design.Parameter;
+        constructor(name: string);
+        setProperty(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+        abstract initEditor(designable: framework.design.Designable, parameter: framework.design.Parameter): any;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        abstract performAction(source: framework.JSContainer, evt: Event): any;
     }
 }
 declare namespace framework.builder.properties {
@@ -2206,6 +2357,17 @@ declare namespace framework.designables {
          * @param {*} designable
          */
         addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.builder.properties {
@@ -2234,7 +2396,9 @@ declare namespace framework.builder.editors {
         config: CodeMirror.EditorConfiguration;
         file: framework.builder.data.File;
         value: string;
-        constructor(name: string);
+        rootEditor: framework.builder.editors.VisualEditor;
+        constructor(name: string, rootEditor: framework.builder.editors.VisualEditor);
+        setRootEditor(editor: framework.builder.editors.VisualEditor): void;
         setConfig(config: CodeMirror.EditorConfiguration): void;
         doRender$framework_builder_editors_CodeMirrorEditor$jsweet_dom_HTMLElement(c: CodeMirrorEditor, root: HTMLElement): void;
         /**
@@ -2260,6 +2424,24 @@ declare namespace framework.builder.editors {
          * @param {framework.builder.data.File} f
          */
         open(f: framework.builder.data.File): void;
+        /**
+         *
+         * @return {framework.builder.editors.Structure}
+         */
+        getStructure(): framework.builder.editors.Structure;
+        /**
+         *
+         * @return {framework.builder.editors.VisualEditor}
+         */
+        getRootEditor(): framework.builder.editors.VisualEditor;
+        /**
+         *
+         */
+        dirty(): void;
+        /**
+         *
+         */
+        clean(): void;
     }
     namespace CodeMirrorEditor {
         class CodeMirrorEditor$0 implements framework.builder.data.RemoteDataListener {
@@ -2293,26 +2475,6 @@ declare namespace framework.builder.properties {
         abstract performAction(source: framework.JSContainer, evt: Event): any;
     }
 }
-declare namespace framework.builder.properties {
-    class EventScriptEditor extends framework.JSTextArea implements framework.builder.properties.PropertyEditor, framework.EventListener {
-        designable: framework.design.Designable;
-        parameter: framework.design.Parameter;
-        eventTypeEditor: framework.builder.properties.EventTypeEditor;
-        constructor(name: string, eventTypeEditor: framework.builder.properties.EventTypeEditor);
-        /**
-         *
-         * @param {*} designable
-         * @param {framework.design.Parameter} parameter
-         */
-        setProperty(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
-        /**
-         *
-         * @param {framework.JSContainer} source
-         * @param {Event} evt
-         */
-        performAction(source: framework.JSContainer, evt: Event): void;
-    }
-}
 declare namespace framework.designables {
     class JSDesignableTextArea extends framework.JSTextArea implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
@@ -2343,6 +2505,17 @@ declare namespace framework.designables {
          * @param {*} designable
          */
         addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.designables {
@@ -2374,6 +2547,17 @@ declare namespace framework.designables {
          * @param {*} designable
          */
         addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.builder.libraries {
@@ -2638,7 +2822,10 @@ declare namespace framework.builder {
         activeEditor: framework.builder.editors.Editor<any>;
         static websocket: WebSocket;
         static websocket_$LI$(): WebSocket;
+        projectOpen: boolean;
         constructor(name: string);
+        static getInstance(): Builder;
+        isProjectOpen(): boolean;
         openProject(file: framework.builder.data.File): void;
         getProject(): framework.builder.data.File;
         isOpen(editorName: string): boolean;
@@ -2750,7 +2937,12 @@ declare namespace framework.builder.properties {
 }
 declare namespace framework.designables {
     class JSDesignableTextComponent extends framework.TextComponent implements framework.design.Designable {
+        static __static_initialized: boolean;
+        static __static_initialize(): void;
         delegate: framework.designables.DesignableDelegate;
+        static textTags: java.util.Map<string, string>;
+        static textTags_$LI$(): java.util.Map<string, string>;
+        static __static_initializer_0(): void;
         constructor(name: string, tag: string);
         /**
          *
@@ -2778,18 +2970,252 @@ declare namespace framework.designables {
          * @param {*} designable
          */
         addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.builder.editors {
-    class StructureTreeItem extends framework.TreeItem {
+    class FileTreeItem extends framework.TreeItem implements framework.EventListener {
+        builder: framework.builder.Builder;
+        type: string;
+        structure: framework.builder.editors.Structure;
+        f: framework.builder.data.File;
+        constructor(f: framework.builder.data.File, type: string, builder: framework.builder.Builder, structure: framework.builder.editors.Structure);
+        click(source: framework.JSContainer, evt: Event): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+    namespace FileTreeItem {
+        class FileTreeItem$0 implements framework.builder.data.RemoteDataListener {
+            private stype;
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any, stype: any);
+        }
+    }
+}
+declare namespace framework.builder.editors {
+    class StructureTreeItem extends framework.TreeItem implements framework.EventListener {
         designable: framework.design.Designable;
-        constructor(name: string, designable: framework.design.Designable);
+        selector: framework.builder.Selector;
+        structure: framework.builder.editors.Structure;
+        __framework_builder_editors_StructureTreeItem_parent: framework.design.Designable;
+        dropdown: framework.lightning.DropDown;
+        lsnClick: framework.EventListener;
+        lsnDblclick: framework.EventListener;
+        lsnDelete: framework.EventListener;
+        paste(): void;
+        constructor(name: string, designable: framework.design.Designable, structure: framework.builder.editors.Structure, parent: framework.design.Designable);
         getDesignable(): framework.design.Designable;
+        getParentDesignable(): framework.design.Designable;
         /**
          *
          * @param {boolean} b
          */
         select(b: boolean): void;
+        saveAsComponent(): void;
+        dblclick(source: framework.JSContainer, evt: Event): void;
+        click(source: framework.JSContainer, evt: Event): void;
+    }
+    namespace StructureTreeItem {
+        class StructureTreeItem$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class StructureTreeItem$1 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class StructureTreeItem$2 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class StructureTreeItem$3 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class StructureTreeItem$4 implements framework.EventListener {
+            private structure;
+            private designable;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, structure: any, designable: any);
+        }
+        class StructureTreeItem$5 implements framework.EventListener {
+            private structure;
+            private designable;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, structure: any, designable: any);
+        }
+        class StructureTreeItem$6 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class StructureTreeItem$7 implements framework.EventListener {
+            private structure;
+            private paste;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, structure: any, paste: any);
+        }
+        class StructureTreeItem$8 implements framework.builder.data.RemoteDataListener {
+            private marshall;
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any, marshall: any);
+        }
+        namespace StructureTreeItem$8 {
+            class StructureTreeItem$8$0 implements framework.builder.data.RemoteDataListener {
+                __parent: any;
+                /**
+                 *
+                 * @param {*} data
+                 */
+                dataLoaded(data: any): void;
+                constructor(__parent: any);
+            }
+        }
+    }
+}
+declare namespace framework.designables {
+    class JSDesignableImage extends framework.designables.JSDesignableBlockComponent {
+        constructor(name: string);
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.design.Parameter>;
+    }
+}
+declare namespace framework.builder {
+    class UIFile extends framework.JSHTMLFragment {
+        constructor(name: string);
+        setTitle(title: string): UIFile;
+        setAbbr(abbr: string): UIFile;
+        setHelp(help: string): UIFile;
+    }
+}
+declare namespace framework.lightning {
+    class AccordionItem extends framework.JSHTMLFragment implements framework.design.Designable {
+        accordionContent: framework.JSContainer;
+        delegate: framework.designables.DesignableDelegate;
+        configured: boolean;
+        constructor(name: string, title: string);
+        open(): void;
+        close(): void;
+        setTitle(title: string): void;
+        setIcon(iconType: string, iconName: string): void;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*}
+         */
+        getDesignables(): java.util.List<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        getContent(): framework.JSContainer;
+        render$jsweet_dom_HTMLElement(parent: HTMLElement): void;
+        /**
+         *
+         * @param {HTMLElement} parent
+         */
+        render(parent?: any): any;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.builder.properties {
@@ -2878,36 +3304,53 @@ declare namespace framework.builder.properties {
     }
 }
 declare namespace framework.builder.properties {
-    class EventTypeEditor extends framework.builder.properties.AbstractSelectPropertyEditor {
-        constructor(name: string);
-        /**
-         *
-         * @param {framework.JSContainer} source
-         * @param {Event} evt
-         */
-        performAction(source: framework.JSContainer, evt: Event): void;
+    class AttributeWithOptionsEditor extends framework.builder.properties.AbstractSelectPropertyEditor {
+        constructor();
         /**
          *
          * @param {*} designable
          * @param {framework.design.Parameter} parameter
          */
         initEditor(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.builder.properties {
+    class TagEditor extends framework.builder.properties.AbstractSelectPropertyEditor {
+        constructor(name: string);
+        /**
+         *
+         * @param {*} designable
+         * @param {framework.design.Parameter} parameter
+         */
+        initEditor(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
 declare namespace framework.builder.editors {
     class CSSEditor extends framework.builder.editors.CodeMirrorEditor {
         editor: CodeMirror.Editor;
-        constructor(name: string);
+        constructor(name: string, editor: framework.builder.editors.VisualEditor);
     }
 }
 declare namespace framework.builder.editors {
     class HTMLEditor extends framework.builder.editors.CodeMirrorEditor {
-        constructor(name: string);
+        constructor(name: string, editor: framework.builder.editors.VisualEditor);
     }
 }
 declare namespace framework.builder.editors {
     class JavascriptEditor extends framework.builder.editors.CodeMirrorEditor {
-        constructor(name: string);
+        constructor(name: string, editor: framework.builder.editors.VisualEditor);
     }
 }
 declare namespace framework.builder.properties {
@@ -2940,7 +3383,8 @@ declare namespace framework.builder.libraries {
 declare namespace framework.builder.editors {
     class StructureDockedComposer extends framework.lightning.DockedComposer {
         structure: framework.builder.editors.Structure;
-        constructor(name: string, root: framework.design.Designable, builder: framework.builder.Builder);
+        constructor(name: string, root: framework.design.Designable, f: framework.builder.data.File, selector: framework.builder.Selector);
+        getStructure(): framework.builder.editors.Structure;
     }
 }
 declare namespace framework.builder.libraries {
@@ -2983,22 +3427,24 @@ declare namespace framework.builder {
         css: framework.builder.UIFile;
         javascript: framework.builder.UIFile;
         __framework_builder_NewFile_data: framework.builder.UIFile;
-        files: java.util.List<framework.builder.UIFile>;
         fileType: string;
         builder: framework.builder.Builder;
+        structure: framework.builder.editors.Structure;
         constructor(name: string, builder_: framework.builder.Builder);
+        click(): void;
+        init(structure: framework.builder.editors.Structure): void;
         createFile(name: string, type: string): void;
         createLightning(name: string): void;
     }
     namespace NewFile {
-        class NewFile$0 implements framework.EventListener {
+        class NewFile$0 implements framework.builder.ItemSelectedListener {
             __parent: any;
             /**
              *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
+             * @param {framework.builder.UIFile} file
+             * @param {framework.builder.ItemSelector} selector
              */
-            performAction(source: framework.JSContainer, evt: Event): void;
+            itemSelected(file: framework.builder.UIFile, selector: framework.builder.ItemSelector): void;
             constructor(__parent: any);
         }
         class NewFile$1 implements framework.EventListener {
@@ -3051,6 +3497,22 @@ declare namespace framework.builder {
         init(): void;
     }
 }
+declare namespace framework.designables {
+    class JSDesignableLink extends framework.designables.JSDesignableTextComponent {
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*}
+         */
+        getParameters(): java.util.List<framework.design.Parameter>;
+    }
+}
 declare namespace framework.builder.properties {
     class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
         constructor();
@@ -3060,16 +3522,6 @@ declare namespace framework.builder.properties {
 declare namespace framework.builder.properties {
     class BasicPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
         constructor(name: string);
-        /**
-         *
-         * @param {*} designable
-         */
-        setComponent(designable: framework.design.Designable): void;
-    }
-}
-declare namespace framework.builder.properties {
-    class EventsPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
-        constructor();
         /**
          *
          * @param {*} designable

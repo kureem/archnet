@@ -7,7 +7,6 @@ public class StyleParameter extends Parameter{
 
 	public StyleParameter(String name, String label, String category) {
 		super(name, label, "String", "Basic");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -15,6 +14,11 @@ public class StyleParameter extends Parameter{
 		StyleEditor editor =new StyleEditor();
 		editor.setProperty(designable,this);
 		return editor;
+	}
+
+	@Override
+	public String extractValue(Designable designable) {
+		return designable.getStyle(name);
 	}
 
 }

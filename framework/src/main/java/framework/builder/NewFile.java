@@ -2,10 +2,6 @@ package framework.builder;
 
 import static def.dom.Globals.alert;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import def.js.JSON;
 import framework.EventListener;
 import framework.JSContainer;
 import framework.builder.data.File;
@@ -31,131 +27,141 @@ public class NewFile extends ItemSelector {
 
 	private UIFile javascript = new UIFile("scripts").setAbbr("JS").setTitle("Javascript file")
 			.setHelp("Create a new javascript file to be included in project");
-	
-	
+
 	private UIFile data = new UIFile("data").setAbbr("DAT").setTitle("Data Environment")
 			.setHelp("Creates a new data environment to be included inn the project");
-
-	private List<UIFile> files = new LinkedList<>();
 
 	private String fileType = null;
 
 	private Builder builder;
+	
+	private Structure structure;
 
 	public NewFile(String name, Builder builder_) {
 		super(name, "New File");
 		this.builder = builder_;
-		getFilesList().addFile(lightning);
-		getFilesList().addFile(mobile);
-		getFilesList().addFile(html);
-		getFilesList().addFile(css);
-		getFilesList().addFile(javascript);
-		getFilesList().addFile(data);
 
-		files.add(lightning);
-		files.add(mobile);
-		files.add(html);
-		files.add(css);
-		files.add(javascript);
-		files.add(data);
+		getFilesList().addItemSelectedListener(new ItemSelectedListener() {
 
-		for (UIFile file : files) {
-			file.addEventListener(new EventListener() {
-
-				@Override
-				public void performAction(JSContainer source, Event evt) {
-					fileType = source.getName();
-				}
-			}, "click");
-		}
-
+			@Override
+			public void itemSelected(UIFile file, ItemSelector selector) {
+				fileType = file.getName();
+			}
+		});
 		getSaveButton().addEventListener(new EventListener() {
 
 			@Override
 			public void performAction(JSContainer source, Event evt) {
-				if (fileType == null) {
-					alert("Please select a file type");
-					return;
-				}
-
-				String name = getInput().getValue();
-				if (name == null || name.trim().length() <= 0) {
-					alert("Please enter a name for the file");
-					return;
-				}
-				
-				if(fileType.equalsIgnoreCase("lightning")){
-					createLightning(name);
-				}else if(fileType.equalsIgnoreCase("mobile")){
-					
-				}else{
-					createFile(name, fileType);
-				}
+				click();
 			}
 		}, "click");
 	}
 
-	public void createFile(String name, String type){
-		if(type.equalsIgnoreCase("stylesheets")){
-			if(!name.endsWith(".css")){
+	public void click() {
+		if (fileType == null) {
+			alert("Please select a file type");
+			return;
+		}
+
+		String name = getInput().getValue();
+		if (name == null || name.trim().length() <= 0) {
+			alert("Please enter a name for the file");
+			return;
+		}
+
+		if (fileType.equalsIgnoreCase("lightning")) {
+			createLightning(name);
+		} else if (fileType.equalsIgnoreCase("mobile")) {
+
+		} else {
+			createFile(name, fileType);
+		}
+
+	}
+
+	public void init(Structure structure) {
+		getInput().setValue("");
+		this.structure = structure;
+		getFilesList().getChildren().clear();
+		getFilesList().addFile(lightning);
+		getFilesList().addFile(mobile);
+		if (!builder.isProjectOpen()) {
+			
+		} else {
+			getFilesList().addFile(html);
+			getFilesList().addFile(css);
+			getFilesList().addFile(javascript);
+			getFilesList().addFile(data);
+
+		}
+
+		getFilesList().setRendered(false);
+	}
+
+	public void createFile(String name, String type) {
+		if (type.equalsIgnoreCase("stylesheets")) {
+			if (!name.endsWith(".css")) {
 				name = name + ".css";
 			}
-		}else if(type.equalsIgnoreCase("scripts")){
-			
-			if(!name.endsWith(".js")){
+		} else if (type.equalsIgnoreCase("scripts")) {
+
+			if (!name.endsWith(".js")) {
 				name = name + ".js";
 			}
-			
-		}else if(type.equalsIgnoreCase("templates")){
-			if(!name.endsWith(".html")){
+
+		} else if (type.equalsIgnoreCase("templates")) {
+			if (!name.endsWith(".html")) {
 				name = name + ".html";
 			}
-		}else if(type.equalsIgnoreCase("data")){
-			if(!name.endsWith(".dat")){
+		} else if (type.equalsIgnoreCase("data")) {
+			if (!name.endsWith(".dat")) {
 				name = name + ".dat";
+			}
+		}else if (type.equalsIgnoreCase("components")) {
+			if (!name.endsWith(".cmp")) {
+				name = name + ".cmp";
 			}
 		}
 		File project = builder.getProject();
 		project.createFile(name, type, new RemoteDataListener() {
-			
+
 			@Override
 			public void dataLoaded(Object data) {
-				//alert(JSON.stringify(data));
-				//alert("sdfsdfsd pops");
 				close();
 				render();
 				getBackdrop().render();
-				
-				BeanFactory.getInstance().getBeanOfType(Structure.class).reload(type);
-				BeanFactory.getInstance().getBeanOfType(Structure.class).render();
-				
+
+				if(structure != null){
+					structure.reload(type);
+					structure.render();
+				}
+
 			}
 		});
-		
+
 	}
-	
+
 	public void createLightning(String name) {
-		
-		if(!name.endsWith(".prj")){
+
+		if (!name.endsWith(".prj")) {
 			name = name + ".prj";
 		}
 
 		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createProject(name, name,
 				new RemoteDataListener() {
 
-			@Override
-			public void dataLoaded(Object data) {
+					@Override
+					public void dataLoaded(Object data) {
 
-				File project = new File(new jsweet.lang.Object(data));
-				close();
-				render();
-				getBackdrop().render();
-				builder.openProject(project);
-				builder.render();
-			}
-		});
-		
-		
+						File project = new File(new jsweet.lang.Object(data));
+						close();
+						render();
+						getBackdrop().render();
+						builder.openProject(project);
+						builder.render();
+					}
+				});
+
 	}
 
 }

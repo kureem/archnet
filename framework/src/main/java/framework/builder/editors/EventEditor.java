@@ -1,7 +1,5 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.alert;
-
 import java.util.List;
 
 import framework.EventListener;
@@ -18,21 +16,20 @@ import jsweet.dom.Event;
 public class EventEditor extends AbstractEditor<Component> {
 
 	JSContainer component = new JSContainer("label");
-	// JSSelect component = new JSSelect("components");
 	JSSelect events = new JSSelect("events");
 
 	private Designable root;
 
-	private JavascriptEditor editor = new JavascriptEditor("sd");
-	
+	private JavascriptEditor editor = new JavascriptEditor("sd", null);
+
 	private String justSaved = "";
 
-	public EventEditor(String name, Designable root) {
-		super(name, "div");
+	public EventEditor(String name, Designable root, VisualEditor veditor) {
+		super(name, "div", veditor);
 
+		this.editor.setRootEditor(veditor);
 		Grid grid = new Grid("", "div");
 		addChild(grid);
-		// grid.setAlignSpread(true);
 
 		JSContainer colLeft = new JSContainer("div");
 		JSContainer colRight = new JSContainer("div");
@@ -47,22 +44,22 @@ public class EventEditor extends AbstractEditor<Component> {
 		colRight.addChild(events.setStyle("width", "100%"));
 
 		events.addEventListener(new EventListener() {
-			
+
 			@Override
 			public void performAction(JSContainer source, Event evt) {
-					//alert("dsfsds");
-					if(!justSaved.equals(events.getValue())){
-						justSaved = events.getValue();
-						save(events.getValue());
-						
-					}
+
+				if (!justSaved.equals(events.getValue())) {
+					justSaved = events.getValue();
+					save(events.getValue());
+
+				}
 			}
 		}, "focus");
 		events.addEventListener(new EventListener() {
 
 			@Override
 			public void performAction(JSContainer source, Event evt) {
-				
+
 				String id = component.getAttribute("desid");
 				Designable des = findDesignableById(root, id);
 				fillValue(des, false);
@@ -87,18 +84,18 @@ public class EventEditor extends AbstractEditor<Component> {
 						if (editor.getEditor() != null) {
 							editor.getEditor().setValue(bel.getSource());
 						} else {
-							
+
 						}
 						s = true;
 					}
 				}
 			}
 			if (!s) {
-				if (editor != null && editor.getEditor() != null){
+				if (editor != null && editor.getEditor() != null) {
 					editor.getEditor().setValue("");
 					editor.setValue("");
 				}
-					
+
 			}
 		}
 		String last = "click";
@@ -121,7 +118,7 @@ public class EventEditor extends AbstractEditor<Component> {
 			if (editor.getEditor() != null) {
 				editor.getEditor().setValue(lastSrc);
 			} else {
-				
+
 			}
 		}
 	}
@@ -139,17 +136,10 @@ public class EventEditor extends AbstractEditor<Component> {
 		return null;
 	}
 
-	/*
-	 * public void addComponentOption(Designable designable){
-	 * component.addOption(new JSOption(designable.getName(),
-	 * designable.getId())); for(Designable des : designable.getDesignables()){
-	 * addComponentOption(des); } }
-	 */
-
-	public void reactivate(){
+	public void reactivate() {
 		setDesignable(findDesignableById(root, component.getAttribute("desid")));
 	}
-	
+
 	public void setDesignable(Designable designable) {
 
 		component.setAttribute("desid", designable.getId());
@@ -173,17 +163,18 @@ public class EventEditor extends AbstractEditor<Component> {
 
 	@Override
 	public void save() {
-		
+
 		String type = events.getValue();
 		save(type);
-		//super.save();
+
+		clean();
 	}
 
 	public void save(String type) {
 		String componentId = component.getAttribute("desid");
 
 		String src = editor.getEditor().getValue();
-		alert(type + ":" + src);
+		// alert(type + ":" + src);
 		Designable des = findDesignableById(root, componentId);
 		if (des != null) {
 			List<EventListener> listeners = des.getListeners().get(type);
@@ -205,31 +196,25 @@ public class EventEditor extends AbstractEditor<Component> {
 			}
 		}
 
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public String getMarshall() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Component createNew(File f) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Component unmarshall(File f) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void consume(Component data) {
-		// TODO Auto-generated method stub
 
 	}
 

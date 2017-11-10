@@ -12,7 +12,7 @@ import jsweet.dom.Event;
 
 public class Selector extends JSContainer  implements EventListener{
 
-	private JSContainer selected = null;
+	private Designable selected = null;
 	
 	private VisualEditor visualEditor;
 
@@ -26,35 +26,35 @@ public class Selector extends JSContainer  implements EventListener{
 		this.visualEditor = editor;
 	}
 
-	public JSContainer getSelected() {
+	public Designable getSelected() {
 		return selected;
 	}
 
 	public void select(Designable component) {
-		try {
-			def.jqueryui.JQuery jqSelector = (JQuery) $(getNative());
-			def.jqueryui.JQuery jqComponent = (JQuery) $(component.getNative());
-			
-			jqSelector.width(jqComponent.outerWidth());
-			jqSelector.height(jqComponent.outerHeight());
-			
-			JQueryPositionOptions options = new JQueryPositionOptions() {
-			};
+		if(selected == null || !component.equals(selected)){
+			try {
+				this.selected = component;
+				def.jqueryui.JQuery jqSelector = (JQuery) $(getNative());
+				def.jqueryui.JQuery jqComponent = (JQuery) $(component.getNative());
 
-			options.my = "top left";
-			options.at = "top left";
+				jqSelector.width(jqComponent.outerWidth());
+				jqSelector.height(jqComponent.outerHeight());
 
-			
-			
-			options.of = jqComponent; 
-			jqSelector.position(options);
-			
-			
-			
+				JQueryPositionOptions options = new JQueryPositionOptions() {
+				};
+
+				options.my = "top left";
+				options.at = "top left";
+
+				options.of = jqComponent;
+				jqSelector.position(options);
+
+				 visualEditor.getStructure().select(component);
+
+			} catch (Exception e) {
+				// e.printStackTrace();
+			}
 			visualEditor.selectItem(component);
-			
-		} catch (Exception e) {
-			//e.printStackTrace();
 		}
 	}
 
@@ -62,6 +62,7 @@ public class Selector extends JSContainer  implements EventListener{
 	public void performAction(JSContainer source, Event evt) {
 		source.setStyle("width", "0px");
 		source.setStyle("height", "0px");
+		selected = null;
 		
 	}
 

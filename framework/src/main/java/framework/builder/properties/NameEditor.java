@@ -1,6 +1,7 @@
 package framework.builder.properties;
 
 import framework.JSContainer;
+import framework.builder.editors.VisualEditor;
 import framework.design.Designable;
 import framework.design.Parameter;
 import jsweet.dom.Event;
@@ -17,6 +18,10 @@ public class NameEditor extends AbstractInputPropertyEditor{
 		String name = getValue();
 		designable.applyParam("name", name);
 		designable.setName(name);
+		VisualEditor editor = getAncestorWithClass("visual-editor");
+		editor.getStructure().reload(designable);
+		VisualEditor veditor = getAncestorWithClass("visual-editor");
+		veditor.dirty();
 	}
 
 	@Override

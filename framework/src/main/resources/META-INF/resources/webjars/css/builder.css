@@ -5,6 +5,60 @@
 	
 }
 
+.builder .buttons-ctn{
+	display: none;
+}
+
+.builder .slds-tree__item:hover .buttons-ctn{
+	display: block;
+}
+
+
+
+.builder .structure  .slds-tree__item .slds-m-right_x-small{
+	margin: 0px;
+	color: #0070d2 !important;
+}
+.builder .structure  .slds-tree__item .slds-m-right_x-small .slds-button__icon{
+	width:10px;
+	height: 10px;
+}
+.builder .structure  .slds-tree__item .slds-button__icon{
+	width: 16px;
+	height: 16px;
+}
+
+.builder .structure .slds-tree__item.type-data .left-icon,.builder .structure .slds-tree__item.type-data .slds-truncate{
+	color: orange;
+}
+
+.builder .structure .slds-tree__item.type-templates .left-icon,.builder .structure .slds-tree__item.type-templates .slds-truncate{
+	color: steelblue;
+}
+
+.builder .structure .slds-tree__item.type-components .left-icon,.builder .structure .slds-tree__item.type-components .slds-truncate{
+	color: #dd6085;
+}
+
+.builder .structure .slds-tree__item.type-stylesheets .left-icon,.builder .structure .slds-tree__item.type-stylesheets .slds-truncate{
+	color: #8ed363;
+}
+
+.builder .structure .slds-tree__item.type-scripts .left-icon,.builder .structure .slds-tree__item.type-scripts .slds-truncate{
+	color: #f0856e;
+}
+
+
+
+
+
+.builder .item-selector .selected a{
+	border: solid 1px steelblue;
+}
+
+.builder .item-selector .selected .slds-app-launcher__tile-figure{
+	background: darkcyan;
+}
 
 .builder .buttons-ctn{
 	position: absolute;
@@ -25,6 +79,10 @@
 	padding: .75rem 0 0;
 }
 
+.visual-editor .component-design.selected .slds-avatar__initials {
+	background: sienna;
+}
+
 .builder .slds-tabs_default__link{
 	text-transform: none;
 }
@@ -33,13 +91,44 @@
 	padding: 0px;
 }
 
-.builder .tab-close-button{
+.builder .editor-tabs ul .tab-close-button{
 	
     float: left;
     position: absolute;
-    right: 0px;
-    top: 0px;
+    right: 1px;
+    top: 9px;
 	
+}
+
+.builder .editor-tabs ul li a{
+	margin-right: 8px;
+}
+.builder .editor-tabs ul .slds-active .tab-close-button{
+	
+    float: left;
+    position: absolute;
+
+    top: 9px;
+	
+}
+
+.builder.editor-tabs ul  .slds-active{
+    
+}
+
+
+.builder .editor-tabs .slds-tabs_default__nav .slds-tabs_default__item{
+	padding-left: 4px;
+}
+
+.builder .editor-tabs .slds-tabs_default__nav .slds-tabs_default__item .slds-tabs_default__link{
+	
+}
+
+    
+.builder .editor-tabs .tab-close-button .slds-button__icon{
+	    width: 0.675rem;
+    height: .675rem;
 }
 .builder .save-button{
 	position: absolute;
@@ -93,16 +182,25 @@
 	background:white;
 }
 
-.builder .properties-composer .slds-form_compact{
-	
+.builder .properties-composer {
+	height: 300px;
+	border-bottom: 1px solid #dddbda;
+	box-shadow:0 1px 2px 0 rgba(0,0,0,.16)
 }
 
-.builder .slds-form_compact .slds-input{
+.builder .library-composer{
+	height: 300px;
+	border-bottom: 1px solid #dddbda;
+	box-shadow:0 1px 2px 0 rgba(0,0,0,.16)
+}
+
+.builder .slds-form_compact .slds-input, .builder .slds-form_compact .slds-select{
 	border-radius:0px;
 	line-height: 20px;
 	min-height: 0px;
 	padding: 0 4px;
 	margin: 0px;
+	height: auto;
 }
 
 .builder .slds-form_compact .slds-form-element{
@@ -117,8 +215,10 @@
 .builder .slds-tabs_compact .slds-tabs_default__content .slds-library{
 	
 	margin: 0px;
-	height: 400px;
-	overflow: auto;
+    height: 197px;
+    overflow-y: auto;
+    
+    overflow-x: hidden;
 }
 
 .builder .visual-editor .slds-docked-composer{

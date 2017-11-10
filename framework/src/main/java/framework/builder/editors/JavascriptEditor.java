@@ -7,8 +7,8 @@ public class JavascriptEditor extends CodeMirrorEditor {
 
 	//Editor editor = null;
 
-	public JavascriptEditor(String name) {
-		super(name);
+	public JavascriptEditor(String name, VisualEditor editor) {
+		super(name, editor);
 
 		EditorConfiguration config = new EditorConfiguration() {
 		};

@@ -22,7 +22,7 @@ public class JSDesignableButton extends Button implements Designable{
 	}
 	@Override
 	public void applyParam(String key, String value) {
-		delegate.setParameter(key, value, true);
+		delegate.applyParameter(key, value, true);
 	}
 	@Override
 	public List<Designable> getDesignables() {
@@ -66,6 +66,18 @@ public class JSDesignableButton extends Button implements Designable{
 		throw new RuntimeException("Cannot add children to this component");
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void removeDesignable(Designable designable) {
+		
+		delegate.removeDesignable(designable);
+		
+	}
+
+
+	@Override
+	public void moveDesignable(Designable designable, int steps) {
+		delegate.moveDesignable(designable, steps);
 	}
 
 	

@@ -9,7 +9,7 @@ public class Section extends JSContainer{
 	
 	private JSContainer title = new JSContainer("span").addClass("slds-truncate");
 	
-	private Icon arrow = new Icon("arrow", "utility", "switch");
+	private SvgIcon arrow = new SvgIcon("arrow", "utility", "switch");
 	
 	private JSContainer content = new JSContainer("div").addClass("slds-section__content");
 	

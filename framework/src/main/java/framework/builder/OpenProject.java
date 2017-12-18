@@ -9,7 +9,7 @@ import framework.core.BeanFactory;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
 
-public class OpenProject extends ItemSelector implements EventListener, RemoteDataListener {
+public class OpenProject extends ItemSelector implements EventListener, RemoteDataListener<Object> {
 
 	private Builder builder_;
 

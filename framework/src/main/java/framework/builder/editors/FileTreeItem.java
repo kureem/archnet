@@ -69,11 +69,15 @@ public class FileTreeItem extends TreeItem implements EventListener {
 			builder.openEditor(f.getName(), editor);
 			editor.open(f);
 		} else if (f.getName().endsWith("dat")) {
-			DataComposer editor = new DataComposer(f.getName(),veditor);
+			DataComposer editor = new DataComposer(f.getName(),veditor, structure);
 			builder.openEditor(f.getName(), editor);
 			editor.open(f);
 		}else if(f.getName().endsWith(".cmp")){
 			VisualEditor editor = new VisualEditor(f.getName());
+			builder.openEditor(f.getName(), editor);
+			editor.open(f);
+		}else{
+			DataComposer editor = new DataComposer(f.getName(),veditor, structure);
 			builder.openEditor(f.getName(), editor);
 			editor.open(f);
 		}
@@ -89,7 +93,7 @@ public class FileTreeItem extends TreeItem implements EventListener {
 		}
 		if (source.getName().equals("delete")) {
 			String stype = type;
-			builder.getProject().deleteFile(f.getName(), stype, new RemoteDataListener() {
+			builder.getProject().deleteFile(f.getName(), stype, new RemoteDataListener<java.lang.Object>() {
 
 				@Override
 				public void dataLoaded(Object data) {

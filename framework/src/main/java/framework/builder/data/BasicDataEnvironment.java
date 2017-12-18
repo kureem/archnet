@@ -1,5 +1,6 @@
 package framework.builder.data;
 
+import framework.core.BeanFactory;
 import jsweet.lang.Array;
 
 public class BasicDataEnvironment implements DataEnvironment{
@@ -8,20 +9,39 @@ public class BasicDataEnvironment implements DataEnvironment{
 	
 	
 	@Override
-	public Array<DataStructure> getDataStructures() {
-		return structures;
+	public void getDataStructures(RemoteDataListener<Array<DataStructure>> listener) {
+		if(structures.length == 0){
+			BeanFactory.getInstance().getBeanOfType(ProjectService.class).getDataStructures(new RemoteDataListener<Object>() {
+				
+				@SuppressWarnings("unchecked")
+				@Override
+				public void dataLoaded(Object data) {
+					
+					jsweet.lang.Object obj = (jsweet.lang.Object)data;
+					
+					Array<jsweet.lang.Object> sobjects =(Array<jsweet.lang.Object>) obj.$get("sobjects");
+					for(jsweet.lang.Object o : sobjects){
+						DataStructure structure = new DataStructure(o);
+						structures.push(structure);
+					}
+					listener.dataLoaded(structures);
+				}
+			});
+		}else{
+			listener.dataLoaded(structures);
+		}
 	}
 
 	@Override
 	public void saveStructure(DataStructure datastructure) {
-		for(DataStructure structure : structures){
+		//for(DataStructure structure : structures){
 			/*if(structure.name.equals(datastructure.name)){
 				structure.label = datastructure.label;
 				structure.fields = datastructure.fields;
 				return;
 			}*/
-		}
-		structures.push(datastructure);
+		//}
+		//structures.push(datastructure);
 	}
 
 	@Override

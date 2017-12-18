@@ -40,7 +40,7 @@ var framework;
     var builder;
     (function (builder) {
         var data;
-        (function (data) {
+        (function (data_1) {
             var BasicDataEnvironment = (function () {
                 function BasicDataEnvironment() {
                 }
@@ -49,32 +49,21 @@ var framework;
                 ;
                 /**
                  *
-                 * @return {framework.builder.data.DataStructure[]}
+                 * @param {*} listener
                  */
-                BasicDataEnvironment.prototype.getDataStructures = function () {
-                    return BasicDataEnvironment.structures_$LI$();
+                BasicDataEnvironment.prototype.getDataStructures = function (listener) {
+                    if (BasicDataEnvironment.structures_$LI$().length === 0) {
+                        framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).getDataStructures(new BasicDataEnvironment.BasicDataEnvironment$0(this, listener));
+                    }
+                    else {
+                        listener.dataLoaded(BasicDataEnvironment.structures_$LI$());
+                    }
                 };
                 /**
                  *
                  * @param {framework.builder.data.DataStructure} datastructure
                  */
                 BasicDataEnvironment.prototype.saveStructure = function (datastructure) {
-                    for (var index10003 = 0; index10003 < BasicDataEnvironment.structures_$LI$().length; index10003++) {
-                        var structure = BasicDataEnvironment.structures_$LI$()[index10003];
-                        {
-                            if ((function (o1, o2) { if (o1 && o1.equals) {
-                                return o1.equals(o2);
-                            }
-                            else {
-                                return o1 === o2;
-                            } })(structure.name, datastructure.name)) {
-                                structure.label = datastructure.label;
-                                structure.fields = datastructure.fields;
-                                return;
-                            }
-                        }
-                    }
-                    BasicDataEnvironment.structures_$LI$().push(datastructure);
                 };
                 /**
                  *
@@ -82,15 +71,15 @@ var framework;
                  */
                 BasicDataEnvironment.prototype.deleteStructure = function (name) {
                     var tmp = (new Array());
-                    for (var index10004 = 0; index10004 < BasicDataEnvironment.structures_$LI$().length; index10004++) {
-                        var structure = BasicDataEnvironment.structures_$LI$()[index10004];
+                    for (var index1100 = 0; index1100 < BasicDataEnvironment.structures_$LI$().length; index1100++) {
+                        var structure = BasicDataEnvironment.structures_$LI$()[index1100];
                         {
                             if (!(function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
                             }
                             else {
                                 return o1 === o2;
-                            } })(structure.name, name)) {
+                            } })(structure.getName(), name)) {
                                 tmp.push(structure);
                             }
                         }
@@ -99,9 +88,36 @@ var framework;
                 };
                 return BasicDataEnvironment;
             }());
-            data.BasicDataEnvironment = BasicDataEnvironment;
+            data_1.BasicDataEnvironment = BasicDataEnvironment;
             BasicDataEnvironment["__class"] = "framework.builder.data.BasicDataEnvironment";
             BasicDataEnvironment["__interfaces"] = ["framework.builder.data.DataEnvironment"];
+            (function (BasicDataEnvironment) {
+                var BasicDataEnvironment$0 = (function () {
+                    function BasicDataEnvironment$0(__parent, listener) {
+                        this.listener = listener;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {*} data
+                     */
+                    BasicDataEnvironment$0.prototype.dataLoaded = function (data) {
+                        var obj = data;
+                        var sobjects = obj["sobjects"];
+                        for (var index1101 = 0; index1101 < sobjects.length; index1101++) {
+                            var o = sobjects[index1101];
+                            {
+                                var structure = new framework.builder.data.DataStructure(o);
+                                framework.builder.data.BasicDataEnvironment.structures_$LI$().push(structure);
+                            }
+                        }
+                        this.listener.dataLoaded(framework.builder.data.BasicDataEnvironment.structures_$LI$());
+                    };
+                    return BasicDataEnvironment$0;
+                }());
+                BasicDataEnvironment.BasicDataEnvironment$0 = BasicDataEnvironment$0;
+                BasicDataEnvironment$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            })(BasicDataEnvironment = data_1.BasicDataEnvironment || (data_1.BasicDataEnvironment = {}));
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -111,35 +127,119 @@ var framework;
         var data;
         (function (data) {
             var DataField = (function () {
-                function DataField() {
-                    this.type = framework.builder.data.DataType.TEXT;
-                    this.primaryKey = false;
-                    this.name = null;
-                    this.label = null;
-                    this.format = null;
+                function DataField(o) {
+                    var _this = this;
+                    if (((o != null && o instanceof Object) || o === null)) {
+                        var __args = Array.prototype.slice.call(arguments);
+                        this.object = null;
+                        this.object = null;
+                        (function () {
+                            _this.object = o;
+                        })();
+                    }
+                    else if (o === undefined) {
+                        var __args = Array.prototype.slice.call(arguments);
+                        this.object = null;
+                        this.object = null;
+                        (function () {
+                            _this.object = new Object();
+                        })();
+                    }
+                    else
+                        throw new Error('invalid overload');
                 }
+                DataField.prototype.getNative = function () {
+                    return this.object;
+                };
+                DataField.prototype.getName = function () {
+                    return this.object["name"];
+                };
+                DataField.prototype.getType = function () {
+                    return this.object["type"];
+                };
+                DataField.prototype.getLabel = function () {
+                    return this.object["label"];
+                };
+                DataField.prototype.getFormat = function () {
+                    return this.object["format"];
+                };
+                DataField.prototype.getPrimaryKey = function () {
+                    return this.object["primaryKey"];
+                };
+                DataField.prototype.getAutoNumber = function () {
+                    return this.object["autoNumber"];
+                };
+                DataField.prototype.getByteLength = function () {
+                    return this.object["byteLength"];
+                };
+                DataField.prototype.getCalculated = function () {
+                    return this.object["calculated"];
+                };
+                DataField.prototype.getCreateable = function () {
+                    return this.object["createable"];
+                };
+                DataField.prototype.getDefaultedOnCreate = function () {
+                    return this.object["defaultedOnCreate"];
+                };
+                DataField.prototype.getDependentPicklist = function () {
+                    return this.object["dependentPicklist"];
+                };
+                DataField.prototype.getFilterable = function () {
+                    return this.object["filterable"];
+                };
+                DataField.prototype.getHtmlFormatted = function () {
+                    return this.object["htmlFormatted"];
+                };
+                DataField.prototype.getNillable = function () {
+                    return this.object["nillable"];
+                };
+                DataField.prototype.getRestrictedPicklist = function () {
+                    return this.object["restrictedPicklist"];
+                };
+                DataField.prototype.getUnique = function () {
+                    return this.object["unique"];
+                };
+                DataField.prototype.getUpdateable = function () {
+                    return this.object["updateable"];
+                };
+                DataField.prototype.getCalculatedFormula = function () {
+                    return this.object["calculatedFormula"];
+                };
+                DataField.prototype.getDefaultValue = function () {
+                    return this.object["defaultValue"];
+                };
+                DataField.prototype.getDefaultValueFormula = function () {
+                    return this.object["defaultValueFormula"];
+                };
+                DataField.prototype.getDigits = function () {
+                    return this.object["digits"];
+                };
+                DataField.prototype.getLength = function () {
+                    return this.object["length"];
+                };
+                DataField.prototype.getPicklistValues = function () {
+                    return this.object["picklistValues"];
+                };
+                DataField.prototype.getPrecision = function () {
+                    return this.object["precision"];
+                };
+                DataField.prototype.getRelationshipName = function () {
+                    return this.object["relationshipName"];
+                };
+                DataField.prototype.getScale = function () {
+                    return this.object["scale"];
+                };
+                DataField.prototype.getSortable = function () {
+                    return this.object["sortable"];
+                };
+                DataField.prototype.getValue = function (field) {
+                    var o = this.object[field];
+                    return o;
+                };
                 return DataField;
             }());
             data.DataField = DataField;
             DataField["__class"] = "framework.builder.data.DataField";
-        })(data = builder.data || (builder.data = {}));
-    })(builder = framework.builder || (framework.builder = {}));
-})(framework || (framework = {}));
-(function (framework) {
-    var builder;
-    (function (builder) {
-        var data;
-        (function (data) {
-            var DataStructure = (function () {
-                function DataStructure() {
-                    this.fields = (new Array());
-                    this.name = null;
-                    this.label = null;
-                }
-                return DataStructure;
-            }());
-            data.DataStructure = DataStructure;
-            DataStructure["__class"] = "framework.builder.data.DataStructure";
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -174,7 +274,7 @@ var framework;
     var builder;
     (function (builder) {
         var data;
-        (function (data_1) {
+        (function (data_2) {
             var File = (function () {
                 function File(file) {
                     this.file = null;
@@ -192,8 +292,8 @@ var framework;
                 File.prototype.getTemplates = function () {
                     return this.getChild("templates").getChildren();
                 };
-                File.prototype.getDataEnvironment = function () {
-                    return this.getChild("data").getChildren();
+                File.prototype.getDataStructures = function (listener) {
+                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.DataEnvironment").getDataStructures(listener);
                 };
                 File.prototype.getComponents = function () {
                     return this.getChild("components").getChildren();
@@ -206,8 +306,8 @@ var framework;
                     framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).deleteFile(f.getPath(), new File.File$0(this, l));
                 };
                 File.prototype.getChild = function (name) {
-                    for (var index10005 = this.getChildren().iterator(); index10005.hasNext();) {
-                        var f = index10005.next();
+                    for (var index1102 = this.getChildren().iterator(); index1102.hasNext();) {
+                        var f = index1102.next();
                         {
                             if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(f.getName(), name)) {
                                 return f;
@@ -275,9 +375,9 @@ var framework;
                 File.prototype.removeFile = function (f) {
                     var children = (new Array());
                     {
-                        var array10007 = this.file["children"];
-                        for (var index10006 = 0; index10006 < array10007.length; index10006++) {
-                            var o = array10007[index10006];
+                        var array1104 = this.file["children"];
+                        for (var index1103 = 0; index1103 < array1104.length; index1103++) {
+                            var o = array1104[index1103];
                             {
                                 if (!(function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -295,9 +395,9 @@ var framework;
                 File.prototype.getChildren = function () {
                     var result = (new java.util.LinkedList());
                     {
-                        var array10009 = this.file["children"];
-                        for (var index10008 = 0; index10008 < array10009.length; index10008++) {
-                            var o = array10009[index10008];
+                        var array1106 = this.file["children"];
+                        for (var index1105 = 0; index1105 < array1106.length; index1105++) {
+                            var o = array1106[index1105];
                             {
                                 result.add(new File(o));
                             }
@@ -307,7 +407,7 @@ var framework;
                 };
                 return File;
             }());
-            data_1.File = File;
+            data_2.File = File;
             File["__class"] = "framework.builder.data.File";
             (function (File) {
                 var File$0 = (function () {
@@ -344,7 +444,7 @@ var framework;
                 }());
                 File.File$1 = File$1;
                 File$1["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
-            })(File = data_1.File || (data_1.File = {}));
+            })(File = data_2.File || (data_2.File = {}));
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -352,7 +452,7 @@ var framework;
     var builder;
     (function (builder) {
         var data;
-        (function (data_2) {
+        (function (data_3) {
             var ProjectService = (function () {
                 function ProjectService() {
                 }
@@ -398,9 +498,23 @@ var framework;
                         return t;
                     });
                 };
+                ProjectService.prototype.getDataStructures = function (listener) {
+                    $.get("/projects/structures", new Object(), function (t, u, v) {
+                        if (listener != null)
+                            listener.dataLoaded(t);
+                        return t;
+                    });
+                };
+                ProjectService.prototype.getDataStructure = function (listener, name) {
+                    $.get("/projects/structures/" + name, new Object(), function (t, u, v) {
+                        if (listener != null)
+                            listener.dataLoaded(t);
+                        return t;
+                    });
+                };
                 return ProjectService;
             }());
-            data_2.ProjectService = ProjectService;
+            data_3.ProjectService = ProjectService;
             ProjectService["__class"] = "framework.builder.data.ProjectService";
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
@@ -448,8 +562,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index10010 = 0; index10010 < keys.length; index10010++) {
-                        var key = keys[index10010];
+                    for (var index1107 = 0; index1107 < keys.length; index1107++) {
+                        var key = keys[index1107];
                         {
                             var value = component.styles[key].toString();
                             instance.setStyle(key, value);
@@ -458,8 +572,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index10011 = 0; index10011 < keys.length; index10011++) {
-                        var key = keys[index10011];
+                    for (var index1108 = 0; index1108 < keys.length; index1108++) {
+                        var key = keys[index1108];
                         {
                             if (component.parameters[key] != null) {
                                 var value = component.parameters[key].toString();
@@ -469,8 +583,8 @@ var framework;
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index10012 = 0; index10012 < component.events.length; index10012++) {
-                        var event_1 = component.events[index10012];
+                    for (var index1109 = 0; index1109 < component.events.length; index1109++) {
+                        var event_1 = component.events[index1109];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source);
                             instance.addEventListener(listener, event_1.type);
@@ -599,23 +713,23 @@ var framework;
                     var c = new framework.builder.marshalling.Component();
                     c.impl = designable.getAttribute("identifier");
                     var parameters = designable.getParameters();
-                    for (var index10013 = designable.getStyleNames().iterator(); index10013.hasNext();) {
-                        var s = index10013.next();
+                    for (var index1110 = designable.getStyleNames().iterator(); index1110.hasNext();) {
+                        var s = index1110.next();
                         {
                             c.styles[s] = designable.getStyle(s);
                         }
                     }
-                    for (var index10014 = parameters.iterator(); index10014.hasNext();) {
-                        var p = index10014.next();
+                    for (var index1111 = parameters.iterator(); index1111.hasNext();) {
+                        var p = index1111.next();
                         {
                             c.parameters[p.name] = p.extractValue(designable);
                         }
                     }
-                    for (var index10015 = designable.getListeners().keySet().iterator(); index10015.hasNext();) {
-                        var key = index10015.next();
+                    for (var index1112 = designable.getListeners().keySet().iterator(); index1112.hasNext();) {
+                        var key = index1112.next();
                         {
-                            for (var index10016 = designable.getListeners().get(key).iterator(); index10016.hasNext();) {
-                                var l = index10016.next();
+                            for (var index1113 = designable.getListeners().get(key).iterator(); index1113.hasNext();) {
+                                var l = index1113.next();
                                 {
                                     if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                         var bel = l;
@@ -628,8 +742,8 @@ var framework;
                             }
                         }
                     }
-                    for (var index10017 = designable.getDesignables().iterator(); index10017.hasNext();) {
-                        var child = index10017.next();
+                    for (var index1114 = designable.getDesignables().iterator(); index1114.hasNext();) {
+                        var child = index1114.next();
                         {
                             var childC = MarshallUtil.extract(child);
                             c.children.push(childC);
@@ -640,8 +754,8 @@ var framework;
                 MarshallUtil.toDesignable = function (component) {
                     var des = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, false);
                     if (component.children != null) {
-                        for (var index10018 = 0; index10018 < component.children.length; index10018++) {
-                            var c = component.children[index10018];
+                        for (var index1115 = 0; index1115 < component.children.length; index1115++) {
+                            var c = component.children[index1115];
                             {
                                 var child = MarshallUtil.toDesignable(c);
                                 des.addDesignable(child);
@@ -675,8 +789,8 @@ var framework;
                     var events = o["events"];
                     if (events != null && events.length > 0) {
                         var bevents = (new Array());
-                        for (var index10019 = 0; index10019 < events.length; index10019++) {
-                            var e = events[index10019];
+                        for (var index1116 = 0; index1116 < events.length; index1116++) {
+                            var e = events[index1116];
                             {
                                 var event_2 = new framework.builder.marshalling.BuilderEvent();
                                 event_2.source = e["source"].toString();
@@ -689,8 +803,8 @@ var framework;
                     var bchildren = (new Array());
                     var children = o["children"];
                     if (children != null && children.length > 0) {
-                        for (var index10020 = 0; index10020 < children.length; index10020++) {
-                            var c = children[index10020];
+                        for (var index1117 = 0; index1117 < children.length; index1117++) {
+                            var c = children[index1117];
                             {
                                 bchildren.push(MarshallUtil.toComponent$jsweet_lang_Object(c));
                             }
@@ -704,6 +818,21 @@ var framework;
             marshalling.MarshallUtil = MarshallUtil;
             MarshallUtil["__class"] = "framework.builder.marshalling.MarshallUtil";
         })(marshalling = builder.marshalling || (builder.marshalling = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var properties;
+        (function (properties) {
+            var FieldEditor = (function () {
+                function FieldEditor() {
+                }
+                return FieldEditor;
+            }());
+            properties.FieldEditor = FieldEditor;
+            FieldEditor["__class"] = "framework.builder.properties.FieldEditor";
+        })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -795,8 +924,8 @@ var framework;
                 this.beans.put(mixxingName, instance);
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
-                for (var index10021 = this.beans.keySet().iterator(); index10021.hasNext();) {
-                    var key = index10021.next();
+                for (var index1118 = this.beans.keySet().iterator(); index1118.hasNext();) {
+                    var key = index1118.next();
                     {
                         var bean = this.beans.get(key);
                         try {
@@ -933,8 +1062,8 @@ var framework;
                 }
             };
             /*private*/ DesignableDelegate.prototype.containsName = function (name) {
-                for (var index10022 = this.ui.getChildren().iterator(); index10022.hasNext();) {
-                    var c = index10022.next();
+                for (var index1119 = this.ui.getChildren().iterator(); index1119.hasNext();) {
+                    var c = index1119.next();
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -1131,6 +1260,11 @@ var framework;
                  * @return {*}
                  */
                 DefaultTableCellRenderer.prototype.getComponent = function (table, value, row, column) {
+                    if (value != null && (typeof value === 'boolean')) {
+                        var ch = new framework.lightning.CheckBox("");
+                        ch.setValue$java_lang_Boolean(value);
+                        return ch;
+                    }
                     var truncate = new framework.JSContainer("div").addClass("slds-truncate");
                     var s = "";
                     if (value != null) {
@@ -1219,8 +1353,8 @@ var framework;
             function ContainerRenderer() {
             }
             ContainerRenderer.prototype.decorate = function (c) {
-                for (var index10023 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index10023.hasNext();) {
-                    var dec = index10023.next();
+                for (var index1120 = framework.core.BeanFactory.getInstance().getBeanOfType("framework.core.DecoratorsRegistry").getDecorators().iterator(); index1120.hasNext();) {
+                    var dec = index1120.next();
                     {
                         dec.decorate(c);
                     }
@@ -1302,15 +1436,15 @@ var framework;
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var _this = this;
-                for (var index10024 = c.getListeners().keySet().iterator(); index10024.hasNext();) {
-                    var key = index10024.next();
+                for (var index1121 = c.getListeners().keySet().iterator(); index1121.hasNext();) {
+                    var key = index1121.next();
                     {
                         var listeners = c.getListeners().get(key);
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
                                 _this.synchronizeFields(c.getRoot().getNative(), c.getRoot());
-                                for (var index10025 = listeners.iterator(); index10025.hasNext();) {
-                                    var l = index10025.next();
+                                for (var index1122 = listeners.iterator(); index1122.hasNext();) {
+                                    var l = index1122.next();
                                     {
                                         l.performAction(c, evt);
                                     }
@@ -1392,8 +1526,8 @@ var framework;
                         }
                     }
                 }
-                for (var index10026 = jsfield.getChildren().iterator(); index10026.hasNext();) {
-                    var c = index10026.next();
+                for (var index1123 = jsfield.getChildren().iterator(); index1123.hasNext();) {
+                    var c = index1123.next();
                     {
                         this.synchronizeFields(document.getElementById(c.getId()), c);
                     }
@@ -1402,9 +1536,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array10028 = c.getChangedAttributes();
-                        for (var index10027 = 0; index10027 < array10028.length; index10027++) {
-                            var key = array10028[index10027];
+                        var array1125 = c.getChangedAttributes();
+                        for (var index1124 = 0; index1124 < array1125.length; index1124++) {
+                            var key = array1125[index1124];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -1417,8 +1551,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index10029 = c.getAttributeNames().iterator(); index10029.hasNext();) {
-                        var key = index10029.next();
+                    for (var index1126 = c.getAttributeNames().iterator(); index1126.hasNext();) {
+                        var key = index1126.next();
                         {
                             if (c.getAttribute(key) != null)
                                 njq.setAttribute(key, c.getAttribute(key));
@@ -1445,9 +1579,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array10031 = c.getChangedStyles();
-                        for (var index10030 = 0; index10030 < array10031.length; index10030++) {
-                            var key = array10031[index10030];
+                        var array1128 = c.getChangedStyles();
+                        for (var index1127 = 0; index1127 < array1128.length; index1127++) {
+                            var key = array1128[index1127];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -1455,8 +1589,8 @@ var framework;
                     }
                 }
                 else {
-                    for (var index10032 = c.getStyleNames().iterator(); index10032.hasNext();) {
-                        var key = index10032.next();
+                    for (var index1129 = c.getStyleNames().iterator(); index1129.hasNext();) {
+                        var key = index1129.next();
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
@@ -1592,6 +1726,95 @@ var framework;
     })(util = framework.util || (framework.util = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var builder;
+    (function (builder) {
+        var data;
+        (function (data_4) {
+            var DataStructure = (function (_super) {
+                __extends(DataStructure, _super);
+                function DataStructure(object) {
+                    var _this = _super.call(this, object) || this;
+                    _this.object = null;
+                    _this.object = object;
+                    return _this;
+                }
+                DataStructure.prototype.getName = function () {
+                    return this.object["name"];
+                };
+                DataStructure.prototype.getLabel = function () {
+                    return this.object["label"];
+                };
+                DataStructure.prototype.getTitle = function () {
+                    return this.object["label"];
+                };
+                DataStructure.prototype.isDeletable = function () {
+                    return this.object["deletable"];
+                };
+                DataStructure.prototype.getLabelPlural = function () {
+                    return this.object["labelPlural"];
+                };
+                DataStructure.prototype.isQueryable = function () {
+                    return this.object["queryable"];
+                };
+                DataStructure.prototype.getSearchable = function () {
+                    return this.object["searchable"];
+                };
+                DataStructure.prototype.isUpdateable = function () {
+                    return this.object["updateable"];
+                };
+                DataStructure.prototype.getFields = function (listener) {
+                    var cached = this.object["fields"];
+                    if (cached == null) {
+                        framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).getDataStructure(new DataStructure.DataStructure$0(this, listener), this.getName());
+                    }
+                    else {
+                        var fields = (new java.util.LinkedList());
+                        this.object["fields"] = cached;
+                        for (var index1130 = 0; index1130 < cached.length; index1130++) {
+                            var oField = cached[index1130];
+                            {
+                                fields.add(new framework.builder.data.DataField(oField));
+                            }
+                        }
+                        listener.dataLoaded(fields);
+                    }
+                };
+                return DataStructure;
+            }(framework.builder.data.File));
+            data_4.DataStructure = DataStructure;
+            DataStructure["__class"] = "framework.builder.data.DataStructure";
+            (function (DataStructure) {
+                var DataStructure$0 = (function () {
+                    function DataStructure$0(__parent, listener) {
+                        this.listener = listener;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {*} data
+                     */
+                    DataStructure$0.prototype.dataLoaded = function (data) {
+                        var o = data;
+                        var fields = (new java.util.LinkedList());
+                        var oFields = o["fields"];
+                        this.__parent.object["fields"] = oFields;
+                        for (var index1131 = 0; index1131 < oFields.length; index1131++) {
+                            var oField = oFields[index1131];
+                            {
+                                fields.add(new framework.builder.data.DataField(oField));
+                            }
+                        }
+                        this.listener.dataLoaded(fields);
+                    };
+                    return DataStructure$0;
+                }());
+                DataStructure.DataStructure$0 = DataStructure$0;
+                DataStructure$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            })(DataStructure = data_4.DataStructure || (data_4.DataStructure = {}));
+        })(data = builder.data || (builder.data = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var Boot = (function () {
         function Boot() {
         }
@@ -1605,8 +1828,8 @@ var framework;
             componentFactoryRegistry.registerComponentFactory("html:html", new Boot.Boot$0("html:html"));
             componentFactoryRegistry.registerComponentFactory("html:p", new Boot.Boot$1("html:p"));
             componentFactoryRegistry.registerComponentFactory("html:cmp", new Boot.Boot$2("html:cmp"));
-            for (var index10033 = 0; index10033 < tags.length; index10033++) {
-                var tag = tags[index10033];
+            for (var index1132 = 0; index1132 < tags.length; index1132++) {
+                var tag = tags[index1132];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -1981,8 +2204,8 @@ var framework;
              */
             TagParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.TagEditor("tagEditor");
-                for (var index10034 = this.options.iterator(); index10034.hasNext();) {
-                    var opt = index10034.next();
+                for (var index1133 = this.options.iterator(); index1133.hasNext();) {
+                    var opt = index1133.next();
                     {
                         editor.addOption(new framework.JSOption(opt.text, opt.value));
                     }
@@ -2273,8 +2496,8 @@ var framework;
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index10035 = 0; index10035 < aStyles.length; index10035++) {
-                var style = aStyles[index10035];
+            for (var index1134 = 0; index1134 < aStyles.length; index1134++) {
+                var style = aStyles[index1134];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -2484,8 +2707,8 @@ var framework;
         JSContainer.prototype.setRendered = function (b) {
             this.rendered = b;
             if (!b) {
-                for (var index10036 = this.children.iterator(); index10036.hasNext();) {
-                    var child = index10036.next();
+                for (var index1135 = this.children.iterator(); index1135.hasNext();) {
+                    var child = index1135.next();
                     {
                         child.setRendered(b);
                     }
@@ -2513,12 +2736,12 @@ var framework;
             if (!this.renderers.contains(JSContainer.DEFAULT_RENDERER_$LI$())) {
                 this.renderers.add(0, JSContainer.DEFAULT_RENDERER_$LI$());
             }
-            for (var index10037 = this.renderers.iterator(); index10037.hasNext();) {
-                var renderer_1 = index10037.next();
+            for (var index1136 = this.renderers.iterator(); index1136.hasNext();) {
+                var renderer_1 = index1136.next();
                 renderer_1.doRender(this, parent);
             }
-            for (var index10038 = this.getChildren().iterator(); index10038.hasNext();) {
-                var child = index10038.next();
+            for (var index1137 = this.getChildren().iterator(); index1137.hasNext();) {
+                var child = index1137.next();
                 {
                     child.render();
                 }
@@ -2560,9 +2783,9 @@ var framework;
             var clsss = this.parent.getAttribute("class");
             if (clsss != null) {
                 {
-                    var array10040 = this.parent.getAttribute("class").split(" ");
-                    for (var index10039 = 0; index10039 < array10040.length; index10039++) {
-                        var s = array10040[index10039];
+                    var array1139 = this.parent.getAttribute("class").split(" ");
+                    for (var index1138 = 0; index1138 < array1139.length; index1138++) {
+                        var s = array1139[index1138];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -2905,6 +3128,7 @@ var framework;
                     /*private*/ _this.selected = null;
                     /*private*/ _this.__cut = false;
                     /*private*/ _this.clipboardItem = null;
+                    _this.dataRoot = new framework.TreeItem("", "Data").setLeftIcon("https://d13yacurqjgara.cloudfront.net/users/82092/screenshots/1073359/spinner.gif");
                     _this.toggleSelect = new Structure.Structure$0(_this);
                     _this.root = null;
                     _this.liJS = null;
@@ -2984,15 +3208,15 @@ var framework;
                     this.ul.addChild$framework_JSContainer(this.liCss);
                     this.liTemplates.addChild$framework_JSContainer(new framework.TreeItem("", "Templates").addClass("type-templates").addEventListener(this.toggleSelect, "click"));
                     this.ul.addChild$framework_JSContainer(this.liTemplates);
-                    this.liData.addChild$framework_JSContainer(new framework.TreeItem("", "Data").addClass("type-data").addEventListener(this.toggleSelect, "click"));
+                    this.liData.addChild$framework_JSContainer(this.dataRoot.addClass("type-data").addEventListener(this.toggleSelect, "click"));
                     this.ul.addChild$framework_JSContainer(this.liData);
                     this.liComponents.addChild$framework_JSContainer(new framework.TreeItem("", "Components").addClass("type-components").addEventListener(this.toggleSelect, "click"));
                     this.ul.addChild$framework_JSContainer(this.liComponents);
                     this.renderFiles();
                 };
                 Structure.prototype.getItem$framework_design_Designable$framework_JSContainer = function (designable, currentNode) {
-                    for (var index10041 = currentNode.getChildren().iterator(); index10041.hasNext();) {
-                        var des = index10041.next();
+                    for (var index1140 = currentNode.getChildren().iterator(); index1140.hasNext();) {
+                        var des = index1140.next();
                         {
                             if (des != null && des instanceof framework.builder.editors.StructureTreeItem) {
                                 var titem = des;
@@ -3100,19 +3324,19 @@ var framework;
                 Structure.prototype.unselect = function (c) {
                 };
                 Structure.prototype.renderFiles = function () {
-                    var types = ["stylesheets", "scripts", "templates", "data", "components"];
+                    var types = ["stylesheets", "scripts", "templates", "components"];
                     var lis = (new java.util.HashMap());
                     lis.put("stylesheets", this.liCss);
                     lis.put("data", this.liData);
                     lis.put("scripts", this.liJS);
                     lis.put("templates", this.liTemplates);
                     lis.put("components", this.liComponents);
-                    for (var index10042 = 0; index10042 < types.length; index10042++) {
-                        var type = types[index10042];
+                    for (var index1141 = 0; index1141 < types.length; index1141++) {
+                        var type = types[index1141];
                         {
                             var cstylesheets = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
-                            for (var index10043 = this.file.getChild(type).getChildren().iterator(); index10043.hasNext();) {
-                                var f = index10043.next();
+                            for (var index1142 = this.file.getChild(type).getChildren().iterator(); index1142.hasNext();) {
+                                var f = index1142.next();
                                 {
                                     var item = new framework.builder.editors.FileTreeItem(f, type, framework.builder.Builder.getInstance(), this);
                                     item.addEventListener(this.toggleSelect, "click");
@@ -3122,6 +3346,8 @@ var framework;
                             }
                         }
                     }
+                    var struc = this;
+                    this.file.getDataStructures(new Structure.Structure$1(this, struc, lis));
                 };
                 Structure.prototype.addNode = function (ctn, li, level, parent) {
                     var item = new framework.builder.editors.StructureTreeItem(ctn.getName(), ctn, this, parent);
@@ -3131,8 +3357,8 @@ var framework;
                         item.leaf(false);
                         var children = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                         li.addChild$framework_JSContainer(children);
-                        for (var index10044 = ctn.getDesignables().iterator(); index10044.hasNext();) {
-                            var c = index10044.next();
+                        for (var index1143 = ctn.getDesignables().iterator(); index1143.hasNext();) {
+                            var c = index1143.next();
                             {
                                 var child = new framework.JSContainer("li");
                                 children.addChild$framework_JSContainer(child);
@@ -3171,6 +3397,45 @@ var framework;
                 }());
                 Structure.Structure$0 = Structure$0;
                 Structure$0["__interfaces"] = ["framework.EventListener"];
+                var Structure$1 = (function () {
+                    function Structure$1(__parent, struc, lis) {
+                        this.struc = struc;
+                        this.lis = lis;
+                        this.__parent = __parent;
+                    }
+                    Structure$1.prototype.dataLoaded$jsweet_lang_Array = function (data) {
+                        var cstylesheets = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+                        var count = 0;
+                        for (var index1144 = 0; index1144 < data.length; index1144++) {
+                            var f = data[index1144];
+                            {
+                                if (count === 10) {
+                                    break;
+                                }
+                                var item = new framework.builder.editors.FileTreeItem(f, "data", framework.builder.Builder.getInstance(), this.struc);
+                                item.addEventListener(this.__parent.toggleSelect, "click");
+                                var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "2");
+                                this.__parent.dataRoot.setLeftIcon$java_lang_String$java_lang_String("file", "utility");
+                                this.lis.get("data").addChild$framework_JSContainer(cstylesheets.addChild$framework_JSContainer(li)).render();
+                                count++;
+                            }
+                        }
+                    };
+                    /**
+                     *
+                     * @param {framework.builder.data.DataStructure[]} data
+                     */
+                    Structure$1.prototype.dataLoaded = function (data) {
+                        if (((data != null && data instanceof Array) || data === null)) {
+                            return this.dataLoaded$jsweet_lang_Array(data);
+                        }
+                        else
+                            throw new Error('invalid overload');
+                    };
+                    return Structure$1;
+                }());
+                Structure.Structure$1 = Structure$1;
+                Structure$1["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
             })(Structure = editors.Structure || (editors.Structure = {}));
         })(editors = builder.editors || (builder.editors = {}));
     })(builder = framework.builder || (framework.builder = {}));
@@ -3201,16 +3466,16 @@ var framework;
                 this.itemSelectedListeners.add(l);
             };
             FilesList.prototype.fireItemSelectedListeners = function (file, selector) {
-                for (var index10045 = this.itemSelectedListeners.iterator(); index10045.hasNext();) {
-                    var l = index10045.next();
+                for (var index1145 = this.itemSelectedListeners.iterator(); index1145.hasNext();) {
+                    var l = index1145.next();
                     {
                         l.itemSelected(file, selector);
                     }
                 }
             };
             FilesList.prototype.select = function (file) {
-                for (var index10046 = this.getChildren().iterator(); index10046.hasNext();) {
-                    var c = index10046.next();
+                for (var index1146 = this.getChildren().iterator(); index1146.hasNext();) {
+                    var c = index1146.next();
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -3256,6 +3521,67 @@ var framework;
 (function (framework) {
     var builder;
     (function (builder) {
+        var libraries;
+        (function (libraries) {
+            var DataComposer = (function (_super) {
+                __extends(DataComposer, _super);
+                function DataComposer(name, editor, structure) {
+                    var _this = _super.call(this, name, "div") || this;
+                    _this.editor = null;
+                    _this.structure = null;
+                    _this.editor = editor;
+                    _this.structure = structure;
+                    return _this;
+                }
+                /**
+                 *
+                 */
+                DataComposer.prototype.save = function () {
+                };
+                /**
+                 *
+                 */
+                DataComposer.prototype.dirty = function () {
+                };
+                /**
+                 *
+                 */
+                DataComposer.prototype.clean = function () {
+                };
+                /**
+                 *
+                 * @param {framework.builder.data.File} file
+                 */
+                DataComposer.prototype.open = function (file) {
+                    var struct = file;
+                    var item = new framework.builder.libraries.DataItem(struct.getName(), struct);
+                    this.addChild$framework_JSContainer(item);
+                };
+                /**
+                 *
+                 * @return {framework.builder.editors.Structure}
+                 */
+                DataComposer.prototype.getStructure = function () {
+                    return this.structure;
+                };
+                /**
+                 *
+                 * @return {framework.builder.editors.VisualEditor}
+                 */
+                DataComposer.prototype.getRootEditor = function () {
+                    return this.editor;
+                };
+                return DataComposer;
+            }(framework.JSContainer));
+            libraries.DataComposer = DataComposer;
+            DataComposer["__class"] = "framework.builder.libraries.DataComposer";
+            DataComposer["__interfaces"] = ["framework.builder.editors.Editor", "framework.interactions.Droppable", "framework.Renderable"];
+        })(libraries = builder.libraries || (builder.libraries = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
         var Previewer = (function (_super) {
             __extends(Previewer, _super);
             function Previewer(name) {
@@ -3275,24 +3601,24 @@ var framework;
                     var f = new framework.builder.data.File(o);
                     Previewer.project = f;
                     var preview = new framework.builder.editors.Preview(f);
-                    for (var index10047 = f.getStylesheets().iterator(); index10047.hasNext();) {
-                        var sc = index10047.next();
+                    for (var index1147 = f.getStylesheets().iterator(); index1147.hasNext();) {
+                        var sc = index1147.next();
                         {
                             var elem = document.createElement("style");
                             elem.textContent = sc.getData();
                             document.body.appendChild(elem);
                         }
                     }
-                    for (var index10048 = f.getScripts().iterator(); index10048.hasNext();) {
-                        var sc = index10048.next();
+                    for (var index1148 = f.getScripts().iterator(); index1148.hasNext();) {
+                        var sc = index1148.next();
                         {
                             var elem = document.createElement("script");
                             elem.textContent = sc.getData();
                             document.body.appendChild(elem);
                         }
                     }
-                    for (var index10049 = f.getTemplates().iterator(); index10049.hasNext();) {
-                        var sc = index10049.next();
+                    for (var index1149 = f.getTemplates().iterator(); index1149.hasNext();) {
+                        var sc = index1149.next();
                         {
                             var elem = document.createElement("div");
                             elem.setAttribute("id", /* replace */ sc.getName().split(".html").join(""));
@@ -3475,8 +3801,8 @@ var framework;
             JSDesignableList.prototype.decorate = function () {
                 var dec = this.getAttribute("decorate-class");
                 if (dec != null) {
-                    for (var index10050 = this.getChildren().iterator(); index10050.hasNext();) {
-                        var c = index10050.next();
+                    for (var index1150 = this.getChildren().iterator(); index1150.hasNext();) {
+                        var c = index1150.next();
                         {
                             c.setAttribute("class", dec);
                         }
@@ -3484,8 +3810,8 @@ var framework;
                 }
                 var decStyle = this.getAttribute("decorate-style");
                 if (decStyle != null) {
-                    for (var index10051 = this.getChildren().iterator(); index10051.hasNext();) {
-                        var c = index10051.next();
+                    for (var index1151 = this.getChildren().iterator(); index1151.hasNext();) {
+                        var c = index1151.next();
                         {
                             c.setAttribute("style", decStyle);
                         }
@@ -3732,8 +4058,8 @@ var framework;
          */
         JSSelect.prototype.getValue = function () {
             var val = this.getAttribute("value");
-            for (var index10052 = this.getChildren().iterator(); index10052.hasNext();) {
-                var opt = index10052.next();
+            for (var index1152 = this.getChildren().iterator(); index1152.hasNext();) {
+                var opt = index1152.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -3750,8 +4076,8 @@ var framework;
         JSSelect.prototype.setValue$java_lang_String = function (val) {
             this.previousValue = this.getValue();
             this.setAttribute("value", val);
-            for (var index10053 = this.getChildren().iterator(); index10053.hasNext();) {
-                var opt = index10053.next();
+            for (var index1153 = this.getChildren().iterator(); index1153.hasNext();) {
+                var opt = index1153.next();
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -4186,8 +4512,8 @@ var framework;
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index10054 = 0; index10054 < Button.states_$LI$().length; index10054++) {
-                    var s = Button.states_$LI$()[index10054];
+                for (var index1154 = 0; index1154 < Button.states_$LI$().length; index1154++) {
+                    var s = Button.states_$LI$()[index1154];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -4547,7 +4873,7 @@ var framework;
             __extends(DropDownItem, _super);
             function DropDownItem(name, label) {
                 var _this = _super.call(this, name, "a") || this;
-                /*private*/ _this.label = new framework.lightning.Icon("span");
+                /*private*/ _this.label = new framework.lightning.SvgIcon("span");
                 /*private*/ _this.txt = new framework.JSContainer("span");
                 _this.setAttribute("role", "menuitem");
                 _this.label.addClass("slds-truncate");
@@ -4755,99 +5081,11 @@ var framework;
 (function (framework) {
     var lightning;
     (function (lightning) {
-        var Icon = (function (_super) {
-            __extends(Icon, _super);
-            function Icon(name, type, iconName) {
-                var _this = this;
-                if (((typeof name === 'string') || name === null) && ((typeof type === 'string') || type === null) && ((typeof iconName === 'string') || iconName === null)) {
-                    var __args = Array.prototype.slice.call(arguments);
-                    _this = _super.call(this, name, "div") || this;
-                    _this.assetsUrl = "/webjars/salesforce-lightning-design-system/2.4.1/assets/icons";
-                    _this.type = "utility";
-                    _this.iconName = "settings";
-                    _this.svgClass = "slds-icon";
-                    (function () {
-                        _this.type = type;
-                        _this.iconName = iconName;
-                        _this.refresh();
-                    })();
-                }
-                else if (((typeof name === 'string') || name === null) && type === undefined && iconName === undefined) {
-                    var __args = Array.prototype.slice.call(arguments);
-                    _this = _super.call(this, name, "div") || this;
-                    _this.assetsUrl = "/webjars/salesforce-lightning-design-system/2.4.1/assets/icons";
-                    _this.type = "utility";
-                    _this.iconName = "settings";
-                    _this.svgClass = "slds-icon";
-                    (function () {
-                        _this.refresh();
-                    })();
-                }
-                else
-                    throw new Error('invalid overload');
-                return _this;
-            }
-            Icon.prototype.setSvgClass = function (cls) {
-                this.svgClass = cls;
-                this.refresh();
-            };
-            Icon.prototype.refresh = function () {
-                var html = "<svg class=\'" + this.svgClass + "\'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"" + this.assetsUrl + "/" + this.type + "-sprite/svg/symbols.svg#" + this.iconName + "\"></use></svg>";
-                this.setHtml(html);
-            };
-            Icon.prototype.getAssetsUrl = function () {
-                return this.assetsUrl;
-            };
-            Icon.prototype.setAssetsUrl = function (assetsUrl) {
-                this.assetsUrl = assetsUrl;
-                this.refresh();
-            };
-            Icon.prototype.getType = function () {
-                return this.type;
-            };
-            Icon.prototype.setType = function (type) {
-                this.type = type;
-                this.refresh();
-            };
-            Icon.prototype.getIconName = function () {
-                return this.iconName;
-            };
-            Icon.prototype.setIconName = function (name) {
-                this.iconName = name;
-                this.refresh();
-            };
-            Icon.prototype.setSize = function (size) {
-                this.removeClass(Icon.EXTRA_EXTRA_SMALL).removeClass(Icon.EXTRA_SMALL).removeClass(Icon.LARGE).removeClass(Icon.SMALL);
-                this.addClass(size);
-                return this;
-            };
-            Icon.prototype.setTextType = function (type) {
-                this.removeClass(Icon.TEXT_DEFAULT).removeClass(Icon.TEXT_ERROR).removeClass(Icon.TEXT_LIGHT).removeClass(Icon.TEXT_WARNING).addClass(type);
-                return this;
-            };
-            return Icon;
-        }(framework.JSContainer));
-        Icon.SMALL = "slds-button_icon_small";
-        Icon.EXTRA_SMALL = "slds-_icon_x-small";
-        Icon.EXTRA_EXTRA_SMALL = "slds-button_icon_xx-small";
-        Icon.LARGE = "slds-button_icon_large";
-        Icon.TEXT_DEFAULT = "slds-icon-text-default";
-        Icon.TEXT_WARNING = "slds-icon-text-warning";
-        Icon.TEXT_ERROR = "slds-icon-text-error";
-        Icon.TEXT_LIGHT = "slds-icon-text-light";
-        lightning.Icon = Icon;
-        Icon["__class"] = "framework.lightning.Icon";
-        Icon["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
-    })(lightning = framework.lightning || (framework.lightning = {}));
-})(framework || (framework = {}));
-(function (framework) {
-    var lightning;
-    (function (lightning) {
         var IconButton = (function (_super) {
             __extends(IconButton, _super);
             function IconButton(name) {
                 var _this = _super.call(this, name, "button") || this;
-                /*private*/ _this.icon = new framework.lightning.Icon("icon");
+                /*private*/ _this.icon = new framework.lightning.SvgIcon("icon");
                 _this.icon.setSvgClass("slds-button__icon");
                 _this.addChild$framework_JSContainer(_this.icon);
                 _this.addClass("slds-button").addClass("slds-button_icon");
@@ -5172,7 +5410,7 @@ var framework;
                 var _this = _super.call(this, name, "div") || this;
                 /*private*/ _this.titleContainer = new framework.JSContainer("h3").addClass("slds-section__title");
                 /*private*/ _this.title = new framework.JSContainer("span").addClass("slds-truncate");
-                /*private*/ _this.arrow = new framework.lightning.Icon("arrow", "utility", "switch");
+                /*private*/ _this.arrow = new framework.lightning.SvgIcon("arrow", "utility", "switch");
                 /*private*/ _this.content = new framework.JSContainer("div").addClass("slds-section__content");
                 _this.addClass("slds-section");
                 _this.addChild$framework_JSContainer(_this.titleContainer);
@@ -5208,6 +5446,114 @@ var framework;
         lightning.Section = Section;
         Section["__class"] = "framework.lightning.Section";
         Section["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var Spinner = (function (_super) {
+            __extends(Spinner, _super);
+            function Spinner(name) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.__framework_lightning_Spinner_html = "<div class=\"slds-spinner__dot-a\"></div><div class=\"slds-spinner__dot-b\"></div>";
+                _this.addClass("slds-spinner slds-spinner_medium");
+                _this.setAttribute("role", "status");
+                _this.setHtml(_this.__framework_lightning_Spinner_html);
+                return _this;
+            }
+            return Spinner;
+        }(framework.JSContainer));
+        lightning.Spinner = Spinner;
+        Spinner["__class"] = "framework.lightning.Spinner";
+        Spinner["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var SvgIcon = (function (_super) {
+            __extends(SvgIcon, _super);
+            function SvgIcon(name, type, iconName) {
+                var _this = this;
+                if (((typeof name === 'string') || name === null) && ((typeof type === 'string') || type === null) && ((typeof iconName === 'string') || iconName === null)) {
+                    var __args = Array.prototype.slice.call(arguments);
+                    _this = _super.call(this, name, "div") || this;
+                    _this.assetsUrl = "/webjars/salesforce-lightning-design-system/2.4.1/assets/icons";
+                    _this.type = "utility";
+                    _this.iconName = "settings";
+                    _this.svgClass = "slds-icon";
+                    (function () {
+                        _this.type = type;
+                        _this.iconName = iconName;
+                        _this.refresh();
+                    })();
+                }
+                else if (((typeof name === 'string') || name === null) && type === undefined && iconName === undefined) {
+                    var __args = Array.prototype.slice.call(arguments);
+                    _this = _super.call(this, name, "div") || this;
+                    _this.assetsUrl = "/webjars/salesforce-lightning-design-system/2.4.1/assets/icons";
+                    _this.type = "utility";
+                    _this.iconName = "settings";
+                    _this.svgClass = "slds-icon";
+                    (function () {
+                        _this.refresh();
+                    })();
+                }
+                else
+                    throw new Error('invalid overload');
+                return _this;
+            }
+            SvgIcon.prototype.setSvgClass = function (cls) {
+                this.svgClass = cls;
+                this.refresh();
+            };
+            SvgIcon.prototype.refresh = function () {
+                var html = "<svg class=\'" + this.svgClass + "\'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"" + this.assetsUrl + "/" + this.type + "-sprite/svg/symbols.svg#" + this.iconName + "\"></use></svg>";
+                this.setHtml(html);
+            };
+            SvgIcon.prototype.getAssetsUrl = function () {
+                return this.assetsUrl;
+            };
+            SvgIcon.prototype.setAssetsUrl = function (assetsUrl) {
+                this.assetsUrl = assetsUrl;
+                this.refresh();
+            };
+            SvgIcon.prototype.getType = function () {
+                return this.type;
+            };
+            SvgIcon.prototype.setType = function (type) {
+                this.type = type;
+                this.refresh();
+            };
+            SvgIcon.prototype.getIconName = function () {
+                return this.iconName;
+            };
+            SvgIcon.prototype.setIconName = function (name) {
+                this.iconName = name;
+                this.refresh();
+            };
+            SvgIcon.prototype.setSize = function (size) {
+                this.removeClass(SvgIcon.EXTRA_EXTRA_SMALL).removeClass(SvgIcon.EXTRA_SMALL).removeClass(SvgIcon.LARGE).removeClass(SvgIcon.SMALL);
+                this.addClass(size);
+                return this;
+            };
+            SvgIcon.prototype.setTextType = function (type) {
+                this.removeClass(SvgIcon.TEXT_DEFAULT).removeClass(SvgIcon.TEXT_ERROR).removeClass(SvgIcon.TEXT_LIGHT).removeClass(SvgIcon.TEXT_WARNING).addClass(type);
+                return this;
+            };
+            return SvgIcon;
+        }(framework.JSContainer));
+        SvgIcon.SMALL = "slds-button_icon_small";
+        SvgIcon.EXTRA_SMALL = "slds-_icon_x-small";
+        SvgIcon.EXTRA_EXTRA_SMALL = "slds-button_icon_xx-small";
+        SvgIcon.LARGE = "slds-button_icon_large";
+        SvgIcon.TEXT_DEFAULT = "slds-icon-text-default";
+        SvgIcon.TEXT_WARNING = "slds-icon-text-warning";
+        SvgIcon.TEXT_ERROR = "slds-icon-text-error";
+        SvgIcon.TEXT_LIGHT = "slds-icon-text-light";
+        lightning.SvgIcon = SvgIcon;
+        SvgIcon["__class"] = "framework.lightning.SvgIcon";
+        SvgIcon["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -5252,7 +5598,7 @@ var framework;
                 var _this = _super.call(this, name, "li") || this;
                 /*private*/ _this.__framework_lightning_TabItem_listeners = (new java.util.ArrayList());
                 /*private*/ _this.title = new framework.JSContainer("a").addClass("slds-tabs_default__link").setAttribute("href", "javascript:void(0)").setAttribute("role", "tab");
-                /*private*/ _this.closeButton = new framework.lightning.Icon("close", "utility", "close");
+                /*private*/ _this.closeButton = new framework.lightning.SvgIcon("close", "utility", "close");
                 /*private*/ _this.active = false;
                 _this.body = null;
                 _this.body = body;
@@ -5298,24 +5644,24 @@ var framework;
                 return this.active;
             };
             TabItem.prototype.fireClose = function () {
-                for (var index10055 = this.__framework_lightning_TabItem_listeners.iterator(); index10055.hasNext();) {
-                    var li = index10055.next();
+                for (var index1155 = this.__framework_lightning_TabItem_listeners.iterator(); index1155.hasNext();) {
+                    var li = index1155.next();
                     {
                         li.onClose(this);
                     }
                 }
             };
             TabItem.prototype.fireActivate = function () {
-                for (var index10056 = this.__framework_lightning_TabItem_listeners.iterator(); index10056.hasNext();) {
-                    var li = index10056.next();
+                for (var index1156 = this.__framework_lightning_TabItem_listeners.iterator(); index1156.hasNext();) {
+                    var li = index1156.next();
                     {
                         li.onActivate(this);
                     }
                 }
             };
             TabItem.prototype.fireDeActivate = function () {
-                for (var index10057 = this.__framework_lightning_TabItem_listeners.iterator(); index10057.hasNext();) {
-                    var li = index10057.next();
+                for (var index1157 = this.__framework_lightning_TabItem_listeners.iterator(); index1157.hasNext();) {
+                    var li = index1157.next();
                     {
                         li.onDeactivate(this);
                     }
@@ -5373,22 +5719,210 @@ var framework;
     var lightning;
     (function (lightning) {
         var table;
-        (function (table) {
+        (function (table_2) {
+            var Paginator = (function (_super) {
+                __extends(Paginator, _super);
+                function Paginator(name) {
+                    var _this = _super.call(this, name, "div") || this;
+                    /*private*/ _this.previous = new framework.lightning.IconButton("previous");
+                    _this.next = new framework.lightning.IconButton("next");
+                    /*private*/ _this.pages = new framework.JSContainer("pages").addClass("pages");
+                    _this.maxItem = 8;
+                    _this.numPages = 0;
+                    _this.table = null;
+                    _this.setVisible(false);
+                    _this.addClass("table-paginator");
+                    var leftGrp = new framework.lightning.ButtonGroup("leftGrp");
+                    _this.previous.getIcon().setIconName("left");
+                    _this.previous.getIcon().setType("utility");
+                    _this.next.getIcon().setIconName("right");
+                    _this.next.getIcon().setType("utility");
+                    leftGrp.addButton$framework_lightning_IconButton(_this.previous.setBorder(true)).addChild$framework_JSContainer(_this.pages);
+                    leftGrp.addButton$framework_lightning_IconButton(_this.next.setBorder(true));
+                    _this.addChild$framework_JSContainer(leftGrp);
+                    _this.previous.addEventListener(_this, "click");
+                    _this.next.addEventListener(_this, "click");
+                    return _this;
+                }
+                Paginator.prototype.setTable = function (table) {
+                    this.table = table;
+                    this.pages.getChildren().clear();
+                    this.pages.setRendered(false);
+                    var pageSize = table.getPageSize();
+                    var model = table.getModel();
+                    this.numPages = Math.round((model.getRowCount() / pageSize | 0));
+                    if (this.numPages <= 1) {
+                        this.setVisible(false);
+                        return;
+                    }
+                    this.setVisible(true);
+                    if (this.numPages < this.maxItem) {
+                        this.maxItem = this.numPages;
+                    }
+                    for (var i = 0; i < this.numPages; i++) {
+                        var btn = new framework.lightning.Button(i + "");
+                        btn.addEventListener(this, "click");
+                        btn.setState(framework.lightning.Button.STATE_NEUTRAL);
+                        btn.setLabel((i + 1) + "");
+                        this.pages.addChild$framework_JSContainer(btn);
+                        if (i >= this.maxItem) {
+                            btn.setVisible(false);
+                        }
+                        if (i === 0) {
+                            btn.addClass("slds-button_brand");
+                        }
+                    }
+                    ;
+                    this.pages.getChildren().get(0).setStyle("border-left", "none").setStyle("border-radius", "0");
+                    this.pages.getChildren().get(this.pages.getChildren().size() - 1).setStyle("border-right", "none").setStyle("border-radius", "0");
+                };
+                /*private*/ Paginator.prototype.redisplayBtns = function (currentPage) {
+                    if (currentPage >= this.maxItem) {
+                        var rangeFrom = currentPage - this.maxItem;
+                        for (var i = 0; i < this.pages.getChildren().size(); i++) {
+                            if (i <= rangeFrom) {
+                                this.pages.getChildren().get(i).setVisible(false);
+                            }
+                            else if (i > currentPage) {
+                                this.pages.getChildren().get(i).setVisible(false);
+                            }
+                            else {
+                                this.pages.getChildren().get(i).setVisible(true);
+                            }
+                            if (i === currentPage) {
+                                this.pages.getChildren().get(i).addClass("slds-button_brand");
+                            }
+                            else {
+                                this.pages.getChildren().get(i).removeClass("slds-button_brand");
+                            }
+                        }
+                        ;
+                    }
+                    else {
+                        for (var i = 0; i < this.pages.getChildren().size(); i++) {
+                            if (i === currentPage) {
+                                this.pages.getChildren().get(i).addClass("slds-button_brand");
+                            }
+                            else {
+                                this.pages.getChildren().get(i).removeClass("slds-button_brand");
+                            }
+                        }
+                        ;
+                    }
+                };
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                Paginator.prototype.performAction = function (source, evt) {
+                    var currentPage = 0;
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(source.getName(), "previous")) {
+                        currentPage = this.table.getPage();
+                        if (currentPage > 0) {
+                            currentPage = currentPage - 1;
+                            this.table.setPage(currentPage);
+                        }
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(source.getName(), "next")) {
+                        currentPage = this.table.getPage();
+                        if (currentPage < this.numPages - 1) {
+                            currentPage = currentPage + 1;
+                            this.table.setPage(currentPage);
+                        }
+                    }
+                    else {
+                        currentPage = javaemul.internal.IntegerHelper.parseInt(source.getName());
+                        this.table.setPage(currentPage);
+                    }
+                    this.redisplayBtns(currentPage);
+                };
+                return Paginator;
+            }(framework.JSContainer));
+            table_2.Paginator = Paginator;
+            Paginator["__class"] = "framework.lightning.table.Paginator";
+            Paginator["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.Renderable"];
+        })(table = lightning.table || (lightning.table = {}));
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var table;
+        (function (table_3) {
             var Table = (function (_super) {
                 __extends(Table, _super);
                 function Table(name) {
                     var _this = _super.call(this, name, "table") || this;
                     /*private*/ _this.thead = new framework.JSContainer("thead");
                     /*private*/ _this.tbody = new framework.JSContainer("tbody");
+                    /*private*/ _this.tfoot = new framework.JSContainer("tfoot");
                     /*private*/ _this.tableCellRenderer = new framework.lightning.table.DefaultTableCellRenderer();
                     /*private*/ _this.tableColumnModel = new framework.lightning.table.DefaultTableColumnModel();
+                    /*private*/ _this.currrentPage = 0;
+                    /*private*/ _this.pageSize = 10;
+                    _this.ftr = new framework.JSContainer("tr");
+                    _this.ftd = new framework.JSContainer("td");
+                    /*private*/ _this.paginator = new framework.lightning.table.Paginator("paginator");
+                    /*private*/ _this.selectable = false;
+                    /*private*/ _this.multiSelectable = false;
+                    /*private*/ _this.selecteRowOn = "click";
+                    /*private*/ _this.emptyTableMessage = "No data available";
+                    /*private*/ _this.rowsSelectionListeners = (new java.util.LinkedList());
                     _this.model = null;
                     _this.addClass("slds-table");
                     _this.addChild$framework_JSContainer(_this.thead);
                     _this.addChild$framework_JSContainer(_this.tbody);
+                    _this.addChild$framework_JSContainer(_this.tfoot);
+                    _this.tfoot.addChild$framework_JSContainer(_this.ftr.addChild$framework_JSContainer(_this.ftd));
+                    _this.ftd.addChild$framework_JSContainer(_this.paginator);
                     _this.setBordered(true);
+                    _this.tbody.setStyle("min-height", "250px");
+                    _this.loading();
                     return _this;
                 }
+                Table.SELECT_ROW_EVT_$LI$ = function () { if (Table.SELECT_ROW_EVT == null)
+                    Table.SELECT_ROW_EVT = new Table.Table$0(); return Table.SELECT_ROW_EVT; };
+                ;
+                Table.prototype.addRowsSelectionListener = function (l) {
+                    this.rowsSelectionListeners.add(l);
+                };
+                Table.prototype.fireRowsSelectionListeners = function (source, evt, firstIndex, lastIndex) {
+                    for (var index1158 = this.rowsSelectionListeners.iterator(); index1158.hasNext();) {
+                        var l = index1158.next();
+                        {
+                            l.onSelectRow(source, evt, this, firstIndex, lastIndex);
+                        }
+                    }
+                };
+                Table.prototype.setSelectRowOn = function (on) {
+                    this.selecteRowOn = on;
+                };
+                /*private*/ Table.prototype.addEmptyRow = function () {
+                    this.tbody.getChildren().clear();
+                    var tr = new framework.JSContainer("tr");
+                    var td = new framework.JSContainer("td").setAttribute("colspan", "1000");
+                    tr.addChild$framework_JSContainer(td);
+                    tr.addClass("empty-row");
+                    this.tbody.addChild$framework_JSContainer(tr);
+                    return td;
+                };
+                /*private*/ Table.prototype.loading = function () {
+                    this.addEmptyRow().addChild$framework_JSContainer(new framework.lightning.Spinner("spinner"));
+                };
+                /*private*/ Table.prototype.emptyData = function () {
+                    this.addEmptyRow().addChild$framework_JSContainer(new framework.JSContainer("p").setHtml(this.emptyTableMessage));
+                };
                 Table.prototype.getModel = function () {
                     return this.model;
                 };
@@ -5413,30 +5947,84 @@ var framework;
                 Table.prototype.getTbody = function () {
                     return this.tbody;
                 };
+                Table.prototype.setPage = function (page) {
+                    this.currrentPage = page;
+                    this.refreshData();
+                };
+                Table.prototype.getPage = function () {
+                    return this.currrentPage;
+                };
+                Table.prototype.getPageSize = function () {
+                    return this.pageSize;
+                };
+                Table.prototype.setPageSize = function (size) {
+                    this.pageSize = size;
+                    this.refreshData();
+                };
                 Table.prototype.refreshData = function () {
                     this.tbody.getChildren().clear();
                     this.tbody.setRendered(false);
                     var rows = this.model.getRowCount();
-                    var cols = this.model.getColumnCount();
-                    for (var row = 0; row < rows; row++) {
-                        var tr = new framework.JSContainer("tr");
-                        this.tbody.addChild$framework_JSContainer(tr.addClass("slds-hint-parent"));
-                        for (var col = 0; col < cols; col++) {
-                            var value = this.model.getValueAt(row, col);
-                            var cell = this.tableCellRenderer.getComponent(this, value, row, col);
-                            var td = new framework.JSContainer("td").addClass("slds-cell-wrap").setAttribute("role", "gridcell");
-                            tr.addChild$framework_JSContainer(td);
-                            td.addChild$framework_JSContainer(cell);
+                    var cols = this.tableColumnModel.getColumnCount();
+                    var iterSize = this.pageSize;
+                    if (rows < this.pageSize) {
+                        iterSize = rows;
+                    }
+                    if (rows === 0) {
+                        this.emptyData();
+                    }
+                    else {
+                        for (var row = 0; row < iterSize; row++) {
+                            var realRow = (this.currrentPage * this.pageSize) + row;
+                            if (realRow >= rows) {
+                                break;
+                            }
+                            var tr = new framework.JSContainer("tr");
+                            if (this.selectable) {
+                                tr.addEventListener(Table.SELECT_ROW_EVT_$LI$(), this.selecteRowOn);
+                            }
+                            this.tbody.addChild$framework_JSContainer(tr.addClass("slds-hint-parent"));
+                            for (var col = 0; col < cols; col++) {
+                                var value = this.model.getValueAt(realRow, col);
+                                var cell = this.tableCellRenderer.getComponent(this, value, row, col);
+                                var td = new framework.JSContainer("td").addClass("slds-cell-wrap").setAttribute("role", "gridcell");
+                                if (value != null && (typeof value === 'boolean')) {
+                                    td.addClass("boolean-cell");
+                                }
+                                else if (value != null && (typeof value === 'number')) {
+                                    td.addClass("numeric-cell");
+                                }
+                                td.addClass("col_" + col);
+                                tr.addChild$framework_JSContainer(td);
+                                tr.addClass("row_" + row);
+                                td.addChild$framework_JSContainer(cell);
+                            }
+                            ;
                         }
                         ;
                     }
-                    ;
+                    this.paginator.setTable(this);
+                    this.tfoot.setAttribute("colspan", cols + "");
+                    this.ftd.setAttribute("colspan", cols + "");
+                    this.ftr.setAttribute("colspan", cols + "");
                 };
                 Table.prototype.getRow = function (index) {
                     return this.tbody.getChildren().get(index);
                 };
                 Table.prototype.getBody = function () {
                     return this.tbody;
+                };
+                Table.prototype.setSelectable = function (b) {
+                    this.selectable = b;
+                };
+                Table.prototype.isSelectable = function () {
+                    return this.selectable;
+                };
+                Table.prototype.setMultiSelectable = function (b) {
+                    this.multiSelectable = b;
+                };
+                Table.prototype.isMultiSelectable = function () {
+                    return this.multiSelectable;
                 };
                 Table.prototype.refreshColumns = function () {
                     this.thead.getChildren().clear();
@@ -5491,9 +6079,31 @@ var framework;
                 };
                 return Table;
             }(framework.JSContainer));
-            table.Table = Table;
+            table_3.Table = Table;
             Table["__class"] = "framework.lightning.table.Table";
             Table["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+            (function (Table) {
+                var Table$0 = (function () {
+                    function Table$0() {
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    Table$0.prototype.performAction = function (source, evt) {
+                        var index = source.getParent().getChildren().indexOf(source);
+                        alert("selected row index: " + index);
+                        var table = source.getParent().getParent();
+                        var page = table.currrentPage;
+                        index = (page * table.pageSize) + index;
+                        table.fireRowsSelectionListeners(source, evt, index, index);
+                    };
+                    return Table$0;
+                }());
+                Table.Table$0 = Table$0;
+                Table$0["__interfaces"] = ["framework.EventListener"];
+            })(Table = table_3.Table || (table_3.Table = {}));
         })(table = lightning.table || (lightning.table = {}));
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
@@ -5516,6 +6126,10 @@ var framework;
                 }
                 TableColumn.prototype.getIdentifier = function () {
                     return this.identifier;
+                };
+                TableColumn.prototype.setWidth = function (width) {
+                    this.title.setStyle("width", width);
+                    return this;
                 };
                 TableColumn.prototype.setLabel = function (title) {
                     this.title.setHtml(title);
@@ -5562,8 +6176,8 @@ var framework;
                 return this;
             };
             Tabs.prototype.setActive = function (item) {
-                for (var index10058 = this.getItems().iterator(); index10058.hasNext();) {
-                    var tab = index10058.next();
+                for (var index1159 = this.getItems().iterator(); index1159.hasNext();) {
+                    var tab = index1159.next();
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -5585,8 +6199,8 @@ var framework;
                 return this;
             };
             Tabs.prototype.getTab = function (body) {
-                for (var index10059 = this.getItems().iterator(); index10059.hasNext();) {
-                    var c = index10059.next();
+                for (var index1160 = this.getItems().iterator(); index1160.hasNext();) {
+                    var c = index1160.next();
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -5601,8 +6215,8 @@ var framework;
                 return null;
             };
             Tabs.prototype.getActiveTab = function () {
-                for (var index10060 = this.getItems().iterator(); index10060.hasNext();) {
-                    var item = index10060.next();
+                for (var index1161 = this.getItems().iterator(); index1161.hasNext();) {
+                    var item = index1161.next();
                     {
                         if (item.isActive()) {
                             return item;
@@ -5681,15 +6295,30 @@ var framework;
             _this.addChild$framework_JSContainer(_this.title.setHtml(title));
             _this.button.addEventListener(_this, "click");
             _this.addChild$framework_JSContainer(_this.buttonsCtn);
-            _this.setLeftIcon("file", "utility");
+            _this.setLeftIcon$java_lang_String$java_lang_String("file", "utility");
             return _this;
         }
+        TreeItem.prototype.setLeftIcon$java_lang_String$java_lang_String = function (name, type) {
+            this.leftIcon.setIcon(new framework.lightning.SvgIcon(name, type, name));
+            return this;
+        };
         TreeItem.prototype.setLeftIcon = function (name, type) {
-            this.leftIcon.setIcon(new framework.lightning.Icon(name, type, name));
+            if (((typeof name === 'string') || name === null) && ((typeof type === 'string') || type === null)) {
+                return this.setLeftIcon$java_lang_String$java_lang_String(name, type);
+            }
+            else if (((typeof name === 'string') || name === null) && type === undefined) {
+                return this.setLeftIcon$java_lang_String(name);
+            }
+            else
+                throw new Error('invalid overload');
+        };
+        TreeItem.prototype.setLeftIcon$java_lang_String = function (name) {
+            this.leftIcon.setIcon(new framework.lightning.ImageIcon(name, "https://d13yacurqjgara.cloudfront.net/users/82092/screenshots/1073359/spinner.gif"));
+            return this;
         };
         TreeItem.prototype.addIcon = function (name, type, listener) {
             var minimize = new framework.lightning.IconButton(name);
-            minimize.setIcon(new framework.lightning.Icon(name, type, name));
+            minimize.setIcon(new framework.lightning.SvgIcon(name, type, name));
             this.buttonsCtn.addChild$framework_JSContainer(minimize);
             minimize.addEventListener(listener, "click");
             this.buttons.add(minimize);
@@ -5791,8 +6420,8 @@ var framework;
                     grid.addChild$framework_JSContainer(colLeft.addClass("slds-col"));
                     grid.addChild$framework_JSContainer(colRight.addClass("slds-col"));
                     _this.root = root;
-                    for (var index10061 = 0; index10061 < framework.builder.editors.EventTypes.events_$LI$().length; index10061++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index10061];
+                    for (var index1162 = 0; index1162 < framework.builder.editors.EventTypes.events_$LI$().length; index1162++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index1162];
                         _this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                     }
                     colLeft.addChild$framework_JSContainer(_this.component.setStyle("width", "100%"));
@@ -5808,8 +6437,8 @@ var framework;
                     if (!updEvtSelect) {
                         var listeners = des.getListeners().get(this.events.getValue());
                         if (listeners != null) {
-                            for (var index10062 = listeners.iterator(); index10062.hasNext();) {
-                                var e = index10062.next();
+                            for (var index1163 = listeners.iterator(); index1163.hasNext();) {
+                                var e = index1163.next();
                                 {
                                     if (e != null && e instanceof framework.builder.BuilderEventListener) {
                                         var bel = e;
@@ -5833,8 +6462,8 @@ var framework;
                     }
                     var last = "click";
                     var lastSrc = this.getSource(des, last);
-                    for (var index10063 = this.events.getChildren().iterator(); index10063.hasNext();) {
-                        var opt = index10063.next();
+                    for (var index1164 = this.events.getChildren().iterator(); index1164.hasNext();) {
+                        var opt = index1164.next();
                         {
                             var option = opt;
                             var type = option.getValue();
@@ -5862,8 +6491,8 @@ var framework;
                 EventEditor.prototype.getSource = function (des, type) {
                     var listeners = des.getListeners().get(type);
                     if (listeners != null) {
-                        for (var index10064 = listeners.iterator(); index10064.hasNext();) {
-                            var l = index10064.next();
+                        for (var index1165 = listeners.iterator(); index1165.hasNext();) {
+                            var l = index1165.next();
                             {
                                 if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                     var evt = l;
@@ -5890,8 +6519,8 @@ var framework;
                     } })(parent.getId(), id)) {
                         return parent;
                     }
-                    for (var index10065 = parent.getDesignables().iterator(); index10065.hasNext();) {
-                        var des = index10065.next();
+                    for (var index1166 = parent.getDesignables().iterator(); index1166.hasNext();) {
+                        var des = index1166.next();
                         {
                             var res = this.findDesignableById(des, id);
                             if (res != null) {
@@ -5913,8 +6542,8 @@ var framework;
                     if (des != null) {
                         var listeners = des.getListeners().get(type);
                         if (listeners != null) {
-                            for (var index10066 = listeners.iterator(); index10066.hasNext();) {
-                                var l_1 = index10066.next();
+                            for (var index1167 = listeners.iterator(); index1167.hasNext();) {
+                                var l_1 = index1167.next();
                                 {
                                     if (l_1 != null && l_1 instanceof framework.builder.BuilderEventListener) {
                                         var evt = l_1;
@@ -6154,8 +6783,8 @@ var framework;
                 VisualEditor.prototype.cona = function (component) {
                     this.templates.getChildren().clear();
                     this.templates.setRendered(false);
-                    for (var index10067 = this.file.getTemplates().iterator(); index10067.hasNext();) {
-                        var temp = index10067.next();
+                    for (var index1168 = this.file.getTemplates().iterator(); index1168.hasNext();) {
+                        var temp = index1168.next();
                         {
                             var t = new framework.builder.editors.JSTemplate(temp);
                             this.templates.addChild$framework_JSContainer(t);
@@ -6164,8 +6793,8 @@ var framework;
                     var des = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, true);
                     des.addEventListener(new framework.builder.SelectComponentEvent(this.selector), "click");
                     if (component.children != null) {
-                        for (var index10068 = 0; index10068 < component.children.length; index10068++) {
-                            var c = component.children[index10068];
+                        for (var index1169 = 0; index1169 < component.children.length; index1169++) {
+                            var c = component.children[index1169];
                             {
                                 var child = this.cona(c);
                                 des.addDesignable(child);
@@ -6209,143 +6838,6 @@ var framework;
             VisualEditor["__class"] = "framework.builder.editors.VisualEditor";
             VisualEditor["__interfaces"] = ["framework.builder.editors.Editor", "framework.interactions.Droppable", "framework.Renderable"];
         })(editors = builder.editors || (builder.editors = {}));
-    })(builder = framework.builder || (framework.builder = {}));
-})(framework || (framework = {}));
-(function (framework) {
-    var builder;
-    (function (builder) {
-        var libraries;
-        (function (libraries) {
-            var DataComposer = (function (_super) {
-                __extends(DataComposer, _super);
-                function DataComposer(name, editor) {
-                    var _this = _super.call(this, name, "div", editor) || this;
-                    /*private*/ _this.header = new framework.lightning.GlobalHeader("header");
-                    /*private*/ _this.addNew = new framework.lightning.Button();
-                    /*private*/ _this.structures = (new Array());
-                    _this.addNew.setLabel("Add New");
-                    _this.header.addChild$framework_JSContainer(_this.addNew);
-                    _this.addChild$framework_JSContainer(_this.header);
-                    _this.addNew.setState(framework.lightning.Button.STATE_BRAND);
-                    _this.addNew.addEventListener(new DataComposer.DataComposer$0(_this), "click");
-                    return _this;
-                }
-                DataComposer.prototype.createNewFile$ = function () {
-                    var name = prompt("Label of Data structure");
-                    this.createNewFile$java_lang_String(name);
-                };
-                DataComposer.prototype.createNewFile$java_lang_String = function (name) {
-                    var structure = new framework.builder.data.DataStructure();
-                    structure.name = name;
-                    structure.label = name;
-                    this.structures.push(structure);
-                    var item = new framework.builder.libraries.DataItem(name, structure);
-                    this.addChild$framework_JSContainer(item);
-                };
-                DataComposer.prototype.createNewFile = function (name) {
-                    if (((typeof name === 'string') || name === null)) {
-                        return this.createNewFile$java_lang_String(name);
-                    }
-                    else if (name === undefined) {
-                        return this.createNewFile$();
-                    }
-                    else
-                        throw new Error('invalid overload');
-                };
-                /**
-                 *
-                 * @return {string}
-                 */
-                DataComposer.prototype.getMarshall = function () {
-                    return JSON.stringify(this.structures);
-                };
-                /**
-                 *
-                 * @param {framework.builder.data.File} f
-                 * @return {string}
-                 */
-                DataComposer.prototype.createNew = function (f) {
-                    return this.getMarshall();
-                };
-                /**
-                 *
-                 * @param {framework.builder.data.File} f
-                 * @return {string}
-                 */
-                DataComposer.prototype.unmarshall = function (f) {
-                    var data = f.getData();
-                    return data;
-                };
-                DataComposer.prototype.consume$java_lang_String = function (data) {
-                    var odata = JSON.parse(data);
-                    this.getChildren().clear();
-                    if (odata != null && odata.length > 0) {
-                        for (var index10069 = 0; index10069 < odata.length; index10069++) {
-                            var oline = odata[index10069];
-                            {
-                                var st = new framework.builder.data.DataStructure();
-                                st.label = oline["label"].toString();
-                                st.name = oline["name"].toString();
-                                var ofields = oline["fields"];
-                                if (ofields != null && ofields.length > 0) {
-                                    for (var index10070 = 0; index10070 < ofields.length; index10070++) {
-                                        var ofield = ofields[index10070];
-                                        {
-                                            var field = new framework.builder.data.DataField();
-                                            field.format = ofield["format"];
-                                            field.label = ofield["label"];
-                                            field.name = ofield["name"];
-                                            field.primaryKey = ofield["primaryKey"];
-                                            field.type = ofield["type"];
-                                            st.fields.push(field);
-                                        }
-                                    }
-                                }
-                                this.structures.push(st);
-                                var item = new framework.builder.libraries.DataItem(st.name, st);
-                                this.addChild$framework_JSContainer(item);
-                            }
-                        }
-                    }
-                };
-                /**
-                 *
-                 * @param {string} data
-                 */
-                DataComposer.prototype.consume = function (data) {
-                    if (((typeof data === 'string') || data === null)) {
-                        return this.consume$java_lang_String(data);
-                    }
-                    else if (((data != null) || data === null)) {
-                        return this.consume$java_lang_Object(data);
-                    }
-                    else
-                        throw new Error('invalid overload');
-                };
-                return DataComposer;
-            }(framework.builder.editors.AbstractEditor));
-            libraries.DataComposer = DataComposer;
-            DataComposer["__class"] = "framework.builder.libraries.DataComposer";
-            DataComposer["__interfaces"] = ["framework.builder.editors.Editor", "framework.interactions.Droppable", "framework.Renderable"];
-            (function (DataComposer) {
-                var DataComposer$0 = (function () {
-                    function DataComposer$0(__parent) {
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    DataComposer$0.prototype.performAction = function (source, evt) {
-                        this.__parent.createNewFile();
-                    };
-                    return DataComposer$0;
-                }());
-                DataComposer.DataComposer$0 = DataComposer$0;
-                DataComposer$0["__interfaces"] = ["framework.EventListener"];
-            })(DataComposer = libraries.DataComposer || (libraries.DataComposer = {}));
-        })(libraries = builder.libraries || (builder.libraries = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -6423,8 +6915,8 @@ var framework;
                     else {
                         project = framework.builder.Previewer.project;
                     }
-                    for (var index10071 = project.getChild("components").getChildren().iterator(); index10071.hasNext();) {
-                        var f = index10071.next();
+                    for (var index1170 = project.getChild("components").getChildren().iterator(); index1170.hasNext();) {
+                        var f = index1170.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -6434,24 +6926,24 @@ var framework;
                             } })(f.getName(), value)) {
                                 this.content = framework.builder.marshalling.MarshallUtil.build(f.getData());
                                 this.addChild$framework_JSContainer(this.content);
-                                for (var index10072 = f.getStylesheets().iterator(); index10072.hasNext();) {
-                                    var sc = index10072.next();
+                                for (var index1171 = f.getStylesheets().iterator(); index1171.hasNext();) {
+                                    var sc = index1171.next();
                                     {
                                         var elem = document.createElement("style");
                                         elem.textContent = sc.getData();
                                         document.body.appendChild(elem);
                                     }
                                 }
-                                for (var index10073 = f.getScripts().iterator(); index10073.hasNext();) {
-                                    var sc = index10073.next();
+                                for (var index1172 = f.getScripts().iterator(); index1172.hasNext();) {
+                                    var sc = index1172.next();
                                     {
                                         var elem = document.createElement("script");
                                         elem.textContent = sc.getData();
                                         document.body.appendChild(elem);
                                     }
                                 }
-                                for (var index10074 = f.getTemplates().iterator(); index10074.hasNext();) {
-                                    var sc = index10074.next();
+                                for (var index1173 = f.getTemplates().iterator(); index1173.hasNext();) {
+                                    var sc = index1173.next();
                                     {
                                         var elem = document.createElement("div");
                                         elem.setAttribute("id", sc.getName());
@@ -6500,8 +6992,8 @@ var framework;
                 var component = new framework.design.AttributeParameter("component", "Component Src", "Basic");
                 var project = framework.builder.Builder.getInstance().getProject();
                 component.options.add(new framework.design.Option("None", ""));
-                for (var index10075 = project.getChild("components").getChildren().iterator(); index10075.hasNext();) {
-                    var f = index10075.next();
+                for (var index1174 = project.getChild("components").getChildren().iterator(); index1174.hasNext();) {
+                    var f = index1174.next();
                     {
                         component.options.add(new framework.design.Option(f.getName(), f.getName()));
                     }
@@ -6561,8 +7053,8 @@ var framework;
                 project = framework.builder.Previewer.project;
             }
             templates.options.add(new framework.design.Option("Default", "#default"));
-            for (var index10076 = project.getTemplates().iterator(); index10076.hasNext();) {
-                var f = index10076.next();
+            for (var index1175 = project.getTemplates().iterator(); index1175.hasNext();) {
+                var f = index1175.next();
                 {
                     templates.options.add(new framework.design.Option(f.getName(), "#" + f.getName().split(".html").join("")));
                 }
@@ -6943,9 +7435,16 @@ var framework;
                     }
                     /**
                      *
-                     * @param {*} data
+                     * @param {framework.builder.data.DataStructure[]} data
                      */
                     CodeMirrorEditor$0.prototype.dataLoaded = function (data) {
+                        if (((data != null) || data === null)) {
+                            return this.dataLoaded$java_lang_Object(data);
+                        }
+                        else
+                            throw new Error('invalid overload');
+                    };
+                    CodeMirrorEditor$0.prototype.dataLoaded$java_lang_Object = function (data) {
                         this.__parent.clean();
                         var title = this.__parent.getAttribute("title");
                         framework.builder.Builder.websocket_$LI$().send("open:" + title);
@@ -7156,260 +7655,142 @@ var framework;
         (function (libraries) {
             var DataItem = (function (_super) {
                 __extends(DataItem, _super);
-                function DataItem(name, structure) {
-                    var _this = _super.call(this, name, "div") || this;
-                    /*private*/ _this.title = new framework.JSContainer("a").setAttribute("href", "javascript:void(0);").addClass("slds-card__header-link slds-truncate");
-                    /*private*/ _this.figure = new framework.lightning.Icon("figure");
-                    /*private*/ _this.fields = new framework.lightning.table.Table("fields");
-                    /*private*/ _this.dataStructure = null;
-                    /*private*/ _this.delegate = new framework.lightning.table.DefaultTableCellRenderer();
-                    /*private*/ _this.editTitle = new framework.JSInput("editTitle");
-                    /*private*/ _this.addNew = new framework.lightning.Button("addNew").setLabel("Add Field");
-                    /*private*/ _this.deleteStructure = new framework.lightning.Button("delete").setLabel("Delete Structure");
-                    /*private*/ _this.addNewMode = false;
-                    _this.editMode = false;
-                    _this.dataEnvironment = null;
-                    _this.addClass("data-item");
-                    _this.dataEnvironment = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.DataEnvironment"));
-                    _this.addNew.addClass("slds-button_small");
-                    _this.addNew.addEventListener(new DataItem.DataItem$0(_this), "click");
-                    _this.deleteStructure.addEventListener(new DataItem.DataItem$1(_this), "click");
-                    var grid = new framework.lightning.Grid("ds", "div");
-                    grid.setAlignSpread(true);
-                    grid.addClass("slds-grid_vertical-align-center");
-                    _this.getHeaderMedia().addBody(grid);
-                    var colLeft = new framework.JSContainer("div");
-                    var colRight = new framework.JSContainer("div");
-                    grid.addChild$framework_JSContainer(colLeft);
-                    grid.addChild$framework_JSContainer(colRight);
-                    var h2 = new framework.JSContainer("h2");
-                    _this.editTitle.setVisible(false);
-                    h2.addChild$framework_JSContainer(_this.editTitle);
-                    h2.addChild$framework_JSContainer(_this.title);
-                    colLeft.addChild$framework_JSContainer(h2);
-                    _this.title.addEventListener(new DataItem.DataItem$2(_this), "click");
-                    _this.editTitle.addEventListener(new DataItem.DataItem$3(_this), "blur");
-                    _this.addNew.setState(framework.lightning.Button.STATE_BRAND);
-                    colRight.addChild$framework_JSContainer(_this.addNew);
-                    _this.deleteStructure.setState(framework.lightning.Button.STATE_DESTRUCTIVE);
-                    colRight.addChild$framework_JSContainer(_this.deleteStructure);
-                    _this.figure.setIconName("contact");
-                    _this.figure.setType("standard");
-                    _this.figure.setTag("span");
-                    _this.figure.addClass("slds-icon_container slds-icon-standard-contact");
-                    _this.figure.setSvgClass("slds-icon slds-icon_small");
-                    _this.getHeaderMedia().addFigure(_this.figure);
-                    _this.getBody().addChild$framework_JSContainer(_this.fields);
-                    _this.setStyle("width", "450px");
-                    _this.setDataStructure(structure);
+                function DataItem(name, structure, labels, fields) {
+                    var _this = this;
+                    if (((typeof name === 'string') || name === null) && ((structure != null && structure instanceof framework.builder.data.DataStructure) || structure === null) && ((labels != null && labels instanceof Array && (labels.length == 0 || labels[0] == null || (typeof labels[0] === 'string'))) || labels === null) && ((fields != null && fields instanceof Array && (fields.length == 0 || fields[0] == null || (typeof fields[0] === 'string'))) || fields === null)) {
+                        var __args = Array.prototype.slice.call(arguments);
+                        _this = _super.call(this, name, "div") || this;
+                        _this.labels = null;
+                        _this.labelsFields = null;
+                        _this.dataFields = null;
+                        _this.title = new framework.JSContainer("a").setAttribute("href", "javascript:void(0);").addClass("slds-card__header-link slds-truncate");
+                        _this.figure = new framework.lightning.SvgIcon("figure");
+                        _this.fields = new framework.lightning.table.Table("fields");
+                        _this.dataStructure = null;
+                        _this.delegate = new framework.lightning.table.DefaultTableCellRenderer();
+                        _this.labels = null;
+                        _this.labelsFields = null;
+                        _this.dataFields = null;
+                        (function () {
+                            _this.labels = labels;
+                            _this.labelsFields = fields;
+                            _this.addClass("data-item");
+                            var grid = new framework.lightning.Grid("ds", "div");
+                            grid.setAlignSpread(true);
+                            grid.addClass("slds-grid_vertical-align-center");
+                            _this.getHeaderMedia().addBody(grid);
+                            var colLeft = new framework.JSContainer("div");
+                            var colRight = new framework.JSContainer("div");
+                            grid.addChild$framework_JSContainer(colLeft);
+                            grid.addChild$framework_JSContainer(colRight);
+                            var h2 = new framework.JSContainer("h2");
+                            h2.addChild$framework_JSContainer(_this.title);
+                            colLeft.addChild$framework_JSContainer(h2);
+                            _this.figure.setIconName("contact");
+                            _this.figure.setType("standard");
+                            _this.figure.setTag("span");
+                            _this.figure.addClass("slds-icon_container slds-icon-standard-contact");
+                            _this.figure.setSvgClass("slds-icon slds-icon_small");
+                            _this.getHeaderMedia().addFigure(_this.figure);
+                            _this.getBody().addChild$framework_JSContainer(_this.fields);
+                            _this.setDataStructure(structure);
+                        })();
+                    }
+                    else if (((typeof name === 'string') || name === null) && ((structure != null && structure instanceof framework.builder.data.DataStructure) || structure === null) && labels === undefined && fields === undefined) {
+                        var __args = Array.prototype.slice.call(arguments);
+                        {
+                            var __args_2 = Array.prototype.slice.call(arguments);
+                            var labels_1 = ["Name", "Label", "Type", "Calculated", "Creatable", "Updatable", "Filterable", "Sortable", "Nillable", "Unique", "Length"];
+                            var fields_1 = ["name", "label", "type", "calculated", "createable", "updateable", "filterable", "sortable", "nillable", "unique", "length"];
+                            _this = _super.call(this, name, "div") || this;
+                            _this.labels = null;
+                            _this.labelsFields = null;
+                            _this.dataFields = null;
+                            _this.title = new framework.JSContainer("a").setAttribute("href", "javascript:void(0);").addClass("slds-card__header-link slds-truncate");
+                            _this.figure = new framework.lightning.SvgIcon("figure");
+                            _this.fields = new framework.lightning.table.Table("fields");
+                            _this.dataStructure = null;
+                            _this.delegate = new framework.lightning.table.DefaultTableCellRenderer();
+                            _this.labels = null;
+                            _this.labelsFields = null;
+                            _this.dataFields = null;
+                            (function () {
+                                _this.labels = labels_1;
+                                _this.labelsFields = fields_1;
+                                _this.addClass("data-item");
+                                var grid = new framework.lightning.Grid("ds", "div");
+                                grid.setAlignSpread(true);
+                                grid.addClass("slds-grid_vertical-align-center");
+                                _this.getHeaderMedia().addBody(grid);
+                                var colLeft = new framework.JSContainer("div");
+                                var colRight = new framework.JSContainer("div");
+                                grid.addChild$framework_JSContainer(colLeft);
+                                grid.addChild$framework_JSContainer(colRight);
+                                var h2 = new framework.JSContainer("h2");
+                                h2.addChild$framework_JSContainer(_this.title);
+                                colLeft.addChild$framework_JSContainer(h2);
+                                _this.figure.setIconName("contact");
+                                _this.figure.setType("standard");
+                                _this.figure.setTag("span");
+                                _this.figure.addClass("slds-icon_container slds-icon-standard-contact");
+                                _this.figure.setSvgClass("slds-icon slds-icon_small");
+                                _this.getHeaderMedia().addFigure(_this.figure);
+                                _this.getBody().addChild$framework_JSContainer(_this.fields);
+                                _this.setDataStructure(structure);
+                            })();
+                        }
+                    }
+                    else
+                        throw new Error('invalid overload');
                     return _this;
                 }
-                DataItem.prototype.deleteField = function (row) {
-                    delete this.dataStructure.fields[row + ""];
-                    this.dataEnvironment.saveStructure(this.dataStructure);
-                    this.setDataStructure(this.dataStructure);
-                };
-                DataItem.prototype.save = function (row) {
-                    if (row === -1) {
-                        var tr = this.fields.getBody().getChildren().get(this.fields.getBody().getChildren().size() - 1);
-                        var name_3 = tr.getChildren().get(0).getChildren().get(0);
-                        var label = tr.getChildren().get(1).getChildren().get(0);
-                        var type = tr.getChildren().get(2).getChildren().get(0);
-                        var field = new framework.builder.data.DataField();
-                        field.label = label.getValue();
-                        field.name = name_3.getValue();
-                        field.type = type.getValue();
-                        this.dataStructure.fields.push(field);
-                        this.setDataStructure(this.dataStructure);
-                        this.addNewMode = false;
-                        this.addNew.setDisabled(false);
-                        this.dataEnvironment.saveStructure(this.dataStructure);
-                    }
-                    else {
-                        var tr = this.fields.getBody().getChildren().get(row);
-                        var name_4 = tr.getChildren().get(0).getChildren().get(0);
-                        var label = tr.getChildren().get(1).getChildren().get(0);
-                        var type = tr.getChildren().get(2).getChildren().get(0);
-                        var field = this.dataStructure.fields[row];
-                        field.label = label.getValue();
-                        field.name = name_4.getValue();
-                        field.type = type.getValue();
-                        this.setDataStructure(this.dataStructure);
-                        this.dataEnvironment.saveStructure(this.dataStructure);
-                        this.editMode = false;
-                        this.addNew.setDisabled(false);
-                    }
-                };
-                DataItem.prototype.addNewRow = function () {
-                    var body = this.fields.getBody();
-                    var tr = new framework.JSContainer("tr");
-                    tr.addClass(" slds-hint-parent");
-                    var name = new framework.JSInput("name");
-                    var label = new framework.JSInput("label");
-                    var type = new framework.JSSelect("type");
-                    for (var index10077 = 0; index10077 < framework.builder.data.DataType.Types_$LI$().length; index10077++) {
-                        var stype = framework.builder.data.DataType.Types_$LI$()[index10077];
-                        {
-                            type.addOption(new framework.JSOption(stype, stype));
-                        }
-                    }
-                    var btn = new framework.lightning.IconButton("sdfs");
-                    btn.setBorderFilled(true);
-                    btn.addClass("slds-button_icon-x-small");
-                    var icon = new framework.lightning.Icon("edit");
-                    icon.setSvgClass("slds-button__icon slds-button__icon_hint slds-button__icon_small");
-                    icon.setType("utility");
-                    btn.setIcon(icon);
-                    btn.addEventListener(new DataItem.DataItem$4(this), "click");
-                    var td = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    var td1 = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    var td2 = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    var td3 = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    tr.addChild$framework_JSContainer(td);
-                    tr.addChild$framework_JSContainer(td1);
-                    tr.addChild$framework_JSContainer(td2);
-                    tr.addChild$framework_JSContainer(td3);
-                    td.addChild$framework_JSContainer(name);
-                    td1.addChild$framework_JSContainer(label);
-                    td2.addChild$framework_JSContainer(type);
-                    td3.addChild$framework_JSContainer(btn);
-                    body.addChild$framework_JSContainer(tr);
-                };
-                DataItem.prototype.editRow = function (row) {
-                    this.editMode = true;
-                    var name = new framework.JSInput("name");
-                    var label = new framework.JSInput("label");
-                    var type = new framework.JSSelect("type");
-                    for (var index10078 = 0; index10078 < framework.builder.data.DataType.Types_$LI$().length; index10078++) {
-                        var stype = framework.builder.data.DataType.Types_$LI$()[index10078];
-                        {
-                            type.addOption(new framework.JSOption(stype, stype));
-                        }
-                    }
-                    var btn = new framework.lightning.IconButton("sdfs");
-                    btn.setBorderFilled(true);
-                    btn.addClass("slds-button_icon-x-small");
-                    var icon = new framework.lightning.Icon("edit");
-                    icon.setSvgClass("slds-button__icon slds-button__icon_hint slds-button__icon_small");
-                    icon.setType("utility");
-                    btn.setIcon(icon);
-                    btn.addEventListener(new DataItem.DataItem$5(this, row), "click");
-                    name.setValue$java_lang_String(this.dataStructure.fields[row].name);
-                    label.setValue$java_lang_String(this.dataStructure.fields[row].label);
-                    type.setValue$java_lang_String(this.dataStructure.fields[row].type);
-                    var tr = this.fields.getRow(row);
-                    tr.getChildren().clear();
-                    tr.setRendered(false);
-                    var td = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    var td1 = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    var td2 = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    var td3 = new framework.JSContainer("td");
-                    td.addClass(" slds-cell-wrap");
-                    tr.addChild$framework_JSContainer(td);
-                    tr.addChild$framework_JSContainer(td1);
-                    tr.addChild$framework_JSContainer(td2);
-                    tr.addChild$framework_JSContainer(td3);
-                    td.addChild$framework_JSContainer(name);
-                    td1.addChild$framework_JSContainer(label);
-                    td2.addChild$framework_JSContainer(type);
-                    td3.addChild$framework_JSContainer(btn);
+                DataItem.prototype.addOnFieldSeletedListener = function (l) {
+                    var item = this;
+                    this.fields.addRowsSelectionListener(new DataItem.DataItem$0(this, l, item));
                 };
                 DataItem.prototype.setDataStructure = function (structure) {
                     this.dataStructure = structure;
-                    this.title.setHtml(structure.label);
-                    this.editTitle.setValue$java_lang_String(structure.label);
+                    this.title.setHtml(structure.getLabel());
                     var cmodel = new framework.lightning.table.DefaultTableColumnModel();
-                    var name = new framework.lightning.table.TableColumn("name", "name", "Name");
-                    var label = new framework.lightning.table.TableColumn("label", "label", "Label");
-                    var type = new framework.lightning.table.TableColumn("type", "type", "Type");
+                    for (var i = 0; i < this.labels.length; i++) {
+                        var col = new framework.lightning.table.TableColumn(this.labelsFields[i], this.labelsFields[i], this.labels[i]);
+                        cmodel.addColumn(col);
+                        if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(this.labelsFields[i], "name")) {
+                            col.setWidth("200px");
+                        }
+                        if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(this.labelsFields[i], "label")) {
+                            col.setWidth("200px");
+                        }
+                        if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(this.labelsFields[i], "type")) {
+                            col.setWidth("75px");
+                        }
+                    }
+                    ;
                     var actions = new framework.lightning.table.TableColumn("actions", "actins", " ");
-                    actions.setStyle("width", "10%");
-                    cmodel.addColumn(name);
-                    cmodel.addColumn(label);
-                    cmodel.addColumn(type);
+                    actions.setWidth("20px");
                     cmodel.addColumn(actions);
+                    this.fields.setTableColumnModel(cmodel);
+                    this.fields.refreshColumns();
                     this.fields.setTableCellRenderer(this);
                     this.fields.setStriped(true);
                     this.fields.setColBordered(true);
-                    this.fields.setModel(this);
-                    this.fields.setTableColumnModel(cmodel);
-                    this.fields.refreshColumns();
-                    this.fields.refreshData();
-                };
-                /**
-                 *
-                 * @return {number}
-                 */
-                DataItem.prototype.getRowCount = function () {
-                    var d = this.dataStructure.fields.length;
-                    return (d | 0);
-                };
-                /**
-                 *
-                 * @return {number}
-                 */
-                DataItem.prototype.getColumnCount = function () {
-                    return 4;
-                };
-                /**
-                 *
-                 * @param {number} columnIndex
-                 * @return {string}
-                 */
-                DataItem.prototype.getColumnName = function (columnIndex) {
-                    return "";
-                };
-                /**
-                 *
-                 * @param {number} columnIndex
-                 * @return {string}
-                 */
-                DataItem.prototype.getColumnType = function (columnIndex) {
-                    return "string";
-                };
-                /**
-                 *
-                 * @param {number} rowIndex
-                 * @param {number} columnIndex
-                 * @return {boolean}
-                 */
-                DataItem.prototype.isCellEditable = function (rowIndex, columnIndex) {
-                    return false;
-                };
-                /**
-                 *
-                 * @param {number} rowIndex
-                 * @param {number} columnIndex
-                 * @return {*}
-                 */
-                DataItem.prototype.getValueAt = function (rowIndex, columnIndex) {
-                    if (columnIndex === 0) {
-                        return this.dataStructure.fields[rowIndex].name;
-                    }
-                    else if (columnIndex === 1) {
-                        return this.dataStructure.fields[rowIndex].label;
-                    }
-                    else if (columnIndex === 2) {
-                        return this.dataStructure.fields[rowIndex].type;
-                    }
-                    else {
-                        return this.dataStructure.fields[rowIndex].name;
-                    }
-                };
-                /**
-                 *
-                 * @param {*} aValue
-                 * @param {number} rowIndex
-                 * @param {number} columnIndex
-                 */
-                DataItem.prototype.setValueAt = function (aValue, rowIndex, columnIndex) {
+                    this.fields.setSelectable(true);
+                    this.dataStructure.getFields(new DataItem.DataItem$1(this));
                 };
                 /**
                  *
@@ -7420,26 +7801,16 @@ var framework;
                  * @return {*}
                  */
                 DataItem.prototype.getComponent = function (table, value, row, column) {
-                    if (column === 3) {
+                    if (column === this.labels.length) {
                         var btn = new framework.lightning.IconButton("sdfs");
                         btn.setBorderFilled(true);
                         btn.addClass("slds-button_icon-x-small");
-                        var icon = new framework.lightning.Icon("edit");
+                        var icon = new framework.lightning.SvgIcon("edit");
                         icon.setSvgClass("slds-button__icon slds-button__icon_hint slds-button__icon_small");
                         icon.setType("utility");
-                        icon.setIconName("down");
+                        icon.setIconName("right");
                         btn.setIcon(icon);
-                        var dp = new framework.lightning.DropDown("dp");
-                        var editItem = new framework.lightning.DropDownItem("edit", "Edit");
-                        var deleteItem = new framework.lightning.DropDownItem("delete", "Delete");
-                        dp.addItem(editItem);
-                        dp.addItem(deleteItem);
-                        editItem.setAttribute("row", row + "");
-                        deleteItem.setAttribute("row", row + "");
-                        editItem.addEventListener(new DataItem.DataItem$6(this), "click");
-                        deleteItem.addEventListener(new DataItem.DataItem$7(this), "click");
-                        var trigger = new framework.lightning.DropDownTrigger(value, btn, dp);
-                        return trigger;
+                        return btn;
                     }
                     else {
                         return this.delegate.getComponent(table, value, row, column);
@@ -7449,156 +7820,103 @@ var framework;
             }(framework.lightning.Card));
             libraries.DataItem = DataItem;
             DataItem["__class"] = "framework.builder.libraries.DataItem";
-            DataItem["__interfaces"] = ["framework.lightning.table.TableModel", "framework.interactions.Droppable", "framework.lightning.table.TableCellRenderer", "framework.Renderable"];
+            DataItem["__interfaces"] = ["framework.interactions.Droppable", "framework.lightning.table.TableCellRenderer", "framework.Renderable"];
             (function (DataItem) {
                 var DataItem$0 = (function () {
-                    function DataItem$0(__parent) {
+                    function DataItem$0(__parent, l, item) {
+                        this.l = l;
+                        this.item = item;
                         this.__parent = __parent;
                     }
                     /**
                      *
                      * @param {framework.JSContainer} source
-                     * @param {Event} evt
+                     * @param {Event} event
+                     * @param {framework.lightning.table.Table} table
+                     * @param {number} firstIndex
+                     * @param {number} lastIndex
                      */
-                    DataItem$0.prototype.performAction = function (source, evt) {
-                        if (!this.__parent.addNewMode && !this.__parent.editMode) {
-                            this.__parent.addNewMode = true;
-                            this.__parent.addNew.setDisabled(true);
-                            this.__parent.addNewRow();
-                        }
+                    DataItem$0.prototype.onSelectRow = function (source, event, table, firstIndex, lastIndex) {
+                        var field = this.__parent.dataFields.get(firstIndex);
+                        this.l.onItemSelected(field, this.item);
                     };
                     return DataItem$0;
                 }());
                 DataItem.DataItem$0 = DataItem$0;
-                DataItem$0["__interfaces"] = ["framework.EventListener"];
+                DataItem$0["__interfaces"] = ["framework.lightning.table.TableRowsSelectionListener"];
                 var DataItem$1 = (function () {
                     function DataItem$1(__parent) {
                         this.__parent = __parent;
                     }
+                    DataItem$1.prototype.dataLoaded$java_util_List = function (data_) {
+                        this.__parent.dataFields = data_;
+                        this.__parent.fields.setModel(new DataItem$1.DataItem$1$0(this));
+                        this.__parent.fields.refreshData();
+                        this.__parent.fields.render();
+                    };
                     /**
                      *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
+                     * @param {*} data_
                      */
-                    DataItem$1.prototype.performAction = function (source, evt) {
-                        this.__parent.dataEnvironment.deleteStructure(this.__parent.dataStructure.name);
-                        this.__parent.setVisible(false);
+                    DataItem$1.prototype.dataLoaded = function (data_) {
+                        if (((data_ != null && (data_["__interfaces"] != null && data_["__interfaces"].indexOf("java.util.List") >= 0 || data_.constructor != null && data_.constructor["__interfaces"] != null && data_.constructor["__interfaces"].indexOf("java.util.List") >= 0)) || data_ === null)) {
+                            return this.dataLoaded$java_util_List(data_);
+                        }
+                        else
+                            throw new Error('invalid overload');
                     };
                     return DataItem$1;
                 }());
                 DataItem.DataItem$1 = DataItem$1;
-                DataItem$1["__interfaces"] = ["framework.EventListener"];
-                var DataItem$2 = (function () {
-                    function DataItem$2(__parent) {
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    DataItem$2.prototype.performAction = function (source, evt) {
-                        this.__parent.title.setVisible(false);
-                        this.__parent.editTitle.setVisible(true);
-                        this.__parent.editMode = true;
-                        this.__parent.addNew.setVisible(false);
-                        this.__parent.deleteStructure.setVisible(false);
-                    };
-                    return DataItem$2;
-                }());
-                DataItem.DataItem$2 = DataItem$2;
-                DataItem$2["__interfaces"] = ["framework.EventListener"];
-                var DataItem$3 = (function () {
-                    function DataItem$3(__parent) {
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    DataItem$3.prototype.performAction = function (source, evt) {
-                        var newTitle = this.__parent.editTitle.getValue();
-                        this.__parent.dataStructure.name = newTitle;
-                        this.__parent.dataStructure.label = newTitle;
-                        this.__parent.setDataStructure(this.__parent.dataStructure);
-                        this.__parent.title.setVisible(true);
-                        this.__parent.editTitle.setVisible(false);
-                        this.__parent.addNew.setVisible(true);
-                        this.__parent.deleteStructure.setVisible(true);
-                        this.__parent.editMode = false;
-                    };
-                    return DataItem$3;
-                }());
-                DataItem.DataItem$3 = DataItem$3;
-                DataItem$3["__interfaces"] = ["framework.EventListener"];
-                var DataItem$4 = (function () {
-                    function DataItem$4(__parent) {
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    DataItem$4.prototype.performAction = function (source, evt) {
-                        this.__parent.save(-1);
-                    };
-                    return DataItem$4;
-                }());
-                DataItem.DataItem$4 = DataItem$4;
-                DataItem$4["__interfaces"] = ["framework.EventListener"];
-                var DataItem$5 = (function () {
-                    function DataItem$5(__parent, row) {
-                        this.row = row;
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    DataItem$5.prototype.performAction = function (source, evt) {
-                        this.__parent.save(this.row);
-                    };
-                    return DataItem$5;
-                }());
-                DataItem.DataItem$5 = DataItem$5;
-                DataItem$5["__interfaces"] = ["framework.EventListener"];
-                var DataItem$6 = (function () {
-                    function DataItem$6(__parent) {
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    DataItem$6.prototype.performAction = function (source, evt) {
-                        var rrow = javaemul.internal.IntegerHelper.parseInt(source.getAttribute("row"));
-                        this.__parent.editRow(rrow);
-                    };
-                    return DataItem$6;
-                }());
-                DataItem.DataItem$6 = DataItem$6;
-                DataItem$6["__interfaces"] = ["framework.EventListener"];
-                var DataItem$7 = (function () {
-                    function DataItem$7(__parent) {
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    DataItem$7.prototype.performAction = function (source, evt) {
-                        var rrow = javaemul.internal.IntegerHelper.parseInt(source.getAttribute("row"));
-                        this.__parent.deleteField(rrow);
-                    };
-                    return DataItem$7;
-                }());
-                DataItem.DataItem$7 = DataItem$7;
-                DataItem$7["__interfaces"] = ["framework.EventListener"];
+                DataItem$1["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+                (function (DataItem$1) {
+                    var DataItem$1$0 = (function () {
+                        function DataItem$1$0(__parent) {
+                            this.__parent = __parent;
+                        }
+                        /**
+                         *
+                         * @param {*} aValue
+                         * @param {number} rowIndex
+                         * @param {number} columnIndex
+                         */
+                        DataItem$1$0.prototype.setValueAt = function (aValue, rowIndex, columnIndex) {
+                        };
+                        /**
+                         *
+                         * @param {number} rowIndex
+                         * @param {number} columnIndex
+                         * @return {boolean}
+                         */
+                        DataItem$1$0.prototype.isCellEditable = function (rowIndex, columnIndex) {
+                            return false;
+                        };
+                        /**
+                         *
+                         * @param {number} rowIndex
+                         * @param {number} columnIndex
+                         * @return {*}
+                         */
+                        DataItem$1$0.prototype.getValueAt = function (rowIndex, columnIndex) {
+                            if (columnIndex < this.__parent.__parent.labels.length) {
+                                return this.__parent.__parent.dataFields.get(rowIndex).getValue(this.__parent.__parent.labelsFields[columnIndex]);
+                            }
+                            else {
+                                return this.__parent.__parent.dataFields.get(rowIndex).getName();
+                            }
+                        };
+                        /**
+                         *
+                         * @return {number}
+                         */
+                        DataItem$1$0.prototype.getRowCount = function () {
+                            return this.__parent.__parent.dataFields.size();
+                        };
+                        return DataItem$1$0;
+                    }());
+                    DataItem$1.DataItem$1$0 = DataItem$1$0;
+                    DataItem$1$0["__interfaces"] = ["framework.lightning.table.TableModel"];
+                })(DataItem$1 = DataItem.DataItem$1 || (DataItem.DataItem$1 = {}));
             })(DataItem = libraries.DataItem || (libraries.DataItem = {}));
         })(libraries = builder.libraries || (builder.libraries = {}));
     })(builder = framework.builder || (framework.builder = {}));
@@ -7638,8 +7956,8 @@ var framework;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index10079 = 0; index10079 < components.length; index10079++) {
-                    var com = components[index10079];
+                for (var index1176 = 0; index1176 < components.length; index1176++) {
+                    var com = components[index1176];
                     {
                         var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-4");
                         this.addChild$framework_JSContainer(li);
@@ -7741,7 +8059,7 @@ var framework;
                 /*private*/ _this.header = new framework.lightning.Grid("header", "div").addClass("slds-docked-composer__header slds-shrink-none").setAttribute("aria-live", "assertive");
                 /*private*/ _this.headerTitle = new framework.lightning.Media("headerTitle");
                 /*private*/ _this.headerIconContainer = new framework.JSContainer("div").addClass("slds-icon_container");
-                /*private*/ _this.headerIcon = new framework.lightning.Icon("headerIcon").setSize(framework.lightning.Icon.EXTRA_SMALL).setTextType(framework.lightning.Icon.TEXT_DEFAULT);
+                /*private*/ _this.headerIcon = new framework.lightning.SvgIcon("headerIcon").setSize(framework.lightning.SvgIcon.EXTRA_SMALL).setTextType(framework.lightning.SvgIcon.TEXT_DEFAULT);
                 /*private*/ _this.title = new framework.lightning.Text("title", "h2").setTruncate(true);
                 /*private*/ _this.tools = new framework.JSContainer("div").addClass("slds-col_bump-left slds-shrink-none");
                 /*private*/ _this.minimize = new framework.lightning.IconButton("minimize");
@@ -7955,21 +8273,21 @@ var framework;
                 _this.newFileModal.setBackdrop(_this.backdrop);
                 _this.openProjectModal.setBackdrop(_this.backdrop);
                 _this.addClass("builder");
-                var icon = new framework.lightning.Icon("as", "utility", "save");
+                var icon = new framework.lightning.SvgIcon("as", "utility", "save");
                 _this.saveButton.setIcon(icon);
                 _this.saveButton.setBorderFilled(true);
                 _this.saveButton.addClass("slds-button_icon-container").addClass("save-button");
                 _this.saveButton.addEventListener(new Builder.Builder$0(_this), "click");
                 _this.addChild$framework_JSContainer(_this.saveButton);
                 _this.addChild$framework_JSContainer(_this.openProjectBtn);
-                _this.previewBtn.setIcon(new framework.lightning.Icon("", "utility", "preview"));
+                _this.previewBtn.setIcon(new framework.lightning.SvgIcon("", "utility", "preview"));
                 _this.previewBtn.setBorderFilled(true);
                 _this.previewBtn.addClass("slds-button_icon-container");
-                _this.openProjectBtn.setIcon(new framework.lightning.Icon("", "utility", "open"));
+                _this.openProjectBtn.setIcon(new framework.lightning.SvgIcon("", "utility", "open"));
                 _this.openProjectBtn.setBorderFilled(true);
                 _this.openProjectBtn.addClass("slds-button_icon-container").addClass("new-button").setStyle("right", "10%");
                 _this.openProjectBtn.addEventListener(new Builder.Builder$1(_this), "click");
-                var iconNew = new framework.lightning.Icon("as", "utility", "new");
+                var iconNew = new framework.lightning.SvgIcon("as", "utility", "new");
                 _this.newFileButtn.setIcon(iconNew);
                 _this.newFileButtn.setBorderFilled(true);
                 _this.newFileButtn.addClass("slds-button_icon-container").addClass("new-button");
@@ -8033,8 +8351,8 @@ var framework;
                 }
             };
             Builder.prototype.isOpen = function (editorName) {
-                for (var index10080 = this.editorTabs.getItems().iterator(); index10080.hasNext();) {
-                    var item = index10080.next();
+                for (var index1177 = this.editorTabs.getItems().iterator(); index1177.hasNext();) {
+                    var item = index1177.next();
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -8049,8 +8367,8 @@ var framework;
                 return false;
             };
             Builder.prototype.activateEditor = function (editorName) {
-                for (var index10081 = this.editorTabs.getItems().iterator(); index10081.hasNext();) {
-                    var item = index10081.next();
+                for (var index1178 = this.editorTabs.getItems().iterator(); index1178.hasNext();) {
+                    var item = index1178.next();
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -8209,8 +8527,8 @@ var framework;
             DescriptionList.prototype.setLayout = function (layout) {
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
-                for (var index10082 = this.getChildren().iterator(); index10082.hasNext();) {
-                    var child = index10082.next();
+                for (var index1179 = this.getChildren().iterator(); index1179.hasNext();) {
+                    var child = index1179.next();
                     {
                         child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                         child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -8366,6 +8684,155 @@ var framework;
 (function (framework) {
     var builder;
     (function (builder) {
+        var properties;
+        (function (properties) {
+            var ItemSelector = (function (_super) {
+                __extends(ItemSelector, _super);
+                function ItemSelector(name) {
+                    var _this = _super.call(this, name, "div") || this;
+                    /*private*/ _this.dataTable = new framework.lightning.table.Table("fields");
+                    /*private*/ _this.delegate = new framework.lightning.table.DefaultTableCellRenderer();
+                    /*private*/ _this.tableColumModel = new framework.lightning.table.DefaultTableColumnModel();
+                    _this.dataList = null;
+                    _this.addClass("data-item");
+                    _this.getContent().addChild$framework_JSContainer(_this.dataTable);
+                    return _this;
+                }
+                ItemSelector.prototype.addOnItemSeletedListener = function (l) {
+                    this.dataTable.addRowsSelectionListener(new ItemSelector.ItemSelector$0(this, l));
+                };
+                ItemSelector.prototype.addColumn = function (column) {
+                    this.tableColumModel.addColumn(column);
+                };
+                ItemSelector.prototype.setDataList = function (dataList) {
+                    this.dataList = dataList;
+                    this.dataTable.setTableCellRenderer(this);
+                    this.dataTable.setTableColumnModel(this.tableColumModel);
+                    this.dataTable.refreshColumns();
+                    this.dataTable.setModel(new ItemSelector.ItemSelector$1(this, dataList));
+                    this.dataTable.refreshData();
+                };
+                /**
+                 *
+                 * @param {framework.lightning.table.Table} table
+                 * @param {*} value
+                 * @param {number} row
+                 * @param {number} column
+                 * @return {*}
+                 */
+                ItemSelector.prototype.getComponent = function (table, value, row, column) {
+                    if (this.isActionColumn(table, value, row, column)) {
+                        var btn = new framework.lightning.IconButton("sdfs");
+                        btn.setBorderFilled(true);
+                        btn.addClass("slds-button_icon-x-small");
+                        var icon = new framework.lightning.SvgIcon("edit");
+                        icon.setSvgClass("slds-button__icon slds-button__icon_hint slds-button__icon_small");
+                        icon.setType("utility");
+                        icon.setIconName("right");
+                        btn.setIcon(icon);
+                        return btn;
+                    }
+                    else {
+                        return this.delegate.getComponent(table, value, row, column);
+                    }
+                };
+                return ItemSelector;
+            }(framework.lightning.Modal));
+            properties.ItemSelector = ItemSelector;
+            ItemSelector["__class"] = "framework.builder.properties.ItemSelector";
+            ItemSelector["__interfaces"] = ["framework.interactions.Droppable", "framework.lightning.table.TableCellRenderer", "framework.Renderable"];
+            (function (ItemSelector) {
+                var ItemSelector$0 = (function () {
+                    function ItemSelector$0(__parent, l) {
+                        this.l = l;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} event
+                     * @param {framework.lightning.table.Table} table
+                     * @param {number} firstIndex
+                     * @param {number} lastIndex
+                     */
+                    ItemSelector$0.prototype.onSelectRow = function (source, event, table, firstIndex, lastIndex) {
+                        var field = this.__parent.dataList.get(firstIndex);
+                        this.l.onItemSelected(field);
+                    };
+                    return ItemSelector$0;
+                }());
+                ItemSelector.ItemSelector$0 = ItemSelector$0;
+                ItemSelector$0["__interfaces"] = ["framework.lightning.table.TableRowsSelectionListener"];
+                var ItemSelector$1 = (function () {
+                    function ItemSelector$1(__parent, dataList) {
+                        this.dataList = dataList;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {*} aValue
+                     * @param {number} rowIndex
+                     * @param {number} columnIndex
+                     */
+                    ItemSelector$1.prototype.setValueAt = function (aValue, rowIndex, columnIndex) {
+                    };
+                    /**
+                     *
+                     * @param {number} rowIndex
+                     * @param {number} columnIndex
+                     * @return {boolean}
+                     */
+                    ItemSelector$1.prototype.isCellEditable = function (rowIndex, columnIndex) {
+                        return false;
+                    };
+                    /**
+                     *
+                     * @param {number} rowIndex
+                     * @param {number} columnIndex
+                     * @return {*}
+                     */
+                    ItemSelector$1.prototype.getValueAt = function (rowIndex, columnIndex) {
+                        return null;
+                    };
+                    /**
+                     *
+                     * @return {number}
+                     */
+                    ItemSelector$1.prototype.getRowCount = function () {
+                        return this.dataList.size();
+                    };
+                    return ItemSelector$1;
+                }());
+                ItemSelector.ItemSelector$1 = ItemSelector$1;
+                ItemSelector$1["__interfaces"] = ["framework.lightning.table.TableModel"];
+            })(ItemSelector = properties.ItemSelector || (properties.ItemSelector = {}));
+        })(properties = builder.properties || (builder.properties = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var ImageIcon = (function (_super) {
+            __extends(ImageIcon, _super);
+            function ImageIcon(name, url) {
+                var _this = _super.call(this, name) || this;
+                _this.img = new framework.JSContainer("img");
+                _this.setHtml("");
+                _this.getChildren().clear();
+                _this.addChild$framework_JSContainer(_this.img);
+                _this.img.setAttribute("src", "http://www.powells.com/Portals/0/Images/powells_images/loading.gif");
+                return _this;
+            }
+            return ImageIcon;
+        }(framework.lightning.SvgIcon));
+        lightning.ImageIcon = ImageIcon;
+        ImageIcon["__class"] = "framework.lightning.ImageIcon";
+        ImageIcon["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
         var ComponentsTabs = (function (_super) {
             __extends(ComponentsTabs, _super);
             function ComponentsTabs(name) {
@@ -8507,8 +8974,8 @@ var framework;
                 var params = this.delegate.getParameters();
                 var textParam = new framework.design.TextParameter("text", "Text", "Basic");
                 var tagParam = new framework.design.TagParameter();
-                for (var index10083 = JSDesignableTextComponent.textTags_$LI$().keySet().iterator(); index10083.hasNext();) {
-                    var key = index10083.next();
+                for (var index1180 = JSDesignableTextComponent.textTags_$LI$().keySet().iterator(); index1180.hasNext();) {
+                    var key = index1180.next();
                     {
                         tagParam.options.add(new framework.design.Option(JSDesignableTextComponent.textTags_$LI$().get(key), key));
                     }
@@ -8570,19 +9037,19 @@ var framework;
                     _this.addClass("file-tree-item");
                     _this.addClass("type-" + type);
                     if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(f.getName(), "html")) {
-                        _this.setLeftIcon("work_type", "standard");
+                        _this.setLeftIcon$java_lang_String$java_lang_String("work_type", "standard");
                     }
                     else if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(f.getName(), "css")) {
-                        _this.setLeftIcon("topic", "standard");
+                        _this.setLeftIcon$java_lang_String$java_lang_String("topic", "standard");
                     }
                     else if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(f.getName(), "js")) {
-                        _this.setLeftIcon("custom_notification", "standard");
+                        _this.setLeftIcon$java_lang_String$java_lang_String("custom_notification", "standard");
                     }
                     else if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(f.getName(), "dat")) {
-                        _this.setLeftIcon("database", "utility");
+                        _this.setLeftIcon$java_lang_String$java_lang_String("database", "utility");
                     }
                     else if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(f.getName(), ".cmp")) {
-                        _this.setLeftIcon("custom63", "custom");
+                        _this.setLeftIcon$java_lang_String$java_lang_String("custom63", "custom");
                     }
                     return _this;
                 }
@@ -8605,12 +9072,17 @@ var framework;
                         editor.open(f);
                     }
                     else if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(f.getName(), "dat")) {
-                        var editor = new framework.builder.libraries.DataComposer(f.getName(), veditor);
+                        var editor = new framework.builder.libraries.DataComposer(f.getName(), veditor, this.structure);
                         this.builder.openEditor(f.getName(), editor);
                         editor.open(f);
                     }
                     else if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(f.getName(), ".cmp")) {
                         var editor = new framework.builder.editors.VisualEditor(f.getName());
+                        this.builder.openEditor(f.getName(), editor);
+                        editor.open(f);
+                    }
+                    else {
+                        var editor = new framework.builder.libraries.DataComposer(f.getName(), veditor, this.structure);
                         this.builder.openEditor(f.getName(), editor);
                         editor.open(f);
                     }
@@ -8655,9 +9127,16 @@ var framework;
                     }
                     /**
                      *
-                     * @param {*} data
+                     * @param {framework.builder.data.DataStructure[]} data
                      */
                     FileTreeItem$0.prototype.dataLoaded = function (data) {
+                        if (((data != null) || data === null)) {
+                            return this.dataLoaded$java_lang_Object(data);
+                        }
+                        else
+                            throw new Error('invalid overload');
+                    };
+                    FileTreeItem$0.prototype.dataLoaded$java_lang_Object = function (data) {
                         this.__parent.structure.reload();
                         this.__parent.structure.getItem$java_lang_String(this.stype).open();
                         this.__parent.structure.render();
@@ -8692,7 +9171,7 @@ var framework;
                     _this.structure = structure;
                     _this.designable = designable;
                     _this.addClass("structure-tree-item");
-                    _this.setLeftIcon("template", "standard");
+                    _this.setLeftIcon$java_lang_String$java_lang_String("template", "standard");
                     var deleteMenu = new framework.lightning.DropDownItem("delete", "Delete");
                     deleteMenu.setIcon("delete", "utility");
                     var copy = new framework.lightning.DropDownItem("copy", "Copy");
@@ -8958,9 +9437,16 @@ var framework;
                     }
                     /**
                      *
-                     * @param {*} data
+                     * @param {framework.builder.data.DataStructure[]} data
                      */
                     StructureTreeItem$8.prototype.dataLoaded = function (data) {
+                        if (((data != null) || data === null)) {
+                            return this.dataLoaded$java_lang_Object(data);
+                        }
+                        else
+                            throw new Error('invalid overload');
+                    };
+                    StructureTreeItem$8.prototype.dataLoaded$java_lang_Object = function (data) {
                         var fff = new framework.builder.data.File(data);
                         fff.setData(this.marshall);
                         framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).saveFile(fff, new StructureTreeItem$8.StructureTreeItem$8$0(this));
@@ -8978,9 +9464,16 @@ var framework;
                         }
                         /**
                          *
-                         * @param {*} data
+                         * @param {framework.builder.data.DataStructure[]} data
                          */
                         StructureTreeItem$8$0.prototype.dataLoaded = function (data) {
+                            if (((data != null) || data === null)) {
+                                return this.dataLoaded$java_lang_Object(data);
+                            }
+                            else
+                                throw new Error('invalid overload');
+                        };
+                        StructureTreeItem$8$0.prototype.dataLoaded$java_lang_Object = function (data) {
                             console.log(data);
                         };
                         return StructureTreeItem$8$0;
@@ -9007,8 +9500,8 @@ var framework;
             JSDesignableImage.prototype.getParameters = function () {
                 var parameters = _super.prototype.getParameters.call(this);
                 parameters.add(new framework.design.AttributeParameter("src", "Source", "Basic"));
-                for (var index10084 = parameters.iterator(); index10084.hasNext();) {
-                    var p = index10084.next();
+                for (var index1181 = parameters.iterator(); index1181.hasNext();) {
+                    var p = index1181.next();
                     {
                         if (p != null && p instanceof framework.design.TagParameter) {
                             parameters.remove(p);
@@ -9227,6 +9720,76 @@ var framework;
     (function (builder) {
         var properties;
         (function (properties) {
+            var InputWithSelectorEditor = (function (_super) {
+                __extends(InputWithSelectorEditor, _super);
+                function InputWithSelectorEditor(name, modal) {
+                    var _this = _super.call(this, name) || this;
+                    /*private*/ _this.icon = null;
+                    _this.modal = null;
+                    _this.selectedItem = null;
+                    _this.modal = modal;
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                InputWithSelectorEditor.prototype.initEditor = function (designable, parameter) {
+                    if (this.icon == null) {
+                        this.icon = new framework.lightning.IconButton("icon");
+                        this.getParent().addChild$framework_JSContainer(this.icon.addClass("input-icon"));
+                        this.getParent().addChild$framework_JSContainer(this.modal);
+                        this.icon.addEventListener(new InputWithSelectorEditor.InputWithSelectorEditor$0(this), "click");
+                        this.modal.addOnItemSeletedListener(new InputWithSelectorEditor.InputWithSelectorEditor$1(this));
+                    }
+                };
+                return InputWithSelectorEditor;
+            }(framework.builder.properties.AbstractInputPropertyEditor));
+            properties.InputWithSelectorEditor = InputWithSelectorEditor;
+            InputWithSelectorEditor["__class"] = "framework.builder.properties.InputWithSelectorEditor";
+            InputWithSelectorEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.EventListener", "framework.Renderable", "framework.InputField"];
+            (function (InputWithSelectorEditor) {
+                var InputWithSelectorEditor$0 = (function () {
+                    function InputWithSelectorEditor$0(__parent) {
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    InputWithSelectorEditor$0.prototype.performAction = function (source, evt) {
+                        this.__parent.modal.open();
+                    };
+                    return InputWithSelectorEditor$0;
+                }());
+                InputWithSelectorEditor.InputWithSelectorEditor$0 = InputWithSelectorEditor$0;
+                InputWithSelectorEditor$0["__interfaces"] = ["framework.EventListener"];
+                var InputWithSelectorEditor$1 = (function () {
+                    function InputWithSelectorEditor$1(__parent) {
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {*} item
+                     */
+                    InputWithSelectorEditor$1.prototype.onItemSelected = function (item) {
+                        this.__parent.selectedItem = item;
+                    };
+                    return InputWithSelectorEditor$1;
+                }());
+                InputWithSelectorEditor.InputWithSelectorEditor$1 = InputWithSelectorEditor$1;
+                InputWithSelectorEditor$1["__interfaces"] = ["framework.builder.properties.ItemSelectedListener"];
+            })(InputWithSelectorEditor = properties.InputWithSelectorEditor || (properties.InputWithSelectorEditor = {}));
+        })(properties = builder.properties || (builder.properties = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var properties;
+        (function (properties) {
             var NameEditor = (function (_super) {
                 __extends(NameEditor, _super);
                 function NameEditor() {
@@ -9394,8 +9957,8 @@ var framework;
                     var value = designable.getAttribute(attr);
                     this.getChildren().clear();
                     this.setRendered(false);
-                    for (var index10085 = parameter.options.iterator(); index10085.hasNext();) {
-                        var opt = index10085.next();
+                    for (var index1182 = parameter.options.iterator(); index1182.hasNext();) {
+                        var opt = index1182.next();
                         {
                             this.addOption(new framework.JSOption(opt.text, opt.value));
                         }
@@ -9566,8 +10129,8 @@ var framework;
                 OptionsEditor.prototype.initEditor = function (designable, parameter) {
                     var value = "";
                     var select = designable;
-                    for (var index10086 = select.getChildren().iterator(); index10086.hasNext();) {
-                        var c = index10086.next();
+                    for (var index1183 = select.getChildren().iterator(); index1183.hasNext();) {
+                        var c = index1183.next();
                         {
                             var opt = c;
                             value = value + "\n" + opt.getText();
@@ -9586,8 +10149,8 @@ var framework;
                     var select = this.designable;
                     select.getChildren().clear();
                     select.setRendered(false);
-                    for (var index10087 = 0; index10087 < options.length; index10087++) {
-                        var opt = options[index10087];
+                    for (var index1184 = 0; index1184 < options.length; index1184++) {
+                        var opt = options[index1184];
                         {
                             var option = new framework.JSOption(opt, opt);
                             select.addOption(option);
@@ -9842,6 +10405,7 @@ var framework;
             };
             NewFile.prototype.init = function (structure) {
                 this.getInput().setValue$java_lang_String("");
+                this.getInput().addEventListener(new NewFile.NewFile$2(this), "keypress");
                 this.structure = structure;
                 this.getFilesList().getChildren().clear();
                 this.getFilesList().addFile(this.lightning);
@@ -9883,13 +10447,13 @@ var framework;
                     }
                 }
                 var project = this.builder.getProject();
-                project.createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name, type, new NewFile.NewFile$2(this, type));
+                project.createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name, type, new NewFile.NewFile$3(this, type));
             };
             NewFile.prototype.createLightning = function (name) {
                 if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".prj")) {
                     name = name + ".prj";
                 }
-                framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).createProject(name, name, new NewFile.NewFile$3(this));
+                framework.core.BeanFactory.getInstance().getBeanOfType(framework.builder.data.ProjectService).createProject(name, name, new NewFile.NewFile$4(this));
             };
             return NewFile;
         }(framework.builder.ItemSelector));
@@ -9930,15 +10494,41 @@ var framework;
             NewFile.NewFile$1 = NewFile$1;
             NewFile$1["__interfaces"] = ["framework.EventListener"];
             var NewFile$2 = (function () {
-                function NewFile$2(__parent, type) {
+                function NewFile$2(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                NewFile$2.prototype.performAction = function (source, evt) {
+                    var kevt = evt;
+                    if (kevt.keyCode === 13 || kevt.which === 13) {
+                        this.__parent.click();
+                    }
+                };
+                return NewFile$2;
+            }());
+            NewFile.NewFile$2 = NewFile$2;
+            NewFile$2["__interfaces"] = ["framework.EventListener"];
+            var NewFile$3 = (function () {
+                function NewFile$3(__parent, type) {
                     this.type = type;
                     this.__parent = __parent;
                 }
                 /**
                  *
-                 * @param {*} data
+                 * @param {framework.builder.data.DataStructure[]} data
                  */
-                NewFile$2.prototype.dataLoaded = function (data) {
+                NewFile$3.prototype.dataLoaded = function (data) {
+                    if (((data != null) || data === null)) {
+                        return this.dataLoaded$java_lang_Object(data);
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                NewFile$3.prototype.dataLoaded$java_lang_Object = function (data) {
                     this.__parent.close();
                     this.__parent.render();
                     this.__parent.getBackdrop().render();
@@ -9947,19 +10537,26 @@ var framework;
                         this.__parent.structure.render();
                     }
                 };
-                return NewFile$2;
+                return NewFile$3;
             }());
-            NewFile.NewFile$2 = NewFile$2;
-            NewFile$2["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
-            var NewFile$3 = (function () {
-                function NewFile$3(__parent) {
+            NewFile.NewFile$3 = NewFile$3;
+            NewFile$3["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            var NewFile$4 = (function () {
+                function NewFile$4(__parent) {
                     this.__parent = __parent;
                 }
                 /**
                  *
-                 * @param {*} data
+                 * @param {framework.builder.data.DataStructure[]} data
                  */
-                NewFile$3.prototype.dataLoaded = function (data) {
+                NewFile$4.prototype.dataLoaded = function (data) {
+                    if (((data != null) || data === null)) {
+                        return this.dataLoaded$java_lang_Object(data);
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                NewFile$4.prototype.dataLoaded$java_lang_Object = function (data) {
                     var project = new framework.builder.data.File(new Object(data));
                     this.__parent.close();
                     this.__parent.render();
@@ -9967,10 +10564,10 @@ var framework;
                     this.__parent.builder.openProject(project);
                     this.__parent.builder.render();
                 };
-                return NewFile$3;
+                return NewFile$4;
             }());
-            NewFile.NewFile$3 = NewFile$3;
-            NewFile$3["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            NewFile.NewFile$4 = NewFile$4;
+            NewFile$4["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
         })(NewFile = builder.NewFile || (builder.NewFile = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -10007,12 +10604,19 @@ var framework;
             };
             /**
              *
-             * @param {*} data
+             * @param {framework.builder.data.DataStructure[]} data
              */
             OpenProject.prototype.dataLoaded = function (data) {
+                if (((data != null) || data === null)) {
+                    return this.dataLoaded$java_lang_Object(data);
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            OpenProject.prototype.dataLoaded$java_lang_Object = function (data) {
                 var nprojects = data;
-                for (var index10088 = 0; index10088 < nprojects.length; index10088++) {
-                    var p = nprojects[index10088];
+                for (var index1185 = 0; index1185 < nprojects.length; index1185++) {
+                    var p = nprojects[index1185];
                     {
                         var project = new framework.builder.data.File(p);
                         var file = new framework.builder.UIFile(project.getName());
@@ -10038,6 +10642,70 @@ var framework;
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var builder;
+    (function (builder) {
+        var data;
+        (function (data_5) {
+            var FieldSelector = (function (_super) {
+                __extends(FieldSelector, _super);
+                function FieldSelector(name, structure) {
+                    var _this = _super.call(this, name) || this;
+                    /*private*/ _this.labels = ["Name", "Label", "Type"];
+                    /*private*/ _this.fields = ["name", "label", "type"];
+                    for (var i = 0; i < _this.labels.length; i++) {
+                        var col = new framework.lightning.table.TableColumn(_this.fields[i], _this.fields[i], _this.labels[i]);
+                        _this.addColumn(col);
+                    }
+                    ;
+                    var actions = new framework.lightning.table.TableColumn("actions", "actins", " ");
+                    actions.setWidth("20px");
+                    structure.getFields(new FieldSelector.FieldSelector$0(_this));
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {framework.lightning.table.Table} table
+                 * @param {*} value
+                 * @param {number} row
+                 * @param {number} column
+                 * @return {boolean}
+                 */
+                FieldSelector.prototype.isActionColumn = function (table, value, row, column) {
+                    return column === this.labels.length;
+                };
+                return FieldSelector;
+            }(framework.builder.properties.ItemSelector));
+            data_5.FieldSelector = FieldSelector;
+            FieldSelector["__class"] = "framework.builder.data.FieldSelector";
+            FieldSelector["__interfaces"] = ["framework.interactions.Droppable", "framework.lightning.table.TableCellRenderer", "framework.Renderable"];
+            (function (FieldSelector) {
+                var FieldSelector$0 = (function () {
+                    function FieldSelector$0(__parent) {
+                        this.__parent = __parent;
+                    }
+                    FieldSelector$0.prototype.dataLoaded$java_util_List = function (data) {
+                        this.__parent.setDataList(data);
+                    };
+                    /**
+                     *
+                     * @param {*} data
+                     */
+                    FieldSelector$0.prototype.dataLoaded = function (data) {
+                        if (((data != null && (data["__interfaces"] != null && data["__interfaces"].indexOf("java.util.List") >= 0 || data.constructor != null && data.constructor["__interfaces"] != null && data.constructor["__interfaces"].indexOf("java.util.List") >= 0)) || data === null)) {
+                            return this.dataLoaded$java_util_List(data);
+                        }
+                        else
+                            throw new Error('invalid overload');
+                    };
+                    return FieldSelector$0;
+                }());
+                FieldSelector.FieldSelector$0 = FieldSelector$0;
+                FieldSelector$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            })(FieldSelector = data_5.FieldSelector || (data_5.FieldSelector = {}));
+        })(data = builder.data || (builder.data = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var designables;
     (function (designables) {
         var JSDesignableLink = (function (_super) {
@@ -10059,8 +10727,8 @@ var framework;
              */
             JSDesignableLink.prototype.getParameters = function () {
                 var parameters = _super.prototype.getParameters.call(this);
-                for (var index10089 = parameters.iterator(); index10089.hasNext();) {
-                    var p = index10089.next();
+                for (var index1186 = parameters.iterator(); index1186.hasNext();) {
+                    var p = index1186.next();
                     {
                         if (p != null && p instanceof framework.design.TagParameter) {
                             parameters.remove(p);
@@ -10092,8 +10760,8 @@ var framework;
                 AdvancedPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index10090 = this.component.getParameters().iterator(); index10090.hasNext();) {
-                        var p = index10090.next();
+                    for (var index1187 = this.component.getParameters().iterator(); index1187.hasNext();) {
+                        var p = index1187.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10130,8 +10798,8 @@ var framework;
                 BasicPropertiesEditor.prototype.setComponent = function (designable) {
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
-                    for (var index10091 = designable.getParameters().iterator(); index10091.hasNext();) {
-                        var param = index10091.next();
+                    for (var index1188 = designable.getParameters().iterator(); index1188.hasNext();) {
+                        var param = index1188.next();
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10156,6 +10824,7 @@ framework.designables.JSDesignableTextComponent.textTags_$LI$();
 framework.designables.JSDesignableTextComponent.__static_initialize();
 framework.builder.Builder.websocket_$LI$();
 framework.designables.JSDesignableButton.stateLabels_$LI$();
+framework.lightning.table.Table.SELECT_ROW_EVT_$LI$();
 framework.lightning.Button.states_$LI$();
 framework.JSTextArea.TEXT_AREA_RENDERER_$LI$();
 framework.JSContainer.DEFAULT_RENDERER_$LI$();

@@ -1,7 +1,5 @@
 package framework.designables;
 
-import static def.dom.Globals.alert;
-
 import java.util.LinkedList;
 import java.util.List;
 

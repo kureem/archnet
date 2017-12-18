@@ -118,6 +118,28 @@
 			</resource>
 		</resources>
 		<plugins>
+		<plugin>
+      <groupId>com.samaxes.maven</groupId>
+      <artifactId>minify-maven-plugin</artifactId>
+      <version>1.7.6</version>
+      <executions>
+        <execution>
+          <id>default-minify</id>
+          <configuration>
+            <charset>UTF-8</charset>
+            <jsSourceFiles>
+           		<jsSourceFile>src/main/resources/META-INF/resources/webjars/framework/1.0.5-SNAPSHOT/bundle.js</jsSourceFile>
+           		<jsSourceFile>src/main/resources/META-INF/resources/webjars/j4ts/0.2.0-SNAPSHOT/bundle.js</jsSourceFile>
+            </jsSourceFiles>
+            <jsFinalFile>script.js</jsFinalFile>
+            <jsEngine>CLOSURE</jsEngine>
+          </configuration>
+          <goals>
+            <goal>minify</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>

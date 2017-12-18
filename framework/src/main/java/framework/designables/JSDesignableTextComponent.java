@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import framework.JSContainer;
-import framework.JSOption;
 import framework.TextComponent;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
@@ -41,6 +40,7 @@ public class JSDesignableTextComponent extends TextComponent implements Designab
 		delegate.applyParameter(key, value, true);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Designable> getDesignables() {
 		List l = getChildren();

@@ -2,7 +2,7 @@ package framework.lightning;
 
 import framework.JSContainer;
 
-public class Icon extends JSContainer {
+public class SvgIcon extends JSContainer {
 
 	public final static String SMALL = "slds-button_icon_small";
 
@@ -28,7 +28,7 @@ public class Icon extends JSContainer {
 	
 	private String svgClass = "slds-icon";
 
-	public Icon(String name, String type, String iconName) {
+	public SvgIcon(String name, String type, String iconName) {
 		super(name, "div");
 		this.type = type;
 		this.iconName = iconName;
@@ -36,7 +36,7 @@ public class Icon extends JSContainer {
 
 	}
 
-	public Icon(String name) {
+	public SvgIcon(String name) {
 		super(name, "div");
 		refresh();
 	}
@@ -78,13 +78,13 @@ public class Icon extends JSContainer {
 		refresh();
 	}
 
-	public Icon setSize(String size) {
+	public SvgIcon setSize(String size) {
 		removeClass(EXTRA_EXTRA_SMALL).removeClass(EXTRA_SMALL).removeClass(LARGE).removeClass(SMALL);
 		addClass(size);
 		return this;
 	}
 
-	public Icon setTextType(String type) {
+	public SvgIcon setTextType(String type) {
 		removeClass(TEXT_DEFAULT).removeClass(TEXT_ERROR).removeClass(TEXT_LIGHT).removeClass(TEXT_WARNING)
 				.addClass(type);
 		return this;

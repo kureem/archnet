@@ -7,7 +7,7 @@ import jsweet.util.function.TriFunction;
 
 public class ProjectService {
 
-	public void createProject(String name, String title, RemoteDataListener listener) {
+	public void createProject(String name, String title, RemoteDataListener<java.lang.Object> listener) {
 
 		jsweet.lang.Object data = new jsweet.lang.Object();
 		data.$set("name", name);
@@ -25,7 +25,7 @@ public class ProjectService {
 	
 	
 	
-	public void getProjects(RemoteDataListener listener){
+	public void getProjects(RemoteDataListener<java.lang.Object> listener){
 		$.get("/projects/get-projects", new TriFunction<Object, String, JQueryXHR, Object>() {
 
 			@Override
@@ -36,7 +36,7 @@ public class ProjectService {
 		});
 	}
 	
-	public void saveFile(File file, RemoteDataListener listener){
+	public void saveFile(File file, RemoteDataListener<java.lang.Object> listener){
 		
 		$.post("/projects/update-file", file.getNative(), new TriFunction<Object, String, JQueryXHR, Object>() {
 
@@ -51,7 +51,7 @@ public class ProjectService {
 		});
 	}
 	
-	public void createFile(String name,String title, String dir, RemoteDataListener listener){
+	public void createFile(String name,String title, String dir, RemoteDataListener<java.lang.Object> listener){
 		
 		jsweet.lang.Object data = new jsweet.lang.Object();
 		data.$set("name", name);
@@ -71,7 +71,7 @@ public class ProjectService {
 		});
 	}
 	
-	public void deleteFile(String path, RemoteDataListener listener){
+	public void deleteFile(String path, RemoteDataListener<java.lang.Object> listener){
 		jsweet.lang.Object data = new jsweet.lang.Object();
 		data.$set("path", path);
 		
@@ -87,6 +87,35 @@ public class ProjectService {
 			
 		});
 		
+	}
+	
+	
+	public void getDataStructures(RemoteDataListener<java.lang.Object> listener){
+		$.get("/projects/structures", new Object(), new TriFunction<Object, String, JQueryXHR, Object>() {
+
+			@Override
+			public Object apply(Object t, String u, JQueryXHR v) {
+				if(listener != null)
+					listener.dataLoaded(t);
+				return t;
+			}
+			
+			
+		});
+	}
+	
+	public void getDataStructure(RemoteDataListener<java.lang.Object> listener, String name){
+		$.get("/projects/structures/" + name, new Object(), new TriFunction<Object, String, JQueryXHR, Object>() {
+
+			@Override
+			public Object apply(Object t, String u, JQueryXHR v) {
+				if(listener != null)
+					listener.dataLoaded(t);
+				return t;
+			}
+			
+			
+		});
 	}
 
 }

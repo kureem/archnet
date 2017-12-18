@@ -1,9 +1,24 @@
+/*
+ * Copyright 2002-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package framework;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import framework.lightning.Icon;
+import framework.lightning.SvgIcon;
 import framework.lightning.IconButton;
 import jsweet.dom.Event;
 
@@ -42,14 +57,19 @@ public class TreeItem extends JSContainer implements EventListener{
 	}
 	
 	
-	public void setLeftIcon(String name, String type){
-		leftIcon.setIcon(new Icon(name, type, name));
+	public TreeItem setLeftIcon(String name, String type){
+		leftIcon.setIcon(new SvgIcon(name, type, name));
+		return this;
 	}
 	
+	public TreeItem setLeftIcon(String name){
+		leftIcon.setIcon(new framework.lightning.ImageIcon(name, "https://d13yacurqjgara.cloudfront.net/users/82092/screenshots/1073359/spinner.gif"));
+		return this;
+	}
 	
 	public void addIcon(String name, String type, EventListener listener){
 		IconButton minimize = new IconButton(name);
-		minimize.setIcon(new Icon(name, type, name));
+		minimize.setIcon(new SvgIcon(name, type, name));
 		buttonsCtn.addChild(minimize);
 		minimize.addEventListener(listener, "click");
 		

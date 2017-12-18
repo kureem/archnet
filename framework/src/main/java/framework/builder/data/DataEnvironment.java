@@ -4,7 +4,7 @@ import jsweet.lang.Array;
 
 public interface DataEnvironment {
 	
-	public Array<DataStructure> getDataStructures();
+	public void getDataStructures(RemoteDataListener<Array<DataStructure>> listener);
 	
 	
 	public void saveStructure(DataStructure datastructure);

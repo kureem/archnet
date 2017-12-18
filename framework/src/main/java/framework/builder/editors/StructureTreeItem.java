@@ -206,13 +206,13 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 		if (!name.endsWith(".cmp")) {
 			name = name + ".cmp";
 		}
-		project.createFile(name, "components", new RemoteDataListener() {
+		project.createFile(name, "components", new RemoteDataListener<java.lang.Object>() {
 
 			@Override
 			public void dataLoaded(Object data) {
 				File fff = new File((jsweet.lang.Object) data);
 				fff.setData(marshall);
-				BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(fff, new RemoteDataListener() {
+				BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(fff, new RemoteDataListener<java.lang.Object>() {
 
 					@Override
 					public void dataLoaded(Object data) {

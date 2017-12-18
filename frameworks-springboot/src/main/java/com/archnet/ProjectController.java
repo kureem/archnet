@@ -28,10 +28,18 @@ public class ProjectController {
 		return force.accounts(principal);
 	}
 	
-	@RequestMapping("/meta-account")
-	public Map<Object,Object> metaAccount(OAuth2Authentication principal) {
-		return force.metaAccounts(principal);
+	@RequestMapping("/structures")
+	public Map<Object,Object> types(OAuth2Authentication principal) {
+		return force.types(principal);
 	}
+	
+	
+	@RequestMapping("/structures/{type}")
+	public Map<Object,Object> describe(OAuth2Authentication principal, @PathVariable("type") String type) {
+		return force.describe(principal,type);
+	}
+	
+	
 
 	@RequestMapping(path = "/create-project", method = RequestMethod.GET)
 	public Project createProject(@RequestParam("name") String name, @RequestParam("title") String title) {

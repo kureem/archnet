@@ -1,7 +1,5 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.console;
-
 import java.util.function.Consumer;
 
 import def.codemirror.codemirror.Editor;
@@ -85,7 +83,7 @@ public class CodeMirrorEditor extends JSTextArea
 		String data = editor.getValue();
 		this.value = data;
 		file.setData(data);
-		BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(file, new RemoteDataListener() {
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(file, new RemoteDataListener<java.lang.Object>() {
 
 			@Override
 			public void dataLoaded(java.lang.Object data) {

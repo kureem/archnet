@@ -6,7 +6,7 @@ public class DropDownItem extends JSContainer {
 
 	//private JSContainer label = new JSContainer("span").addClass("slds-truncate");
 	
-	private Icon label = new Icon("span");
+	private SvgIcon label = new SvgIcon("span");
 	
 	private JSContainer txt = new JSContainer("span");
 	

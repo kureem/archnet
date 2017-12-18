@@ -25,7 +25,7 @@ public class Button extends JSContainer {
 		addClass("slds-button");
 	}
 
-	public Button addIcon(Icon icon) {
+	public Button addIcon(SvgIcon icon) {
 		addClass("slds-button_icon");
 		addChild(icon);
 		return this;

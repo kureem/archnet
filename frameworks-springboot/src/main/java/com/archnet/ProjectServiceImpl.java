@@ -119,7 +119,6 @@ public class ProjectServiceImpl implements ProjectService{
 
 	@Override
 	public void deleteFile(String path) {
-		// TODO Auto-generated method stub
 		File file = fileRepository.findOne(path);
 		file.getParent().getChildren().remove(file);
 		File parent = file.getParent();

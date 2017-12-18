@@ -20,7 +20,7 @@ public class ValueParameter extends Parameter{
 
 	@Override
 	public String extractValue(Designable designable) {
-		Object s=  ((InputField)designable).getValue();
+		Object s=  ((InputField<?>)designable).getValue();
 		if(s != null){
 			return s.toString();
 		}else{

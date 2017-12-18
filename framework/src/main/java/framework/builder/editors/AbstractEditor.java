@@ -1,7 +1,5 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.console;
-
 import framework.JSContainer;
 import framework.builder.Builder;
 import framework.builder.data.File;
@@ -64,7 +62,7 @@ public abstract class AbstractEditor<T> extends JSContainer implements Editor<T>
 	public void save() {
 		String data = getMarshall();
 		file.setData(data);
-		projectService.saveFile(file, new RemoteDataListener() {
+		projectService.saveFile(file, new RemoteDataListener<java.lang.Object>() {
 
 			@Override
 			public void dataLoaded(Object data) {

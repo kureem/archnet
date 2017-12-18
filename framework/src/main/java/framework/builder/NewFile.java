@@ -10,6 +10,7 @@ import framework.builder.data.RemoteDataListener;
 import framework.builder.editors.Structure;
 import framework.core.BeanFactory;
 import jsweet.dom.Event;
+import jsweet.dom.KeyboardEvent;
 
 public class NewFile extends ItemSelector {
 
@@ -34,7 +35,7 @@ public class NewFile extends ItemSelector {
 	private String fileType = null;
 
 	private Builder builder;
-	
+
 	private Structure structure;
 
 	public NewFile(String name, Builder builder_) {
@@ -81,12 +82,24 @@ public class NewFile extends ItemSelector {
 
 	public void init(Structure structure) {
 		getInput().setValue("");
+
+		getInput().addEventListener(new EventListener() {
+
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				KeyboardEvent kevt = (KeyboardEvent)evt;
+				if(kevt.keyCode == 13 || kevt.which == 13){
+					click();
+				}
+			
+			}
+		}, "keypress");
 		this.structure = structure;
 		getFilesList().getChildren().clear();
 		getFilesList().addFile(lightning);
 		getFilesList().addFile(mobile);
 		if (!builder.isProjectOpen()) {
-			
+
 		} else {
 			getFilesList().addFile(html);
 			getFilesList().addFile(css);
@@ -117,13 +130,13 @@ public class NewFile extends ItemSelector {
 			if (!name.endsWith(".dat")) {
 				name = name + ".dat";
 			}
-		}else if (type.equalsIgnoreCase("components")) {
+		} else if (type.equalsIgnoreCase("components")) {
 			if (!name.endsWith(".cmp")) {
 				name = name + ".cmp";
 			}
 		}
 		File project = builder.getProject();
-		project.createFile(name, type, new RemoteDataListener() {
+		project.createFile(name, type, new RemoteDataListener<Object>() {
 
 			@Override
 			public void dataLoaded(Object data) {
@@ -131,7 +144,7 @@ public class NewFile extends ItemSelector {
 				render();
 				getBackdrop().render();
 
-				if(structure != null){
+				if (structure != null) {
 					structure.reload(type);
 					structure.render();
 				}
@@ -148,7 +161,7 @@ public class NewFile extends ItemSelector {
 		}
 
 		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createProject(name, name,
-				new RemoteDataListener() {
+				new RemoteDataListener<Object>() {
 
 					@Override
 					public void dataLoaded(Object data) {

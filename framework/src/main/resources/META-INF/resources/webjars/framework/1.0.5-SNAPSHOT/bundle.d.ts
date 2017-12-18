@@ -18,9 +18,9 @@ declare namespace framework.builder.data {
         static structures_$LI$(): Array<framework.builder.data.DataStructure>;
         /**
          *
-         * @return {framework.builder.data.DataStructure[]}
+         * @param {*} listener
          */
-        getDataStructures(): Array<framework.builder.data.DataStructure>;
+        getDataStructures(listener: framework.builder.data.RemoteDataListener<Array<framework.builder.data.DataStructure>>): void;
         /**
          *
          * @param {framework.builder.data.DataStructure} datastructure
@@ -33,30 +33,59 @@ declare namespace framework.builder.data {
         deleteStructure(name: string): void;
         constructor();
     }
+    namespace BasicDataEnvironment {
+        class BasicDataEnvironment$0 implements framework.builder.data.RemoteDataListener<any> {
+            private listener;
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any, listener: any);
+        }
+    }
 }
 declare namespace framework.builder.data {
     interface DataEnvironment {
-        getDataStructures(): Array<framework.builder.data.DataStructure>;
+        getDataStructures(listener: framework.builder.data.RemoteDataListener<Array<framework.builder.data.DataStructure>>): any;
         saveStructure(datastructure: framework.builder.data.DataStructure): any;
         deleteStructure(name: string): any;
     }
 }
 declare namespace framework.builder.data {
     class DataField {
-        name: string;
-        type: string;
-        label: string;
-        format: string;
-        primaryKey: boolean;
-        constructor();
-    }
-}
-declare namespace framework.builder.data {
-    class DataStructure {
-        name: string;
-        label: string;
-        fields: Array<framework.builder.data.DataField>;
-        constructor();
+        object: Object;
+        constructor(o?: any);
+        getNative(): any;
+        getName(): string;
+        getType(): string;
+        getLabel(): string;
+        getFormat(): string;
+        getPrimaryKey(): boolean;
+        getAutoNumber(): boolean;
+        getByteLength(): number;
+        getCalculated(): boolean;
+        getCreateable(): boolean;
+        getDefaultedOnCreate(): boolean;
+        getDependentPicklist(): boolean;
+        getFilterable(): boolean;
+        getHtmlFormatted(): boolean;
+        getNillable(): boolean;
+        getRestrictedPicklist(): boolean;
+        getUnique(): boolean;
+        getUpdateable(): boolean;
+        getCalculatedFormula(): string;
+        getDefaultValue(): string;
+        getDefaultValueFormula(): string;
+        getDigits(): number;
+        getLength(): number;
+        getPicklistValues(): string[];
+        getPrecision(): number;
+        getRelationshipName(): string;
+        getScale(): number;
+        getSortable(): boolean;
+        getValue(field: string): any;
     }
 }
 declare namespace framework.builder.data {
@@ -82,16 +111,16 @@ declare namespace framework.builder.data {
         getStylesheets(): java.util.List<File>;
         getScripts(): java.util.List<File>;
         getTemplates(): java.util.List<File>;
-        getDataEnvironment(): java.util.List<File>;
+        getDataStructures(listener: framework.builder.data.RemoteDataListener<Array<framework.builder.data.DataStructure>>): void;
         getComponents(): java.util.List<File>;
         getFile(name: string, type: string): File;
-        deleteFile(name: string, type: string, l: framework.builder.data.RemoteDataListener): void;
+        deleteFile(name: string, type: string, l: framework.builder.data.RemoteDataListener<any>): void;
         getChild(name: string): File;
-        createCss(name: string, listener: framework.builder.data.RemoteDataListener): void;
-        createTemplate(name: string, listener: framework.builder.data.RemoteDataListener): void;
-        createScript(name: string, listener: framework.builder.data.RemoteDataListener): void;
-        createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name: string, type: string, listener: framework.builder.data.RemoteDataListener): void;
-        createFile$java_lang_String$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name: string, title: string, dir: string, listener: framework.builder.data.RemoteDataListener): void;
+        createCss(name: string, listener: framework.builder.data.RemoteDataListener<any>): void;
+        createTemplate(name: string, listener: framework.builder.data.RemoteDataListener<any>): void;
+        createScript(name: string, listener: framework.builder.data.RemoteDataListener<any>): void;
+        createFile$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name: string, type: string, listener: framework.builder.data.RemoteDataListener<any>): void;
+        createFile$java_lang_String$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(name: string, title: string, dir: string, listener: framework.builder.data.RemoteDataListener<any>): void;
         createFile(name?: any, title?: any, dir?: any, listener?: any): any;
         getName(): string;
         getPath(): string;
@@ -107,7 +136,7 @@ declare namespace framework.builder.data {
         getChildren(): java.util.List<File>;
     }
     namespace File {
-        class File$0 implements framework.builder.data.RemoteDataListener {
+        class File$0 implements framework.builder.data.RemoteDataListener<any> {
             private l;
             __parent: any;
             /**
@@ -117,7 +146,7 @@ declare namespace framework.builder.data {
             dataLoaded(data: any): void;
             constructor(__parent: any, l: any);
         }
-        class File$1 implements framework.builder.data.RemoteDataListener {
+        class File$1 implements framework.builder.data.RemoteDataListener<any> {
             private dir;
             private listener;
             __parent: any;
@@ -132,16 +161,22 @@ declare namespace framework.builder.data {
 }
 declare namespace framework.builder.data {
     class ProjectService {
-        createProject(name: string, title: string, listener: framework.builder.data.RemoteDataListener): void;
-        getProjects(listener: framework.builder.data.RemoteDataListener): void;
-        saveFile(file: framework.builder.data.File, listener: framework.builder.data.RemoteDataListener): void;
-        createFile(name: string, title: string, dir: string, listener: framework.builder.data.RemoteDataListener): void;
-        deleteFile(path: string, listener: framework.builder.data.RemoteDataListener): void;
+        createProject(name: string, title: string, listener: framework.builder.data.RemoteDataListener<any>): void;
+        getProjects(listener: framework.builder.data.RemoteDataListener<any>): void;
+        saveFile(file: framework.builder.data.File, listener: framework.builder.data.RemoteDataListener<any>): void;
+        createFile(name: string, title: string, dir: string, listener: framework.builder.data.RemoteDataListener<any>): void;
+        deleteFile(path: string, listener: framework.builder.data.RemoteDataListener<any>): void;
+        getDataStructures(listener: framework.builder.data.RemoteDataListener<any>): void;
+        getDataStructure(listener: framework.builder.data.RemoteDataListener<any>, name: string): void;
     }
 }
 declare namespace framework.builder.data {
-    interface RemoteDataListener {
-        dataLoaded(data: any): any;
+    interface RemoteDataListener<T> {
+        /**
+         *
+         * @param {framework.builder.data.DataStructure[]} data
+         */
+        dataLoaded(data?: any): any;
     }
 }
 declare namespace framework.builder.editors {
@@ -214,6 +249,11 @@ declare namespace framework.builder.libraries {
         getComponentFactory(identifier: string): framework.builder.marshalling.ComponentFactory;
     }
 }
+declare namespace framework.builder.libraries {
+    interface FileSelectedListener {
+        onItemSelected(field: framework.builder.data.DataField, source: framework.builder.libraries.DataItem): any;
+    }
+}
 declare namespace framework.builder.marshalling {
     class BuilderEvent {
         type: string;
@@ -245,6 +285,15 @@ declare namespace framework.builder.marshalling {
         static toComponent$java_lang_String(s: string): framework.builder.marshalling.Component;
         static toComponent(s?: any): any;
         static toComponent$jsweet_lang_Object(o: Object): framework.builder.marshalling.Component;
+    }
+}
+declare namespace framework.builder.properties {
+    class FieldEditor {
+    }
+}
+declare namespace framework.builder.properties {
+    interface ItemSelectedListener<T> {
+        onItemSelected(item: T): any;
     }
 }
 declare namespace framework.builder.properties {
@@ -519,12 +568,14 @@ declare namespace framework.lightning.table {
 declare namespace framework.lightning.table {
     interface TableModel {
         getRowCount(): number;
-        getColumnCount(): number;
-        getColumnName(columnIndex: number): string;
-        getColumnType(columnIndex: number): string;
         isCellEditable(rowIndex: number, columnIndex: number): boolean;
         getValueAt(rowIndex: number, columnIndex: number): any;
         setValueAt(aValue: any, rowIndex: number, columnIndex: number): any;
+    }
+}
+declare namespace framework.lightning.table {
+    interface TableRowsSelectionListener {
+        onSelectRow(source: framework.JSContainer, event: Event, table: framework.lightning.table.Table, firstIndex: number, lastIndex: number): any;
     }
 }
 declare namespace framework {
@@ -652,6 +703,33 @@ declare namespace framework.util {
          */
         static getStreamContentAsBytes(is: java.io.InputStream): number[];
         static writeToFile(content: string, f: java.io.File): boolean;
+    }
+}
+declare namespace framework.builder.data {
+    class DataStructure extends framework.builder.data.File {
+        object: Object;
+        constructor(object: Object);
+        getName(): string;
+        getLabel(): string;
+        getTitle(): string;
+        isDeletable(): boolean;
+        getLabelPlural(): string;
+        isQueryable(): boolean;
+        getSearchable(): string;
+        isUpdateable(): boolean;
+        getFields(listener: framework.builder.data.RemoteDataListener<java.util.List<framework.builder.data.DataField>>): void;
+    }
+    namespace DataStructure {
+        class DataStructure$0 implements framework.builder.data.RemoteDataListener<any> {
+            private listener;
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any, listener: any);
+        }
     }
 }
 declare namespace framework {
@@ -1174,7 +1252,7 @@ declare namespace framework.builder.editors {
         open(f: framework.builder.data.File): void;
     }
     namespace AbstractEditor {
-        class AbstractEditor$0 implements framework.builder.data.RemoteDataListener {
+        class AbstractEditor$0 implements framework.builder.data.RemoteDataListener<any> {
             __parent: any;
             /**
              *
@@ -1216,6 +1294,7 @@ declare namespace framework.builder.editors {
         selector: framework.builder.Selector;
         __cut: boolean;
         clipboardItem: framework.design.Designable;
+        dataRoot: framework.TreeItem;
         toggleSelect: framework.EventListener;
         constructor(name: string, root: framework.design.Designable, f: framework.builder.data.File, selector: framework.builder.Selector);
         copy(des: framework.design.Designable): void;
@@ -1251,6 +1330,18 @@ declare namespace framework.builder.editors {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
+        class Structure$1 implements framework.builder.data.RemoteDataListener<Array<framework.builder.data.DataStructure>> {
+            private struc;
+            private lis;
+            __parent: any;
+            dataLoaded$jsweet_lang_Array(data: Array<framework.builder.data.DataStructure>): void;
+            /**
+             *
+             * @param {framework.builder.data.DataStructure[]} data
+             */
+            dataLoaded(data?: any): any;
+            constructor(__parent: any, struc: any, lis: any);
+        }
     }
 }
 declare namespace framework.builder {
@@ -1275,6 +1366,40 @@ declare namespace framework.builder {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
+    }
+}
+declare namespace framework.builder.libraries {
+    class DataComposer extends framework.JSContainer implements framework.builder.editors.Editor<Array<framework.builder.data.DataStructure>> {
+        editor: framework.builder.editors.VisualEditor;
+        structure: framework.builder.editors.Structure;
+        constructor(name: string, editor: framework.builder.editors.VisualEditor, structure: framework.builder.editors.Structure);
+        /**
+         *
+         */
+        save(): void;
+        /**
+         *
+         */
+        dirty(): void;
+        /**
+         *
+         */
+        clean(): void;
+        /**
+         *
+         * @param {framework.builder.data.File} file
+         */
+        open(file: framework.builder.data.File): void;
+        /**
+         *
+         * @return {framework.builder.editors.Structure}
+         */
+        getStructure(): framework.builder.editors.Structure;
+        /**
+         *
+         * @return {framework.builder.editors.VisualEditor}
+         */
+        getRootEditor(): framework.builder.editors.VisualEditor;
     }
 }
 declare namespace framework.builder {
@@ -1617,7 +1742,7 @@ declare namespace framework.lightning {
         static STATE_SUCCESS: string;
         component: framework.builder.marshalling.Component;
         constructor(name?: any);
-        addIcon(icon: framework.lightning.Icon): Button;
+        addIcon(icon: framework.lightning.SvgIcon): Button;
         setLabel(label: string): Button;
         setState(state: string): Button;
         setInverse(b: boolean): Button;
@@ -1719,7 +1844,7 @@ declare namespace framework.lightning {
 }
 declare namespace framework.lightning {
     class DropDownItem extends framework.JSContainer {
-        label: framework.lightning.Icon;
+        label: framework.lightning.SvgIcon;
         txt: framework.JSContainer;
         constructor(name: string, label: string);
         setIcon(name: string, type: string): void;
@@ -1788,41 +1913,14 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning {
-    class Icon extends framework.JSContainer {
-        static SMALL: string;
-        static EXTRA_SMALL: string;
-        static EXTRA_EXTRA_SMALL: string;
-        static LARGE: string;
-        static TEXT_DEFAULT: string;
-        static TEXT_WARNING: string;
-        static TEXT_ERROR: string;
-        static TEXT_LIGHT: string;
-        assetsUrl: string;
-        type: string;
-        iconName: string;
-        svgClass: string;
-        constructor(name?: any, type?: any, iconName?: any);
-        setSvgClass(cls: string): void;
-        refresh(): void;
-        getAssetsUrl(): string;
-        setAssetsUrl(assetsUrl: string): void;
-        getType(): string;
-        setType(type: string): void;
-        getIconName(): string;
-        setIconName(name: string): void;
-        setSize(size: string): Icon;
-        setTextType(type: string): Icon;
-    }
-}
-declare namespace framework.lightning {
     class IconButton extends framework.JSContainer {
-        icon: framework.lightning.Icon;
+        icon: framework.lightning.SvgIcon;
         static SMALL: string;
         static EXTRA_SMALL: string;
         static EXTRA_EXTRA_SMALL: string;
         constructor(name: string);
-        getIcon(): framework.lightning.Icon;
-        setIcon(icon: framework.lightning.Icon): IconButton;
+        getIcon(): framework.lightning.SvgIcon;
+        setIcon(icon: framework.lightning.SvgIcon): IconButton;
         toggleClass(cls: string, b: boolean): IconButton;
         setContainer(b: boolean): IconButton;
         setBorder(b: boolean): IconButton;
@@ -1919,7 +2017,7 @@ declare namespace framework.lightning {
     class Section extends framework.JSContainer {
         titleContainer: framework.JSContainer;
         title: framework.JSContainer;
-        arrow: framework.lightning.Icon;
+        arrow: framework.lightning.SvgIcon;
         content: framework.JSContainer;
         constructor(name: string, title: string);
         open(): Section;
@@ -1927,6 +2025,39 @@ declare namespace framework.lightning {
         setTitle(stitle: string): Section;
         getContent(): framework.JSContainer;
         getTitleContainer(): framework.JSContainer;
+    }
+}
+declare namespace framework.lightning {
+    class Spinner extends framework.JSContainer {
+        __framework_lightning_Spinner_html: string;
+        constructor(name: string);
+    }
+}
+declare namespace framework.lightning {
+    class SvgIcon extends framework.JSContainer {
+        static SMALL: string;
+        static EXTRA_SMALL: string;
+        static EXTRA_EXTRA_SMALL: string;
+        static LARGE: string;
+        static TEXT_DEFAULT: string;
+        static TEXT_WARNING: string;
+        static TEXT_ERROR: string;
+        static TEXT_LIGHT: string;
+        assetsUrl: string;
+        type: string;
+        iconName: string;
+        svgClass: string;
+        constructor(name?: any, type?: any, iconName?: any);
+        setSvgClass(cls: string): void;
+        refresh(): void;
+        getAssetsUrl(): string;
+        setAssetsUrl(assetsUrl: string): void;
+        getType(): string;
+        setType(type: string): void;
+        getIconName(): string;
+        setIconName(name: string): void;
+        setSize(size: string): SvgIcon;
+        setTextType(type: string): SvgIcon;
     }
 }
 declare namespace framework.lightning {
@@ -1941,7 +2072,7 @@ declare namespace framework.lightning {
         __framework_lightning_TabItem_listeners: java.util.List<framework.lightning.TabActionListener>;
         body: framework.lightning.TabBody;
         title: framework.JSContainer;
-        closeButton: framework.lightning.Icon;
+        closeButton: framework.lightning.SvgIcon;
         active: boolean;
         constructor(name: string, body: framework.lightning.TabBody);
         setClosable(b: boolean): TabItem;
@@ -1963,13 +2094,51 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning.table {
+    class Paginator extends framework.JSContainer implements framework.EventListener {
+        previous: framework.lightning.IconButton;
+        next: framework.lightning.IconButton;
+        pages: framework.JSContainer;
+        numPages: number;
+        table: framework.lightning.table.Table;
+        maxItem: number;
+        constructor(name: string);
+        setTable(table: framework.lightning.table.Table): void;
+        redisplayBtns(currentPage: number): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+}
+declare namespace framework.lightning.table {
     class Table extends framework.JSContainer {
         thead: framework.JSContainer;
         tbody: framework.JSContainer;
+        tfoot: framework.JSContainer;
         model: framework.lightning.table.TableModel;
         tableCellRenderer: framework.lightning.table.TableCellRenderer;
         tableColumnModel: framework.lightning.table.TableColumnModel;
+        currrentPage: number;
+        pageSize: number;
+        ftr: framework.JSContainer;
+        ftd: framework.JSContainer;
+        paginator: framework.lightning.table.Paginator;
+        selectable: boolean;
+        multiSelectable: boolean;
+        selecteRowOn: string;
+        emptyTableMessage: string;
+        rowsSelectionListeners: java.util.List<framework.lightning.table.TableRowsSelectionListener>;
+        static SELECT_ROW_EVT: framework.EventListener;
+        static SELECT_ROW_EVT_$LI$(): framework.EventListener;
         constructor(name: string);
+        addRowsSelectionListener(l: framework.lightning.table.TableRowsSelectionListener): void;
+        fireRowsSelectionListeners(source: framework.JSContainer, evt: Event, firstIndex: number, lastIndex: number): void;
+        setSelectRowOn(on: string): void;
+        addEmptyRow(): framework.JSContainer;
+        loading(): void;
+        emptyData(): void;
         getModel(): framework.lightning.table.TableModel;
         setModel(model: framework.lightning.table.TableModel): void;
         getTableCellRenderer(): framework.lightning.table.TableCellRenderer;
@@ -1978,9 +2147,17 @@ declare namespace framework.lightning.table {
         setTableColumnModel(tableColumnModel: framework.lightning.table.TableColumnModel): void;
         getThead(): framework.JSContainer;
         getTbody(): framework.JSContainer;
+        setPage(page: number): void;
+        getPage(): number;
+        getPageSize(): number;
+        setPageSize(size: number): void;
         refreshData(): void;
         getRow(index: number): framework.JSContainer;
         getBody(): framework.JSContainer;
+        setSelectable(b: boolean): void;
+        isSelectable(): boolean;
+        setMultiSelectable(b: boolean): void;
+        isMultiSelectable(): boolean;
         refreshColumns(): void;
         setBordered(b: boolean): Table;
         setFixedLayout(b: boolean): Table;
@@ -1992,6 +2169,17 @@ declare namespace framework.lightning.table {
         setHasNoRowHover(b: boolean): Table;
         setStriped(b: boolean): Table;
     }
+    namespace Table {
+        class Table$0 implements framework.EventListener {
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor();
+        }
+    }
 }
 declare namespace framework.lightning.table {
     class TableColumn extends framework.JSContainer {
@@ -1999,6 +2187,7 @@ declare namespace framework.lightning.table {
         title: framework.JSContainer;
         constructor(name: string, identifier: any, label: string);
         getIdentifier(): any;
+        setWidth(width: string): TableColumn;
         setLabel(title: string): TableColumn;
         setFeature(cls: string, b: boolean): void;
     }
@@ -2038,7 +2227,9 @@ declare namespace framework {
         buttonsCtn: framework.JSContainer;
         leftIcon: framework.lightning.IconButton;
         constructor(name: string, title: string);
-        setLeftIcon(name: string, type: string): void;
+        setLeftIcon$java_lang_String$java_lang_String(name: string, type: string): TreeItem;
+        setLeftIcon(name?: any, type?: any): any;
+        setLeftIcon$java_lang_String(name: string): TreeItem;
         addIcon(name: string, type: string, listener: framework.EventListener): void;
         getButton(): framework.JSContainer;
         open(): void;
@@ -2170,52 +2361,6 @@ declare namespace framework.builder.editors {
         consume(component?: any): any;
         getStructure(): framework.builder.editors.Structure;
         getSelector(): framework.builder.Selector;
-    }
-}
-declare namespace framework.builder.libraries {
-    class DataComposer extends framework.builder.editors.AbstractEditor<string> {
-        header: framework.lightning.GlobalHeader;
-        addNew: framework.lightning.Button;
-        structures: Array<framework.builder.data.DataStructure>;
-        constructor(name: string, editor: framework.builder.editors.VisualEditor);
-        createNewFile$(): void;
-        createNewFile$java_lang_String(name: string): void;
-        createNewFile(name?: any): any;
-        /**
-         *
-         * @return {string}
-         */
-        getMarshall(): string;
-        /**
-         *
-         * @param {framework.builder.data.File} f
-         * @return {string}
-         */
-        createNew(f: framework.builder.data.File): string;
-        /**
-         *
-         * @param {framework.builder.data.File} f
-         * @return {string}
-         */
-        unmarshall(f: framework.builder.data.File): string;
-        consume$java_lang_String(data: string): void;
-        /**
-         *
-         * @param {string} data
-         */
-        consume(data?: any): any;
-    }
-    namespace DataComposer {
-        class DataComposer$0 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
     }
 }
 declare namespace framework.designables {
@@ -2444,13 +2589,14 @@ declare namespace framework.builder.editors {
         clean(): void;
     }
     namespace CodeMirrorEditor {
-        class CodeMirrorEditor$0 implements framework.builder.data.RemoteDataListener {
+        class CodeMirrorEditor$0 implements framework.builder.data.RemoteDataListener<any> {
             __parent: any;
             /**
              *
-             * @param {*} data
+             * @param {framework.builder.data.DataStructure[]} data
              */
-            dataLoaded(data: any): void;
+            dataLoaded(data?: any): any;
+            dataLoaded$java_lang_Object(data: any): void;
             constructor(__parent: any);
         }
     }
@@ -2561,67 +2707,18 @@ declare namespace framework.designables {
     }
 }
 declare namespace framework.builder.libraries {
-    class DataItem extends framework.lightning.Card implements framework.lightning.table.TableModel, framework.lightning.table.TableCellRenderer {
+    class DataItem extends framework.lightning.Card implements framework.lightning.table.TableCellRenderer {
         title: framework.JSContainer;
-        figure: framework.lightning.Icon;
+        figure: framework.lightning.SvgIcon;
         fields: framework.lightning.table.Table;
         dataStructure: framework.builder.data.DataStructure;
         delegate: framework.lightning.table.DefaultTableCellRenderer;
-        editTitle: framework.JSInput;
-        addNew: framework.lightning.Button;
-        deleteStructure: framework.lightning.Button;
-        addNewMode: boolean;
-        editMode: boolean;
-        dataEnvironment: framework.builder.data.DataEnvironment;
-        constructor(name: string, structure: framework.builder.data.DataStructure);
-        deleteField(row: number): void;
-        save(row: number): void;
-        addNewRow(): void;
-        editRow(row: number): void;
+        labels: string[];
+        labelsFields: string[];
+        dataFields: java.util.List<framework.builder.data.DataField>;
+        constructor(name?: any, structure?: any, labels?: any, fields?: any);
+        addOnFieldSeletedListener(l: framework.builder.libraries.FileSelectedListener): void;
         setDataStructure(structure: framework.builder.data.DataStructure): void;
-        /**
-         *
-         * @return {number}
-         */
-        getRowCount(): number;
-        /**
-         *
-         * @return {number}
-         */
-        getColumnCount(): number;
-        /**
-         *
-         * @param {number} columnIndex
-         * @return {string}
-         */
-        getColumnName(columnIndex: number): string;
-        /**
-         *
-         * @param {number} columnIndex
-         * @return {string}
-         */
-        getColumnType(columnIndex: number): string;
-        /**
-         *
-         * @param {number} rowIndex
-         * @param {number} columnIndex
-         * @return {boolean}
-         */
-        isCellEditable(rowIndex: number, columnIndex: number): boolean;
-        /**
-         *
-         * @param {number} rowIndex
-         * @param {number} columnIndex
-         * @return {*}
-         */
-        getValueAt(rowIndex: number, columnIndex: number): any;
-        /**
-         *
-         * @param {*} aValue
-         * @param {number} rowIndex
-         * @param {number} columnIndex
-         */
-        setValueAt(aValue: any, rowIndex: number, columnIndex: number): void;
         /**
          *
          * @param {framework.lightning.table.Table} table
@@ -2633,86 +2730,62 @@ declare namespace framework.builder.libraries {
         getComponent(table: framework.lightning.table.Table, value: any, row: number, column: number): framework.Renderable;
     }
     namespace DataItem {
-        class DataItem$0 implements framework.EventListener {
+        class DataItem$0 implements framework.lightning.table.TableRowsSelectionListener {
+            private l;
+            private item;
             __parent: any;
             /**
              *
              * @param {framework.JSContainer} source
-             * @param {Event} evt
+             * @param {Event} event
+             * @param {framework.lightning.table.Table} table
+             * @param {number} firstIndex
+             * @param {number} lastIndex
              */
-            performAction(source: framework.JSContainer, evt: Event): void;
+            onSelectRow(source: framework.JSContainer, event: Event, table: framework.lightning.table.Table, firstIndex: number, lastIndex: number): void;
+            constructor(__parent: any, l: any, item: any);
+        }
+        class DataItem$1 implements framework.builder.data.RemoteDataListener<java.util.List<framework.builder.data.DataField>> {
+            __parent: any;
+            dataLoaded$java_util_List(data_: java.util.List<framework.builder.data.DataField>): void;
+            /**
+             *
+             * @param {*} data_
+             */
+            dataLoaded(data_?: any): any;
             constructor(__parent: any);
         }
-        class DataItem$1 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class DataItem$2 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class DataItem$3 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class DataItem$4 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class DataItem$5 implements framework.EventListener {
-            private row;
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any, row: any);
-        }
-        class DataItem$6 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
-        class DataItem$7 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
+        namespace DataItem$1 {
+            class DataItem$1$0 implements framework.lightning.table.TableModel {
+                __parent: any;
+                /**
+                 *
+                 * @param {*} aValue
+                 * @param {number} rowIndex
+                 * @param {number} columnIndex
+                 */
+                setValueAt(aValue: any, rowIndex: number, columnIndex: number): void;
+                /**
+                 *
+                 * @param {number} rowIndex
+                 * @param {number} columnIndex
+                 * @return {boolean}
+                 */
+                isCellEditable(rowIndex: number, columnIndex: number): boolean;
+                /**
+                 *
+                 * @param {number} rowIndex
+                 * @param {number} columnIndex
+                 * @return {*}
+                 */
+                getValueAt(rowIndex: number, columnIndex: number): any;
+                /**
+                 *
+                 * @return {number}
+                 */
+                getRowCount(): number;
+                constructor(__parent: any);
+            }
         }
     }
 }
@@ -2749,7 +2822,7 @@ declare namespace framework.lightning {
         header: framework.lightning.Grid;
         headerTitle: framework.lightning.Media;
         headerIconContainer: framework.JSContainer;
-        headerIcon: framework.lightning.Icon;
+        headerIcon: framework.lightning.SvgIcon;
         title: framework.lightning.Text;
         tools: framework.JSContainer;
         minimize: framework.lightning.IconButton;
@@ -2760,7 +2833,7 @@ declare namespace framework.lightning {
         constructor(name: string);
         setOpen(b: boolean): DockedComposer;
         setClosed(b: boolean): DockedComposer;
-        getHeaderIcon(): framework.lightning.Icon;
+        getHeaderIcon(): framework.lightning.SvgIcon;
         getTitle(): framework.lightning.Text;
         getTools(): framework.JSContainer;
         getExpandButton(): framework.lightning.IconButton;
@@ -2920,6 +2993,81 @@ declare namespace framework.builder {
         getFilesList(): framework.builder.FilesList;
     }
 }
+declare namespace framework.builder.properties {
+    abstract class ItemSelector<T> extends framework.lightning.Modal implements framework.lightning.table.TableCellRenderer {
+        dataTable: framework.lightning.table.Table;
+        delegate: framework.lightning.table.DefaultTableCellRenderer;
+        tableColumModel: framework.lightning.table.DefaultTableColumnModel;
+        dataList: java.util.List<T>;
+        constructor(name: string);
+        addOnItemSeletedListener(l: framework.builder.properties.ItemSelectedListener<T>): void;
+        addColumn(column: framework.lightning.table.TableColumn): void;
+        setDataList(dataList: java.util.List<T>): void;
+        abstract isActionColumn(table: framework.lightning.table.Table, value: any, row: number, column: number): boolean;
+        /**
+         *
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
+         */
+        getComponent(table: framework.lightning.table.Table, value: any, row: number, column: number): framework.Renderable;
+    }
+    namespace ItemSelector {
+        class ItemSelector$0 implements framework.lightning.table.TableRowsSelectionListener {
+            private l;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} event
+             * @param {framework.lightning.table.Table} table
+             * @param {number} firstIndex
+             * @param {number} lastIndex
+             */
+            onSelectRow(source: framework.JSContainer, event: Event, table: framework.lightning.table.Table, firstIndex: number, lastIndex: number): void;
+            constructor(__parent: any, l: any);
+        }
+        class ItemSelector$1 implements framework.lightning.table.TableModel {
+            private dataList;
+            __parent: any;
+            /**
+             *
+             * @param {*} aValue
+             * @param {number} rowIndex
+             * @param {number} columnIndex
+             */
+            setValueAt(aValue: any, rowIndex: number, columnIndex: number): void;
+            /**
+             *
+             * @param {number} rowIndex
+             * @param {number} columnIndex
+             * @return {boolean}
+             */
+            isCellEditable(rowIndex: number, columnIndex: number): boolean;
+            /**
+             *
+             * @param {number} rowIndex
+             * @param {number} columnIndex
+             * @return {*}
+             */
+            getValueAt(rowIndex: number, columnIndex: number): any;
+            /**
+             *
+             * @return {number}
+             */
+            getRowCount(): number;
+            constructor(__parent: any, dataList: any);
+        }
+    }
+}
+declare namespace framework.lightning {
+    class ImageIcon extends framework.lightning.SvgIcon {
+        img: framework.JSContainer;
+        constructor(name: string, url: string);
+    }
+}
 declare namespace framework.builder {
     class ComponentsTabs extends framework.lightning.Tabs {
         constructor(name: string);
@@ -2999,14 +3147,15 @@ declare namespace framework.builder.editors {
         performAction(source: framework.JSContainer, evt: Event): void;
     }
     namespace FileTreeItem {
-        class FileTreeItem$0 implements framework.builder.data.RemoteDataListener {
+        class FileTreeItem$0 implements framework.builder.data.RemoteDataListener<any> {
             private stype;
             __parent: any;
             /**
              *
-             * @param {*} data
+             * @param {framework.builder.data.DataStructure[]} data
              */
-            dataLoaded(data: any): void;
+            dataLoaded(data?: any): any;
+            dataLoaded$java_lang_Object(data: any): void;
             constructor(__parent: any, stype: any);
         }
     }
@@ -3121,24 +3270,26 @@ declare namespace framework.builder.editors {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any, structure: any, paste: any);
         }
-        class StructureTreeItem$8 implements framework.builder.data.RemoteDataListener {
+        class StructureTreeItem$8 implements framework.builder.data.RemoteDataListener<any> {
             private marshall;
             __parent: any;
             /**
              *
-             * @param {*} data
+             * @param {framework.builder.data.DataStructure[]} data
              */
-            dataLoaded(data: any): void;
+            dataLoaded(data?: any): any;
+            dataLoaded$java_lang_Object(data: any): void;
             constructor(__parent: any, marshall: any);
         }
         namespace StructureTreeItem$8 {
-            class StructureTreeItem$8$0 implements framework.builder.data.RemoteDataListener {
+            class StructureTreeItem$8$0 implements framework.builder.data.RemoteDataListener<any> {
                 __parent: any;
                 /**
                  *
-                 * @param {*} data
+                 * @param {framework.builder.data.DataStructure[]} data
                  */
-                dataLoaded(data: any): void;
+                dataLoaded(data?: any): any;
+                dataLoaded$java_lang_Object(data: any): void;
                 constructor(__parent: any);
             }
         }
@@ -3233,6 +3384,41 @@ declare namespace framework.builder.properties {
          * @param {framework.design.Parameter} parameter
          */
         initEditor(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+    }
+}
+declare namespace framework.builder.properties {
+    abstract class InputWithSelectorEditor<T> extends framework.builder.properties.AbstractInputPropertyEditor {
+        icon: framework.lightning.IconButton;
+        modal: framework.builder.properties.ItemSelector<T>;
+        selectedItem: T;
+        constructor(name: string, modal: framework.builder.properties.ItemSelector<T>);
+        /**
+         *
+         * @param {*} designable
+         * @param {framework.design.Parameter} parameter
+         */
+        initEditor(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+    }
+    namespace InputWithSelectorEditor {
+        class InputWithSelectorEditor$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class InputWithSelectorEditor$1 implements framework.builder.properties.ItemSelectedListener<any> {
+            __parent: any;
+            /**
+             *
+             * @param {*} item
+             */
+            onItemSelected(item: any): void;
+            constructor(__parent: any);
+        }
     }
 }
 declare namespace framework.builder.properties {
@@ -3457,29 +3643,41 @@ declare namespace framework.builder {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
-        class NewFile$2 implements framework.builder.data.RemoteDataListener {
+        class NewFile$2 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class NewFile$3 implements framework.builder.data.RemoteDataListener<any> {
             private type;
             __parent: any;
             /**
              *
-             * @param {*} data
+             * @param {framework.builder.data.DataStructure[]} data
              */
-            dataLoaded(data: any): void;
+            dataLoaded(data?: any): any;
+            dataLoaded$java_lang_Object(data: any): void;
             constructor(__parent: any, type: any);
         }
-        class NewFile$3 implements framework.builder.data.RemoteDataListener {
+        class NewFile$4 implements framework.builder.data.RemoteDataListener<any> {
             __parent: any;
             /**
              *
-             * @param {*} data
+             * @param {framework.builder.data.DataStructure[]} data
              */
-            dataLoaded(data: any): void;
+            dataLoaded(data?: any): any;
+            dataLoaded$java_lang_Object(data: any): void;
             constructor(__parent: any);
         }
     }
 }
 declare namespace framework.builder {
-    class OpenProject extends framework.builder.ItemSelector implements framework.EventListener, framework.builder.data.RemoteDataListener {
+    class OpenProject extends framework.builder.ItemSelector implements framework.EventListener, framework.builder.data.RemoteDataListener<any> {
         builder_: framework.builder.Builder;
         selectedItem: framework.builder.UIFile;
         constructor(name: string, builder: framework.builder.Builder);
@@ -3491,10 +3689,39 @@ declare namespace framework.builder {
         performAction(source: framework.JSContainer, evt: Event): void;
         /**
          *
-         * @param {*} data
+         * @param {framework.builder.data.DataStructure[]} data
          */
-        dataLoaded(data: any): void;
+        dataLoaded(data?: any): any;
+        dataLoaded$java_lang_Object(data: any): void;
         init(): void;
+    }
+}
+declare namespace framework.builder.data {
+    class FieldSelector extends framework.builder.properties.ItemSelector<framework.builder.data.DataField> {
+        labels: string[];
+        fields: string[];
+        constructor(name: string, structure: framework.builder.data.DataStructure);
+        /**
+         *
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {boolean}
+         */
+        isActionColumn(table: framework.lightning.table.Table, value: any, row: number, column: number): boolean;
+    }
+    namespace FieldSelector {
+        class FieldSelector$0 implements framework.builder.data.RemoteDataListener<java.util.List<framework.builder.data.DataField>> {
+            __parent: any;
+            dataLoaded$java_util_List(data: java.util.List<framework.builder.data.DataField>): void;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data?: any): any;
+            constructor(__parent: any);
+        }
     }
 }
 declare namespace framework.designables {

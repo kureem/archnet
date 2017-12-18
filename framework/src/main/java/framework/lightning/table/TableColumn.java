@@ -16,6 +16,7 @@ public class TableColumn extends JSContainer {
 	
 	private JSContainer title = new JSContainer("div").addClass("slds-truncate");
 	
+	
 	//private Icon icon = new Icon("", "utility", "arrowdown");
 	
 	
@@ -62,6 +63,11 @@ public class TableColumn extends JSContainer {
 	
 	public Object getIdentifier(){
 		return identifier;
+	}
+	
+	public TableColumn setWidth(String width){
+		title.setStyle("width", width);
+		return this;
 	}
 	
 	/*public void setCheckBox(boolean b){

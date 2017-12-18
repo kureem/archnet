@@ -13,7 +13,7 @@ public class DockedComposer extends Grid implements Draggable{
 	
 	private JSContainer headerIconContainer = new JSContainer("div").addClass("slds-icon_container");
 	
-	private Icon headerIcon = new Icon("headerIcon").setSize(Icon.EXTRA_SMALL).setTextType(Icon.TEXT_DEFAULT);
+	private SvgIcon headerIcon = new SvgIcon("headerIcon").setSize(SvgIcon.EXTRA_SMALL).setTextType(SvgIcon.TEXT_DEFAULT);
 	
 	private Text title = new Text("title", "h2").setTruncate(true);
 	
@@ -64,7 +64,7 @@ public class DockedComposer extends Grid implements Draggable{
 		return this;
 	}
 
-	public Icon getHeaderIcon() {
+	public SvgIcon getHeaderIcon() {
 		return headerIcon;
 	}
 

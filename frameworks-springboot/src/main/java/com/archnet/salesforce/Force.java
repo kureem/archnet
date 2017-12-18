@@ -35,8 +35,16 @@ public class Force {
 		return urls.get("rest").replace("{version}", REST_VERSION);
 	}
 
-	public Map<Object, Object> metaAccounts(OAuth2Authentication principal) {
-		String url = restUrl(principal) + "sobjects/Account/describe";
+	@SuppressWarnings("unchecked")
+	public Map<Object, Object> types(OAuth2Authentication principal) {
+		String url = restUrl(principal) + "sobjects";
+		return restTemplate.getForObject(url, Map.class);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public Map<Object,Object> describe(OAuth2Authentication principal, String type){
+		String url = restUrl(principal) + "sobjects/"+type+"/describe";
 		return restTemplate.getForObject(url, Map.class);
 	}
 

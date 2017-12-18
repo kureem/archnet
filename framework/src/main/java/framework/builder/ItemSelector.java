@@ -48,6 +48,8 @@ public class ItemSelector extends Modal {
 		setLarge(true);
 		
 		setStyle("width", "80%");
+		
+		
 
 	}
 

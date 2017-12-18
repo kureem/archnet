@@ -1,17 +1,16 @@
 package framework.builder.data;
 
-import def.codemirror.codemirror.Editor.Object;
 
 public class DataField {
 	
-	private Object object;
+	private jsweet.lang.Object object;
 
 
 	public DataField(){
-		object = new Object();
+		object = new jsweet.lang.Object();
 	}
 	
-	public DataField(Object o){
+	public DataField(jsweet.lang.Object o){
 		object = o;
 	}
 	
@@ -28,6 +27,8 @@ public class DataField {
 	public String getLabel() {
 		return (String)object.$get("label");
 	}
+	
+
 	public String getFormat() {
 		return (String)object.$get("format");
 	}
@@ -101,8 +102,10 @@ public class DataField {
 		return (Boolean)object.$get("sortable");
 	}
 	
-	
-	
+	public Object getValue(String field){
+		Object o = object.$get(field);
+		return o;
+	}
 	
 
 }

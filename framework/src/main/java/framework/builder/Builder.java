@@ -1,6 +1,5 @@
 package framework.builder;
 
-import static def.dom.Globals.alert;
 import static def.dom.Globals.console;
 import static def.dom.Globals.window;
 import static def.jquery.Globals.$;
@@ -17,7 +16,7 @@ import framework.builder.editors.EventEditor;
 import framework.builder.editors.VisualEditor;
 import framework.core.BeanFactory;
 import framework.lightning.Backdrop;
-import framework.lightning.Icon;
+import framework.lightning.SvgIcon;
 import framework.lightning.IconButton;
 import framework.lightning.LTContainer;
 import framework.lightning.TabActionListener;
@@ -66,7 +65,7 @@ public class Builder extends LTContainer {
 		newFileModal.setBackdrop(backdrop);
 		openProjectModal.setBackdrop(backdrop);
 		addClass("builder");
-		Icon icon = new Icon("as", "utility", "save");
+		SvgIcon icon = new SvgIcon("as", "utility", "save");
 		saveButton.setIcon(icon);
 		saveButton.setBorderFilled(true);
 		saveButton.addClass("slds-button_icon-container").addClass("save-button");
@@ -83,11 +82,11 @@ public class Builder extends LTContainer {
 
 		addChild(openProjectBtn);
 
-		previewBtn.setIcon(new Icon("", "utility", "preview"));
+		previewBtn.setIcon(new SvgIcon("", "utility", "preview"));
 		previewBtn.setBorderFilled(true);
 		previewBtn.addClass("slds-button_icon-container");
 
-		openProjectBtn.setIcon(new Icon("", "utility", "open"));
+		openProjectBtn.setIcon(new SvgIcon("", "utility", "open"));
 		openProjectBtn.setBorderFilled(true);
 		openProjectBtn.addClass("slds-button_icon-container").addClass("new-button").setStyle("right", "10%");
 		openProjectBtn.addEventListener(new EventListener() {
@@ -100,7 +99,7 @@ public class Builder extends LTContainer {
 			}
 		}, "click");
 
-		Icon iconNew = new Icon("as", "utility", "new");
+		SvgIcon iconNew = new SvgIcon("as", "utility", "new");
 		newFileButtn.setIcon(iconNew);
 		newFileButtn.setBorderFilled(true);
 		newFileButtn.addClass("slds-button_icon-container").addClass("new-button");

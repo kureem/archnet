@@ -15,7 +15,7 @@ public class TabItem extends JSContainer implements EventListener {
 	private JSContainer title = new JSContainer("a").addClass("slds-tabs_default__link")
 			.setAttribute("href", "javascript:void(0)").setAttribute("role", "tab");
 
-	private Icon closeButton = new Icon("close", "utility", "close");
+	private SvgIcon closeButton = new SvgIcon("close", "utility", "close");
 
 	private boolean active = false;
 

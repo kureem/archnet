@@ -58,6 +58,7 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Designable> getDesignables() {
 		List l = accordionContent.getChildren();

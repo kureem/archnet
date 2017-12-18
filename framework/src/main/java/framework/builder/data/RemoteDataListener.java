@@ -1,7 +1,7 @@
 package framework.builder.data;
 
-public interface RemoteDataListener {
+public interface RemoteDataListener<T> {
 	
-	public void dataLoaded(Object data);
+	public void dataLoaded(T data);
 
 }

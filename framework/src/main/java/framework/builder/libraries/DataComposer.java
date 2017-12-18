@@ -1,121 +1,59 @@
 package framework.builder.libraries;
 
-import static def.dom.Globals.alert;
-import static def.dom.Globals.prompt;
-
-import framework.EventListener;
 import framework.JSContainer;
-import framework.builder.data.DataField;
 import framework.builder.data.DataStructure;
 import framework.builder.data.File;
-import framework.builder.editors.AbstractEditor;
+import framework.builder.editors.Editor;
+import framework.builder.editors.Structure;
 import framework.builder.editors.VisualEditor;
-import framework.lightning.Button;
-import framework.lightning.GlobalHeader;
-import jsweet.dom.Event;
 import jsweet.lang.Array;
-import jsweet.lang.JSON;
 
-public class DataComposer extends AbstractEditor<String> {
+public class DataComposer extends JSContainer implements Editor<Array<DataStructure>> {
+
+	//private Array<DataStructure> structures = new Array<DataStructure>();
+
+	private VisualEditor editor;
 	
-	private GlobalHeader header = new GlobalHeader("header");
+	private Structure structure;
 	
-	private Button addNew = new Button();
-	
-	
-	private Array<DataStructure> structures = new Array<DataStructure>();
-	
-	public DataComposer(String name, VisualEditor editor) { 
-		super(name, "div",editor);
-		
-		addNew.setLabel("Add New");
-		header.addChild(addNew);
-		addChild(header);
-		
-		addNew.setState(Button.STATE_BRAND);
-		addNew.addEventListener(new EventListener() {
-			
-			@Override
-			public void performAction(JSContainer source, Event evt) {
-				createNewFile();
-			}
-		}, "click");
-		
+	public DataComposer(String name, VisualEditor editor, Structure structure) {
+		super(name, "div");
+		this.editor = editor;
+		this.structure = structure;
+	}
+
+	@Override
+	public void save() {
 		
 	}
 
-	
-	public void createNewFile(){
-		String name = prompt("Label of Data structure");
-		createNewFile(name);
+	@Override
+	public void dirty() {
 		
 	}
-	
-	public void createNewFile(String name){
-		DataStructure structure = new DataStructure();
-		structure.name = name;
-		structure.label = name;
-		structures.push(structure);
-		//dataEnvironment.saveStructure(structure);
-		DataItem item = new DataItem(name, structure);
+
+	@Override
+	public void clean() {
+		
+	}
+
+	@Override
+	public void open(File file) {
+		DataStructure struct = (DataStructure)file;
+		DataItem item = new DataItem(struct.getName(), struct);
 		addChild(item);
 	}
 
+	@Override
+	public Structure getStructure() {
+		return structure;
+	}
+
+	@Override
+	public VisualEditor getRootEditor() {
+		return editor;
+	}
+
 	
-	
-	@Override
-	public String getMarshall() {
-		return JSON.stringify(structures);
-		//return JSON.stringify(dataEnvironment.getDataStructures());
-	}
-
-
-	@Override
-	public String createNew(File f) {
-		
-		return getMarshall();
-	}
-
-
-	@Override
-	public String unmarshall(File f) {
-		String data = f.getData();
-		return data;
-	}
-
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void consume(String data) {
-		//alert("consume datacomposer");
-		Array<jsweet.lang.Object> odata = (Array<jsweet.lang.Object>)JSON.parse(data);
-		this.getChildren().clear();
-		if(odata != null && odata.length > 0){
-			for(jsweet.lang.Object oline : odata){
-				DataStructure st = new DataStructure();
-				st.label = oline.$get("label").toString();
-				st.name = oline.$get("name").toString();
-				Array<jsweet.lang.Object> ofields = (Array<jsweet.lang.Object>)oline.$get("fields");
-				if(ofields != null && ofields.length > 0){
-					for(jsweet.lang.Object ofield : ofields){
-						DataField field = new DataField();
-						field.format = (String)ofield.$get("format");
-						field.label = (String)ofield.$get("label");
-						field.name = (String)ofield.$get("name");
-						field.primaryKey = (Boolean)ofield.$get("primaryKey");
-						field.type = (String)ofield.$get("type");
-						st.fields.push(field);
-					}
-				}
-				structures.push(st);
-				DataItem item = new DataItem(st.name, st);
-				addChild(item);
-			}
-			
-		}
-		
-		
-		
-	}
 
 }

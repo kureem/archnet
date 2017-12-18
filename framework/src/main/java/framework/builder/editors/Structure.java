@@ -9,9 +9,12 @@ import framework.JSContainer;
 import framework.TreeItem;
 import framework.builder.Builder;
 import framework.builder.Selector;
+import framework.builder.data.DataStructure;
 import framework.builder.data.File;
+import framework.builder.data.RemoteDataListener;
 import framework.design.Designable;
 import jsweet.dom.Event;
+import jsweet.lang.Array;
 
 public class Structure extends JSContainer {
 
@@ -40,6 +43,8 @@ public class Structure extends JSContainer {
 	private boolean cut = false;
 
 	private Designable clipboardItem = null;
+	
+	TreeItem dataRoot = new TreeItem("", "Data").setLeftIcon("https://d13yacurqjgara.cloudfront.net/users/82092/screenshots/1073359/spinner.gif");
 
 	EventListener toggleSelect = new EventListener() {
 
@@ -54,14 +59,12 @@ public class Structure extends JSContainer {
 		}
 	};
 
-	// private Builder builder = null;
 
 	public Structure(String name, Designable root, File f, Selector selector) {
 		super(name, "div");
 		addClass("structure");
 		this.selector = selector;
 		this.file = f;
-		// this.builder = builder;
 		addClass("slds-tree_container");
 
 		addChild(ul.addClass("slds-tree").setAttribute("role", "tree"));
@@ -112,8 +115,6 @@ public class Structure extends JSContainer {
 		setSelected(itemS);
 		getSelected().select(true);
 
-		// StructureTreeItem item = getItem(designable, liRoot);
-		// setSelected(item);
 	}
 
 	public void setSelected(TreeItem item) {
@@ -161,7 +162,8 @@ public class Structure extends JSContainer {
 				new TreeItem("", "Templates").addClass("type-templates").addEventListener(toggleSelect, "click"));
 		ul.addChild(liTemplates);
 
-		liData.addChild(new TreeItem("", "Data").addClass("type-data").addEventListener(toggleSelect, "click"));
+		
+		liData.addChild(dataRoot.addClass("type-data").addEventListener(toggleSelect, "click"));
 		ul.addChild(liData);
 
 		liComponents.addChild(
@@ -214,7 +216,6 @@ public class Structure extends JSContainer {
 	public void reload(Designable designable) {
 		clipboardItem = null;
 		StructureTreeItem item = getItem(designable, liRoot);
-		// alert(item);
 		if (item != null) {
 			Integer level = Integer.parseInt(item.getParent().getAttribute("aria-level"));
 			JSContainer li = item.getParent();
@@ -222,7 +223,6 @@ public class Structure extends JSContainer {
 			li.setRendered(false);
 			addNode(designable, li, level, item.getParentDesignable()).open();
 			item.open();
-
 		}
 	}
 
@@ -231,7 +231,7 @@ public class Structure extends JSContainer {
 	}
 
 	public void renderFiles() {
-		String[] types = new String[] { "stylesheets", "scripts", "templates", "data", "components" };
+		String[] types = new String[] { "stylesheets", "scripts", "templates", "components" };
 		Map<String, JSContainer> lis = new HashMap<String, JSContainer>();
 		lis.put("stylesheets", liCss);
 		lis.put("data", liData);
@@ -249,11 +249,31 @@ public class Structure extends JSContainer {
 				lis.get(type).addChild(cstylesheets.addChild(li));
 			}
 		}
+		Structure struc = this;
+		file.getDataStructures(new RemoteDataListener<Array<DataStructure>>() {
+			@Override
+			public void dataLoaded(Array<DataStructure> data) {
+				JSContainer cstylesheets = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
+				int count = 0;
+				for(DataStructure f : data){
+					if(count == 10){
+						break;
+					}
+					TreeItem item = new FileTreeItem(f, "data", Builder.getInstance(), struc);
+					item.addEventListener(toggleSelect, "click");
+					JSContainer li = new JSContainer("li").addChild(item).setAttribute("role", "treeitem")
+						.setAttribute("aria-level", "2");
+					
+					dataRoot.setLeftIcon("file", "utility");
+					lis.get("data").addChild(cstylesheets.addChild(li)).render();
+					count++;
+				}
+			}
+		});
 
 	}
 
 	public StructureTreeItem addNode(Designable ctn, JSContainer li, int level, Designable parent) {
-		// li.setHtml(ctn.getName());
 		StructureTreeItem item = new StructureTreeItem(ctn.getName(), ctn, this, parent);
 		li.addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", level + "");
 

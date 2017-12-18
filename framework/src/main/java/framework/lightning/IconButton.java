@@ -4,7 +4,7 @@ import framework.JSContainer;
 
 public class IconButton extends JSContainer{
 
-	private Icon icon = new Icon("icon");
+	private SvgIcon icon = new SvgIcon("icon");
 	
 	private final static String SMALL = "slds-button_icon-small";
 	
@@ -20,11 +20,11 @@ public class IconButton extends JSContainer{
 		addClass("slds-button").addClass("slds-button_icon");
 	}
 	
-	public Icon getIcon(){
+	public SvgIcon getIcon(){
 		return icon;
 	}
 	
-	public IconButton setIcon(Icon icon){
+	public IconButton setIcon(SvgIcon icon){
 		this.getChildren().remove(this.icon);
 		this.icon = icon;
 	    icon.setSvgClass("slds-button__icon");

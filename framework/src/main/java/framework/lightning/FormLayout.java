@@ -1,5 +1,7 @@
 package framework.lightning;
 
+import jsweet.lang.Array;
+
 public class FormLayout extends LTContainer {
 
 	public FormLayout(String name, String tag) {
@@ -60,13 +62,17 @@ public class FormLayout extends LTContainer {
 	
 	
 	public FormLayout clear(){
-		getChildren().clear();
+		clearChildren();
 		setRendered(false);
 		return this;
 	}
 	
 	
-	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Array<FormElement> getElements(){
+		Array l = getChildren();
+		return l;
+	}
 	
 
 }

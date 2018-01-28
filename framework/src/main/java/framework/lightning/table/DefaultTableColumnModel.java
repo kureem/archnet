@@ -1,11 +1,10 @@
 package framework.lightning.table;
 
-import java.util.LinkedList;
-import java.util.List;
+import jsweet.lang.Array;
 
 public class DefaultTableColumnModel implements TableColumnModel {
 
-	private List<TableColumn> columns = new LinkedList<>();
+	private Array<TableColumn> columns = new Array<>();
 
 
 	public DefaultTableColumnModel() {
@@ -15,35 +14,31 @@ public class DefaultTableColumnModel implements TableColumnModel {
 
 	@Override
 	public void addColumn(TableColumn aColumn) {
-		columns.add(aColumn);
+		columns.push(aColumn);
 
 	}
 
+	
+
 	@Override
-	public void removeColumn(TableColumn column) {
-		columns.remove(column);
+	public double getColumnCount() {
+		return columns.length;
 	}
 
 	@Override
-	public int getColumnCount() {
-		return columns.size();
-	}
+	public double getColumnIndex(Object columnIdentifier) {
 
-	@Override
-	public int getColumnIndex(Object columnIdentifier) {
-
-		for (int i = 0; i < columns.size(); i++) {
-			if (columns.get(i).getIdentifier().equals(columnIdentifier)) {
+		for (double i = 0; i < columns.length; i++) {
+			if (columns.$get(i).getIdentifier().equals(columnIdentifier)) {
 				return i;
 			}
 		}
-		// TODO Auto-generated method stub
 		return -1;
 	}
 
 	@Override
 	public TableColumn getColumn(int columnIndex) {
-		return columns.get(columnIndex);
+		return columns.$get(columnIndex);
 	}
 
 }

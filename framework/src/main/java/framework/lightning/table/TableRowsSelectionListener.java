@@ -6,6 +6,6 @@ import jsweet.dom.Event;
 public interface TableRowsSelectionListener {
 	
 	
-	public void onSelectRow(JSContainer source, Event event,Table table, int firstIndex, int lastIndex);
+	public void onSelectRow(JSContainer source, Event event,Table table, double firstIndex, double lastIndex);
 
 }

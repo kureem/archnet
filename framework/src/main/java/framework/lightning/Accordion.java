@@ -1,21 +1,17 @@
 package framework.lightning;
 
-import static def.dom.Globals.alert;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
+import jsweet.lang.Array;
 
 public class Accordion extends JSContainer implements Designable {
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
-	private List<Designable> designables = new LinkedList<>();
+	private Array<Designable> designables = new Array<>();
 
 	public Accordion(String name) {
 		super(name, "ul");
@@ -33,7 +29,7 @@ public class Accordion extends JSContainer implements Designable {
 	}
 
 	@Override
-	public List<Designable> getDesignables() {
+	public Array<Designable> getDesignables() {
 		return designables;
 	}
 
@@ -43,7 +39,7 @@ public class Accordion extends JSContainer implements Designable {
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
+	public Array<Parameter> getParameters() {
 		return delegate.getParameters();
 	}
 
@@ -52,25 +48,35 @@ public class Accordion extends JSContainer implements Designable {
 		if (designable instanceof AccordionItem) {
 			JSContainer li = new JSContainer("li").addClass("slds-accordion__list-item");
 			addChild(li);
-
+			
 			li.addChild((JSContainer) designable);
+			designables.push(designable);
 		} else {
-			throw new RuntimeException("Can only add Component of type JSAccordionItem in an Accordion Container");
+			//throw new java.lang.RuntimeException("Can only add Component of type JSAccordionItem in an Accordion Container");
 		}
 	}
 
 	@Override
 	public void removeDesignable(Designable designable) {
-		// TODO Auto-generated method stub
-		getChildren().remove(designable.getParent());
-		setRendered(false);
 		
+		Array<Designable> result = new Array<Designable>();
+		//delegate.removeDesignable(designable);
+		
+		for(Designable des : designables){
+			if(des.equals(designable)){
+				
+			}else{
+				result.push(des);
+			}
+		}
+		this.designables = result;
+		designable.getParent().removeChild(designable);
+		setRendered(false);
 	}
 
 	@Override
 	public void moveDesignable(Designable designable, int steps) {
-		// TODO Auto-generated method stub
-		alert("under construction");
+		delegate.moveDesignable(designable, steps);
 	}
 	
 	

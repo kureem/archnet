@@ -1,19 +1,18 @@
 package framework.design;
 
-import java.util.List;
-
 import framework.Renderable;
 import framework.builder.marshalling.Component;
+import jsweet.lang.Array;
 
 public interface Designable extends Renderable {
 
 	public void applyParam(String key, String value);
 
-	public List<Designable> getDesignables();
+	public Array<Designable> getDesignables();
 
 	public Component getComponent();
 
-	public List<Parameter> getParameters();
+	public Array<Parameter> getParameters();
 
 	public void addDesignable(Designable designable);
 

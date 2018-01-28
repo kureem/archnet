@@ -1,7 +1,5 @@
 package framework.builder.marshalling;
 
-import java.util.List;
-
 import framework.EventListener;
 import framework.builder.BuilderEventListener;
 import framework.builder.libraries.ComponentFactoryRegistry;
@@ -14,11 +12,11 @@ import jsweet.lang.Object;
 
 public class MarshallUtil {
 	
+	@SuppressWarnings("unchecked")
 	public static Component extract(Designable designable){
 		Component c = new Component();
 		c.impl = designable.getAttribute("identifier");
-		//ComponentFactory factory = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class).getComponentFactory(c.impl);
-		List<Parameter> parameters = designable.getParameters();
+		Array<Parameter> parameters = designable.getParameters();
 		
 		
 		for(String s : designable.getStyleNames()){
@@ -29,15 +27,9 @@ public class MarshallUtil {
 			c.parameters.$set(p.name,p.extractValue(designable));
 		}
 		
-		/*for(String s : designable.getAttributeNames()){
-			c.parameters.$set(s, designable.getAttribute(s));
-		}
 		
-		c.parameters.$set("text", designable.getHtml());
-		c.parameters.$set("tag", designable.getTag());*/
-		
-		for(String key : designable.getListeners().keySet()){
-			for(EventListener l : designable.getListeners().get(key)){
+		for(String key : Object.keys(designable.getListeners())){
+			for(EventListener l : (Array<EventListener>)designable.getListeners().$get(key)){
 				if(l instanceof BuilderEventListener){
 					BuilderEventListener bel = (BuilderEventListener)l;
 					BuilderEvent be = new BuilderEvent();

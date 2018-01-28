@@ -18,6 +18,7 @@ import framework.design.Designable;
 import framework.lightning.DropDown;
 import framework.lightning.DropDownItem;
 import jsweet.dom.Event;
+import jsweet.lang.Array;
 import jsweet.lang.JSON;
 
 public class StructureTreeItem extends TreeItem implements EventListener {
@@ -71,12 +72,79 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 		VisualEditor editor = getAncestorWithClass("visual-editor");
 		editor.addNewComponent(des, designable);
 		structure.clearClipboard();
-		if (structure.isCut()) {
-			parent.removeDesignable(designable);
-			structure.reload(parent);
-		}
+		
 		editor.dirty();
 	}
+	
+	public void pasteBefore() {
+		Designable clip = structure.getClipBoard();
+		Move(clip, true);
+	}
+	
+	
+	public void pasteAfter() {
+		Designable clip = structure.getClipBoard();
+		Move(clip, false);
+	}
+	
+	private void Move(Designable clip, boolean before){
+		Designable parent = getParentDesignable();
+		
+		
+		
+		if(parent != null){
+			Array<Designable> children = parent.getDesignables();
+			double currentIndex = children.indexOf(designable);
+			
+			
+			for(Designable child : children){
+				parent.removeDesignable(child);
+			}
+			
+			Array<Designable> result = new Array<Designable>();
+			
+			
+			framework.builder.marshalling.Component cmp = MarshallUtil.extract(clip);
+			Designable d = MarshallUtil.toDesignable(cmp);
+			for(double i = 0; i < children.length; i++){
+				
+				if(i == currentIndex){
+					if(before){
+						result.push(d);
+						result.push(children.$get(i));
+					}else{
+						
+						result.push(children.$get(i));
+						result.push(d);
+					}
+				}else{
+					result.push(children.$get(i));
+				}
+				
+			}
+			
+			
+			for(Designable child : result){
+				parent.addDesignable(child);
+			}
+			parent.setRendered(false);
+			VisualEditor editor = getAncestorWithClass("visual-editor");
+			editor.dirty();
+			
+			structure.reload(parent);
+			structure.render();
+		}
+	}
+	/*private Designable getParentDesignable(Renderable d){
+		Renderable parent = d.getParent();
+		if(parent instanceof Designable){
+			return (Designable)parent;
+		}else if(parent == null){
+			return null;
+		}else{
+			return getParentDesignable(parent);
+		}
+	}*/
 
 	public StructureTreeItem(String name, Designable designable, Structure structure, Designable parent) {
 		super(name, designable.getName());
@@ -101,6 +169,20 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 		
 		DropDownItem exportAs = new DropDownItem("export", "Export");
 		exportAs.setIcon("add_relationship", "action");
+		
+		
+		
+		
+		
+		DropDownItem pasteBefore = new DropDownItem("pasteBefore", "Paste Before");
+		pasteBefore.setIcon("add_relationship", "action");
+		
+		DropDownItem pasteAfter = new DropDownItem("pasteAfter", "Paste After");
+		pasteAfter.setIcon("add_relationship", "action");
+		
+		
+		
+		
 		
 		exportAs.addEventListener(new EventListener() {
 
@@ -128,7 +210,7 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 				dropdown.setVisible(false);
 			}
 		}, "click");
-
+ 
 		paste.addEventListener(new EventListener() {
 
 			@Override
@@ -136,14 +218,37 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 				paste();
 			}
 		}, "click");
+		
+		
+		pasteBefore.addEventListener(new EventListener() {
 
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				pasteBefore();
+			}
+		}, "click");
+
+		
+		pasteAfter.addEventListener(new EventListener() {
+
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				pasteAfter();
+			}
+		}, "click");
+		
 		deleteMenu.addEventListener(lsnDelete, "click");
 
 		// dropdown.addItem(cut);
+		
 		dropdown.addItem(paste);
+		dropdown.addItem(pasteBefore);
+		dropdown.addItem(pasteAfter);
 		dropdown.addItem(copy);
 		dropdown.addItem(exportAs);
 		dropdown.addItem(deleteMenu);
+		
+		
 
 		dropdown.setVisible(false);
 		addChild(dropdown);
@@ -153,7 +258,8 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 			@Override
 			public void $apply(def.dom.Event evt) {
 				dropdown.setVisible(false);
-				dropdown.render();
+				if(dropdown.isRendered())
+					dropdown.render();
 
 			}
 		});
@@ -164,6 +270,8 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 		 * saveAsComponent(); } });
 		 */
 		addIcon("delete", "utility", lsnDelete);
+		
+		
 
 		addEventListener(lsnClick, "click");
 		addEventListener(lsnDblclick, "dblclick");
@@ -174,16 +282,61 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 			public void performAction(JSContainer source, Event evt) {
 				evt.preventDefault();
 				if (structure.getClipBoard() == null) {
-					paste.setVisible(false);
+					paste.getParent().setVisible(false);
+					pasteAfter.getParent().setVisible(false);
+					pasteBefore.getParent().setVisible(false);
 				} else {
-					paste.setVisible(true);
+					paste.getParent().setVisible(true);
+					pasteAfter.getParent().setVisible(true);
+					pasteBefore.getParent().setVisible(true);
 				}
 				dropdown.setVisible(true);
 
 			}
 		}, "contextmenu");
+		
+		
+		/*setAttribute("draggable", "true");
+		
+		addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				DragEvent e = (DragEvent)evt;
+				e.dataTransfer.effectAllowed = "move";
+			}
+		}, "dragstart");
+		
+		
+		addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				DragEvent e = (DragEvent)evt;
+				HTMLElement target = (HTMLElement)e.target;
+				target = (HTMLElement)target.parentNode;
+				HTMLElement sourceNode = source.getNative();
+				if(isBefore(sourceNode, target)){
+					target.parentNode.parentNode.insertBefore(sourceNode.parentNode,target.parentNode);
+				}else{
+					target.parentNode.insertBefore(sourceNode.parentNode, target.parentNode.nextSibling);
+				}
+			}
+		}, "dragenter");*/
+		
 
 	}
+	
+	/*private boolean isBefore(HTMLElement a, HTMLElement b){
+		if (a.parentNode == b.parentNode) {
+	        for (Node cur = a; cur != null; cur = cur.previousSibling) {
+	            if (cur.isEqualNode(b)) { 
+	                return true;
+	            }
+	        }
+	    }
+	    return false;
+	}*/
 
 	public Designable getDesignable() {
 		return designable;
@@ -267,7 +420,8 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 				structure.getSelected().select(false);
 			}
 			structure.setSelected(itemS);
-			structure.getSelected().select(true);
+			if(structure.getSelected() != null)
+				structure.getSelected().select(true);
 		}
 	}
 

@@ -1,7 +1,6 @@
 package framework.designables;
 
-import java.util.LinkedList;
-import java.util.List;
+import static jsweet.lang.Globals.eval;
 
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
@@ -9,6 +8,8 @@ import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.NameParameter;
 import framework.design.Parameter;
+import jsweet.lang.Array;
+import jsweet.lang.Object;
 
 public class DesignableDelegate {
 
@@ -26,7 +27,16 @@ public class DesignableDelegate {
 	}
 
 	public void applyParameter(String key, String value, boolean designMode) {
-		component.parameters.$set(key, value);
+		String raw = value;
+		component.parameters.$set(key, raw);
+		
+		String rendered = "";
+		Object cxt = new Object();
+		cxt.$set("firstName", "Kureem Rossaye");
+		String js = "value = Mustache.render(value, cxt);";
+		eval(js);
+		
+		
 		if (key.equalsIgnoreCase("text") || key.equalsIgnoreCase("html")) {
 			ui.setHtml(value);
 		} else if (key.equalsIgnoreCase("name")) {
@@ -43,6 +53,14 @@ public class DesignableDelegate {
 			ui.setAttribute("style", value);
 		}else if(key.equalsIgnoreCase("class")){
 			ui.setAttribute("class", value);
+		}else if(key.equalsIgnoreCase("dhidden")){
+			ui.setVisible(!"true".equals(value));
+		}else if(key.equalsIgnoreCase("draggable")){
+			ui.setAttribute("draggable", value);
+		}else{
+			if(value.length() < 200){
+				ui.setAttribute(key, value);
+			}
 		}
 	}
 
@@ -71,17 +89,19 @@ public class DesignableDelegate {
 		return component;
 	}
 
-	public List<Parameter> getParameters() {
-		List<Parameter> params = new LinkedList<>();
-		params.add(new NameParameter("Name", "Basic"));
-		params.add(new AttributeParameter("class", "Style class", "Basic"));
-		params.add(new AttributeParameter("style", "Style", "Basic"));
+	public Array<Parameter> getParameters() {
+		Array<Parameter> params = new Array<>();
+		params.push(new NameParameter("Name", "Basic"));
+		params.push(new AttributeParameter("class", "Style class", "Basic"));
+		params.push(new AttributeParameter("style", "Style", "Basic"));
+		params.push(new AttributeParameter("dhidden", "Hidden", "Basic"));
+		params.push(new AttributeParameter("draggable", "Draggable", "Basic"));
 		return params;
 	}
 
 	public void removeDesignable(Designable designable) {
 
-		ui.getChildren().remove(designable);
+		ui.removeChild(designable);
 		ui.setRendered(false);
 
 	}
@@ -91,18 +111,18 @@ public class DesignableDelegate {
 	}
 	public void moveDesignable(JSContainer designable, int steps) {
 		if (steps != 0) {
-			int index = ui.getChildren().indexOf(designable);
-			int nextIndex = index + steps;
+			double index = ui.getChildren().indexOf(designable);
+			double nextIndex = index + steps;
 			if (nextIndex < 0) {
 				nextIndex = 0;
 
-			} else if (nextIndex >= ui.getChildren().size() - 1) {
-				nextIndex = ui.getChildren().size() - 2;
+			} else if (nextIndex >= ui.getChildren().length - 1) {
+				nextIndex = ui.getChildren().length - 2;
 			}
 
 			if (index != nextIndex) {
-				ui.getChildren().remove(designable);
-				ui.getChildren().add(nextIndex, designable);
+				ui.removeChild(designable);
+				ui.addChildAt(nextIndex, designable);
 				ui.setRendered(false);
 			}
 		}

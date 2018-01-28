@@ -1,8 +1,7 @@
 package framework.lightning;
 
-import java.util.List;
-
 import framework.JSContainer;
+import jsweet.lang.Array;
 
 public class Tabs extends JSContainer {
 
@@ -54,8 +53,8 @@ public class Tabs extends JSContainer {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<TabItem> getItems() {
-		return (List) nav.getChildren();
+	public Array<TabItem> getItems() {
+		return (Array) nav.getChildren();
 	}
 
 }

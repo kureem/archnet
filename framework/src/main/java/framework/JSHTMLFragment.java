@@ -18,8 +18,6 @@ package framework;
 import static def.jquery.Globals.$;
 import static jsweet.lang.Globals.eval;
 
-import java.util.List;
-
 import framework.builder.Builder;
 import framework.builder.Previewer;
 import framework.builder.data.File;
@@ -28,6 +26,7 @@ import framework.design.Option;
 import framework.design.Parameter;
 import framework.designables.JSDesignable;
 import jsweet.dom.HTMLElement;
+import jsweet.lang.Array;
 import jsweet.lang.Object;
 
 public class JSHTMLFragment extends JSDesignable {
@@ -68,8 +67,8 @@ public class JSHTMLFragment extends JSDesignable {
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> parameters = super.getParameters();
+	public Array<Parameter> getParameters() {
+		Array<Parameter> parameters = super.getParameters();
 		AttributeParameter templates = new AttributeParameter("template", "Template", "Basic");
 		File project = null;
 		if(Builder.getInstance() != null){
@@ -77,12 +76,12 @@ public class JSHTMLFragment extends JSDesignable {
 		}else{
 			project = Previewer.project;
 		}
-		templates.options.add(new Option("Default", "#default"));
+		templates.options.push(new Option("Default", "#default"));
 		for(File f : project.getTemplates()){
-			templates.options.add(new Option(f.getName(), "#" +f.getName().replace(".html", "")));
+			templates.options.push(new Option(f.getName(), "#" +f.getName().replace(".html", "")));
 		}
 		
-		parameters.add(templates);
+		parameters.push(templates);
 		return parameters;
 
 	}

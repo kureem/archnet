@@ -1,15 +1,13 @@
 package framework.lightning;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import def.js.Array;
 import framework.EventListener;
 import framework.JSContainer;
 import jsweet.dom.Event;
 
 public class TabItem extends JSContainer implements EventListener {
 
-	private List<TabActionListener> listeners = new ArrayList<>();
+	private Array<TabActionListener> listeners = new Array<>();
 
 	public TabBody body;
 	private JSContainer title = new JSContainer("a").addClass("slds-tabs_default__link")
@@ -41,25 +39,25 @@ public class TabItem extends JSContainer implements EventListener {
 	}
 
 	public void addTabActionListener(TabActionListener listene) {
-		listeners.add(listene);
+		listeners.push(listene);
 	}
 
 	public TabItem close() {
 		fireClose();
 		active = false;
-		body.getParent().getChildren().remove(body);
+		body.getParent().removeChild(body);
 		body.show(false);
-		int currentIndex = this.getParent().getChildren().indexOf(this);
-		this.getParent().getChildren().remove(this);
+		double currentIndex = this.getParent().getChildren().indexOf(this);
+		this.getParent().removeChild(this);
 		
 		this.getParent().setRendered(false);
 		body.getParent().setRendered(false);
 		
-		if(this.getParent().getChildren().size() > 0){
-			if(currentIndex >= this.getParent().getChildren().size()){
-				currentIndex = this.getParent().getChildren().size()-1;
+		if(this.getParent().getChildren().length > 0){
+			if(currentIndex >= this.getParent().getChildren().length){
+				currentIndex = this.getParent().getChildren().length-1;
 			}
-			TabItem item = (TabItem)this.getParent().getChildren().get(currentIndex);
+			TabItem item = (TabItem)this.getParent().getChildren().$get(currentIndex);
 			item.setActive(true);
 		}
 
@@ -128,8 +126,6 @@ public class TabItem extends JSContainer implements EventListener {
 		}
 		Tabs tabs = source.getAncestorWithClass("slds-tabs_default");
 		tabs.setActive(this);
-		// TODO Auto-generated method stub
-
 	}
 
 }

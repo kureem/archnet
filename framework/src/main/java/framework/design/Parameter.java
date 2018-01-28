@@ -1,9 +1,7 @@
 package framework.design;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.builder.properties.PropertyEditor;
+import jsweet.lang.Array;
 
 public abstract class Parameter {
 
@@ -13,7 +11,7 @@ public abstract class Parameter {
 
 	public String type;
 
-	public List<Option> options = new LinkedList<>();
+	public Array<Option> options = new Array<>();
 	
 	public String category;
 

@@ -1,11 +1,8 @@
 package framework.builder;
 
-import static def.jquery.Globals.$;
-
-import def.jqueryui.JQuery;
-import def.jqueryui.jqueryui.JQueryPositionOptions;
 import framework.EventListener;
 import framework.JSContainer;
+import framework.builder.editors.Visitor;
 import framework.builder.editors.VisualEditor;
 import framework.design.Designable;
 import jsweet.dom.Event;
@@ -30,11 +27,12 @@ public class Selector extends JSContainer  implements EventListener{
 		return selected;
 	}
 
+	
 	public void select(Designable component) {
 		if(selected == null || !component.equals(selected)){
 			try {
 				this.selected = component;
-				def.jqueryui.JQuery jqSelector = (JQuery) $(getNative());
+			/*	def.jqueryui.JQuery jqSelector = (JQuery) $(getNative());
 				def.jqueryui.JQuery jqComponent = (JQuery) $(component.getNative());
 
 				jqSelector.width(jqComponent.outerWidth());
@@ -48,12 +46,23 @@ public class Selector extends JSContainer  implements EventListener{
 
 				options.of = jqComponent;
 				jqSelector.position(options);
-
+*/
 				 visualEditor.getStructure().select(component);
 
 			} catch (Exception e) {
 				// e.printStackTrace();
 			}
+			
+			visualEditor.visit(new Visitor() {
+				
+				@Override
+				public void doVisit(Designable host) {
+					//host.removeClass("item-selelected");
+					host.setAttribute("dssel", "false");
+				}
+			});
+			component.setAttribute("dssel", "true");
+			//component.addClass("item-selected");
 			visualEditor.selectItem(component);
 		}
 	}

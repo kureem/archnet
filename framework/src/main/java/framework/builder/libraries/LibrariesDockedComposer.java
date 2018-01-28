@@ -17,7 +17,7 @@ addClass("library-composer");
 		getBody().addChild(componentsTabs);
 		componentsTabs.addItem("Basic", basicComponentLib);
 		componentsTabs.addItem("Lightning", lightningComponentLib);
-		componentsTabs.getItems().get(0).setActive(true);
+		componentsTabs.getItems().$get(0).setActive(true);
 
 	}
 

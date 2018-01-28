@@ -1,7 +1,5 @@
 package framework.builder.libraries;
 
-import java.util.List;
-
 import framework.JSContainer;
 import framework.Renderable;
 import framework.builder.data.DataField;
@@ -19,6 +17,7 @@ import framework.lightning.table.TableColumn;
 import framework.lightning.table.TableModel;
 import framework.lightning.table.TableRowsSelectionListener;
 import jsweet.dom.Event;
+import jsweet.lang.Array;
 
 public class DataItem extends Card implements TableCellRenderer {
 
@@ -37,7 +36,7 @@ public class DataItem extends Card implements TableCellRenderer {
 
 	protected String[] labelsFields;
 
-	private List<DataField> dataFields;
+	private Array<DataField> dataFields;
 
 	public DataItem(String name, DataStructure structure) {
 		this(name, structure, new String[] { "Name", "Label", "Type", "Calculated", "Creatable", "Updatable",
@@ -81,9 +80,9 @@ public class DataItem extends Card implements TableCellRenderer {
 		fields.addRowsSelectionListener(new TableRowsSelectionListener() {
 
 			@Override
-			public void onSelectRow(JSContainer source, Event event, Table table, int firstIndex, int lastIndex) {
+			public void onSelectRow(JSContainer source, Event event, Table table, double firstIndex, double lastIndex) {
 
-				DataField field = dataFields.get(firstIndex);
+				DataField field = dataFields.$get(firstIndex);
 				l.onItemSelected(field, item);
 			}
 		});
@@ -122,10 +121,10 @@ public class DataItem extends Card implements TableCellRenderer {
 		fields.setColBordered(true);
 		fields.setSelectable(true);
 
-		dataStructure.getFields(new RemoteDataListener<List<DataField>>() {
+		dataStructure.getFields(new RemoteDataListener<Array<DataField>>() {
 
 			@Override
-			public void dataLoaded(List<DataField> data_) {
+			public void dataLoaded(Array<DataField> data_) {
 
 				dataFields = data_;
 				fields.setModel(new TableModel() {
@@ -144,15 +143,15 @@ public class DataItem extends Card implements TableCellRenderer {
 					public Object getValueAt(int rowIndex, int columnIndex) {
 
 						if (columnIndex < labels.length) {
-							return dataFields.get(rowIndex).getValue(labelsFields[columnIndex]);
+							return dataFields.$get(rowIndex).getValue(labelsFields[columnIndex]);
 						} else {
-							return dataFields.get(rowIndex).getName();
+							return dataFields.$get(rowIndex).getName();
 						}
 					}
 
 					@Override
-					public int getRowCount() {
-						return dataFields.size();
+					public double getRowCount() {
+						return dataFields.length;
 					}
 
 				});

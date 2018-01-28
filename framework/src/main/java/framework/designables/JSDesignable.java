@@ -1,11 +1,10 @@
 package framework.designables;
 
-import java.util.List;
-
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
 import framework.design.Parameter;
+import jsweet.lang.Array;
 
 public class JSDesignable extends JSContainer implements Designable{
 
@@ -28,16 +27,16 @@ public class JSDesignable extends JSContainer implements Designable{
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
+	public Array<Parameter> getParameters() {
 		return delegate.getParameters();
 	}
 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public List<Designable> getDesignables() {
+	public Array<Designable> getDesignables() {
 		
-		List l = getChildren();
+		Array l = getChildren();
 		return l;		
 	}
 

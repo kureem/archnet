@@ -1,9 +1,8 @@
 package framework.renderer;
 
+import static def.dom.Globals.console;
 import static def.jquery.Globals.$;
 import static jsweet.dom.Globals.document;
-
-import java.util.List;
 
 import framework.EventListener;
 import framework.InputField;
@@ -20,17 +19,31 @@ import jsweet.dom.HTMLSelectElement;
 import jsweet.dom.HTMLTextAreaElement;
 import jsweet.dom.NamedNodeMap;
 import jsweet.dom.Node;
+import jsweet.lang.Array;
+import jsweet.lang.Date;
+import jsweet.lang.Object;
 
-public class ContainerRenderer implements Renderer<JSContainer> {
+public class ContainerRenderer implements ExtendedRenderer<JSContainer> {
+	
+	public  static double timeSpent =0;
 
+	
 	public void decorate(JSContainer c) {
+		/*double start = new Date().getMilliseconds();
 		for (Decorator dec : BeanFactory.getInstance().getBeanOfType(DecoratorsRegistry.class).getDecorators()) {
 			dec.decorate(c);
 		}
+		
+	
+		double end = new Date().getMilliseconds() - start;
+		timeSpent = timeSpent + end;
+		
+		console.log("-------->" + timeSpent);*/
 	}
 
 	public void doRender(JSContainer c, HTMLElement root) {
 		HTMLElement jq = document.getElementById(c.getId());
+		
 		String tag = c.getTag();
 		boolean rendered = c.isRendered();
 		String name = c.getName();
@@ -53,21 +66,18 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 					Node body = document.getElementsByTagName("body").$get(0);
 					body.appendChild(njq);
 				} else {
-					if (parent instanceof JSHTMLFragment) {
-						$(parent).find("#" + parent.getId() + " [name=" + name + "]").replaceWith(njq);
-					} else {
-						root.appendChild(njq);
-					}
+					root.appendChild(njq);
 				}
 			} else {
 
 				if (parent instanceof JSHTMLFragment) {
 					$("#" + parent.getId() + " [name=" + name + "]").replaceWith(njq);
 				} else {
-					int index = parent.getChildren().indexOf(c);
+					
+					double index = parent.getChildren().indexOf(c);
 					Renderable nextSib = null;
-					if (index < parent.getChildren().size() - 1) {
-						nextSib = parent.getChildren().get(index + 1);
+					if (index < parent.getChildren().length - 1) {
+						nextSib = parent.getChildren().$get(index + 1);
 						if (!nextSib.isRendered()) {
 							nextSib = null;
 						}
@@ -81,14 +91,17 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 					}
 				}
 			}
+		//	List l =null;
 			renderEvents(njq, c);
 			execCommands(njq, c);
 			c.flush("a28n12l10");
 		} else {
-			renderAttributes(jq, c, true);
-			renderStyles(jq, c, true);
-			execCommands(jq, c);
-			c.flush("a28n12l10");
+			if(jq != null){
+				renderAttributes(jq, c, true);
+				renderStyles(jq, c, true);
+				execCommands(jq, c);
+				c.flush("a28n12l10");
+			}
 
 		}
 	}
@@ -111,10 +124,11 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 		}*/
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void renderEvents(HTMLElement njq, JSContainer c) {
-
-		for (String key : c.getListeners().keySet()) {
-			final List<EventListener> listeners = c.getListeners().get(key);
+		String[] keys = Object.keys(c.getListeners());
+		for (String key :  keys) {
+			final Array<EventListener> listeners = (Array<EventListener>)c.getListeners().$get(key);
 			njq.addEventListener(key, (evt) -> {
 				synchronizeFields(c.getRoot().getNative(), c.getRoot());
 				for (EventListener l : listeners) {
@@ -133,31 +147,43 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 			InputField<String> inputField = (JSInput) jsfield;
 			if (jsfield.getTag().equals("input") && "checkbox".equals(jsfield.getAttribute("type"))) {
 				HTMLInputElement field = (HTMLInputElement) document.getElementById(jsfield.getId());
-				if (field.checked) {
-					inputField.setRawValue("true");
-				} else {
-					inputField.setRawValue("false");
-				}
-			} else if (jsfield.getTag().equals("input")) {
-
-				HTMLInputElement field = (HTMLInputElement) document.getElementById(jsfield.getId());
-				if ("checkbox".equals(jsfield.getAttribute("type"))) {
+			
+				if(field != null){
 					if (field.checked) {
 						inputField.setRawValue("true");
 					} else {
 						inputField.setRawValue("false");
 					}
-				} else {
-					if(field != null){
-						String value = field.value;
-						inputField.setRawValue(value);
+				}else{
+					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
+				}
+			} else if (jsfield.getTag().equals("input")) {
+
+				HTMLInputElement field = (HTMLInputElement) document.getElementById(jsfield.getId());
+				
+				if(field != null){
+					if ("checkbox".equals(jsfield.getAttribute("type"))) {
+						if (field.checked) {
+							inputField.setRawValue("true");
+						} else {
+							inputField.setRawValue("false");
+						}
+					} else {
+						if(field != null){
+							String value = field.value;
+							inputField.setRawValue(value);
+						}
 					}
+				}else{
+					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
 				}
 			} else if (jsfield.getTag().equalsIgnoreCase("select")) {
 				HTMLSelectElement field = (HTMLSelectElement) document.getElementById(jsfield.getId());
 				if(field != null){
 					String value = field.value;
 					inputField.setRawValue(value);
+				}else{
+					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
 				}
 				
 			} else if (jsfield.getTag().equalsIgnoreCase("textarea")) {
@@ -165,12 +191,16 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 				if(field != null){
 					String value = field.value;
 					inputField.setRawValue(value);
+				}else{
+					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
 				}
 			} else {
 				HTMLElement field = document.getElementById(jsfield.getId());
 				if(field != null){
 					String value = field.getAttribute("value");
 					inputField.setRawValue(value);
+				}else{
+					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
 				}
 			}
 		}
@@ -223,5 +253,10 @@ public class ContainerRenderer implements Renderer<JSContainer> {
 				njq.style.setProperty(key, c.getStyle(key));
 			}
 		}
+	}
+
+	@Override
+	public void postRender(JSContainer c, HTMLElement root) {
+		c.postRender(root);
 	}
 }

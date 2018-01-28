@@ -1,11 +1,10 @@
 package framework.designables;
 
-import java.util.List;
-
 import framework.design.Option;
 import framework.design.Parameter;
 import framework.design.TagParameter;
 import framework.design.TextParameter;
+import jsweet.lang.Array;
 
 public class JSDesignableBlockComponent extends JSDesignable{
 
@@ -14,30 +13,30 @@ public class JSDesignableBlockComponent extends JSDesignable{
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> params = super.getParameters();
+	public Array<Parameter> getParameters() {
+		Array<Parameter> params = super.getParameters();
 		TextParameter textParam = new TextParameter("text", "Html", "Basic");
 		TagParameter tagParam = new TagParameter();
-		tagParam.options.add(new Option("div", "div"));
-		tagParam.options.add(new Option("abbr", "abbr"));
-		tagParam.options.add(new Option("address", "address"));
-		tagParam.options.add(new Option("article", "article"));
-		tagParam.options.add(new Option("aside", "aside"));
-		tagParam.options.add(new Option("cite", "cite"));
-		tagParam.options.add(new Option("blockquote", "blockquote"));
-		tagParam.options.add(new Option("dl", "dl"));
-		tagParam.options.add(new Option("fieldset", "fieldset"));
-		tagParam.options.add(new Option("figure", "figure"));
-		tagParam.options.add(new Option("footer", "footer"));
-		tagParam.options.add(new Option("header", "header"));
-		tagParam.options.add(new Option("hgroup", "hgroup"));
-		tagParam.options.add(new Option("nav", "nav"));
-		tagParam.options.add(new Option("pre", "pre"));
-		tagParam.options.add(new Option("section", "section"));
+		tagParam.options.push(new Option("div", "div"));
+		tagParam.options.push(new Option("abbr", "abbr"));
+		tagParam.options.push(new Option("address", "address"));
+		tagParam.options.push(new Option("article", "article"));
+		tagParam.options.push(new Option("aside", "aside"));
+		tagParam.options.push(new Option("cite", "cite"));
+		tagParam.options.push(new Option("blockquote", "blockquote"));
+		tagParam.options.push(new Option("dl", "dl"));
+		tagParam.options.push(new Option("fieldset", "fieldset"));
+		tagParam.options.push(new Option("figure", "figure"));
+		tagParam.options.push(new Option("footer", "footer"));
+		tagParam.options.push(new Option("header", "header"));
+		tagParam.options.push(new Option("hgroup", "hgroup"));
+		tagParam.options.push(new Option("nav", "nav"));
+		tagParam.options.push(new Option("pre", "pre"));
+		tagParam.options.push(new Option("section", "section"));
 		
 		
-		params.add(tagParam);
-		params.add(textParam);
+		params.push(tagParam);
+		params.push(textParam);
 		return params;
 	}
 	

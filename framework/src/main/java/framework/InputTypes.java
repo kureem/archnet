@@ -34,4 +34,7 @@ public final class InputTypes {
 	public final static String checkbox="checkbox";
 	public final static String radio="radio";
 	
+	
+	public final static String[] types = new String[]{text,password,datetime,datetime_local,date,month,time,week,number,email,url,search,tel,color,checkbox,radio};
+	
 }

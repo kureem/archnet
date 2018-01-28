@@ -3,6 +3,7 @@ package framework.design;
 import framework.builder.properties.AttributeEditor;
 import framework.builder.properties.AttributeWithOptionsEditor;
 import framework.builder.properties.PropertyEditor;
+import framework.builder.properties.SingleOptionAttributeEditor;
 
 public class AttributeParameter extends Parameter {
 
@@ -13,9 +14,13 @@ public class AttributeParameter extends Parameter {
 	@Override
 	public PropertyEditor getEditor(Designable designable) {
 		
-		if(options.size() == 0){
+		if(options.length == 0){
 			AttributeEditor editor = new AttributeEditor();
 			editor.setProperty(designable,this);
+			return editor;
+		}else if(options.length == 1){
+			SingleOptionAttributeEditor editor = new SingleOptionAttributeEditor();
+			editor.setProperty(designable, this);
 			return editor;
 		}else{
 			AttributeWithOptionsEditor editor = new AttributeWithOptionsEditor();

@@ -8,6 +8,7 @@ public class LTContainer extends JSContainer{
 	public final static String FLOAT_RIGHT = "slds-float_right";
 	public final static String FLOAT_NONE = "slds-float_none";
 	
+	
 	public LTContainer(String name,String tag) {
 		super(name,tag);
 	}

@@ -2,14 +2,12 @@ package framework.lightning.table;
 
 import static def.dom.Globals.alert;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.EventListener;
 import framework.JSContainer;
 import framework.Renderable;
 import framework.lightning.Spinner;
 import jsweet.dom.Event;
+import jsweet.lang.Array;
 
 public class Table extends JSContainer {
 
@@ -45,13 +43,13 @@ public class Table extends JSContainer {
 	
 	private String emptyTableMessage = "No data available";
 	
-	private List<TableRowsSelectionListener> rowsSelectionListeners = new LinkedList<>();
+	private Array<TableRowsSelectionListener> rowsSelectionListeners = new Array<>();
 	
 	private final static EventListener SELECT_ROW_EVT = new EventListener() {
 		
 		@Override
 		public void performAction(JSContainer source, Event evt) {
-			int index = source.getParent().getChildren().indexOf(source);
+			double index = source.getParent().getChildren().indexOf(source);
 			alert("selected row index: " + index);
 			
 			Table table = (Table) source.getParent().getParent();
@@ -77,10 +75,10 @@ public class Table extends JSContainer {
 	}
 	
 	public void addRowsSelectionListener(TableRowsSelectionListener l){
-		rowsSelectionListeners.add(l);
+		rowsSelectionListeners.push(l);
 	}
 	
-	public void fireRowsSelectionListeners(JSContainer source, Event evt, int firstIndex, int lastIndex){
+	public void fireRowsSelectionListeners(JSContainer source, Event evt, double firstIndex, double lastIndex){
 		for(TableRowsSelectionListener l : rowsSelectionListeners){
 			l.onSelectRow(source, evt, this, firstIndex, lastIndex);
 		}
@@ -91,7 +89,7 @@ public class Table extends JSContainer {
 		this.selecteRowOn = on;
 	}
 	private JSContainer addEmptyRow(){
-		tbody.getChildren().clear();
+		tbody.clearChildren();
 		JSContainer tr = new JSContainer("tr");
 		JSContainer td = new JSContainer("td").setAttribute("colspan", "1000");
 		tr.addChild(td);
@@ -165,11 +163,11 @@ public class Table extends JSContainer {
 	}
 
 	public void refreshData() {
-		tbody.getChildren().clear();
+		tbody.clearChildren();
 		tbody.setRendered(false);
-		int rows = model.getRowCount();
-		int cols = tableColumnModel.getColumnCount();
-		int iterSize = pageSize;
+		double rows = model.getRowCount();
+		double cols = tableColumnModel.getColumnCount();
+		double iterSize = pageSize;
 		if(rows < pageSize){
 			iterSize = rows;
 		}
@@ -219,7 +217,7 @@ public class Table extends JSContainer {
 	}
 	
 	public JSContainer getRow(int index){
-		return tbody.getChildren().get(index);
+		return tbody.getChildren().$get(index);
 	}
 	
 	public JSContainer getBody(){
@@ -243,7 +241,7 @@ public class Table extends JSContainer {
 	}
 
 	public void refreshColumns() {
-		thead.getChildren().clear();
+		thead.clearChildren();
 		thead.setRendered(false);
 		JSContainer tr = new JSContainer("tr").addClass("slds-text-title_caps");
 		thead.addChild(tr);

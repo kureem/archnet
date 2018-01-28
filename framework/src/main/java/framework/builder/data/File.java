@@ -1,8 +1,5 @@
 package framework.builder.data;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.core.BeanFactory;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
@@ -20,24 +17,30 @@ public class File {
 		return file;
 	}
 
-	public List<File> getStylesheets() {
+	public Array<File> getStylesheets() {
 		return getChild("stylesheets").getChildren();
 	}
 
-	public List<File> getScripts() {
+	public Array<File> getScripts() {
 		return getChild("scripts").getChildren();
 	}
 
-	public List<File> getTemplates() {
+	public Array<File> getTemplates() {
 		return getChild("templates").getChildren();
 
 	}
+	
+	public Array<File> getDataSources() {
+		return getChild("datasources").getChildren();
+
+	}
+
 
 	public void getDataStructures(RemoteDataListener<Array<DataStructure>> listener) {
 		BeanFactory.getInstance().getBeanOfType(DataEnvironment.class).getDataStructures(listener);
 	}
 
-	public List<File> getComponents() {
+	public Array<File> getComponents() {
 		return getChild("components").getChildren();
 	}
 
@@ -152,10 +155,10 @@ public class File {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<File> getChildren() {
-		List<File> result = new LinkedList<>();
+	public Array<File> getChildren() {
+		Array<File> result = new Array<>();
 		for (Object o : (Array<Object>) file.$get("children")) {
-			result.add(new File(o));
+			result.push(new File(o));
 		}
 		return result;
 	}

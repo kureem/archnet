@@ -16,6 +16,7 @@ import framework.builder.editors.EventEditor;
 import framework.builder.editors.VisualEditor;
 import framework.core.BeanFactory;
 import framework.lightning.Backdrop;
+import framework.lightning.ButtonGroup;
 import framework.lightning.SvgIcon;
 import framework.lightning.IconButton;
 import framework.lightning.LTContainer;
@@ -52,23 +53,29 @@ public class Builder extends LTContainer {
 	public static WebSocket websocket = new WebSocket("ws:localhost:8080/preview");
 
 	private boolean projectOpen = false;
+	
+	private ButtonGroup btnGroup = new ButtonGroup("btnGroup");
 
 	// private VisualEditor projectEditor;
 
 	public Builder(String name) {
 		super(name, "div");
-
-		addChild(openProjectModal);
+		addClass("builder");
 		editorTabs.addClass("editor-tabs");
-		addChild(newFileModal);
-		addChild(backdrop);
 		newFileModal.setBackdrop(backdrop);
 		openProjectModal.setBackdrop(backdrop);
-		addClass("builder");
+		
+
+		
+		
+		
+		
+		
+		
 		SvgIcon icon = new SvgIcon("as", "utility", "save");
 		saveButton.setIcon(icon);
 		saveButton.setBorderFilled(true);
-		saveButton.addClass("slds-button_icon-container").addClass("save-button");
+		//saveButton.addClass("slds-button_icon-container").addClass("save-button");
 		saveButton.addEventListener(new EventListener() {
 			@Override
 			public void performAction(JSContainer source, Event evt) {
@@ -78,17 +85,15 @@ public class Builder extends LTContainer {
 				}
 			}
 		}, "click");
-		addChild(saveButton);
-
-		addChild(openProjectBtn);
+		
 
 		previewBtn.setIcon(new SvgIcon("", "utility", "preview"));
 		previewBtn.setBorderFilled(true);
-		previewBtn.addClass("slds-button_icon-container");
+		//previewBtn.addClass("slds-button_icon-container");
 
 		openProjectBtn.setIcon(new SvgIcon("", "utility", "open"));
 		openProjectBtn.setBorderFilled(true);
-		openProjectBtn.addClass("slds-button_icon-container").addClass("new-button").setStyle("right", "10%");
+		//openProjectBtn.addClass("slds-button_icon-container").addClass("new-button").setStyle("right", "10%");
 		openProjectBtn.addEventListener(new EventListener() {
 
 			@Override
@@ -102,7 +107,7 @@ public class Builder extends LTContainer {
 		SvgIcon iconNew = new SvgIcon("as", "utility", "new");
 		newFileButtn.setIcon(iconNew);
 		newFileButtn.setBorderFilled(true);
-		newFileButtn.addClass("slds-button_icon-container").addClass("new-button");
+		//newFileButtn.addClass("slds-button_icon-container").addClass("new-button");
 		newFileButtn.addEventListener(new EventListener() {
 			@Override
 			public void performAction(JSContainer source, Event evt) {
@@ -115,13 +120,28 @@ public class Builder extends LTContainer {
 				backdrop.open();
 			}
 		}, "click");
-		addChild(newFileButtn);
-		addChild(openProjectBtn);
-		previewBtn.addClass("preview-btn");
+		//previewBtn.addClass("preview-btn");
 		previewBtn.setTag("a").setAttribute("target", "_blank");
-		addChild(previewBtn);
+		
+		addChild(openProjectModal);
+		addChild(newFileModal);
+		addChild(backdrop);
+		
+		addChild(btnGroup.addClass("builder-buttons"));
+		
+		btnGroup.addChild(saveButton);
+		btnGroup.addChild(openProjectBtn);
+		btnGroup.addChild(newFileButtn);
+		btnGroup.addChild(openProjectBtn);
+		btnGroup.addChild(previewBtn);
+		
+		
 		addChild(editorTabs);
+		
+		
 		BeanFactory.getInstance().addBean(Builder.class, this);
+		
+		
 
 		$(window).keydown(new Function<JQueryKeyEventObject, Object>() {
 
@@ -197,7 +217,7 @@ public class Builder extends LTContainer {
 		for (TabItem item : editorTabs.getItems()) {
 			if (item.getName().equals("editor_" + editorName)) {
 				editorTabs.setActive(item);
-				activeEditor = (Editor<?>) item.getBody().getChildren().get(0);
+				activeEditor = (Editor<?>) item.getBody().getChildren().$get(0);
 
 				return activeEditor;
 			}
@@ -217,7 +237,7 @@ public class Builder extends LTContainer {
 			@Override
 			public void onClose(TabItem item) {
 				// alert("close:" + item.getName());
-				Editor<?> edi = (Editor<?>) item.getBody().getChildren().get(0);
+				Editor<?> edi = (Editor<?>) item.getBody().getChildren().$get(0);
 				if (edi != null) {
 					// alert("close:" + edi.getName() + ":" + item.getName());
 					edi.save();
@@ -230,7 +250,7 @@ public class Builder extends LTContainer {
 			@Override
 			public void onActivate(TabItem item) {
 
-				activeEditor = (Editor<?>) item.getBody().getChildren().get(0);
+				activeEditor = (Editor<?>) item.getBody().getChildren().$get(0);
 				if (activeEditor instanceof EventEditor) {
 					// alert("reactivate");
 					((EventEditor) activeEditor).reactivate();
@@ -243,7 +263,7 @@ public class Builder extends LTContainer {
 			@Override
 			public void onDeactivate(TabItem item) {
 				// alert("deact:" + item.getName());
-				Editor<?> edi = (Editor<?>) item.getBody().getChildren().get(0);
+				Editor<?> edi = (Editor<?>) item.getBody().getChildren().$get(0);
 				if (edi != null) {
 					// alert("deact:" + edi.getName() + ":" + item.getName());
 					edi.save();

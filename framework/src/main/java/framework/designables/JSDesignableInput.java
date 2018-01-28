@@ -1,8 +1,5 @@
 package framework.designables;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.JSInput;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
@@ -10,6 +7,7 @@ import framework.design.Designable;
 import framework.design.Option;
 import framework.design.Parameter;
 import framework.design.ValueParameter;
+import jsweet.lang.Array;
 
 public class JSDesignableInput extends JSInput implements Designable {
 
@@ -17,18 +15,20 @@ public class JSDesignableInput extends JSInput implements Designable {
 
 	public JSDesignableInput(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void applyParam(String key, String value) {
 		delegate.applyParameter(key, value, true);
+		if(key.equalsIgnoreCase("type")){
+			setType(value);
+		}
 	}
 
 	@Override
-	public List<Designable> getDesignables() {
+	public Array<Designable> getDesignables() {
 
-		return new LinkedList<>();
+		return new Array<>();
 	}
 
 	@Override
@@ -37,40 +37,40 @@ public class JSDesignableInput extends JSInput implements Designable {
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> parameters = delegate.getParameters();
-		parameters.add(new ValueParameter("value", "Value", "Basic"));
+	public Array<Parameter> getParameters() {
+		Array<Parameter> parameters = delegate.getParameters();
+		parameters.push(new ValueParameter("value", "Value", "Basic"));
 		
 		AttributeParameter type = new AttributeParameter("type", "Type", "Basic");
-		type.options.add(new Option("text", "text"));
-		type.options.add(new Option("date", "date"));
-		type.options.add(new Option("datetime", "datetime"));
-		type.options.add(new Option("tel", "tel"));
-		type.options.add(new Option("color", "color"));
-		type.options.add(new Option("checkbox", "checkbox"));
-		type.options.add(new Option("password", "password"));
-		type.options.add(new Option("hidden", "hidden"));
-		type.options.add(new Option("radio", "radio"));
-		type.options.add(new Option("email", "email"));
-		type.options.add(new Option("file", "file"));
-		type.options.add(new Option("image", "image"));
-		type.options.add(new Option("month", "month"));
-		type.options.add(new Option("number", "number"));
-		type.options.add(new Option("range", "range"));
-		type.options.add(new Option("reset", "reset"));
-		type.options.add(new Option("button", "button"));
-		type.options.add(new Option("submit", "submit"));
-		type.options.add(new Option("time", "time"));
-		type.options.add(new Option("url", "url"));
-		type.options.add(new Option("week", "week"));		
+		type.options.push(new Option("text", "text"));
+		type.options.push(new Option("date", "date"));
+		type.options.push(new Option("datetime", "datetime"));
+		type.options.push(new Option("tel", "tel"));
+		type.options.push(new Option("color", "color"));
+		type.options.push(new Option("checkbox", "checkbox"));
+		type.options.push(new Option("password", "password"));
+		type.options.push(new Option("hidden", "hidden"));
+		type.options.push(new Option("radio", "radio"));
+		type.options.push(new Option("email", "email"));
+		type.options.push(new Option("file", "file"));
+		type.options.push(new Option("image", "image"));
+		type.options.push(new Option("month", "month"));
+		type.options.push(new Option("number", "number"));
+		type.options.push(new Option("range", "range"));
+		type.options.push(new Option("reset", "reset"));
+		type.options.push(new Option("button", "button"));
+		type.options.push(new Option("submit", "submit"));
+		type.options.push(new Option("time", "time"));
+		type.options.push(new Option("url", "url"));
+		type.options.push(new Option("week", "week"));		
 		
-		parameters.add(type);
+		parameters.push(type);
 		return parameters;
 	}
 
 	@Override
 	public void addDesignable(Designable designable) {
-		throw new RuntimeException("Cannot add children to this component");
+		//throw new java.lang.RuntimeException("Cannot add children to this component");
 	}
 
 	@Override

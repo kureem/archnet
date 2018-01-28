@@ -1,8 +1,7 @@
 package framework.designables;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import framework.util.HashMap;
+import framework.util.Map;
 
 import framework.JSContainer;
 import framework.TextComponent;
@@ -12,6 +11,7 @@ import framework.design.Option;
 import framework.design.Parameter;
 import framework.design.TagParameter;
 import framework.design.TextParameter;
+import jsweet.lang.Array;
 
 public class JSDesignableTextComponent extends TextComponent implements Designable {
 
@@ -42,8 +42,8 @@ public class JSDesignableTextComponent extends TextComponent implements Designab
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Designable> getDesignables() {
-		List l = getChildren();
+	public Array<Designable> getDesignables() {
+		Array l = getChildren();
 		return l;
 	}
 
@@ -53,16 +53,16 @@ public class JSDesignableTextComponent extends TextComponent implements Designab
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> params = delegate.getParameters();
+	public Array<Parameter> getParameters() {
+		Array<Parameter> params = delegate.getParameters();
 		TextParameter textParam = new TextParameter("text", "Text", "Basic");
 		TagParameter tagParam = new TagParameter();
 		for (String key : textTags.keySet()) {
-			tagParam.options.add(new Option(textTags.get(key), key));
+			tagParam.options.push(new Option(textTags.get(key), key));
 		}
 
-		params.add(tagParam);
-		params.add(textParam);
+		params.push(tagParam);
+		params.push(textParam);
 		return params;
 	}
 

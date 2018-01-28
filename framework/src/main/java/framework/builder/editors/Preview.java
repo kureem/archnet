@@ -6,7 +6,7 @@ import framework.builder.marshalling.Component;
 import framework.builder.marshalling.MarshallUtil;
 import framework.design.Designable;
 
-public class Preview extends JSContainer {
+public class Preview extends JSContainer implements DesignableEditor{
 
 	private Designable root;
 
@@ -30,6 +30,10 @@ public class Preview extends JSContainer {
 								
 		addChild((JSContainer) root);
 
+	}
+	
+	public Designable getRootItem(){
+		return root;
 	}
 
 }

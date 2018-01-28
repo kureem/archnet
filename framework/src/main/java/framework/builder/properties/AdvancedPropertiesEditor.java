@@ -15,7 +15,7 @@ public class AdvancedPropertiesEditor extends BasePropertiesEditor{
 		super.setComponent(designable);
 		clear();
 		for(Parameter p :  component.getParameters()){
-			if(p.category.equals("advanced"))
+			if(p.category.equalsIgnoreCase("advanced"))
 			addProperty(p, designable);
 		}
 	}

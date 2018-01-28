@@ -9,7 +9,7 @@ public class ImageIcon extends SvgIcon{
 		super(name);
 		
 		setHtml("");
-		getChildren().clear();
+		clearChildren();
 		addChild(img);
 		img.setAttribute("src", "http://www.powells.com/Portals/0/Images/powells_images/loading.gif");
 		

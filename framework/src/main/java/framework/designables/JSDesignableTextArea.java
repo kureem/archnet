@@ -1,13 +1,11 @@
 package framework.designables;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.JSTextArea;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
 import framework.design.Parameter;
 import framework.design.ValueParameter;
+import jsweet.lang.Array;
 
 public class JSDesignableTextArea extends JSTextArea implements Designable {
 	
@@ -29,23 +27,23 @@ public class JSDesignableTextArea extends JSTextArea implements Designable {
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> params = delegate.getParameters();//new LinkedList<>();
+	public Array<Parameter> getParameters() {
+		Array<Parameter> params = delegate.getParameters();//new LinkedList<>();
 
-		params.add(new ValueParameter("value", "Value", "Basic"));
+		params.push(new ValueParameter("value", "Value", "Basic"));
 		return params;
 	}
 
 	@Override
-	public List<Designable> getDesignables() {
-		List<Designable> result = new LinkedList<>();
+	public Array<Designable> getDesignables() {
+		Array<Designable> result = new Array<>();
 		return result;
 	}
 	
 	@Override
 	public void addDesignable(Designable designable) {
 		
-		throw new RuntimeException("Cannot add children to this component");
+		//throw new java.lang.RuntimeException("Cannot add children to this component");
 		
 	}
 	

@@ -51,7 +51,7 @@ public class Paginator extends JSContainer implements EventListener{
 	
 	public void setTable(Table table){
 		this.table = table;
-		pages.getChildren().clear();
+		pages.clearChildren();
 		pages.setRendered(false);
 		int pageSize = table.getPageSize();
 		
@@ -83,8 +83,8 @@ public class Paginator extends JSContainer implements EventListener{
 			}
 		}
 		
-		pages.getChildren().get(0).setStyle("border-left", "none").setStyle("border-radius", "0");
-		pages.getChildren().get(pages.getChildren().size()-1).setStyle("border-right", "none").setStyle("border-radius", "0");
+		pages.getChildren().$get(0).setStyle("border-left", "none").setStyle("border-radius", "0");
+		pages.getChildren().$get(pages.getChildren().length-1).setStyle("border-right", "none").setStyle("border-radius", "0");
 		
 		
 		
@@ -93,26 +93,26 @@ public class Paginator extends JSContainer implements EventListener{
 	private void redisplayBtns(int currentPage){
 		if(currentPage >=maxItem){
 			double rangeFrom = currentPage- maxItem;
-			for(int i =0; i <pages.getChildren().size();i++){
+			for(int i =0; i <pages.getChildren().length;i++){
 				if(i <= rangeFrom){
-					pages.getChildren().get(i).setVisible(false);
+					pages.getChildren().$get(i).setVisible(false);
 				}else if(i > currentPage){
-					pages.getChildren().get(i).setVisible(false);
+					pages.getChildren().$get(i).setVisible(false);
 				}else{
-					pages.getChildren().get(i).setVisible(true);
+					pages.getChildren().$get(i).setVisible(true);
 				}
 				if(i == currentPage){
-					pages.getChildren().get(i).addClass("slds-button_brand");
+					pages.getChildren().$get(i).addClass("slds-button_brand");
 				}else{
-					pages.getChildren().get(i).removeClass("slds-button_brand");
+					pages.getChildren().$get(i).removeClass("slds-button_brand");
 				}
 			}
 		}else{
-			for(int i =0; i <pages.getChildren().size();i++){
+			for(int i =0; i <pages.getChildren().length;i++){
 				if(i == currentPage){
-					pages.getChildren().get(i).addClass("slds-button_brand");
+					pages.getChildren().$get(i).addClass("slds-button_brand");
 				}else{
-					pages.getChildren().get(i).removeClass("slds-button_brand");
+					pages.getChildren().$get(i).removeClass("slds-button_brand");
 				}
 			}
 		}

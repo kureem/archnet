@@ -2,9 +2,6 @@ package framework.designables;
 
 import static def.dom.Globals.document;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import def.dom.HTMLElement;
 import framework.JSContainer;
 import framework.builder.Builder;
@@ -15,6 +12,7 @@ import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Option;
 import framework.design.Parameter;
+import jsweet.lang.Array;
 
 public class JSDesignableBuilderComponent extends JSDesignable{
 
@@ -30,7 +28,7 @@ public class JSDesignableBuilderComponent extends JSDesignable{
 		
 		
 		if(key.equals("component")){
-			getChildren().clear();
+			clearChildren();
 			setRendered(false);
 			File project = null;
 			if(Builder.getInstance() != null){
@@ -74,8 +72,8 @@ public class JSDesignableBuilderComponent extends JSDesignable{
 	
 	
 	@Override
-	public List<Designable> getDesignables() {
-		return new LinkedList<>();
+	public Array<Designable> getDesignables() {
+		return new Array<>();
 	}
 	
 	
@@ -96,19 +94,19 @@ public class JSDesignableBuilderComponent extends JSDesignable{
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
+	public Array<Parameter> getParameters() {
 		
-		List<Parameter> parameters = super.getParameters();
+		Array<Parameter> parameters = super.getParameters();
 		
 		
 		AttributeParameter component = new AttributeParameter("component", "Component Src", "Basic");
 		File project =  Builder.getInstance().getProject();
-		component.options.add(new Option("None", ""));
+		component.options.push(new Option("None", ""));
 		for(File f : project.getChild("components").getChildren()){
-			component.options.add(new Option(f.getName(), f.getName()));
+			component.options.push(new Option(f.getName(), f.getName()));
 		}
 		
-		parameters.add(component);
+		parameters.push(component);
 		return parameters;
 	}
 

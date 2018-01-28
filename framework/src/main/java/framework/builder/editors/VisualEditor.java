@@ -16,7 +16,7 @@ import framework.core.BeanFactory;
 import framework.design.Designable;
 import jsweet.lang.JSON;
 
-public class VisualEditor extends AbstractEditor<Component> {
+public class VisualEditor extends AbstractEditor<Component> implements DesignableEditor {
 
 	// private Builder builder;
 
@@ -69,6 +69,17 @@ public class VisualEditor extends AbstractEditor<Component> {
 		propertiesDockedComposer.selectComponent(designable);
 	}
 
+	public void visit(Visitor v){
+		visit(v,root);
+	}
+	
+	public void visit(Visitor v, Designable startAt){
+		v.doVisit(startAt);
+		for(Designable child : startAt.getDesignables()){
+			visit(v,child);
+		}
+	}
+	
 	private framework.builder.Component willAdd = null;
 
 	public void setWillAddComponent(framework.builder.Component component) {
@@ -138,7 +149,7 @@ public class VisualEditor extends AbstractEditor<Component> {
 	}
 
 	public Designable cona(Component component) {
-		templates.getChildren().clear();
+		templates.clearChildren();
 		templates.setRendered(false);
 		for (File temp : file.getTemplates()) {
 			JSTemplate t = new JSTemplate(temp);

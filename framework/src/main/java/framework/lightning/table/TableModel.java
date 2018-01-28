@@ -2,7 +2,7 @@ package framework.lightning.table;
 
 public interface TableModel {
 
-	public int getRowCount();
+	public double getRowCount();
 
 	public boolean isCellEditable(int rowIndex, int columnIndex);
 

@@ -17,7 +17,7 @@ public class CSSEditor extends CodeMirrorEditor {
 		config.autofocus = true;
 		config.lineNumbers = true;
 		Object keys = new Object();
-		keys.$set("Ctrl-Space", "autocomplete");
+		keys.$set("Ctrl-Space", "autocomplete"); 
 		config.extraKeys = keys;
 		config.mode = "text/css";
 

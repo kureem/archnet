@@ -1,10 +1,9 @@
 package framework.designables;
 
-import java.util.List;
-
 import framework.design.AttributeParameter;
 import framework.design.Parameter;
 import framework.design.TagParameter;
+import jsweet.lang.Array;
 
 public class JSDesignableLink extends JSDesignableTextComponent {
 
@@ -19,17 +18,20 @@ public class JSDesignableLink extends JSDesignableTextComponent {
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> parameters = super.getParameters();
+	public Array<Parameter> getParameters() {
+		Array<Parameter> parameters = super.getParameters();
+		Array<Parameter> result = new Array<Parameter>();
 		for(Parameter p : parameters){
 			if(p instanceof TagParameter){
-				parameters.remove(p);
-				break;
+				//parameters.remove(p);
+				//break;
+			}else{
+				result.push(p);
 			}
 		}
 		
-		parameters.add(new AttributeParameter("href", "Href", "Basic"));
-		parameters.add(new AttributeParameter("target", "Target", "Basic"));
+		parameters.push(new AttributeParameter("href", "Href", "Basic"));
+		parameters.push(new AttributeParameter("target", "Target", "Basic"));
 		
 		
 		return parameters;

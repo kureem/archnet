@@ -105,7 +105,8 @@ public class IOUtil {
 			return s;
 			// return new String(buf, "UTF-8");
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			//throw new java.lang.RuntimeException(e);
+			return null;
 		}
 	}
 

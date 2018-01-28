@@ -1,8 +1,5 @@
 package framework.builder.data;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.core.BeanFactory;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
@@ -48,7 +45,7 @@ public class DataStructure extends File {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void getFields(RemoteDataListener<List<DataField>> listener) {
+	public void getFields(RemoteDataListener<Array<DataField>> listener) {
 		
 		Array<Object> cached = (Array<Object>)object.$get("fields");
 		if(cached == null){
@@ -58,11 +55,11 @@ public class DataStructure extends File {
 				@Override
 				public void dataLoaded(java.lang.Object data) {
 					Object o = (Object)data;
-					List<DataField> fields = new LinkedList<>();
+					Array<DataField> fields = new Array<>();
 					Array<Object> oFields = (Array<Object>)o.$get("fields");
 					object.$set("fields", oFields);
 					for(Object oField : oFields){
-						fields.add(new DataField(oField));
+						fields.push(new DataField(oField));
 					}
 					
 					listener.dataLoaded(fields);
@@ -70,10 +67,10 @@ public class DataStructure extends File {
 			}, getName());
 		}else{
 			
-			List<DataField> fields = new LinkedList<>();
+			Array<DataField> fields = new Array<>();
 			object.$set("fields", cached);
 			for(Object oField : cached){
-				fields.add(new DataField(oField));
+				fields.push(new DataField(oField));
 			}
 			
 			listener.dataLoaded(fields);

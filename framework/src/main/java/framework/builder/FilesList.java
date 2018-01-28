@@ -1,15 +1,13 @@
 package framework.builder;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import def.js.Array;
 import framework.EventListener;
 import framework.JSContainer;
 import jsweet.dom.Event;
 
 public class FilesList extends JSContainer{
 	
-	private List<ItemSelectedListener> itemSelectedListeners = new LinkedList<>();
+	private Array<ItemSelectedListener> itemSelectedListeners = new Array<>();
 	
 	private ItemSelector selector;
 	
@@ -38,7 +36,7 @@ public class FilesList extends JSContainer{
 	}
 	
 	public void addItemSelectedListener(ItemSelectedListener l){
-		itemSelectedListeners.add(l);
+		itemSelectedListeners.push(l);
 	}
 	
 	public void fireItemSelectedListeners(UIFile file, ItemSelector selector){
@@ -49,11 +47,11 @@ public class FilesList extends JSContainer{
 	
 	public void select(UIFile file){
 		for(JSContainer c : getChildren()){
-			if(c.getChildren().get(0).getName().equals(file.getName())){
+			if(c.getChildren().$get(0).getName().equals(file.getName())){
 				fireItemSelectedListeners(file, selector);
-				c.getChildren().get(0).addClass("selected");
+				c.getChildren().$get(0).addClass("selected");
 			}else{
-				c.getChildren().get(0).removeClass("selected");
+				c.getChildren().$get(0).removeClass("selected");
 			}
 		}
 		

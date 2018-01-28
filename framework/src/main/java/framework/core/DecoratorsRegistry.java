@@ -1,10 +1,10 @@
 package framework.core;
 
-import java.util.List;
+import jsweet.lang.Array;
 
 public interface DecoratorsRegistry {
 	
 	public void registerDecorator(Decorator decorator);
 
-	public List<Decorator> getDecorators();
+	public Array<Decorator> getDecorators();
 }

@@ -1,7 +1,5 @@
 package framework.builder.properties;
 
-import java.util.List;
-
 import framework.JSContainer;
 import framework.Renderable;
 import framework.lightning.IconButton;
@@ -15,6 +13,7 @@ import framework.lightning.table.TableColumn;
 import framework.lightning.table.TableModel;
 import framework.lightning.table.TableRowsSelectionListener;
 import jsweet.dom.Event;
+import jsweet.lang.Array;
 
 public abstract class ItemSelector<T> extends Modal implements TableCellRenderer {
 
@@ -24,7 +23,7 @@ public abstract class ItemSelector<T> extends Modal implements TableCellRenderer
 
 	private DefaultTableColumnModel tableColumModel = new DefaultTableColumnModel();
 
-	private List<T> dataList;
+	private Array<T> dataList;
 
 	public ItemSelector(String name) {
 		super(name, "div");
@@ -37,9 +36,9 @@ public abstract class ItemSelector<T> extends Modal implements TableCellRenderer
 		dataTable.addRowsSelectionListener(new TableRowsSelectionListener() {
 
 			@Override
-			public void onSelectRow(JSContainer source, Event event, Table table, int firstIndex, int lastIndex) {
+			public void onSelectRow(JSContainer source, Event event, Table table, double firstIndex, double lastIndex) {
 
-				T field = dataList.get(firstIndex);
+				T field = dataList.$get(firstIndex);
 				l.onItemSelected(field);
 			}
 		});
@@ -49,7 +48,7 @@ public abstract class ItemSelector<T> extends Modal implements TableCellRenderer
 		tableColumModel.addColumn(column);
 	}
 
-	public void setDataList(List<T> dataList) {
+	public void setDataList(Array<T> dataList) {
 		this.dataList = dataList;
 		dataTable.setTableCellRenderer(this);
 		dataTable.setTableColumnModel(tableColumModel);
@@ -72,8 +71,8 @@ public abstract class ItemSelector<T> extends Modal implements TableCellRenderer
 			}
 
 			@Override
-			public int getRowCount() {
-				return dataList.size();
+			public double getRowCount() {
+				return dataList.length;
 			}
 
 		});

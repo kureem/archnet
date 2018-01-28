@@ -23,6 +23,8 @@ public class Button extends JSContainer {
 	public Button(String name) {
 		super(name, "button");
 		addClass("slds-button");
+		setAttribute("state", "neutral");
+		setState(STATE_NEUTRAL);
 	}
 
 	public Button addIcon(SvgIcon icon) {
@@ -84,7 +86,7 @@ public class Button extends JSContainer {
 		} else if (key.equals("label")) {
 			setLabel(value);
 		} else {
-			throw new RuntimeException("Unknow parameter key:" + value + " Class: framework.lightning.Button");
+			//throw new java.lang.RuntimeException("Unknow parameter key:" + value + " Class: framework.lightning.Button");
 		}
 	}
 

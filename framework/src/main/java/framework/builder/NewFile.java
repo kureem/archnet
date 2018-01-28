@@ -29,8 +29,8 @@ public class NewFile extends ItemSelector {
 	private UIFile javascript = new UIFile("scripts").setAbbr("JS").setTitle("Javascript file")
 			.setHelp("Create a new javascript file to be included in project");
 
-	private UIFile data = new UIFile("data").setAbbr("DAT").setTitle("Data Environment")
-			.setHelp("Creates a new data environment to be included inn the project");
+	private UIFile data = new UIFile("datasources").setAbbr("DAT").setTitle("Data Source")
+			.setHelp("Creates a new data source to be included inn the project");
 
 	private String fileType = null;
 
@@ -95,7 +95,7 @@ public class NewFile extends ItemSelector {
 			}
 		}, "keypress");
 		this.structure = structure;
-		getFilesList().getChildren().clear();
+		getFilesList().clearChildren();
 		getFilesList().addFile(lightning);
 		getFilesList().addFile(mobile);
 		if (!builder.isProjectOpen()) {
@@ -133,6 +133,10 @@ public class NewFile extends ItemSelector {
 		} else if (type.equalsIgnoreCase("components")) {
 			if (!name.endsWith(".cmp")) {
 				name = name + ".cmp";
+			}
+		} else if (type.equalsIgnoreCase("datasources")) {
+			if (!name.endsWith(".ds")) {
+				name = name + ".ds";
 			}
 		}
 		File project = builder.getProject();

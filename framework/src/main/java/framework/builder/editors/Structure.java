@@ -1,18 +1,17 @@
 package framework.builder.editors;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static def.dom.Globals.alert;
+import static jsweet.lang.Globals.parseInt;
 
 import framework.EventListener;
 import framework.JSContainer;
 import framework.TreeItem;
 import framework.builder.Builder;
 import framework.builder.Selector;
-import framework.builder.data.DataStructure;
 import framework.builder.data.File;
-import framework.builder.data.RemoteDataListener;
 import framework.design.Designable;
+import framework.util.HashMap;
+import framework.util.Map;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
 
@@ -21,16 +20,9 @@ public class Structure extends JSContainer {
 	private Designable root;
 
 	private JSContainer ul = new JSContainer("ul");
+	
+	private Map<String, JSContainer> lis = new HashMap<>();
 
-	private JSContainer liJS;
-
-	private JSContainer liData;
-
-	private JSContainer liTemplates;
-
-	private JSContainer liComponents;
-
-	private JSContainer liCss = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
 
 	private JSContainer liRoot = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
 
@@ -69,6 +61,9 @@ public class Structure extends JSContainer {
 
 		addChild(ul.addClass("slds-tree").setAttribute("role", "tree"));
 		this.root = root;
+		
+		
+		
 		reload();
 	}
 
@@ -133,45 +128,47 @@ public class Structure extends JSContainer {
 	public void reload() {
 		clipboardItem = null;
 		
-		ul.getChildren().clear();
+		ul.clearChildren();
 
 		ul.setRendered(false);
-
-		liJS = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
-
-		liCss = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
-
-		liData = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
-
-		liTemplates = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
-
+		
 		liRoot = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
-
-		liComponents = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
-
+		
 		ul.addChild(liRoot.addClass("type-ui"));
 		addNode(root, liRoot, 0, null);
-
-		liJS.addChild(new TreeItem("", "JS").addClass("type-scripts").addEventListener(toggleSelect, "click"));
-		ul.addChild(liJS);
-
-		liCss.addChild(new TreeItem("", "CSS").addClass("type-stylesheets").addEventListener(toggleSelect, "click"));
-		ul.addChild(liCss);
-
-		liTemplates.addChild(
-				new TreeItem("", "Templates").addClass("type-templates").addEventListener(toggleSelect, "click"));
-		ul.addChild(liTemplates);
-
 		
-		liData.addChild(dataRoot.addClass("type-data").addEventListener(toggleSelect, "click"));
-		ul.addChild(liData);
-
-		liComponents.addChild(
-				new TreeItem("", "Components").addClass("type-components").addEventListener(toggleSelect, "click"));
-		ul.addChild(liComponents);
-
+		String[] items = new String[]{"scripts", "stylesheets", "templates", "components", "datasources", "variables", "types"};
+		String[] labels = new String[]{"JS", "CSS", "HTML", "Components", "Datasources", "Variables", "Types"};
+		
+		for(int i = 0; i < items.length; i++){
+			JSContainer li = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
+			addTreeItem(li, items[i], labels[i]);
+			lis.put(items[i], li);
+		}
+		
+		
+		
 		renderFiles();
 
+	}
+	
+	private void addTreeItem(JSContainer li, String type,String label){
+		TreeItem item =new TreeItem("", label);
+		
+		item.addIcon("add", "utility", new NewFileStructureEventListener( type, file, this));
+		if(type.equalsIgnoreCase("types")){
+			item.addIcon("import", "utility", new EventListener() {
+				
+				@Override
+				public void performAction(JSContainer source, Event evt) {
+					alert("to implement: Import from salesforce");
+				}
+			});
+		}
+		//item.addIcon(name, type, listener); 
+		item.addClass("type-" + type).addEventListener(toggleSelect, "click");
+		li.addChild(item);
+		ul.addChild(li);
 	}
 
 	public StructureTreeItem getItem(Designable designable, JSContainer currentNode) {
@@ -192,18 +189,7 @@ public class Structure extends JSContainer {
 	}
 
 	public TreeItem getItem(String type) {
-		if (type.equals("stylesheets")) {
-			return (TreeItem) liCss.getChildren().get(0);
-		} else if (type.equals("templates")) {
-			return (TreeItem) liTemplates.getChildren().get(0);
-		} else if (type.equals("scripts")) {
-			return (TreeItem) liJS.getChildren().get(0);
-		} else if (type.equals("data")) {
-			return (TreeItem) liData.getChildren().get(0);
-		} else if (type.equals("components")) {
-			return (TreeItem) liComponents.getChildren().get(0);
-		}
-		return null;
+		return (TreeItem)lis.get(type).getChildren().$get(0);
 	}
 
 	public void reload(String type) {
@@ -217,11 +203,12 @@ public class Structure extends JSContainer {
 		clipboardItem = null;
 		StructureTreeItem item = getItem(designable, liRoot);
 		if (item != null) {
-			Integer level = Integer.parseInt(item.getParent().getAttribute("aria-level"));
+			Double level =parseInt(item.getParent().getAttribute("aria-level")); 
+					 //document.parseInt(item.getParent().getAttribute("aria-level"));
 			JSContainer li = item.getParent();
-			li.getChildren().clear();
+			li.clearChildren();
 			li.setRendered(false);
-			addNode(designable, li, level, item.getParentDesignable()).open();
+			addNode(designable, li, level.intValue(), item.getParentDesignable()).open();
 			item.open();
 		}
 	}
@@ -231,45 +218,22 @@ public class Structure extends JSContainer {
 	}
 
 	public void renderFiles() {
-		String[] types = new String[] { "stylesheets", "scripts", "templates", "components" };
-		Map<String, JSContainer> lis = new HashMap<String, JSContainer>();
-		lis.put("stylesheets", liCss);
-		lis.put("data", liData);
-		lis.put("scripts", liJS);
-		lis.put("templates", liTemplates);
-		lis.put("components", liComponents);
-
-		for (String type : types) {
+			
+		for (String type : lis.keySet()) {
 			JSContainer cstylesheets = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
-			for (File f : file.getChild(type).getChildren()) {
-				TreeItem item = new FileTreeItem(f, type, Builder.getInstance(), this);
-				item.addEventListener(toggleSelect, "click");
-				JSContainer li = new JSContainer("li").addChild(item).setAttribute("role", "treeitem")
-						.setAttribute("aria-level", "2");
-				lis.get(type).addChild(cstylesheets.addChild(li));
-			}
-		}
-		Structure struc = this;
-		file.getDataStructures(new RemoteDataListener<Array<DataStructure>>() {
-			@Override
-			public void dataLoaded(Array<DataStructure> data) {
-				JSContainer cstylesheets = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
-				int count = 0;
-				for(DataStructure f : data){
-					if(count == 10){
-						break;
-					}
-					TreeItem item = new FileTreeItem(f, "data", Builder.getInstance(), struc);
+			if(file.getChild(type) != null){
+				for (File f : file.getChild(type).getChildren()) {
+					TreeItem item = new FileTreeItem(f, type, Builder.getInstance(), this);
 					item.addEventListener(toggleSelect, "click");
 					JSContainer li = new JSContainer("li").addChild(item).setAttribute("role", "treeitem")
-						.setAttribute("aria-level", "2");
-					
-					dataRoot.setLeftIcon("file", "utility");
-					lis.get("data").addChild(cstylesheets.addChild(li)).render();
-					count++;
+							.setAttribute("aria-level", "2");
+					lis.get(type).addChild(cstylesheets.addChild(li));
 				}
+			}else{
+				lis.get(type).addChild(cstylesheets);
 			}
-		});
+			
+		}
 
 	}
 
@@ -277,8 +241,8 @@ public class Structure extends JSContainer {
 		StructureTreeItem item = new StructureTreeItem(ctn.getName(), ctn, this, parent);
 		li.addChild(item).setAttribute("role", "treeitem").setAttribute("aria-level", level + "");
 
-		List<Designable> designables = ctn.getDesignables();
-		if (designables != null && designables.size() > 0) {
+		Array<Designable> designables = ctn.getDesignables();
+		if (designables != null && designables.length > 0) {
 			item.leaf(false);
 			JSContainer children = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
 			li.addChild(children);

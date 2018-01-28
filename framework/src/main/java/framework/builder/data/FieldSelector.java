@@ -1,10 +1,9 @@
 package framework.builder.data;
 
-import java.util.List;
-
 import framework.builder.properties.ItemSelector;
 import framework.lightning.table.Table;
 import framework.lightning.table.TableColumn;
+import jsweet.lang.Array;
 
 public class FieldSelector extends ItemSelector<DataField> {
 
@@ -23,10 +22,10 @@ public class FieldSelector extends ItemSelector<DataField> {
 		TableColumn actions = new TableColumn("actions", "actins", " ");
 		actions.setWidth("20px");
 		
-		structure.getFields(new RemoteDataListener<List<DataField>>() {
+		structure.getFields(new RemoteDataListener<Array<DataField>>() {
 			
 			@Override
-			public void dataLoaded(List<DataField> data) {
+			public void dataLoaded(Array<DataField> data) {
 				setDataList(data);
 			}
 		});

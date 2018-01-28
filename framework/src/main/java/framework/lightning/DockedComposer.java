@@ -1,8 +1,11 @@
 package framework.lightning;
 
 import def.jqueryui.jqueryui.DraggableOptions;
+import framework.EventListener;
 import framework.JSContainer;
 import framework.interactions.Draggable;
+import framework.interactions.DraggableRenderer;
+import jsweet.dom.Event;
 
 public class DockedComposer extends Grid implements Draggable{
 
@@ -29,6 +32,8 @@ public class DockedComposer extends Grid implements Draggable{
 	
 	private JSContainer footer = new JSContainer("footer").addClass("slds-docked-composer__footer slds-shrink-none");
 	
+	private boolean closed = false;
+	
 	public DockedComposer(String name) {
 		super(name, "section");
 		setVertical(true);
@@ -44,23 +49,69 @@ public class DockedComposer extends Grid implements Draggable{
 		headerTitle.getBodyContainer().addChild(title);
 		header.addChild(tools);
 		tools.addChild(minimize).addChild(expand).addChild(close);
-		tools.setVisible(false);
+		expand.getIcon().setIconName("expand_alt");
+		minimize.getIcon().setIconName("minimize_window");
+		close.getIcon().setIconName("close");
+		close.setVisible(false);
+		expand.setVisible(false);
+		//tools.setVisible(false);
 		addChild(body);
 		addChild(footer);
 		addClass("slds-docked-composer");
+		addRenderer(new DraggableRenderer());
+		
+		minimize.addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				toggle();
+			}
+		}, "click");
+		
 		
 	}
 	
 	
+	public DockedComposer toggle(){
+		
+		if(closed){
+			setOpen(true);
+		}else{
+			setClosed(true);
+		}
+		
+		return this;
+	}
+	
 	public DockedComposer setOpen(boolean b){
+		closed = !b;
 		toggleClass("slds-is-open", b);
 		toggleClass("slds-is-closed", !b);
+		if(b){
+			body.removeClass("slds-hide");
+			setStyle("height", "300px");
+			minimize.getIcon().setIconName("minimize_window");
+		}else{
+			body.addClass("slds-hide");
+			setStyle("height", "0px");
+			minimize.getIcon().setIconName("erect_window");
+		}
 		return this;
 	}
 
 	public DockedComposer setClosed(boolean b){
+		closed = b;
 		toggleClass("slds-is-closed", b);
 		toggleClass("slds-is-open", !b);
+		if(!b){
+			body.removeClass("slds-hide");
+			setStyle("height", "300px");
+			minimize.getIcon().setIconName("minimize_window");
+		}else{
+			body.addClass("slds-hide");
+			setStyle("height", "0px");
+			minimize.getIcon().setIconName("erect_window");
+		}
 		return this;
 	}
 

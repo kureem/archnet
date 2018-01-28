@@ -22,6 +22,7 @@ public class Component extends JSContainer implements EventListener{
 	
 	private ComponentFactoryRegistry  componentFactoryRegistry = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class);
 	 
+	@SuppressWarnings("unused")
 	private String identifier;
 	
 	public Component(String identifier, String initial, String label) {

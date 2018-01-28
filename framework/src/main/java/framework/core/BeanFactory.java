@@ -1,7 +1,7 @@
 package framework.core;
 
-import java.util.HashMap;
-import java.util.Map;
+import framework.util.HashMap;
+import framework.util.Map;
 
 public class BeanFactory {
 
@@ -57,8 +57,8 @@ public class BeanFactory {
 		if(beans.containsKey(mixing)){
 			return (T)beans.get(mixing);
 		}
-		
-		throw new RuntimeException("No bean of type " + clazz.getName() + " found in factory");
+		return null;
+		//throw new java.lang.RuntimeException("No bean of type " + clazz.getName() + " found in factory");
 	}
 
 	public Object getBean(String name) {

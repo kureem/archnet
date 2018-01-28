@@ -81,8 +81,9 @@ public class Modal extends JSContainer {
 		return this;
 	}
 	
-	public void setTitle(String stitle){
+	public Modal setTitle(String stitle){
 		title.setHtml(stitle);
+		return this;
 	}
 	
 	public JSContainer getTitle(){
@@ -99,6 +100,14 @@ public class Modal extends JSContainer {
 
 	public JSContainer getContent() {
 		return content;
+	}
+	
+	
+	public Modal setBody(JSContainer body){
+		content.clearChildren();
+		content.setRendered(false);
+		content.addChild(body);
+		return this;
 	}
 
 	public JSContainer getFooter() {

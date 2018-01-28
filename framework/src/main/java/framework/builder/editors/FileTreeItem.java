@@ -4,6 +4,7 @@ import framework.EventListener;
 import framework.JSContainer;
 import framework.TreeItem;
 import framework.builder.Builder;
+import framework.builder.data.DataSourcesEditor;
 import framework.builder.data.File;
 import framework.builder.data.RemoteDataListener;
 import framework.builder.libraries.DataComposer;
@@ -47,6 +48,8 @@ public class FileTreeItem extends TreeItem implements EventListener {
 			
 		}else if(f.getName().endsWith(".cmp")){
 			setLeftIcon("custom63", "custom");
+		}else if(f.getName().endsWith(".ds")){
+			setLeftIcon("custom63", "custom");
 		}
 		
 
@@ -74,6 +77,16 @@ public class FileTreeItem extends TreeItem implements EventListener {
 			editor.open(f);
 		}else if(f.getName().endsWith(".cmp")){
 			VisualEditor editor = new VisualEditor(f.getName());
+			builder.openEditor(f.getName(), editor);
+			editor.open(f);
+		}else if(f.getName().endsWith(".ds")){
+			
+			DataSourcesEditor editor = new DataSourcesEditor(f.getName(),veditor);
+			builder.openEditor(f.getName(), editor);
+			editor.open(f);
+		}else if(f.getName().endsWith(".var")){
+			
+			ContextEditor editor = new ContextEditor(f.getName(),veditor);
 			builder.openEditor(f.getName(), editor);
 			editor.open(f);
 		}else{

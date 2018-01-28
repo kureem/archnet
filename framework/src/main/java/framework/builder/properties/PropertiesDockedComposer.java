@@ -19,12 +19,13 @@ public class PropertiesDockedComposer extends DockedComposer {
 		mainEditor.addItem("Advanced", advancedPropertiesEditorBody);
 		
 		getBody().addChild(mainEditor);
+		
 	}
 
 	public void selectComponent(Designable designable) {
 	
 		basicEditorBody.setComponent(designable);
 		advancedPropertiesEditorBody.setComponent(designable);
-		mainEditor.getItems().get(0).setActive(true);
+		mainEditor.getItems().$get(0).setActive(true);
 	}
 }

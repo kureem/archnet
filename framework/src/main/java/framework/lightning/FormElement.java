@@ -22,10 +22,14 @@ public class FormElement extends JSContainer {
 	}
 	
 	public FormElement setInput(InputField<?> input){
-		control.getChildren().clear();
+		control.clearChildren();
 		control.setRendered(false);
 		control.addChild((JSContainer)input);
 		return this;
+	}
+	
+	public InputField<?> getInput(){
+		return (InputField<?>)control.getChildren().$get(0);
 	}
 	
 	public JSContainer getControl(){

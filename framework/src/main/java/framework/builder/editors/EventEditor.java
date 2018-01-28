@@ -1,7 +1,5 @@
 package framework.builder.editors;
 
-import java.util.List;
-
 import framework.EventListener;
 import framework.JSContainer;
 import framework.JSOption;
@@ -12,6 +10,7 @@ import framework.builder.marshalling.Component;
 import framework.design.Designable;
 import framework.lightning.Grid;
 import jsweet.dom.Event;
+import jsweet.lang.Array;
 
 public class EventEditor extends AbstractEditor<Component> {
 
@@ -70,11 +69,12 @@ public class EventEditor extends AbstractEditor<Component> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void fillValue(Designable des, boolean updEvtSelect) {
 		boolean s = false;
 		component.setHtml(des.getName());
 		if (!updEvtSelect) {
-			List<EventListener> listeners = des.getListeners().get(events.getValue());
+			Array<EventListener> listeners = (Array<EventListener>)des.getListeners().$get(events.getValue());
 			if (listeners != null) {
 				for (EventListener e : listeners) {
 					if (e instanceof BuilderEventListener) {
@@ -123,8 +123,9 @@ public class EventEditor extends AbstractEditor<Component> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public String getSource(Designable des, String type) {
-		List<EventListener> listeners = des.getListeners().get(type);
+		Array<EventListener> listeners = (Array<EventListener>)des.getListeners().$get(type);
 		if (listeners != null) {
 			for (EventListener l : listeners) {
 				if (l instanceof BuilderEventListener) {
@@ -170,6 +171,7 @@ public class EventEditor extends AbstractEditor<Component> {
 		clean();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void save(String type) {
 		String componentId = component.getAttribute("desid");
 
@@ -177,7 +179,7 @@ public class EventEditor extends AbstractEditor<Component> {
 		// alert(type + ":" + src);
 		Designable des = findDesignableById(root, componentId);
 		if (des != null) {
-			List<EventListener> listeners = des.getListeners().get(type);
+			Array<EventListener> listeners = (Array<EventListener>)des.getListeners().$get(type);
 			if (listeners != null) {
 				for (EventListener l : listeners) {
 					if (l instanceof BuilderEventListener) {

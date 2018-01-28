@@ -17,7 +17,7 @@ public class SelectComponentEvent implements EventListener {
 
 	@Override
 	public void performAction(JSContainer source, Event evt) {
-		
+		evt.stopPropagation();
 		
 		VisualEditor editor = source.getAncestorWithClass("visual-editor");
 		if(editor != null && editor.getWillAddComponent() != null){

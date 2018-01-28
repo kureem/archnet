@@ -2,18 +2,19 @@ package framework.lightning;
 
 import static def.jquery.Globals.$;
 
-import java.util.List;
 import java.util.function.Function;
 
 import def.jquery.JQueryEventObject;
 import framework.JSContainer;
 import framework.JSHTMLFragment;
 import framework.builder.marshalling.Component;
+import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
 import framework.designables.JSDesignable;
 import jsweet.dom.HTMLElement;
+import jsweet.lang.Array;
 
 public class AccordionItem extends JSHTMLFragment implements Designable {
 
@@ -56,12 +57,15 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 	public void applyParam(String key, String value) {
 		delegate.applyParameter(key, value, true);
 
+		if(key.equals("title")){
+			setTitle(value);
+		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public List<Designable> getDesignables() {
-		List l = accordionContent.getChildren();
+	public Array<Designable> getDesignables() {
+		Array l = accordionContent.getChildren();
 		return l;
 	}
 
@@ -71,8 +75,11 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		return delegate.getParameters();
+	public Array<Parameter> getParameters() {
+		Array<Parameter> parameters = delegate.getParameters();
+		AttributeParameter title = new AttributeParameter("title", "Title", "Basic");
+		parameters.push(title);
+		return parameters;
 	}
 
 	@Override
@@ -111,17 +118,31 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 		configured = true;
 
 	}
+	
+	
+
+	@Override
+	public JSContainer setRendered(boolean b) {
+		 super.setRendered(b);
+		if(!b){
+			configured = false;
+		}
+		
+		return this;
+	}
 
 	@Override
 	public void removeDesignable(Designable designable) {
-		// TODO Auto-generated method stub
+	//	JSContainer parent = (JSContainer)designable.getParent();
+		//parent.removeChild(designable);
+		//delegate.removeDesignable(designable);
 		
+		accordionContent.removeChild(designable);
 	}
 
 	@Override
 	public void moveDesignable(Designable designable, int steps) {
-		// TODO Auto-generated method stub
-		
+		delegate.moveDesignable(accordionContent, steps);
 	}
 
 }

@@ -41,7 +41,10 @@ public class Previewer extends JSContainer{
 				//alert(JSON.stringify(t.data));
 				//
 				
+				HTMLElement templates = document.getElementById("templates");
+				
 				document.body.innerHTML="";
+				document.body.appendChild(templates);
 				Object o = JSON.parse(t.data.toString());
 				HTMLElement template = document.createElement("div");
 				template.style.display= "none";

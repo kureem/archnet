@@ -1,32 +1,60 @@
 package framework.designables;
 
-import java.util.List;
+import static def.dom.Globals.window;
+import static jsweet.lang.Globals.encodeURI;
 
+import framework.JSContainer;
+import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
+import framework.design.Designable;
 import framework.design.Parameter;
-import framework.design.TagParameter;
+import jsweet.lang.Array;
 
-public class JSDesignableImage extends JSDesignableBlockComponent{
+public class JSDesignableImage extends JSContainer implements Designable {
+
+	private DesignableDelegate delegate = new DesignableDelegate(this);
 
 	public JSDesignableImage(String name) {
 		super(name, "img");
-		
+
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> parameters = super.getParameters();
-		parameters.add(new AttributeParameter("src", "Source", "Basic"));
-		
-		for(Parameter p : parameters){
-			if(p instanceof TagParameter){
-				parameters.remove(p);
-				break;
-			}
-		}
-		
+	public Array<Parameter> getParameters() {
+		Array<Parameter> parameters = delegate.getParameters();
+		parameters.push(new AttributeParameter("src", "Source", "Basic"));
+
 		return parameters;
 	}
 
-	
+	@Override
+	public void applyParam(String key, String value) {
+		delegate.applyParameter(key, value, true);
+	}
+
+	@Override
+	public Array<Designable> getDesignables() {
+		return new Array<Designable>();
+	}
+
+	@Override
+	public Component getComponent() {
+		return delegate.getComponent();
+	}
+
+	@Override
+	public void addDesignable(Designable designable) {
+
+	}
+
+	@Override
+	public void removeDesignable(Designable designable) {
+
+	}
+
+	@Override
+	public void moveDesignable(Designable designable, int steps) {
+
+	}
+
 }

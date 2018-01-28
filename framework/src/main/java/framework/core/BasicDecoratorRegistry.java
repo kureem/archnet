@@ -1,19 +1,18 @@
 package framework.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import jsweet.lang.Array;
 
 public class BasicDecoratorRegistry implements DecoratorsRegistry {
 
-	private List<Decorator> decorators = new ArrayList<>();
+	private Array<Decorator> decorators = new Array<>();
 	
 	@Override
 	public void registerDecorator(Decorator decorator) {
-		decorators.add(decorator);
+		decorators.push(decorator);
 	}
 
 	@Override
-	public List<Decorator> getDecorators() {
+	public Array<Decorator> getDecorators() {
 		return decorators;
 	}
 

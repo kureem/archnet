@@ -19,7 +19,7 @@ public class AttributeWithOptionsEditor extends AbstractSelectPropertyEditor{
 		String attr = parameter.name;
 		String value = designable.getAttribute(attr);
 		
-		getChildren().clear();
+		clearChildren();
 		setRendered(false);
 		for(Option opt : parameter.options){
 			addOption(new JSOption(opt.text, opt.value));

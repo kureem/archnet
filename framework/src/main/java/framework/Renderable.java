@@ -15,22 +15,25 @@
  */
 package framework;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import framework.renderer.Renderer;
 import jsweet.dom.HTMLElement;
+import jsweet.lang.Array;
 
 public interface Renderable {
 
-	String[] getChangedAttributes();
+	Array<String> getChangedAttributes();
 
-	String[] getChangedStyles();
+	Array<String> getChangedStyles();
 
 	public HTMLElement getNative();
+	
+	public Renderable getChild(String name);
+	
+	public Renderable removeChild(Renderable r);
+	
+	public Renderable clearChildren();
 
-	List<Renderer<? extends Renderable>> getRenderers();
+	Array<Renderer<? extends Renderable>> getRenderers();
 
 	Renderable addRenderer(Renderer<? extends Renderable> renderer);
 
@@ -44,7 +47,7 @@ public interface Renderable {
 
 	Renderable addChild(JSContainer container);
 
-	Renderable addChildAt(int index, JSContainer child);
+	Renderable addChildAt(double index, JSContainer child);
 
 	Renderable setVisible(boolean b);
 
@@ -75,11 +78,11 @@ public interface Renderable {
 
 	Renderable getParent();
 
-	List<JSContainer> getChildren();
+	Array<JSContainer> getChildren();
 
-	Set<String> getStyleNames();
+	String[] getStyleNames();
 
-	Set<String> getAttributeNames();
+	String[] getAttributeNames();
 
 	String getHtml();
 
@@ -89,7 +92,7 @@ public interface Renderable {
 
 	Renderable setRendered(boolean b);
 
-	Map<String, List<EventListener>> getListeners();
+	jsweet.lang.Object getListeners();
 
 	void render();
 	

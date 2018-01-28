@@ -15,12 +15,10 @@
  */
 package framework;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import framework.lightning.SvgIcon;
 import framework.lightning.IconButton;
+import framework.lightning.SvgIcon;
 import jsweet.dom.Event;
+import jsweet.lang.Array;
 
 public class TreeItem extends JSContainer implements EventListener{
 
@@ -36,7 +34,7 @@ public class TreeItem extends JSContainer implements EventListener{
 	
 	private boolean open = false;
 	
-	private List<IconButton> buttons = new LinkedList<>();
+	private Array<IconButton> buttons = new Array<>();
 	
 	private JSContainer buttonsCtn = new JSContainer("div").addClass("buttons-ctn");
 	
@@ -77,7 +75,7 @@ public class TreeItem extends JSContainer implements EventListener{
 		//minimize.setStyle("top", "-27px");
 		//minimize.setStyle("right", (buttons.size()*16 + 3) + "px");
 		
-		buttons.add(minimize);
+		buttons.push(minimize);
 	}
 	
 	public JSContainer getButton(){
@@ -87,8 +85,8 @@ public class TreeItem extends JSContainer implements EventListener{
 	public void open(){
 		open = true;
 		button.setHtml(iconDown);
-		if(getParent().getChildren().size() >1){
-			getParent().getChildren().get(1).setStyle("display", "block");
+		if(getParent().getChildren().length >1){
+			getParent().getChildren().$get(1).setStyle("display", "block");
 		}
 		
 	}
@@ -96,8 +94,8 @@ public class TreeItem extends JSContainer implements EventListener{
 	public void close(){
 		open = false;
 		button.setHtml(iconRight);
-		if(getParent().getChildren().size() >1){
-			getParent().getChildren().get(1).setStyle("display", "none");
+		if(getParent().getChildren().length >1){
+			getParent().getChildren().$get(1).setStyle("display", "none");
 		}
 	}
 	

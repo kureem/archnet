@@ -12,14 +12,14 @@ public class InteractionsDecorator implements Decorator {
 	@Override
 	public void decorate(Renderable renderable) {
 		if (renderable instanceof Draggable) {
-			if (!renderable.getRenderers().contains(draggableRenderer)) {
+			if (renderable.getRenderers().indexOf(draggableRenderer) <=0) {
 				renderable.addRenderer(draggableRenderer);
 			}
 
 		}
 
 		if (renderable instanceof Droppable) {
-			if (!renderable.getRenderers().contains(droppableRenderer)) {
+			if (renderable.getRenderers().indexOf(droppableRenderer) <=0) {
 				renderable.addRenderer(droppableRenderer);
 			}
 		}

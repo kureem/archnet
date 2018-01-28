@@ -31,7 +31,7 @@ public class OptionsEditor extends AbstractTextAreaPropertyEditor{
 		String value = getValue();
 		String[] options = value.split("\n");
 		JSSelect select = (JSSelect)designable;
-		select.getChildren().clear();
+		select.clearChildren();
 		select.setRendered(false);
 		for(String opt : options){
 			JSOption option = new JSOption(opt, opt);

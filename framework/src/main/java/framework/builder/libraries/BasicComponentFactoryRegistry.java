@@ -1,7 +1,7 @@
 package framework.builder.libraries;
 
-import java.util.HashMap;
-import java.util.Map;
+import framework.util.HashMap;
+import framework.util.Map;
 
 import framework.builder.marshalling.ComponentFactory;
 
@@ -14,7 +14,7 @@ public class BasicComponentFactoryRegistry implements ComponentFactoryRegistry{
 		if(!factories.containsKey(identifier)){
 			factories.put(identifier, factory);
 		}else{
-			throw new RuntimeException("duplicate component factory:->" + identifier);
+			throw new java.lang.RuntimeException("duplicate component factory:->" + identifier);
 		}
 	}
 
@@ -24,7 +24,8 @@ public class BasicComponentFactoryRegistry implements ComponentFactoryRegistry{
 		if(factories.containsKey(identifier)){
 			return factories.get(identifier);
 		}else{
-			throw new RuntimeException("Missing ComponentFactory with identifier:" + identifier);
+			return null;
+			//throw new java.lang.RuntimeException("Missing ComponentFactory with identifier:" + identifier);
 		}
 	}
 

@@ -1,8 +1,5 @@
 package framework.designables;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
@@ -10,11 +7,12 @@ import framework.design.Designable;
 import framework.design.Option;
 import framework.design.Parameter;
 import framework.design.TagParameter;
+import jsweet.lang.Array;
 
 public class JSDesignableList extends JSContainer implements Designable{
 
 	
-	private List<Designable> designables = new LinkedList<>();
+	private Array<Designable> designables = new Array<>();
 	
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	public JSDesignableList(String name) {
@@ -53,7 +51,7 @@ public class JSDesignableList extends JSContainer implements Designable{
 	
 
 	@Override
-	public List<Designable> getDesignables() {
+	public Array<Designable> getDesignables() {
 		return designables;
 	}
 
@@ -63,20 +61,20 @@ public class JSDesignableList extends JSContainer implements Designable{
 	}
 
 	@Override
-	public List<Parameter> getParameters() {
-		List<Parameter> parameters = delegate.getParameters();
+	public Array<Parameter> getParameters() {
+		Array<Parameter> parameters = delegate.getParameters();
 		
 		TagParameter tagParam = new TagParameter();
-		tagParam.options.add(new Option("Un-Ordered(ul)", "ul"));
-		tagParam.options.add(new Option("Ordered(ol)", "ol"));
-		parameters.add(tagParam);
+		tagParam.options.push(new Option("Un-Ordered(ul)", "ul"));
+		tagParam.options.push(new Option("Ordered(ol)", "ol"));
+		parameters.push(tagParam);
 		
 		
 		AttributeParameter decoracteClass = new AttributeParameter("decorate-class", "Decorate class", "Basic");
-		parameters.add(decoracteClass);
+		parameters.push(decoracteClass);
 		
 		AttributeParameter decoracteStyle = new AttributeParameter("decorate-style", "Decorate style", "Basic");
-		parameters.add(decoracteStyle);
+		parameters.push(decoracteStyle);
 		
 		return parameters;
 	}
@@ -86,16 +84,25 @@ public class JSDesignableList extends JSContainer implements Designable{
 		JSContainer li = new JSContainer("li");
 		addChild(li);
 		li.addChild((JSContainer)designable);
-		designables.add(designable);
-		designable.applyParam("name", "item_"+(getChildren().size()-1));
+		designables.push(designable);
+		designable.applyParam("name", "item_"+(getChildren().length-1));
 		decorate();
 	}
 
 	@Override
 	public void removeDesignable(Designable designable) {
-		getChildren().remove(designable.getParent());
-		designables.remove(designable);
-	}
+		removeChild(designable.getParent());
+		Array<Designable> tmp = new Array<Designable>();
+		for(Designable d : designables){
+			if(d.equals(designable)){
+				
+			}else{
+				tmp.push(d);
+			}
+		}
+		designables = tmp;
+		
+			}
 
 	@Override
 	public void moveDesignable(Designable designable, int steps) {

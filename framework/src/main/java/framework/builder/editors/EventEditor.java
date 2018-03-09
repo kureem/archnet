@@ -15,6 +15,8 @@ import jsweet.lang.Array;
 public class EventEditor extends AbstractEditor<Component> {
 
 	JSContainer component = new JSContainer("label");
+	
+	private JSContainer functionName = new JSContainer("div");
 	JSSelect events = new JSSelect("events");
 
 	private Designable root;
@@ -40,6 +42,8 @@ public class EventEditor extends AbstractEditor<Component> {
 			events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
 
 		colLeft.addChild(component.setStyle("width", "100%"));
+		colLeft.addChild(functionName);
+		functionName.setHtml("function(JSContainer source, Event event){");
 		colRight.addChild(events.setStyle("width", "100%"));
 
 		events.addEventListener(new EventListener() {
@@ -68,7 +72,11 @@ public class EventEditor extends AbstractEditor<Component> {
 		addChild(editor);
 
 	}
+	
 
+	private void decoName(){
+		
+	}
 	@SuppressWarnings("unchecked")
 	public void fillValue(Designable des, boolean updEvtSelect) {
 		boolean s = false;
@@ -148,6 +156,9 @@ public class EventEditor extends AbstractEditor<Component> {
 		events.setRendered(false);
 		for (String s : (((JSContainer)designable)).advancedEventTypes())
 			events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
+		
+		//filtering goes here
+		
 		for (String s : EventTypes.events)
 			events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
 		fillValue(designable, true);

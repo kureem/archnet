@@ -19,6 +19,8 @@ public class LightningComponentLibrary extends ComponentsLibrary {
 		addComponents(new Component("lgt:input", "INP", "Lightning Input"));
 
 		addComponents(new Component("lgt:table", "TABLE", "Data Table"));
+		
+		addComponents(new Component("zs:iterator", "ITER", "Iterator"));
 
 	}
 

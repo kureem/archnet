@@ -1276,6 +1276,42 @@ declare namespace framework {
             createInstance(designMode: boolean): framework.design.Designable;
             constructor(__arg0: any);
         }
+        class Boot$31 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$32 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$33 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$34 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
     }
 }
 declare namespace framework.builder.libraries {
@@ -2012,7 +2048,6 @@ declare namespace framework.builder {
 declare namespace framework.designables {
     class JSDesignable extends framework.JSContainer implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
-        component: framework.builder.marshalling.Component;
         constructor(name: string, tag: string);
         /**
          *
@@ -2803,6 +2838,53 @@ declare namespace framework.lightning {
         moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
+declare namespace framework.lightning.designables {
+    class JSDesignableIterator extends framework.JSContainer implements framework.design.Designable {
+        delegate: framework.designables.DesignableDelegate;
+        data: Array<Object>;
+        templateCtn: framework.JSContainer;
+        list: framework.JSContainer;
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        setData(obj: any): void;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
 declare namespace framework.lightning {
     class DockedComposerContainer extends framework.JSContainer {
         constructor(name: string);
@@ -2987,7 +3069,10 @@ declare namespace framework.lightning {
         setBackdrop(backdrop: framework.lightning.Backdrop): void;
         open(): void;
         close(): void;
-        setLarge(b: boolean): Modal;
+        static SIZE_LARGE: string;
+        static SIZE_MEDIUM: string;
+        static SIZE_NORMAL: string;
+        setSize(size: string): Modal;
         setTitle(stitle: string): Modal;
         getTitle(): framework.JSContainer;
         getModalContainer(): framework.JSContainer;
@@ -3475,11 +3560,13 @@ declare namespace framework.builder.editors {
 declare namespace framework.builder.editors {
     class EventEditor extends framework.builder.editors.AbstractEditor<framework.builder.marshalling.Component> {
         component: framework.JSContainer;
+        functionName: framework.JSContainer;
         events: framework.JSSelect;
         root: framework.design.Designable;
         editor: framework.builder.editors.JavascriptEditor;
         justSaved: string;
         constructor(name: string, root: framework.design.Designable, veditor: framework.builder.editors.VisualEditor);
+        decoName(): void;
         fillValue(des: framework.design.Designable, updEvtSelect: boolean): void;
         getSource(des: framework.design.Designable, type: string): string;
         reactivate(): void;
@@ -3539,7 +3626,7 @@ declare namespace framework.builder.editors {
 declare namespace framework.builder.editors {
     class VisualEditor extends framework.builder.editors.AbstractEditor<framework.builder.marshalling.Component> implements framework.builder.editors.DesignableEditor {
         selectedItem: framework.design.Designable;
-        root: framework.design.Designable;
+        root: framework.lightning.LightningApplication;
         workspace: framework.JSContainer;
         selector: framework.builder.Selector;
         leftComposers: framework.JSContainer;
@@ -3570,7 +3657,9 @@ declare namespace framework.builder.editors {
         closeRight(): void;
         openRight(): void;
         resizeWorkspace(work: framework.JSContainer): void;
-        getRootItem(): framework.design.Designable;
+        save(type?: any): any;
+        save$(): void;
+        getRootItem(): framework.lightning.LightningApplication;
         getSelectedItem(): framework.design.Designable;
         selectItem(designable: framework.design.Designable): void;
         visit$framework_builder_editors_Visitor(v: framework.builder.editors.Visitor): void;
@@ -3644,6 +3733,15 @@ declare namespace framework.builder.editors {
             constructor(__parent: any);
         }
         class VisualEditor$3 implements framework.builder.data.RemoteDataListener<any> {
+            __parent: any;
+            /**
+             *
+             * @param {*} data
+             */
+            dataLoaded(data: any): void;
+            constructor(__parent: any);
+        }
+        class VisualEditor$4 implements framework.builder.data.RemoteDataListener<any> {
             private marshall;
             private designable;
             __parent: any;
@@ -3654,8 +3752,8 @@ declare namespace framework.builder.editors {
             dataLoaded(data: any): void;
             constructor(__parent: any, marshall: any, designable: any);
         }
-        namespace VisualEditor$3 {
-            class VisualEditor$3$0 implements framework.builder.data.RemoteDataListener<any> {
+        namespace VisualEditor$4 {
+            class VisualEditor$4$0 implements framework.builder.data.RemoteDataListener<any> {
                 __parent: any;
                 /**
                  *
@@ -3701,6 +3799,18 @@ declare namespace framework {
          * @param {HTMLElement} parent
          */
         render(parent?: any): any;
+    }
+}
+declare namespace framework.lightning.designables {
+    class JSDesignableIterable extends framework.designables.JSDesignable {
+        constructor(name: string, tag: string);
+        /**
+         *
+         * @return {Array}
+         */
+        advancedEventTypes(): string[];
+        setData(data: any): void;
+        Clone(): JSDesignableIterable;
     }
 }
 declare namespace framework.lightning {
@@ -4061,7 +4171,7 @@ declare namespace framework.lightning {
         constructor(name: string);
     }
 }
-declare namespace framework.lightning.designable {
+declare namespace framework.lightning.designables {
     class JSDesignableLightningInput extends framework.lightning.FormElement implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
         input: framework.designables.JSDesignableInput;
@@ -4355,6 +4465,49 @@ declare namespace framework.builder {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any, builder: any);
         }
+    }
+}
+declare namespace framework.lightning.designables {
+    class JSDesignableModal extends framework.lightning.Modal implements framework.design.Designable {
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.lightning {
@@ -4967,7 +5120,7 @@ declare namespace framework.builder.properties {
         addProperty$framework_design_Parameter$framework_design_Designable(parameter: framework.design.Parameter, designable: framework.design.Designable): BasePropertiesEditor;
     }
 }
-declare namespace framework.lightning.designable {
+declare namespace framework.lightning.designables {
     class JSDesignableFormLayout extends framework.lightning.FormLayout implements framework.design.Designable {
         constructor();
         delegate: framework.designables.DesignableDelegate;
@@ -5073,7 +5226,7 @@ declare namespace framework.lightning {
         getBottom(): framework.JSContainer;
     }
 }
-declare namespace framework.lightning.designable {
+declare namespace framework.lightning.designables {
     class JSDesignableLightningGrid extends framework.lightning.Grid implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
         constructor(name: string);
@@ -5423,6 +5576,20 @@ declare namespace framework.designables {
         getParameters(): Array<framework.design.Parameter>;
     }
 }
+declare namespace framework.lightning.designables {
+    class JSDesignableSOQL extends framework.designables.JSDesignableDataProvider implements framework.design.Designable {
+        constructor(name: string);
+        /**
+         *
+         */
+        execute(): void;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+    }
+}
 declare namespace framework.builder.properties {
     class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
         constructor();
@@ -5541,12 +5708,26 @@ declare namespace framework.designables {
         }
     }
 }
-declare namespace framework.lightning.designable {
-    class JSDesignableTable extends framework.lightning.table.Table implements framework.design.ExtDesignable, framework.lightning.table.TableColumnModel, framework.lightning.table.TableModel {
+declare namespace framework.lightning.designables {
+    class JSDesignableTable extends framework.lightning.table.Table implements framework.design.ExtDesignable, framework.lightning.table.TableColumnModel, framework.lightning.table.TableModel, framework.lightning.table.TableCellRenderer {
         delegate: framework.designables.DesignableDelegate;
         fields: Array<framework.lightning.table.TableColumn>;
         tableData: Array<Object>;
         constructor(name: string);
+        /**
+         *
+         */
+        refreshData(): void;
+        getComponent$framework_lightning_table_Table$java_lang_Object$int$int(table: framework.lightning.table.Table, value: any, row: number, column: number): framework.Renderable;
+        /**
+         *
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
+         */
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
         /**
          *
          * @param {string} key
@@ -5558,11 +5739,7 @@ declare namespace framework.lightning.designable {
          * @return {*[]}
          */
         getDesignables(): Array<framework.design.Designable>;
-        /**
-         *
-         * @return {framework.builder.marshalling.Component}
-         */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @return {framework.design.Parameter[]}

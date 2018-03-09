@@ -45,7 +45,7 @@ public class ItemSelector extends Modal {
 
 		section.getContent().addChild(filesList);
 		
-		setLarge(true);
+		setSize(SIZE_LARGE);
 		
 		setStyle("width", "80%");
 		

@@ -3,6 +3,8 @@ package framework.lightning.designables;
 import static jsweet.lang.Globals.parseInt;
 
 import def.js.JSON;
+import framework.JSContainer;
+import framework.Renderable;
 import framework.builder.marshalling.Component;
 import framework.builder.properties.ExtPropertiesEditor;
 import framework.builder.properties.KeyValueEditor;
@@ -12,14 +14,17 @@ import framework.design.ExtDesignable;
 import framework.design.Option;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
+import framework.lightning.CheckBox;
 import framework.lightning.table.Table;
+import framework.lightning.table.TableCellRenderer;
 import framework.lightning.table.TableColumn;
 import framework.lightning.table.TableColumnModel;
 import framework.lightning.table.TableModel;
+import jsweet.dom.CustomEvent;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class JSDesignableTable extends Table implements ExtDesignable, TableColumnModel, TableModel{
+public class JSDesignableTable extends Table implements ExtDesignable, TableColumnModel, TableModel, TableCellRenderer{
 	
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	
@@ -30,14 +35,50 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 	public JSDesignableTable(String name) {
 		super(name);
 		
+		setTableCellRenderer(this);
 		for(int i = 1; i <= 5; i++){
 			addColumn(new TableColumn("field" + i, "field" + i, "Field " + i));
 		}
+		applyParam("PageSize", "10");
 		setTableColumnModel(this);
 		refreshColumns();
 		setModel(this);
 	}
 
+	
+	
+	
+	@Override
+	public void refreshData() {
+		// TODO Auto-generated method stub
+		super.refreshData();
+		CustomEvent evt =new CustomEvent("dataLoaded");
+		//evt.srcElement = getNative();
+		evt.$set("data", tableData);
+		//fireListener("dataLoaded", evt);
+	}
+
+
+
+
+	@Override 
+	public Renderable getComponent(Table table, java.lang.Object value, int row, int column) {
+		
+		if(value != null && value instanceof Boolean){
+			CheckBox ch = new CheckBox("");
+			ch.setValue((Boolean)value);
+			return ch;
+		}
+		
+		JSContainer truncate = new JSContainer("div").addClass("slds-truncate");
+		String s = "";
+		if(value != null){
+			s = value.toString();
+		}
+		
+		truncate.setHtml(s).setAttribute("title", s);
+		return truncate;
+	}
 	
 	@Override
 	public void applyParam(String key, String value) {

@@ -9,7 +9,7 @@ import jsweet.lang.Array;
 public class JSDesignable extends JSContainer implements Designable{
 
 	protected DesignableDelegate delegate = new DesignableDelegate(this);
-	protected Component component = new Component();
+	//protected Component component = new Component();
 	
 	public JSDesignable(String name, String tag) {
 		super(name, tag);
@@ -23,7 +23,8 @@ public class JSDesignable extends JSContainer implements Designable{
 
 	@Override
 	public Component getComponent() {
-		return component;
+		return delegate.getComponent();
+		//return component;
 	}
 
 	@Override

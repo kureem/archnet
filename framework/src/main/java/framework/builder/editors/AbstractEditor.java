@@ -1,7 +1,5 @@
 	package framework.builder.editors;
 
-import static jsweet.dom.Globals.alert;
-
 import framework.JSContainer;
 import framework.builder.Builder;
 import framework.builder.data.File;
@@ -16,9 +14,9 @@ public abstract class AbstractEditor<T> extends JSContainer implements Editor<T>
 
 	protected File file;
 
-	private ProjectService projectService = BeanFactory.getInstance().getBeanOfType(ProjectService.class);
+	protected ProjectService projectService = BeanFactory.getInstance().getBeanOfType(ProjectService.class);
 
-	private VisualEditor rootEditor;
+	protected VisualEditor rootEditor;
 	
 	public AbstractEditor(String name, String tag, VisualEditor rootEditor) {
 		super(name, tag);
@@ -67,6 +65,7 @@ public abstract class AbstractEditor<T> extends JSContainer implements Editor<T>
 	public void save() {
 		String data = getMarshall();
 		file.setData(data);
+		
 		projectService.saveFile(this,file, new RemoteDataListener<java.lang.Object>() {
 
 			@Override

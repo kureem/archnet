@@ -59,8 +59,12 @@ import framework.lightning.Panel;
 import framework.lightning.PanelSection;
 import framework.lightning.Text;
 import framework.lightning.designables.JSDesignableFormLayout;
+import framework.lightning.designables.JSDesignableIterable;
+import framework.lightning.designables.JSDesignableIterator;
 import framework.lightning.designables.JSDesignableLightningGrid;
 import framework.lightning.designables.JSDesignableLightningInput;
+import framework.lightning.designables.JSDesignableModal;
+import framework.lightning.designables.JSDesignableSOQL;
 import framework.lightning.designables.JSDesignableTable;
 import framework.rtc.Conference;
 
@@ -277,6 +281,13 @@ public class Boot {
 		});
 		
 		
+		componentFactoryRegistry.registerComponentFactory("lgt:modal", new AbstractComponentFactory("lgt:modal") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableModal("Modal");
+			}
+		});
 		
 		
 		
@@ -370,6 +381,23 @@ public class Boot {
 				return new JSDesignableTable("Table");
 			}
 		});
+		
+		componentFactoryRegistry.registerComponentFactory("zs:iterator", new AbstractComponentFactory("zs:iterator") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableIterator("Iterator");
+			}
+		});
+
+		componentFactoryRegistry.registerComponentFactory("zs:iterable", new AbstractComponentFactory("zs:iterable") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableIterable("Iterable", "div");
+			}
+		});
+
 
 		componentFactoryRegistry.registerComponentFactory("zs:http", new AbstractComponentFactory("zs:http") {
 
@@ -385,6 +413,16 @@ public class Boot {
 				return new JSDesignableService();
 			}
 		});
+		
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:soql", new AbstractComponentFactory("lgt:soql") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableSOQL("soql");
+			}
+		});
+
 		factory.addBean(ComponentFactoryRegistry.class, componentFactoryRegistry);
 
 		// -- added singleton bean for Selector--//

@@ -1,13 +1,11 @@
 package framework.lightning.table;
 
-import static def.dom.Globals.alert;
-
 import framework.EventListener;
 import framework.JSContainer;
 import framework.Renderable;
 import framework.lightning.Spinner;
+import jsweet.dom.CustomEvent;
 import jsweet.dom.Event;
-import jsweet.lang.Array;
 
 public class Table extends JSContainer {
 
@@ -48,13 +46,14 @@ public class Table extends JSContainer {
 		@Override
 		public void performAction(JSContainer source, Event evt) {
 			double index = source.getParent().getChildren().indexOf(source);
-			alert("selected row index: " + index);
+			//alert("selected row index: " + index);
  
 			Table table = (Table) source.getParent().getParent();
 			int page = table.currrentPage;
 			index = (page * table.pageSize) + index;
-			table.fireListener("selectRows", new TableEvent("selectRows",evt, index, index));
-			//table.fireRowsSelectionListeners(source, evt, index, index);
+			evt.$set("first", index + "");
+			evt.$set("last", index + "");
+			table.fireListener("selectRows",evt);
 		}
 	};
 
@@ -87,7 +86,7 @@ public class Table extends JSContainer {
 
 	@Override
 	public String[] advancedEventTypes() {
-		return new String[]{"selectRows", "addRows", "deleteRows", "dataLoaded", "changeCell", "changeRow", "sort", "changePage"};
+		return new String[]{"selectRows", "sort", "changePage"};
 	}
 
 	public void setSelectRowOn(String on) {
@@ -146,8 +145,13 @@ public class Table extends JSContainer {
 	}
 
 	public void setPage(int page) {
+		
 		this.currrentPage = page;
 		refreshData();
+		CustomEvent evt = new CustomEvent("changePage");
+		evt.$set("page", page + "");
+		//evt.srcElement = getNative();
+		fireListener("changePage", evt);
 	}
 
 	public int getPage() {
@@ -166,6 +170,18 @@ public class Table extends JSContainer {
 	public void refreshData() {
 		tbody.clearChildren();
 		tbody.setRendered(false);
+		if(model == null){
+			return;
+		}
+		
+		if(tableColumnModel == null){
+			return;
+		}
+		
+		if(tableCellRenderer == null){
+			return;
+		}
+		
 		double rows = model.getRowCount();
 		double cols = tableColumnModel.getColumnCount();
 		double iterSize = pageSize;
@@ -215,6 +231,7 @@ public class Table extends JSContainer {
 		tfoot.setAttribute("colspan", cols + "");
 		ftd.setAttribute("colspan", cols + "");
 		ftr.setAttribute("colspan", cols + "");
+		
 	}
 
 	public JSContainer getRow(int index) {

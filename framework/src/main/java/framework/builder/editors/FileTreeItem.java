@@ -77,6 +77,7 @@ public class FileTreeItem extends TreeItem implements EventListener {
 			editor.open(f);
 		}else if(f.getName().endsWith(".cmp")){
 			VisualEditor editor = new VisualEditor(f.getName());
+			editor.setRootEditor(veditor);
 			builder.openEditor(f.getName(), editor);
 			editor.open(f);
 		}else if(f.getName().endsWith(".ds")){

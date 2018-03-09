@@ -7,7 +7,7 @@ import framework.lightning.DescriptionList;
 import jsweet.lang.Array;
 
 public abstract class JSDesignableDataProvider extends DescriptionList implements Designable {
-	DesignableDelegate delegate = new DesignableDelegate(this);
+	protected DesignableDelegate delegate = new DesignableDelegate(this);
 
 	public JSDesignableDataProvider(String name) {
 		super(name);

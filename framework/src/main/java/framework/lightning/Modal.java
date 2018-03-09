@@ -2,6 +2,7 @@ package framework.lightning;
 
 import framework.EventListener;
 import framework.JSContainer;
+import framework.designables.JSDesignable;
 import jsweet.dom.Event;
 
 public class Modal extends JSContainer {
@@ -10,9 +11,9 @@ public class Modal extends JSContainer {
 
 	private JSContainer header = new JSContainer("header").addClass("slds-modal__header");
 	
-	private JSContainer content = new JSContainer("div").addClass("slds-modal__content");
+	private JSContainer content = new JSDesignable("content","div").addClass("slds-modal__content");
 
-	private JSContainer footer = new JSContainer("footer").addClass("slds-modal__footer");
+	private JSContainer footer = new JSDesignable("footer","footer").addClass("slds-modal__footer");
 	
 	private IconButton closeButton = new IconButton("closeButton");
 	
@@ -71,12 +72,14 @@ public class Modal extends JSContainer {
 		setVisible(false);
 	}
 	
-	public Modal setLarge(boolean b){
-		if(b){
-			addClass("slds-modal_large");
-		}else{
-			removeClass("slds-modal_large");
-		}
+	public final static String SIZE_LARGE = "slds-modal_large";
+	public final static String SIZE_MEDIUM = "slds-modal_medium";
+	public final static String SIZE_NORMAL = "slds-modal_normal";
+	
+	public Modal setSize(String size){
+		removeClass(SIZE_LARGE).removeClass(SIZE_MEDIUM);
+		addClass(size);
+		
 		
 		return this;
 	}

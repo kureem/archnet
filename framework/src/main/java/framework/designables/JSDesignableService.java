@@ -1,13 +1,10 @@
 package framework.designables;
 
-import static def.jquery.Globals.$;
-
 import framework.Adaptor;
 import framework.ServiceCallback;
 import framework.core.BeanFactory;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
-import framework.design.Option;
 import framework.design.Parameter;
 import jsweet.lang.Array;
 import jsweet.lang.JSON;

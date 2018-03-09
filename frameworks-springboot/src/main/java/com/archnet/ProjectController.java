@@ -42,7 +42,6 @@ public class ProjectController {
 	}
 
 	
-	public Object query()
 	
 	
 	@SuppressWarnings("unused")

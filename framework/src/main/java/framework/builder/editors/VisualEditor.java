@@ -8,6 +8,7 @@ import static def.jquery.Globals.$;
 import framework.EventListener;
 import framework.JSContainer;
 import framework.JSTextArea;
+import framework.builder.Builder;
 import framework.builder.Ruler;
 import framework.builder.SelectComponentEvent;
 import framework.builder.Selector;
@@ -41,7 +42,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 
 	private Designable selectedItem;
 
-	private Designable root;
+	private LightningApplication root;
 	
 	private JSContainer workspace = new JSContainer("workspace", "div");
 
@@ -283,8 +284,39 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 			work.setStyle("width", "calc(100% - (84px))");
 		}
 	}
+	
+	
 
-	public Designable getRootItem() {
+	@Override
+	public void save() {
+
+		
+		String data = getMarshall();
+		file.setData(data);
+		
+		projectService.saveFile(this,file, new RemoteDataListener<java.lang.Object>() {
+
+			@Override
+			public void dataLoaded(Object data) {
+				
+				clean();
+				String title = getAttribute("title");
+				Builder.websocket.send("open:" + title);
+
+				// alert(JSON.stringify(data));
+			}
+		});
+
+		if(!rootEditor.getId().equals(getId())){
+			getRootEditor().getRootItem().getComponent().custom.$set(file.getName(), file.getData());
+			rootEditor.libraryDockedComposer.refreshWithProject(rootEditor.root);
+			//libraryDockedComposer.refreshWithProject(roo);
+		}
+		
+		
+	}
+
+	public LightningApplication getRootItem() {
 		return root;
 	}
 
@@ -336,9 +368,17 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		Component component = new Component();
 		component.impl = "lgt:app";
 		component.parameters.$set("name", designable.getName() + "_comp");
-		component.children.push(comp);
+		Designable par = MarshallUtil.toDesignable(component);
+		Designable chi = MarshallUtil.toDesignable(comp);
+		par.addDesignable(chi);
+		
+		//component = ;
+		
+		//component.children.push(comp);
+		
+		
 		String marshall = JSON.stringify(
-				component
+				MarshallUtil.extract(par)
 				
 				);
 		
@@ -463,7 +503,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 	@Override
 	public void consume(Component component) {
 
-		root = cona(component);
+		root = (LightningApplication)cona(component);
 		Array<File> components = file.getComponents();
 		
 		

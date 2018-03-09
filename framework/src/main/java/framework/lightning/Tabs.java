@@ -6,16 +6,27 @@ import jsweet.lang.Array;
 public class Tabs extends JSContainer {
 
 	private JSContainer nav = new JSContainer("ul").addClass("slds-tabs_default__nav").setAttribute("role", "tablist");
+	
+	private JSContainer body = new JSContainer("div").addClass("slds-tabs_default__content");
 
 	public Tabs(String name) {
 		super(name, "div");
 		addClass("slds-tabs_default");
 		addChild(nav);
+		addChild(body);
+		body.setAttribute("role", "tabpanel");
 	}
 
 	public Tabs addItem(TabItem item) {
 		nav.addChild(item);
-		addChild(item.body.show(false));
+		body.addChild(item.body.show(false));
+		return this;
+	}
+	
+	public Tabs clear(){
+		nav.clearChildren();
+		body.clearChildren();
+		setRendered(false);
 		return this;
 	}
 

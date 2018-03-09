@@ -106,7 +106,7 @@ public class FileTreeItem extends TreeItem implements EventListener {
 		}
 		if (source.getName().equals("delete")) {
 			String stype = type;
-			builder.getProject().deleteFile(f.getName(), stype, new RemoteDataListener<java.lang.Object>() {
+			builder.getProject().deleteFile(this,f.getName(), stype, new RemoteDataListener<java.lang.Object>() {
 
 				@Override
 				public void dataLoaded(Object data) {

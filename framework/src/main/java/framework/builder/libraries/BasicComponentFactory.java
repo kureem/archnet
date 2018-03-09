@@ -17,6 +17,9 @@ public class BasicComponentFactory extends AbstractComponentFactory {
 	@Override
 	public Designable createInstance(boolean designMode) {
 		JSDesignable container = new JSDesignable(tag,tag);
+		if(tag.equalsIgnoreCase("button")){
+			container.applyParam("label", "Button");
+		}
 		return container;
 	}
 

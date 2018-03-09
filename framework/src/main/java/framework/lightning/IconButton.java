@@ -93,6 +93,15 @@ public class IconButton extends JSContainer implements Designable {
 	public IconButton setSelected(boolean b) {
 		return toggleClass("slds-is-selected", b);
 	}
+	
+	public IconButton setStateful(boolean b){
+		return setBorderFilled(b);
+	}
+	
+	public boolean isSelected(){
+		String sclass = getAttribute("class");
+		return sclass != null && sclass.contains("slds-is-selected");
+	}
 
 	@Override
 	public void applyParam(String key, String value) {
@@ -125,6 +134,8 @@ public class IconButton extends JSContainer implements Designable {
 			setBorderFilled("true".equals(value));
 		} else if (key.equals("borderInverse")) {
 			setBorderInverse("true".equals(value));
+		} else if (key.equals("stateful")) {
+			setStateful("true".equals(value));
 		} else if (key.equals("size")) {
 			setSize(value);
 		}
@@ -146,13 +157,16 @@ public class IconButton extends JSContainer implements Designable {
 		Array<Parameter> parameters = delegate.getParameters();
 
 		String[] keys = new String[] { "iconName", "iconType", "iconAssetUrl", "selected", "more", "error", "inverse",
-				"container", "border", "borderFilled", "borderInverse" };
+				"container", "border", "borderFilled", "borderInverse", "stateful" };
 		String[] labels = new String[] { "Icon Name", "Icon Type", "Icon Asset Url", "Selected", "Error", "Inverse",
-				"Container", "Show Border", "Border Filled", "Border Inverse" };
+				"Container", "Show Border", "Border Filled", "Border Inverse" , "Stateful"};
 
 		for (int i = 0; i < keys.length; i++) {
 			AttributeParameter para = new AttributeParameter(keys[i], labels[i], "Basic");
 			parameters.push(para);
+			if(i >=3){
+				para.options.push(new Option("",""));
+			}
 		}
 
 		AttributeParameter size = new AttributeParameter("size", "Size", "Basic");

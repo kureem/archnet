@@ -1,5 +1,6 @@
 package framework.builder.libraries;
 
+import framework.EventListener;
 import framework.JSContainer;
 import framework.Renderable;
 import framework.builder.data.DataField;
@@ -15,7 +16,7 @@ import framework.lightning.table.Table;
 import framework.lightning.table.TableCellRenderer;
 import framework.lightning.table.TableColumn;
 import framework.lightning.table.TableModel;
-import framework.lightning.table.TableRowsSelectionListener;
+import framework.lightning.table.TableEvent;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
 
@@ -77,7 +78,18 @@ public class DataItem extends Card implements TableCellRenderer {
 
 	public void addOnFieldSeletedListener(FileSelectedListener l) {
 		DataItem item = this;
-		fields.addRowsSelectionListener(new TableRowsSelectionListener() {
+		
+		fields.addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				TableEvent e = (TableEvent)evt;
+				DataField field = dataFields.$get(e.firstIndex);
+				l.onItemSelected(field, item);
+			}
+		}, "selectRows");
+		
+		/*fields.addRowsSelectionListener(new TableEvent() {
 
 			@Override
 			public void onSelectRow(JSContainer source, Event event, Table table, double firstIndex, double lastIndex) {
@@ -86,7 +98,7 @@ public class DataItem extends Card implements TableCellRenderer {
 				l.onItemSelected(field, item);
 			}
 		});
-	}
+*/	}
 
 	public void setDataStructure(DataStructure structure) {
 		this.dataStructure = structure;
@@ -121,7 +133,7 @@ public class DataItem extends Card implements TableCellRenderer {
 		fields.setColBordered(true);
 		fields.setSelectable(true);
 
-		dataStructure.getFields(new RemoteDataListener<Array<DataField>>() {
+		dataStructure.getFields(this,new RemoteDataListener<Array<DataField>>() {
 
 			@Override
 			public void dataLoaded(Array<DataField> data_) {

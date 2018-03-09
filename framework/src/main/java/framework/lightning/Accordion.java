@@ -18,9 +18,23 @@ public class Accordion extends JSContainer implements Designable {
 		addClass("slds-accordion");
 	}
 
+	/**
+	 * 
+	 * @param item
+	 * @return
+	 */
 	public Accordion addItem(AccordionItem item) {
 		addDesignable(item);
+		String i ;
+		
 		return this;
+	}
+	
+	
+
+	@Override
+	public String[] advancedEventTypes() {
+		return new String[]{"open","close"};
 	}
 
 	@Override
@@ -48,11 +62,12 @@ public class Accordion extends JSContainer implements Designable {
 		if (designable instanceof AccordionItem) {
 			JSContainer li = new JSContainer("li").addClass("slds-accordion__list-item");
 			addChild(li);
-			
+			DesignableDelegate.guessName(getDesignables(), designable);
 			li.addChild((JSContainer) designable);
 			designables.push(designable);
 		} else {
-			//throw new java.lang.RuntimeException("Can only add Component of type JSAccordionItem in an Accordion Container");
+			//Error
+			throw new jsweet.lang.Error("Can only add Component of type JSAccordionItem in an Accordion Container");
 		}
 	}
 

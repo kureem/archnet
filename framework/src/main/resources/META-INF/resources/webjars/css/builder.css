@@ -1,9 +1,157 @@
-.composers section{
-	position:absolute;
+.builder .visual-editor .slds-docked-composer{
+	z-index:1;
+}
+
+.builder .editor-tabs > ul{
+	z-index: 2;
+}
+
+.builder .builder-buttons{
+    z-index: 3;
+}
+
+.builder .defn-popup textarea{
+	width:100%;
+	height: 200px;
+}
+
+.builder .builder-buttons a[name=preview] > div{
+	position:relative;
+	top:6px;
+}
+
+.builder .builder-buttons{
+	position: fixed;
+    top: 3px;
+    right: 0px;
+}
+
+
+.builder .visual-editor .zoom {
+	display: inline;
+}
+
+.builder .visual-editor .zoom a{
+	font-size: 22px;
+    line-height: 0;
+    margin: 4px;
+    position: relative;
+    top: 3px;
+    text-decoration: none;
+    display: none;
+}
+
+.builder .visual-editor .zoom input{
+	width: 40px;
+	font-size: 10px;
+	text-align: center;
+}
+
+
+.builder .welcome-screen .slds-section__title{
+	display: none;
+}
+
+.builder .visual-editor .workspace.slds-docked-composer{
+	position: static !important;
+	
+	margin-left:0px;
+	float: none;
+	max-width: 3000px;
+	height: calc((100vh) - (40px)) !important;
+	border-bottom: 1px solid #dddbda;
+	box-shadow:none;
+	    border-top: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.builder .visual-editor .composers .slds-docked-composer{
+	position: static !important;
+	width: 100%;
+	margin-left:0px;
+	float: none;
+	max-width: 3000px;
+	height: calc((100vh/(2)) - (20px));
+	border-bottom: 1px solid #dddbda;
+	box-shadow:none;
+	    border-top: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-left: none;
+    border-right: none;
 }
 .builder .visual-editor{
 	
 }
+
+.builder .visual-editor .slds-size_0-of-12.composers .slds-docked-composer__header .slds-media_center{
+	display: none;
+}
+
+.builder .visual-editor .slds-docked-composer__header{
+	padding:.2rem .75rem;
+	background: #fafaf9;
+}
+
+
+.builder .visual-editor .slds-size_0-of-12.composers .slds-docked-composer__body {
+	display: none;
+}
+
+.builder .visual-editor .slds-docked-composer__footer{
+	padding: .6rem .5rem;
+}
+
+.builder .visual-editor *{
+	
+	
+}
+
+.builder .event-editor .col-left, .builder .event-editor .col-right{
+	
+    background: #f5f5f5;
+    padding: 0.3rem 1.5rem;
+    font-weight: bold;
+    border-bottom: solid 1px #ddd;
+}
+
+.builder .event-editor .col-left label{
+	    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+
+.structure .type-ui .slds-dropdown {
+	left: 10%;
+	min-width: 140px;
+} 
+
+.slds-size_0-of-12{
+	width:42px;
+}
+
+.slds-hidden{
+	display:none;
+}
+
+
+
+.builder .editor-tabs > ul{
+	position: fixed;
+    
+    top: 0;
+    background: #fafaf9;
+    width: 100%;
+    border-bottom:1px solid #dddbda !important;
+}
+
+.builder div[name=editorBody]{
+	margin-top:40px;
+}
+
+
 
 .boolean-cell{
 	text-align: center;
@@ -28,7 +176,7 @@
 
 
 .builder .structure  .slds-tree__item .slds-m-right_x-small{
-	margin: 0px;
+	margin-top: 0.5rem;
 	color: #0070d2 !important;
 }
 .builder .structure  .slds-tree__item .slds-m-right_x-small .slds-button__icon{
@@ -60,6 +208,104 @@
 	color: #f0856e;
 }
 
+.show-ruler .ruler{
+	display: block;
+}
+
+.ruler {
+	display:none;
+	position:relative;
+	width:100%;
+	height:20px;
+	background:silver;
+	top:0;
+	left:0;
+	z-index: 10000;
+	cursor: move;
+	user-select:none;
+	overflow: hidden;
+	
+}
+
+.visual-editor .key-value-editor .header{
+	background: #fafaf9;
+	font-weight: bold;
+	padding: 0 3px;
+}
+
+.visual-editor .key-value-editor div{
+	outline: dotted 1px silver;
+	min-height:18px;
+	padding: 0 3px;
+}
+
+
+.visual-editor .key-value-editor div:focus{
+	outline: 0;
+    border-color: #1589ee;
+    background-color: #fff;
+    box-shadow: 0 0 3px #0070D2;
+}
+
+
+.inner-ruler{
+    position: absolute;
+    height: 16px;
+    top: 0px;
+    left: 0px;
+    background: white;
+    color: #999;
+    overflow: hidden;
+    border-bottom: solid 1px #ddd;
+}
+
+
+.inner-ruler div.big-scale{
+	border-left: solid 1px;
+    height: 16px;
+    top: 0px;
+    font-size:9px;
+    line-height:8px;    
+}
+
+.inner-ruler div.small-scale{
+	border-left: solid 1px;
+    height: 6px;
+    top: 8px;
+    font-size: 9px;
+}
+
+.vertical.ruler{
+	width: 30px;
+	height: 1024px;
+}
+
+.vertical .inner-ruler{
+	width: 30px;
+	height: 1024px;
+	border-top: none;
+    border-bottom: none;
+    
+    border-left: solid 1px;
+    border-right: solid 1px;
+}
+
+
+
+
+
+.vertical .inner-ruler div.big-scale{
+	border-top: solid 1px;
+    width: 30px;
+    left: -1px;
+   
+}
+
+.vertical .inner-ruler div.small-scale{
+		border-top: solid 1px;
+    width: 10px;
+    left: -1px;
+}
 
 
 
@@ -72,9 +318,14 @@
 	background: darkcyan;
 }
 
-.builder .buttons-ctn{
-	position: absolute;
-	right:8px;
+*[dssel=true] {
+	outline: solid 2px #5ab0d2 !important;	
+}
+
+
+.show-outline *[identifier]{
+	outline: dashed 1px silver;
+	
 }
 
 
@@ -104,66 +355,30 @@
 }
 
 .builder .editor-tabs ul .tab-close-button{
-	
     float: left;
     position: absolute;
     right: 1px;
     top: 9px;
-	
 }
 
 .builder .editor-tabs ul li a{
 	margin-right: 8px;
 }
 .builder .editor-tabs ul .slds-active .tab-close-button{
-	
     float: left;
     position: absolute;
-
     top: 9px;
-	
 }
-
-.builder.editor-tabs ul  .slds-active{
-    
-}
-
 
 .builder .editor-tabs .slds-tabs_default__nav .slds-tabs_default__item{
 	padding-left: 4px;
 }
-
-.builder .editor-tabs .slds-tabs_default__nav .slds-tabs_default__item .slds-tabs_default__link{
-	
-}
-
     
 .builder .editor-tabs .tab-close-button .slds-button__icon{
-	    width: 0.675rem;
+	width: 0.675rem;
     height: .675rem;
 }
-.builder .save-button{
-	position: absolute;
-	right: 1%;
-	top: 3px;
-}
 
-.builder .new-button{
-	position: absolute;
-	right: 3%;
-	top: 3px;
-}
-
-.builder .preview-btn{
-	position: absolute;
-	right: 20%;
-	top: 3px;
-}
-
-.builder .preview-btn div{
-	top:6px;
-	position: relative;
-}
 
 .builder .data-item select,.builder .data-item input{
 	width: 100%;
@@ -184,26 +399,53 @@
 	opacity:0.4;
 	border: dotted 4px steelblue;
 	position:absolute;
-}
-
-.builder .slds-docked-composer{
-	max-width:300px;
+	display: none;
 }
 
 .builder .slds-docked-composer__body{
 	background:white;
+	height: 235px;
+}
+.structure{
+	height:calc(100vh - (40px)) !important;
 }
 
-.builder .properties-composer {
-	height: 300px;
-	border-bottom: 1px solid #dddbda;
-	box-shadow:0 1px 2px 0 rgba(0,0,0,.16)
+.visual-editor div[name=workspace] >div {
+	width:100vw !important;
+	
 }
 
-.builder .library-composer{
-	height: 300px;
-	border-bottom: 1px solid #dddbda;
-	box-shadow:0 1px 2px 0 rgba(0,0,0,.16)
+
+.visual-editor div[name=workspace].slds-size_9-of-12 >div {
+	width:calc(75% - (42px));
+	
+}
+
+.visual-editor div[name=workspace]{
+	overflow: auto;
+	height: calc(100vh - (40px));
+	
+	
+}
+
+.visual-editor button[name=toggleOutline], .visual-editor button[name=toggleRuler], .visual-editor button[name=toggleDefinitions]{
+	width: auto;
+    height: auto;
+    border: none;
+    margin-left: 0.2rem;
+}
+
+.builder .visual-editor.show-outline .root *[identifier]{
+	outline: dashed 1px silver;
+}
+
+.builder .root *[identifier].item-selected{
+	outline: solid 2px steelblue;
+}
+
+
+.builder .visual-editor section[name=composer] > .slds-docked-composer__body{
+	border: solid 0.2rem #606060;
 }
 
 .builder .slds-form_compact .slds-input, .builder .slds-form_compact .slds-select{
@@ -227,18 +469,24 @@
 .builder .slds-tabs_compact .slds-tabs_default__content .slds-library{
 	
 	margin: 0px;
-    height: 197px;
+   
     overflow-y: auto;
     
     overflow-x: hidden;
 }
 
-.builder .visual-editor .slds-docked-composer{
-	z-index:1000;
+
+.video-container video{
+	width:100%;
+	padding: 2px;
 }
 
-.builder .visual-editor .composers{
-	position: absolute;
-	width:0px;
-	height: 0px;
+.video-container meter{
+	width: 100%;
+}
+
+.video-container{
+	width: 250px;
+	height: auto !important;
+		
 }

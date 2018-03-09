@@ -6,6 +6,6 @@ public class BuilderEvent {
 	
 	public String source;
 	
-	
+	public String name;
 
 }

@@ -4,6 +4,7 @@ import framework.JSContainer;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
+import framework.design.Option;
 import framework.design.Parameter;
 import framework.design.TextParameter;
 import framework.designables.DesignableDelegate;
@@ -63,7 +64,9 @@ public class Badge extends JSContainer implements Designable{
 	public Array<Parameter> getParameters() {
 		Array<Parameter> parameters = delegate.getParameters();
 		AttributeParameter inverse = new AttributeParameter("inverse", "Inverse", "Basic");
+		inverse.options.push(new Option("",""));
 		AttributeParameter lightest = new AttributeParameter("lightest", "Lightest","Basic");
+		lightest.options.push(new Option("",""));
 		TextParameter textParam = new TextParameter("text", "Html", "Basic");
 		parameters.push(inverse,lightest,textParam);
 		return parameters;

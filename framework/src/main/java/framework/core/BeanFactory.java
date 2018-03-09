@@ -1,13 +1,10 @@
 package framework.core;
 
-import framework.util.HashMap;
-import framework.util.Map;
-
 public class BeanFactory {
 
 	private static BeanFactory INSTANCE = new BeanFactory();
 
-	private Map<String, Object> beans = new HashMap<>();
+	private jsweet.lang.Object beans = new jsweet.lang.Object();
 
 	public static BeanFactory getInstance() {
 		return INSTANCE;
@@ -33,7 +30,7 @@ public class BeanFactory {
 		
 		onInit(instance);
 		initBeanFactoryAware(instance);
-		beans.put(mixxingName, instance);
+		beans.$set(mixxingName, instance);
 	//	addBean(name, instance);
 	}
 
@@ -41,8 +38,8 @@ public class BeanFactory {
 
 	@SuppressWarnings("unchecked")
 	public <T> T getBeanOfType(Class<T> clazz) {
-		for (String key : beans.keySet()) {
-			Object bean = beans.get(key);
+		for (String key : jsweet.lang.Object.keys(beans)) {
+			Object bean = beans.$get(key);
 			try{
 				if (bean.getClass().isAssignableFrom(clazz)) {
 					return (T) bean;
@@ -54,15 +51,15 @@ public class BeanFactory {
 		
 		
 		String mixing = clazz.toString();
-		if(beans.containsKey(mixing)){
-			return (T)beans.get(mixing);
+		if(beans.hasOwnProperty(mixing)){
+			return (T)beans.$get(mixing);
 		}
 		return null;
 		//throw new java.lang.RuntimeException("No bean of type " + clazz.getName() + " found in factory");
 	}
 
 	public Object getBean(String name) {
-		return beans.get(name);
+		return beans.$get(name);
 	}
 
 }

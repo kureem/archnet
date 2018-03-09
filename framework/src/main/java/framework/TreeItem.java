@@ -25,9 +25,9 @@ public class TreeItem extends JSContainer implements EventListener{
 	private JSContainer button = new JSContainer("button").addClass("slds-button slds-button_icon slds-button_icon slds-m-right_x-small");
 	
 	
-	private String iconRight = "<svg class=\"slds-button__icon slds-button__icon_small\" aria-hidden=\"true\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/webjars/salesforce-lightning-design-system/2.4.1/assets/icons/utility-sprite/svg/symbols.svg#chevronright\"></use></svg>";
+	private String iconRight = "<svg class=\"slds-button__icon slds-button__icon_small\" aria-hidden=\"true\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/webjars/salesforce-lightning-design-system/2.5.2/icons/utility-sprite/svg/symbols.svg#chevronright\"></use></svg>";
 	
-	private String iconDown = "<svg class=\"slds-button__icon slds-button__icon_small\" aria-hidden=\"true\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/webjars/salesforce-lightning-design-system/2.4.1/assets/icons/utility-sprite/svg/symbols.svg#chevrondown\"></use></svg>";
+	private String iconDown = "<svg class=\"slds-button__icon slds-button__icon_small\" aria-hidden=\"true\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/webjars/salesforce-lightning-design-system/2.5.2/icons/utility-sprite/svg/symbols.svg#chevrondown\"></use></svg>";
 	
 	
 	private JSContainer title = new JSContainer("span").addClass("slds-truncate");
@@ -36,14 +36,14 @@ public class TreeItem extends JSContainer implements EventListener{
 	
 	private Array<IconButton> buttons = new Array<>();
 	
-	private JSContainer buttonsCtn = new JSContainer("div").addClass("buttons-ctn");
+	private JSContainer buttonsCtn = new JSContainer("div").addClass("buttons-ctn slds-col_bump-left");
 	
 	private IconButton leftIcon = new IconButton("leftIcon");
 	
 	public TreeItem(String name, String title) {
 		super(name, "div");
 		addClass("slds-tree__item");
-		addChild(button.setStyle("margin", "0px"));
+		addChild(button);
 		button.setHtml(iconRight);
 		//IconButton minimize = new IconButton(name);
 		addChild(leftIcon.addClass("left-icon"));

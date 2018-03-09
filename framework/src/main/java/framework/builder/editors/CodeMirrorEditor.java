@@ -83,7 +83,7 @@ public class CodeMirrorEditor extends JSTextArea
 		String data = editor.getValue();
 		this.value = data;
 		file.setData(data);
-		BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(file, new RemoteDataListener<java.lang.Object>() {
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(this,file, new RemoteDataListener<java.lang.Object>() {
 
 			@Override
 			public void dataLoaded(java.lang.Object data) {

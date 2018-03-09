@@ -1,12 +1,12 @@
 package framework.lightning;
 
-import def.dom.Option;
 import framework.JSContainer;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.Component;
 import framework.core.BeanFactory;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
+import framework.design.Option;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
 import framework.designables.JSDesignableImage;
@@ -82,6 +82,7 @@ public class Avatar extends JSContainer implements Designable{
 		Array<Parameter> parameters = delegate.getParameters();
 		
 		AttributeParameter circle = new AttributeParameter("circle", "Make Circle", "Basic");
+		circle.options.push(new Option("",""));
 		parameters.push(circle);
 		
 		

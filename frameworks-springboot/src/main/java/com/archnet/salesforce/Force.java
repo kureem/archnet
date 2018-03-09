@@ -1,25 +1,11 @@
 package com.archnet.salesforce;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@Component
+//@Component
 public class Force {
 
-	private static final String REST_VERSION = "41.0";
+/*	private static final String REST_VERSION = "41.0";
 
-	@Bean
+	//@Bean
 	private OAuth2RestTemplate oAuth2RestTemplate(OAuth2ProtectedResourceDetails resource,
 			OAuth2ClientContext context) {
 		return new OAuth2RestTemplate(resource, context);
@@ -71,6 +57,6 @@ public class Force {
 	}
 
 	private static class QueryResultAccount extends QueryResult<Account> {
-	}
+	}*/
 
 }

@@ -1,4 +1,6 @@
-package framework.builder.editors;
+	package framework.builder.editors;
+
+import static jsweet.dom.Globals.alert;
 
 import framework.JSContainer;
 import framework.builder.Builder;
@@ -37,8 +39,10 @@ public abstract class AbstractEditor<T> extends JSContainer implements Editor<T>
 		TabBody body = getAncestorWithClass("slds-tabs_default__content");
 		Tabs tabs = getAncestorWithClass("editor-tabs");
 		TabItem item = tabs.getTab(body);
-		item.setStyle("color", "red");
-		item.render();
+		if(item != null){
+			item.setStyle("color", "red");
+			item.render();
+		}
 		if(getRootEditor() != null && !getRootEditor().getName().equals(this.getName())){
 			getRootEditor().dirty();
 		}
@@ -48,9 +52,10 @@ public abstract class AbstractEditor<T> extends JSContainer implements Editor<T>
 		TabBody body = getAncestorWithClass("slds-tabs_default__content");
 		Tabs tabs = getAncestorWithClass("editor-tabs");
 		TabItem item = tabs.getTab(body);
-		
-		item.setStyle("color", "#16325c");
-		item.render();
+		if(item != null){
+			item.setStyle("color", "#16325c");
+			item.render();
+		}
 	}
 
 	public VisualEditor getRootEditor(){
@@ -62,7 +67,7 @@ public abstract class AbstractEditor<T> extends JSContainer implements Editor<T>
 	public void save() {
 		String data = getMarshall();
 		file.setData(data);
-		projectService.saveFile(file, new RemoteDataListener<java.lang.Object>() {
+		projectService.saveFile(this,file, new RemoteDataListener<java.lang.Object>() {
 
 			@Override
 			public void dataLoaded(Object data) {

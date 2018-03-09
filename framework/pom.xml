@@ -61,14 +61,23 @@
 			<artifactId>jsweet-core</artifactId>
 			<version>5-20170726</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jsweet.candies</groupId>
-			<artifactId>j4ts</artifactId>
-			<version>0.2.0-SNAPSHOT</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.jsweet.candies</groupId>
 			<artifactId>codemirror</artifactId>
+			<version>0.0.0-1.1.0-20160525</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>handsontable</artifactId>
+			<version>0.24.3-1.1.0-20160525</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>ace</artifactId>
 			<version>0.0.0-1.1.0-20160525</version>
 		</dependency>
 
@@ -83,9 +92,14 @@
 			<version>1.11.0-20170726</version>
 		</dependency>
 		<dependency>
+			<groupId>org.jsweet.candies</groupId>
+			<artifactId>fabricjs</artifactId>
+			<version>1.5.0-1.1.0-20160525</version>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>salesforce-lightning-design-system</artifactId>
-			<version>2.4.1</version>
+			<version>2.5.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -118,28 +132,28 @@
 			</resource>
 		</resources>
 		<plugins>
-		<plugin>
-      <groupId>com.samaxes.maven</groupId>
-      <artifactId>minify-maven-plugin</artifactId>
-      <version>1.7.6</version>
-      <executions>
-        <execution>
-          <id>default-minify</id>
-          <configuration>
-            <charset>UTF-8</charset>
-            <jsSourceFiles>
-           		<jsSourceFile>src/main/resources/META-INF/resources/webjars/framework/1.0.5-SNAPSHOT/bundle.js</jsSourceFile>
-           		<jsSourceFile>src/main/resources/META-INF/resources/webjars/j4ts/0.2.0-SNAPSHOT/bundle.js</jsSourceFile>
-            </jsSourceFiles>
-            <jsFinalFile>script.js</jsFinalFile>
-            <jsEngine>CLOSURE</jsEngine>
-          </configuration>
-          <goals>
-            <goal>minify</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>1.7.6</version>
+				<executions>
+					<execution>
+						<id>default-minify</id>
+						<configuration>
+							<charset>UTF-8</charset>
+							<jsSourceFiles>
+								<jsSourceFile>src/main/resources/META-INF/resources/webjars/framework/1.0.5-SNAPSHOT/bundle.js</jsSourceFile>
+								<jsSourceFile>src/main/resources/META-INF/resources/webjars/j4ts/0.2.0-SNAPSHOT/bundle.js</jsSourceFile>
+							</jsSourceFiles>
+							<jsFinalFile>script.js</jsFinalFile>
+							<jsEngine>CLOSURE</jsEngine>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -162,7 +176,7 @@
 					<!-- <outDir>../ui/src/main/resources/static</outDir> -->
 					<tsOut>src/main/resources/src/typings/${project.artifactId}/${project.version}</tsOut>
 					<declaration>true</declaration>
-					<targetVersion>ES3</targetVersion>
+					<targetVersion>ES5</targetVersion>
 					<encoding>UTF8</encoding>
 				</configuration>
 				<executions>

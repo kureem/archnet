@@ -23,10 +23,12 @@ import def.jqueryui.jqueryui.DroppableOptions;
 import framework.builder.editors.DesignableEditor;
 import framework.core.Global;
 import framework.design.Designable;
+import framework.designables.DesignableDelegate;
 import framework.interactions.Droppable;
 import framework.renderer.ContainerRenderer;
 import framework.renderer.ExtendedRenderer;
 import framework.renderer.Renderer;
+import jsweet.dom.Event;
 import jsweet.dom.HTMLElement;
 import jsweet.lang.Array;
 
@@ -38,188 +40,166 @@ import jsweet.lang.Array;
 @SuppressWarnings("unchecked")
 public class JSContainer implements Renderable, Droppable {
 
-	
 	private jsweet.lang.Object d = new jsweet.lang.Object();
+
 	/**
 	 * 
 	 */
+
+	public void on(String evt, jsweet.dom.EventListener listener) {
+		addEventListener(new EventListener() {
+
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				listener.apply(evt);
+			}
+		}, evt);
+	}
+
+	public String[] advancedEventTypes() {
+		return new String[] {};
+	}
+
+	public void fireListener(String key, Event evt) {
+		final Array<EventListener> listeners = (Array<EventListener>) getListeners().$get(key);
+		if (listeners != null && listeners.length > 0) {
+			for (EventListener l : listeners) {
+
+				l.performAction(this, evt);
+			}
+		}
+
+	}
 	
-	
-	public Renderable find(String path){
+	public jsweet.lang.Object getScope(){
+		return DesignableDelegate.getScope(this);
+	}
+
+	public Renderable find(String path) {
 		String[] sectins = path.split("/");
 		Renderable current = this;
-		if(path.startsWith("/")){
-			current =  ((DesignableEditor)getAncestorWithClass("visual-editor")).getRootItem();
+		if (path.startsWith("/")) {
+			current = ((DesignableEditor) getAncestorWithClass("visual-editor")).getRootItem();
 		}
-		for(String s : sectins){
-			if(s.equals("..")){
-				while(true){
+		for (String s : sectins) {
+			if (s.equals("..")) {
+				while (true) {
 					current = current.getParent();
-					if(current == null)
+					if (current == null)
 						break;
-					if(current.getAttribute("identifier") != null && current.getAttribute("identifier").length() > 0){
+					if (current.getAttribute("identifier") != null && current.getAttribute("identifier").length() > 0) {
 						break;
 					}
 				}
-				
-				if(current == null){
+
+				if (current == null) {
 					console.error("Cannot find root component for path " + path);
 					return null;
 				}
-			}else if(s.equals(".")){
-				//do nothing
-			}else if(s.equals("")){
-				//do nothing
-			}else{
-				
-				if(s.endsWith("]")){
-					if(s.contains("[")){
+			} else if (s.equals(".")) {
+				// do nothing
+			} else if (s.equals("")) {
+				// do nothing
+			} else {
+
+				if (s.endsWith("]")) {
+					if (s.contains("[")) {
 						String[] ss = s.split("[");
 						String index = ss[1];
-						String onlyName =ss[0];
-						if(index.contains("]")){
-							
+						String onlyName = ss[0];
+						if (index.contains("]")) {
+
 							index = index.replace("]", "");
-							
+
 							double iIndex = parseInt(index);
-							current =  findDesignable((Designable)current,onlyName,iIndex);
-							if(current == null){
-								console.error("error parsing path at ..." + s + "..., Cannot find component '"+s+"' while searching in path:" + path + ". Please check path");
+							current = findDesignable((Designable) current, onlyName, iIndex);
+							if (current == null) {
+								console.error("error parsing path at ..." + s + "..., Cannot find component '" + s
+										+ "' while searching in path:" + path + ". Please check path");
 								return null;
 							}
-							
-						}else{
+
+						} else {
 							console.error("error parsing path at ..." + s + "...");
 						}
-					}else{
+					} else {
 						console.error("error parsing path at ..." + s + "...");
 					}
-				}else{
-					current =  findDesignable((Designable)current,s,0);
-					if(current == null){
-						console.error( "error parsing path at ..." + s + "...,Cannot find component '"+s+"' while searching in path:" + path + ". Please check path");
+				} else {
+					current = findDesignable((Designable) current, s, 0);
+					if (current == null) {
+						console.error("error parsing path at ..." + s + "...,Cannot find component '" + s
+								+ "' while searching in path:" + path + ". Please check path");
 						return null;
 					}
 				}
 			}
 		}
-		
+
 		return current;
-		//JSContainer root = getRoot();
+		// JSContainer root = getRoot();
 	}
-	
-	private Renderable findDesignable(Designable des, String name, double index){
+
+	private Renderable findDesignable(Designable des, String name, double index) {
 		Array<Designable> candidates = new Array<Designable>();
-		for(Designable d : des.getDesignables()){
-			if(d.getName().equals(name)){
+		for (Designable d : des.getDesignables()) {
+			if (d.getName().equals(name)) {
 				candidates.push(d);
 			}
 		}
-		if(index < candidates.length){
+		if (index < candidates.length) {
 			return candidates.$get(index);
-		}else{
-			console.error("Cannot find child item with name " + name + " and index " + index + " total number of children with name " + name + " is " + candidates.length);
-		} 
+		} else {
+			console.error("Cannot find child item with name " + name + " and index " + index
+					+ " total number of children with name " + name + " is " + candidates.length);
+		}
 		return null;
 	}
-	
-	public Renderable getChild(String name){
-		for(JSContainer child : getChildren()){
-			if(child.getName().equals(name)){
+
+	public Renderable getChild(String name) {
+		for (JSContainer child : getChildren()) {
+			if (child.getName().equals(name)) {
 				return child;
 			}
 		}
 		return null;
 	}
-	
-	
 
-	//private DroppableOptions droppableOptions = null;
-
-//	private final static Renderer<? extends JSContainer> DEFAULT_RENDERER = new ContainerRenderer();
-
-	//@Optional
-	//private Map<String, List<EventListener>> listeners = new HashMap<>();
-
-//	@Optional
-	//private String id;
-
-	//@Optional
-	//private Object data;
-
-	//@Optional
-	//private Map<String, String> attributes = new HashMap<>();
-
-	//@Optional
-	//private Map<String, String> styles = new HashMap<>();
-
-	//@Optional
-	//private JSContainer parent;
-
-	//@Optional
-	//private List<JSContainer> children = new LinkedList<>();
-
-	//@Optional
-	//private String html = "";
-
-	//@Optional
-	//private String tag = "";
-
-	//@Optional
-	//private String name = "";
-
-	//@Optional
-	//private boolean rendered = false;
-
-	//@Optional
-	//private List<Renderer<? extends Renderable>> renderers = new ArrayList<>();
-
-	//@Optional
-	//private List<String> changedAttributes = new LinkedList<>();
-
-	//@Optional
-	//private List<String> changedStyles = new LinkedList<>();
-
-	//@Optional
-//	private List<JSCommand> commands = new LinkedList<>();
-
-	
-
-	public Renderable removeChild(Renderable r){
+	public Renderable removeChild(final Renderable r) {
 		Array<JSContainer> children = getChildren();
-		Array<JSContainer> tmp = new Array<JSContainer>();
-		for(JSContainer c : children){
-			if(!c.equals(r)){
-				tmp.push(c);
-			}
-		}
-		d.$set("children", tmp);
+		d.$set("children", children.filter((ctn, inde, lst) -> {
+			return !ctn.equals(r);
+
+		}));
+
+		setRendered(false);
 		return this;
 	}
-	
-	public Renderable clearChildren(){
+
+	public Renderable clearChildren() {
 		d.$set("children", new Array<>());
 		return this;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#getChangedAttributes()
 	 */
-	
+
 	@Override
 	public Array<String> getChangedAttributes() {
-		if(d.$get("changedAttributes") != null){
-			Array<String> changed = (Array<String>)d.$get("changedAttributes");
+		if (d.$get("changedAttributes") != null) {
+			Array<String> changed = (Array<String>) d.$get("changedAttributes");
 			return changed;
-			//return changed.sort();
-		}else{
+			// return changed.sort();
+		} else {
 			d.$set("changedAttributes", new Array<>());
 			return getChangedAttributes();
 		}
-		//return changedAttributes.toArray(new String[changedAttributes.size()]);
-		//return new String[]{};
+		// return changedAttributes.toArray(new
+		// String[changedAttributes.size()]);
+		// return new String[]{};
 	}
 
 	public HTMLElement getNative() {
@@ -227,8 +207,9 @@ public class JSContainer implements Renderable, Droppable {
 		if (elem != null) {
 			return elem;
 		} else {
-			//throw new java.lang.RuntimeException(
-				//	"The component " + getId() + " has not been rendered yet. Cannot retrieve native dom");
+			// throw new java.lang.RuntimeException(
+			// "The component " + getId() + " has not been rendered yet. Cannot
+			// retrieve native dom");
 			return null;
 		}
 	}
@@ -240,17 +221,18 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public Array<String> getChangedStyles() {
-		//return changedStyles.toArray(new String[changedStyles.size()]);
-		if(d.$get("changedStyles") != null){
-			Array<String> changed = (Array<String>)d.$get("changedStyles");
+		// return changedStyles.toArray(new String[changedStyles.size()]);
+		if (d.$get("changedStyles") != null) {
+			Array<String> changed = (Array<String>) d.$get("changedStyles");
 			return changed;
-			//return changed.sort();
-		}else{
+			// return changed.sort();
+		} else {
 			d.$set("changedStyles", new Array<>());
 			return getChangedStyles();
 		}
-		//return changedAttributes.toArray(new String[changedAttributes.size()]);
-		//return new Array<String>();
+		// return changedAttributes.toArray(new
+		// String[changedAttributes.size()]);
+		// return new Array<String>();
 	}
 
 	/*
@@ -262,15 +244,15 @@ public class JSContainer implements Renderable, Droppable {
 		if (s.equals("a28n12l10")) {
 			d.$delete("changedAttributes");
 			d.$delete("changedStyles");
-			//changedAttributes.clear();
-			//changedStyles.clear();
-		//	commands.clear();
+			// changedAttributes.clear();
+			// changedStyles.clear();
+			// commands.clear();
 		}
 	}
 
 	public JSContainer(String tag) {
 		super();
-		//this.tag = tag;
+		// this.tag = tag;
 		// addClass(this.getClass().getSimpleName());
 		setTag(tag);
 	}
@@ -282,22 +264,19 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public Array<Renderer<? extends Renderable>> getRenderers() {
-		
-		
-		Array<Renderer<? extends Renderable>> arr =  (Array<Renderer<? extends Renderable>>)d.$get("renderers");
-		if(arr != null){
+
+		Array<Renderer<? extends Renderable>> arr = (Array<Renderer<? extends Renderable>>) d.$get("renderers");
+		if (arr != null) {
 			return arr;
-		}else{
+		} else {
 			return new Array<Renderer<? extends Renderable>>();
 		}
-		/*List<Renderer<? extends Renderable>> l = new ArrayList<Renderer<? extends Renderable>>();
-		if(arr != null){
-			for(Renderer r : arr){
-				l.add(r);
-			}
-		}
-		return l;*/
-		//return renderers;
+		/*
+		 * List<Renderer<? extends Renderable>> l = new ArrayList<Renderer<?
+		 * extends Renderable>>(); if(arr != null){ for(Renderer r : arr){
+		 * l.add(r); } } return l;
+		 */
+		// return renderers;
 	}
 
 	/*
@@ -307,16 +286,16 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public JSContainer addRenderer(Renderer<? extends Renderable> renderer) {
-		Array<Renderer<? extends Renderable>> arr =  (Array<Renderer<? extends Renderable>>)d.$get("renderers");
-		if(arr == null){
+		Array<Renderer<? extends Renderable>> arr = (Array<Renderer<? extends Renderable>>) d.$get("renderers");
+		if (arr == null) {
 			arr = new Array<Renderer<? extends Renderable>>();
-			d.$set("renderers",arr);
+			d.$set("renderers", arr);
 		}
 		arr.push(renderer);
 		d.$set("renderers", arr);
-		/*if (!this.renderers.contains(renderer)) {
-			renderers.add(renderer);
-		}*/
+		/*
+		 * if (!this.renderers.contains(renderer)) { renderers.add(renderer); }
+		 */
 		return this;
 	}
 
@@ -327,7 +306,7 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public String getId() {
-		String id = (String)d.$get("id");
+		String id = (String) d.$get("id");
 		if (id == null) {
 			id = uid();
 			d.$set("id", id);
@@ -400,13 +379,11 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public JSContainer addChild(JSContainer container) {
 		container.d.$set("parent", this);
-		//container.parent = this;
+		// container.parent = this;
 		getChildren().push(container);
-		//children.add(container);
+		// children.add(container);
 		return this;
 	}
-	
-	
 
 	/*
 	 * (non-Javadoc)
@@ -415,19 +392,19 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public JSContainer addChildAt(double index, JSContainer child) {
-		//child.parent = this;
+		// child.parent = this;
 		child.d.$set("parent", this);
 		Array<JSContainer> children = new Array<JSContainer>();
 		double i = 0;
-		for(JSContainer c : getChildren()){
-			if(i == index){
+		for (JSContainer c : getChildren()) {
+			if (i == index) {
 				children.push(c);
 			}
 			children.push(c);
 		}
-		
+
 		d.$set("children", children);
-		//children.add(index, child);
+		// children.add(index, child);
 		return this;
 	}
 
@@ -436,7 +413,7 @@ public class JSContainer implements Renderable, Droppable {
 	 * 
 	 * @see framework.JSContainer_#setVisible(boolean)
 	 */
-	@Override 
+	@Override
 	public JSContainer setVisible(boolean b) {
 		if (!b) {
 			addClass("slds-hidden");
@@ -454,9 +431,9 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public JSContainer addEventListener(EventListener listener, String type) {
-		jsweet.lang.Object listeners =  getListeners();
-		//o.ha
-		if(listeners == null){
+		jsweet.lang.Object listeners = getListeners();
+		// o.ha
+		if (listeners == null) {
 			listeners = new jsweet.lang.Object();
 			d.$set("listeners", listeners);
 		}
@@ -464,7 +441,7 @@ public class JSContainer implements Renderable, Droppable {
 			listeners.$set(type, new Array<>());
 		}
 
-		 ((Array<EventListener>)listeners.$get(type)).push(listener);
+		((Array<EventListener>) listeners.$get(type)).push(listener);
 		return this;
 	}
 
@@ -476,7 +453,7 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public String getTag() {
 		return getString("tag");
-		//return tag;
+		// return tag;
 	}
 
 	/*
@@ -487,7 +464,7 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public JSContainer setTag(String tag) {
 		setString("tag", tag);
-		//this.tag = tag;
+		// this.tag = tag;
 		setRendered(false);
 		return this;
 	}
@@ -500,20 +477,19 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public JSContainer setStyle(String key, String value) {
 		getChangedStyles().push(key);
-		//changedStyles.add(key);
-		if(value != null){
-			if(d.$get("styles") == null){
+		// changedStyles.add(key);
+		if (value != null) {
+			if (d.$get("styles") == null) {
 				d.$set("styles", new jsweet.lang.Object());
 			}
-			((jsweet.lang.Object)d.$get("styles")).$set(key, value);
-		}
-		else{
-			if(d.$get("styles") != null){
-				((jsweet.lang.Object)d.$get("styles")).$delete(key);
+			((jsweet.lang.Object) d.$get("styles")).$set(key, value);
+		} else {
+			if (d.$get("styles") != null) {
+				((jsweet.lang.Object) d.$get("styles")).$delete(key);
 				setRendered(false);
 			}
 		}
-		//styles.put(key, value);
+		// styles.put(key, value);
 		return this;
 	}
 
@@ -524,12 +500,12 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public String getStyle(String key) {
-		if(d.$get("styles") != null){
-		
-			return (String)((jsweet.lang.Object)d.$get("styles")).$get(key);
+		if (d.$get("styles") != null) {
+
+			return (String) ((jsweet.lang.Object) d.$get("styles")).$get(key);
 		}
 		return null;
-		//return styles.get(key);
+		// return styles.get(key);
 	}
 
 	/*
@@ -541,65 +517,54 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public JSContainer setAttribute(String key, String value) {
 		getChangedAttributes().push(key);
-		
-		
-		if(value != null){
-			if(d.$get("attributes") == null){
+
+		if (value != null) {
+			if (d.$get("attributes") == null) {
 				d.$set("attributes", new jsweet.lang.Object());
 			}
-			((jsweet.lang.Object)d.$get("attributes")).$set(key, value);
+			((jsweet.lang.Object) d.$get("attributes")).$set(key, value);
+		} else {
+			if (d.$get("attributes") != null)
+				((jsweet.lang.Object) d.$get("attributes")).$delete(key);
 		}
-		else{
-			if(d.$get("attributes") != null)
-				((jsweet.lang.Object)d.$get("attributes")).$delete(key);
-		}
-		//styles.put(key, value);
+		// styles.put(key, value);
 		return this;
-		//attributes.put(key, value);
-		
-		//return this;
+		// attributes.put(key, value);
+
+		// return this;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#exec(java.lang.String, jsweet.lang.Object)
-	 
-	@Override
-	public void exec(String name, jsweet.lang.Object parameter) {
-		commands.add(new JSCommand(name, JSON.stringify(parameter)));
-	}
-
-	
+	 * 
+	 * @Override public void exec(String name, jsweet.lang.Object parameter) {
+	 * commands.add(new JSCommand(name, JSON.stringify(parameter))); }
+	 * 
+	 * 
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#exec(java.lang.String, java.lang.String)
-	 
-	@Override
-	public void exec(String name, String variable) {
-		commands.add(new JSCommand(name, variable));
-	}
-
-*//*	
-	 * (non-Javadoc)
 	 * 
-	 * @see framework.JSContainer_#exec(java.lang.String)
-	 
-	@Override
-	public void exec(String name) {
-		exec(name, (String) null);
-	}
-*/
+	 * @Override public void exec(String name, String variable) {
+	 * commands.add(new JSCommand(name, variable)); }
+	 * 
+	 *//*
+		 * (non-Javadoc)
+		 * 
+		 * @see framework.JSContainer_#exec(java.lang.String)
+		 * 
+		 * @Override public void exec(String name) { exec(name, (String) null);
+		 * }
+		 */
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see framework.JSContainer_#getCommands()
-	 
-	@Override
-	public Iterable<JSCommand> getCommands() {
-		return commands;
-	}
-*/
+	 * 
+	 * @Override public Iterable<JSCommand> getCommands() { return commands; }
+	 */
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -607,10 +572,10 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public String getAttribute(String key) {
-		//return attributes.get(key);
-		if(d.$get("attributes") != null){
-			
-			return (String)((jsweet.lang.Object)d.$get("attributes")).$get(key);
+		// return attributes.get(key);
+		if (d.$get("attributes") != null) {
+
+			return (String) ((jsweet.lang.Object) d.$get("attributes")).$get(key);
 		}
 		return null;
 	}
@@ -623,10 +588,10 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public String getName() {
 		String name = getAttribute("name");
-		if(name == null){
+		if (name == null) {
 			return "";
 		}
-		
+
 		return name;
 	}
 
@@ -637,8 +602,8 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public void setName(String name) {
-		//this.name = name;
-		//setAttribute("name", name);
+		// this.name = name;
+		// setAttribute("name", name);
 		setAttribute("name", name);
 	}
 
@@ -649,8 +614,8 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public JSContainer getParent() {
-		return (JSContainer)d.$get("parent");
-		//return parent;
+		return (JSContainer) d.$get("parent");
+		// return parent;
 	}
 
 	/*
@@ -660,16 +625,15 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public Array<JSContainer> getChildren() {
-		
-		
-		Array<JSContainer> children = (Array<JSContainer>)d.$get("children");
-		if(children != null){
+
+		Array<JSContainer> children = (Array<JSContainer>) d.$get("children");
+		if (children != null) {
 			return children;
-		}else{
+		} else {
 			d.$set("children", new Array<>());
 			return getChildren();
 		}
-		//return children;
+		// return children;
 	}
 
 	/*
@@ -679,12 +643,12 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public String[] getStyleNames() {
-		jsweet.lang.Object styles = (jsweet.lang.Object)d.$get("styles");
-		if(styles != null){
+		jsweet.lang.Object styles = (jsweet.lang.Object) d.$get("styles");
+		if (styles != null) {
 			return jsweet.lang.Object.keys(styles);
 		}
-		return new String[]{};
-		//return styles.keySet();
+		return new String[] {};
+		// return styles.keySet();
 	}
 
 	/*
@@ -694,12 +658,12 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public String[] getAttributeNames() {
-		jsweet.lang.Object styles = (jsweet.lang.Object)d.$get("attributes");
-		if(styles != null){
+		jsweet.lang.Object styles = (jsweet.lang.Object) d.$get("attributes");
+		if (styles != null) {
 			return jsweet.lang.Object.keys(styles);
 		}
-		return new String[]{};
-		//return attributes.keySet();
+		return new String[] {};
+		// return attributes.keySet();
 	}
 
 	/*
@@ -709,20 +673,20 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public String getHtml() {
-		//return html;
-		String html =  getString("html");
-		if(html == null){
+		// return html;
+		String html = getString("html");
+		if (html == null) {
 			return "";
 		}
 		return html;
 	}
-	
-	private void setString(String key, String value){
+
+	private void setString(String key, String value) {
 		d.$set(key, value);
 	}
-	
-	private String getString(String key){
-		return (String)d.$get(key);
+
+	private String getString(String key) {
+		return (String) d.$get(key);
 	}
 
 	/*
@@ -732,7 +696,7 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public JSContainer setHtml(String h) {
-		//this.html = h;
+		// this.html = h;
 		setString("html", h);
 		setRendered(false);
 		return this;
@@ -745,8 +709,8 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public boolean isRendered() {
-		return (Boolean)d.$get("rendered");
-		//return rendered;
+		return (Boolean) d.$get("rendered");
+		// return rendered;
 	}
 
 	/*
@@ -756,8 +720,8 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public JSContainer setRendered(boolean b) {
-		d.$set("rendered",b);
-		//this.rendered = b;
+		d.$set("rendered", b);
+		// this.rendered = b;
 		if (!b) {
 			for (JSContainer child : getChildren()) {
 				child.setRendered(b);
@@ -774,14 +738,14 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public jsweet.lang.Object getListeners() {
-		
-		jsweet.lang.Object l = (jsweet.lang.Object)d.$get("listeners");
-		if(l == null){
+
+		jsweet.lang.Object l = (jsweet.lang.Object) d.$get("listeners");
+		if (l == null) {
 			d.$set("listeners", new jsweet.lang.Object());
 			return getListeners();
 		}
 		return l;
-		//return listeners;
+		// return listeners;
 	}
 
 	/*
@@ -795,15 +759,16 @@ public class JSContainer implements Renderable, Droppable {
 			render(null);
 		else
 			render(document.getElementById(getParent().getId()));
+
 	}
-	
-	public void postRender(HTMLElement root){
-		
+
+	public void postRender(HTMLElement root) {
+
 	}
-	
-	protected boolean contains(Array<?> lst, Object o){
-		for(Object oo : lst){
-			if(oo.equals(o)){
+
+	protected boolean contains(Array<?> lst, Object o) {
+		for (Object oo : lst) {
+			if (oo.equals(o)) {
 				return true;
 			}
 		}
@@ -811,29 +776,28 @@ public class JSContainer implements Renderable, Droppable {
 	}
 
 	private static ContainerRenderer defaultRenderer = new ContainerRenderer();
-	
+
 	@SuppressWarnings({ "rawtypes" })
 	@Override
 	public void render(HTMLElement parent) {
-		
+
 		Array<Renderer<? extends Renderable>> renderers = getRenderers();
 		if (renderers.length == 0) {
-			//ContainerRenderer defaultRenderer = new ContainerRenderer();
+			// ContainerRenderer defaultRenderer = new ContainerRenderer();
 			renderers.push(defaultRenderer);
 		}
 
-		
-		if (!contains(renderers,defaultRenderer)) {
-			
+		if (!contains(renderers, defaultRenderer)) {
+
 			Array<Renderer<? extends Renderable>> tmp = new Array<Renderer<? extends Renderable>>();
 			tmp.push(defaultRenderer);
-			for(Renderer<? extends Renderable> r : renderers){
+			for (Renderer<? extends Renderable> r : renderers) {
 				tmp.push(r);
 			}
-			//tmp.push(items)
-			//tmp.push(renderers);
+			// tmp.push(items)
+			// tmp.push(renderers);
 			renderers = tmp;
-			//renderers.add(0, DEFAULT_RENDERER);
+			// renderers.add(0, DEFAULT_RENDERER);
 		}
 		for (Renderer renderer : renderers)
 			renderer.doRender(this, parent);
@@ -841,15 +805,14 @@ public class JSContainer implements Renderable, Droppable {
 		for (JSContainer child : getChildren()) {
 			child.render();
 		}
-		
-		
-		for (Renderer renderer : renderers){
-			if(renderer instanceof ExtendedRenderer<?>)
-			((ExtendedRenderer)renderer).postRender(this, parent);
+
+		for (Renderer renderer : renderers) {
+			if (renderer instanceof ExtendedRenderer<?>)
+				((ExtendedRenderer) renderer).postRender(this, parent);
 		}
-		
+
 		setRendered(true);
-		//rendered = true;
+		// rendered = true;
 
 	}
 
@@ -861,7 +824,7 @@ public class JSContainer implements Renderable, Droppable {
 	@Override
 	public Object getData() {
 		return d.$get("data");
-		//return data;
+		// return data;
 	}
 
 	/*
@@ -871,8 +834,8 @@ public class JSContainer implements Renderable, Droppable {
 	 */
 	@Override
 	public void setData(Object data) {
-		d.$set("data",data);
-		//this.data = data;
+		d.$set("data", data);
+		// this.data = data;
 	}
 
 	/*
@@ -886,7 +849,7 @@ public class JSContainer implements Renderable, Droppable {
 			return null;
 		}
 		String clsss = parent.getAttribute("class");
-		if(clsss != null){
+		if (clsss != null) {
 			for (String s : parent.getAttribute("class").split(" ")) {
 				if (s.trim().equals(cls))
 					return (T) parent;
@@ -949,16 +912,15 @@ public class JSContainer implements Renderable, Droppable {
 		}
 	}
 
-	
 	@Override
 	public DroppableOptions getDroppableOptions() {
-		return (DroppableOptions)d.$get("droppableOptions");
-		//return droppableOptions;
+		return (DroppableOptions) d.$get("droppableOptions");
+		// return droppableOptions;
 	}
 
 	public void setDroppableOptions(DroppableOptions options) {
 		d.$set("droppableOptions", options);
-		//this.droppableOptions = options;
+		// this.droppableOptions = options;
 	}
 
 	public JSContainer(String name, String tag) {

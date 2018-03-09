@@ -15,25 +15,14 @@
  */
 package framework;
 
-import framework.renderer.Renderer;
-import jsweet.dom.HTMLElement;
 import jsweet.dom.HTMLTextAreaElement;
 
 public class JSTextArea extends JSContainer implements InputField<String>{
 
-	private final static Renderer<JSTextArea> TEXT_AREA_RENDERER = new Renderer<JSTextArea>() {
-
-		@Override
-		public void doRender(JSTextArea c, HTMLElement root) {
-			HTMLTextAreaElement elem = (HTMLTextAreaElement)root;
-			elem.value = c.getValue();
-		}
-		
-	};
 	
 	public JSTextArea(String name) {
 		super(name, "textarea");
-		addRenderer(TEXT_AREA_RENDERER);
+//		addRenderer(TEXT_AREA_RENDERER);
 	}
 
 	public JSTextArea setDisabled(boolean b) {
@@ -47,11 +36,19 @@ public class JSTextArea extends JSContainer implements InputField<String>{
 
 	@Override
 	public String getValue() {
+		HTMLTextAreaElement elem = (HTMLTextAreaElement)getNative();
+		if(elem != null){
+			return elem.value;
+		}
 		return getAttribute("value");
 	}
 
 	@Override
 	public void setValue(String val) {
+		HTMLTextAreaElement elem = (HTMLTextAreaElement)getNative();
+		if(elem != null){
+			elem.value = val;
+		}
 		setAttribute("value", val);
 	}
 

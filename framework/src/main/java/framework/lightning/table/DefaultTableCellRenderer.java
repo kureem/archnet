@@ -6,7 +6,7 @@ import framework.lightning.CheckBox;
 
 public class DefaultTableCellRenderer implements TableCellRenderer{
 
-	@Override
+	@Override 
 	public Renderable getComponent(Table table, Object value, int row, int column) {
 		
 		if(value != null && value instanceof Boolean){

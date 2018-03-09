@@ -6,8 +6,12 @@ import framework.JSInput;
 import framework.JSTextArea;
 import framework.builder.editors.AbstractEditor;
 import framework.builder.editors.VisualEditor;
+import framework.lightning.Col;
 import framework.lightning.FormElement;
 import framework.lightning.FormLayout;
+import framework.lightning.Grid;
+import framework.lightning.Panel;
+import framework.lightning.PanelSection;
 import jsweet.lang.Object;
 
 public class DataSourcesEditor extends AbstractEditor<DataSource<Object>> {
@@ -21,7 +25,24 @@ public class DataSourcesEditor extends AbstractEditor<DataSource<Object>> {
 
 	public DataSourcesEditor(String name,VisualEditor rootEditor) {
 		super(name, "div", rootEditor);
+		
+		Grid grid = new Grid("df", "div");
+		grid.setWrap(true);
+		
+		Col colFrm = new Col("");
+		colFrm.setSections("12");
+		colFrm.setSpan("8");
+		
+		grid.addChild(colFrm);
+		addChild(grid);
+		
+		Panel panel = new Panel("frm");
+		colFrm.addChild(panel);
+		
 	//	addChild(modal);
+		
+		PanelSection section = new PanelSection("pane", "div");
+		panel.addSection(section);
 		FormLayout form = new FormLayout("form", "div");
 		url.addClass("slds-input");
 		body.addClass("slds-input");
@@ -29,8 +50,12 @@ public class DataSourcesEditor extends AbstractEditor<DataSource<Object>> {
 		form.addFormElement(new FormElement("url", "div").setInput(url).setLabel("Url"));
 		form.addFormElement(new FormElement("body", "div").setInput(body).setLabel("Body"));
 		//modal.setBody(form);
+		section.addChild(form);
 		
-		addChild(form);
+		
+		
+		
+		//addChild(form);
 	}
 
 	@Override

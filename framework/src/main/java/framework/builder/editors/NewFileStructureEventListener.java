@@ -61,7 +61,7 @@ public class NewFileStructureEventListener implements EventListener {
 		}
 
 		// File project = builder.getProject();
-		file.createFile(name, type, new RemoteDataListener<Object>() {
+		file.createFile(source,name, type, new RemoteDataListener<Object>() {
 
 			@Override
 			public void dataLoaded(Object data) {

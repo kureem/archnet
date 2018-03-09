@@ -1,5 +1,6 @@
 package framework.builder.data;
 
+import framework.JSContainer;
 import framework.core.BeanFactory;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
@@ -36,8 +37,8 @@ public class File {
 	}
 
 
-	public void getDataStructures(RemoteDataListener<Array<DataStructure>> listener) {
-		BeanFactory.getInstance().getBeanOfType(DataEnvironment.class).getDataStructures(listener);
+	public void getDataStructures(JSContainer source, RemoteDataListener<Array<DataStructure>> listener) {
+		BeanFactory.getInstance().getBeanOfType(DataEnvironment.class).getDataStructures(source,listener);
 	}
 
 	public Array<File> getComponents() {
@@ -48,10 +49,10 @@ public class File {
 		return getChild(type).getChild(name);
 	}
 
-	public void deleteFile(String name, String type, RemoteDataListener<java.lang.Object> l) {
+	public void deleteFile(JSContainer source, String name, String type, RemoteDataListener<java.lang.Object> l) {
 
 		File f = getFile(name, type);
-		BeanFactory.getInstance().getBeanOfType(ProjectService.class).deleteFile(f.getPath(),
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).deleteFile(source,f.getPath(),
 				new RemoteDataListener<java.lang.Object>() {
 
 					@Override
@@ -71,25 +72,25 @@ public class File {
 		return null;
 	}
 
-	public void createCss(String name, RemoteDataListener<java.lang.Object> listener) {
-		createFile(name, name, "stylesheets", listener);
+	public void createCss(JSContainer source, String name, RemoteDataListener<java.lang.Object> listener) {
+		createFile(source,name, name, "stylesheets", listener);
 	}
 
-	public void createTemplate(String name, RemoteDataListener<java.lang.Object> listener) {
-		createFile(name, name, "templates", listener);
+	public void createTemplate(JSContainer source, String name, RemoteDataListener<java.lang.Object> listener) {
+		createFile(source,name, name, "templates", listener);
 	}
 
-	public void createScript(String name, RemoteDataListener<java.lang.Object> listener) {
-		createFile(name, name, "scripts", listener);
+	public void createScript(JSContainer source, String name, RemoteDataListener<java.lang.Object> listener) {
+		createFile(source,name, name, "scripts", listener);
 	}
 
-	public void createFile(String name, String type, RemoteDataListener<java.lang.Object> listener) {
-		createFile(name, name, type, listener);
+	public void createFile(JSContainer source, String name, String type, RemoteDataListener<java.lang.Object> listener) {
+		createFile(source,name, name, type, listener);
 	}
 
-	public void createFile(String name, String title, String dir, RemoteDataListener<java.lang.Object> listener) {
+	public void createFile(JSContainer source, String name, String title, String dir, RemoteDataListener<java.lang.Object> listener) {
 		String path = getPath() + "/" + dir;
-		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createFile(name, title, path,
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createFile(source,name, title, path,
 				new RemoteDataListener<java.lang.Object>() {
 
 					@SuppressWarnings("unchecked")

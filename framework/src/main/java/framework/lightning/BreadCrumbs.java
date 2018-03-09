@@ -68,6 +68,7 @@ public class BreadCrumbs extends JSContainer implements Designable{
 			breadcrumb.addChild((JSContainer)designable);
 		}else{
 			console.error("Only components of type BreadCrumbItem can be added to a BreadCrumb");
+			throw new jsweet.lang.Error("Only components of type BreadCrumbItem can be added to a BreadCrumb");
 		}
 		
 	}

@@ -13,17 +13,19 @@ public class Component extends JSContainer implements EventListener{
 
 	private JSContainer titleFigure = new JSContainer("div").addClass("slds-app-launcher__tile-figure");
 
-	private JSContainer avatar = new JSContainer("span").addClass("slds-avatar slds-avatar_large");
+	private JSContainer avatar = new JSContainer("span").addClass("slds-avatar slds-avatar_large").setStyle("width", "100%");
 
 	private JSContainer initial = new JSContainer("abbr").addClass("slds-avatar__initials slds-icon-custom-27");
 
-	private JSContainer title = new JSContainer("span").addClass("slds-app-launcher__title-label");
+	private JSContainer title = new JSContainer("span").addClass("slds-app-launcher__title-label").setStyle("width", "100%");
 
 	
 	private ComponentFactoryRegistry  componentFactoryRegistry = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class);
 	 
 	@SuppressWarnings("unused")
 	private String identifier;
+	
+	private String ini;
 	
 	public Component(String identifier, String initial, String label) {
 		super(identifier, "div");
@@ -36,10 +38,25 @@ public class Component extends JSContainer implements EventListener{
 		titleFigure.addChild(avatar.setAttribute("identifier", identifier));
 		avatar.addChild(this.initial.setAttribute("identifier", identifier));
 		this.initial.setAttribute("title", label);
-		this.initial.setHtml(initial);
+		this.initial.setHtml(label);
 		titleFigure.addChild(title.setAttribute("identifier", identifier));
 		title.setHtml(label);
 		addEventListener(this, "click");
+		Component me = this;
+		addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				// TODO Auto-generated method stub
+				VisualEditor editor =getAncestorWithClass("visual-editor");
+				editor.setWillAddComponent(me, true);
+			}
+		}, "dblclick");
+		this.ini = initial;
+	}
+	
+	public String getInital(){
+		return ini;
 	}
 	
 	public ComponentFactory getFactory(){
@@ -60,7 +77,7 @@ public class Component extends JSContainer implements EventListener{
 	public void performAction(JSContainer source, Event evt) {
 		
 		VisualEditor editor =getAncestorWithClass("visual-editor");
-		editor.setWillAddComponent(this);
+		editor.setWillAddComponent(this, false);
 		
 		//.setStyle("cursor", "crosshair");
 	}

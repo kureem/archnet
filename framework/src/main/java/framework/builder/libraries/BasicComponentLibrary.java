@@ -9,7 +9,7 @@ public class BasicComponentLibrary extends ComponentsLibrary{
 		super("Basic");
 		
 		addComponents(
-					new BasicComponent("p", 		"TXT", 		"Text..."),
+					new BasicComponent("p", 		"TXT", 		"Text Element"),
 					new BasicComponent("a", 		"LNK", 		"Hyper Link"),
 					new BasicComponent("img", 		"IMG", 		"Image"),
 					new BasicComponent("div", 		"BLK", 		"Block Component"),

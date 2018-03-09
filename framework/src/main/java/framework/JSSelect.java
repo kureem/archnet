@@ -30,6 +30,10 @@ public class JSSelect extends JSContainer implements InputField<String> {
 
 	@Override
 	public String getValue() {
+		jsweet.dom.HTMLSelectElement ele = (jsweet.dom.HTMLSelectElement) getNative();
+		if(ele != null){
+			return ele.value;
+		}
 		String val = getAttribute("value");
 		for (JSContainer opt : getChildren()) {
 			if (opt.getAttribute("value").equals(val)) {
@@ -42,12 +46,18 @@ public class JSSelect extends JSContainer implements InputField<String> {
 	@Override
 	public void setValue(String val) {
 		previousValue = getValue();
+		jsweet.dom.HTMLSelectElement ele = (jsweet.dom.HTMLSelectElement) getNative();
+		if(ele != null){
+			ele.value = val;
+		}
+		
 		setAttribute("value", val);
 		for (JSContainer opt : getChildren()) {
 			if (opt.getAttribute("value").equals(val)) {
 				((JSOption) opt).setSelected(true);
 			}
 		}
+		
 	}
 	
 	public String getPreviousValue(){

@@ -34,11 +34,15 @@ public class BasePropertiesEditor extends FormLayout implements PropertiesEditor
 	public BasePropertiesEditor addProperty(Parameter parameter, Designable designable) {
 		// todo: delegate to ioc container to allow extension via simple
 		// configurations.
-		FormElement element = new FormElement("elem", "div");
-		element.setLabel(parameter.label);
 		PropertyEditor editor = parameter.getEditor(component);
-		element.setInput((InputField) editor);
-		addFormElement(element);
+		if(editor != null){
+			FormElement element = new FormElement("elem", "div");
+			element.setLabel(parameter.label);
+			
+			
+			element.setInput((InputField) editor);
+			addFormElement(element);
+		}
 		return this;
 
 	}

@@ -55,6 +55,8 @@ public class Builder extends LTContainer {
 	private boolean projectOpen = false;
 	
 	private ButtonGroup btnGroup = new ButtonGroup("btnGroup");
+	
+	private WelcomeScreen welcomeScreen = new WelcomeScreen("welcome",this);
 
 	// private VisualEditor projectEditor;
 
@@ -62,9 +64,10 @@ public class Builder extends LTContainer {
 		super(name, "div");
 		addClass("builder");
 		editorTabs.addClass("editor-tabs");
+
 		newFileModal.setBackdrop(backdrop);
 		openProjectModal.setBackdrop(backdrop);
-		
+		welcomeScreen.setBackdrop(backdrop);
 
 		
 		
@@ -111,13 +114,7 @@ public class Builder extends LTContainer {
 		newFileButtn.addEventListener(new EventListener() {
 			@Override
 			public void performAction(JSContainer source, Event evt) {
-				newFileModal.open();
-				if (activeEditor != null) {
-					newFileModal.init(activeEditor.getStructure());
-				} else {
-					newFileModal.init(null);
-				}
-				backdrop.open();
+				openNewModal();
 			}
 		}, "click");
 		//previewBtn.addClass("preview-btn");
@@ -125,6 +122,9 @@ public class Builder extends LTContainer {
 		
 		addChild(openProjectModal);
 		addChild(newFileModal);
+		addChild(welcomeScreen);
+		welcomeScreen.open();
+		welcomeScreen.setTitle("ZEUS Application Builder");
 		addChild(backdrop);
 		
 		addChild(btnGroup.addClass("builder-buttons"));
@@ -161,7 +161,23 @@ public class Builder extends LTContainer {
 				return true;
 
 			}
-		});
+		}); 
+	}
+	
+	public void openNewModal(){
+		newFileModal.open();
+		if (activeEditor != null) {
+			newFileModal.init(activeEditor.getStructure());
+		} else {
+			newFileModal.init(null);
+		}
+		backdrop.open();
+	}
+	
+	public void openOpenProjectModal(){
+		openProjectModal.open();
+		openProjectModal.init();
+		backdrop.open();
 	}
 
 	public static Builder getInstance() {

@@ -1,5 +1,6 @@
 package framework.builder.data;
 
+import framework.JSContainer;
 import framework.core.BeanFactory;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
@@ -45,12 +46,12 @@ public class DataStructure extends File {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void getFields(RemoteDataListener<Array<DataField>> listener) {
+	public void getFields(JSContainer source, RemoteDataListener<Array<DataField>> listener) {
 		
 		Array<Object> cached = (Array<Object>)object.$get("fields");
 		if(cached == null){
 		
-			BeanFactory.getInstance().getBeanOfType(ProjectService.class).getDataStructure(new RemoteDataListener<java.lang.Object>() {
+			BeanFactory.getInstance().getBeanOfType(ProjectService.class).getDataStructure(source,new RemoteDataListener<java.lang.Object>() {
 				
 				@Override
 				public void dataLoaded(java.lang.Object data) {

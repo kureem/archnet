@@ -15,6 +15,9 @@
  */
 package framework;
 
+import jsweet.dom.HTMLElement;
+import jsweet.dom.HTMLInputElement;
+
 public class JSInput extends JSContainer implements InputField<String>{
 
 	public JSInput(String name) {
@@ -24,7 +27,7 @@ public class JSInput extends JSContainer implements InputField<String>{
 	
 	
 	public JSInput setType(String type){
-		setAttribute("type", type.toString());
+		setAttribute("type", type);
 		return this;
 	}
 	
@@ -40,12 +43,25 @@ public class JSInput extends JSContainer implements InputField<String>{
 
 	@Override
 	public String getValue() {
+		HTMLElement nat = getNative();
+		if(nat != null){
+			HTMLInputElement el = (HTMLInputElement)nat;
+			return el.value;
+		}
+		
 		return getAttribute("value");
 	}
 
 
 	@Override
 	public void setValue(String val) {
+		HTMLElement nat = getNative();
+		if(nat != null){
+			HTMLInputElement el = (HTMLInputElement)nat;
+			el.value = val;
+		}
+		
+	//	return getAttribute("value");
 		setAttribute("value", val);
 	}
 

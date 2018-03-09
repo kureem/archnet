@@ -3,6 +3,7 @@ package framework.design;
 import framework.Renderable;
 import framework.builder.marshalling.Component;
 import jsweet.lang.Array;
+import jsweet.lang.Object;
 
 public interface Designable extends Renderable {
 
@@ -19,5 +20,7 @@ public interface Designable extends Renderable {
 	public void removeDesignable(Designable designable);
 
 	public void moveDesignable(Designable designable, int steps);
+	
+	public Object getScope();
 
 }

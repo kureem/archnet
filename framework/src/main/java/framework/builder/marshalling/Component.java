@@ -14,5 +14,9 @@ public class Component {
 	public Array<BuilderEvent> events = new Array<BuilderEvent>();
 
 	public Object styles = new Object();
+	
+	public Object data = new Object();
+	
+	public Object custom = new Object();
 
 }

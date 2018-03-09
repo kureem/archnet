@@ -1,6 +1,5 @@
 package com.archnet;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,11 +29,11 @@ public class File {
 	@Column(length=600000000)
 	private String data;
 
-	private Date dateCreated = new Date();
+	//private Date dateCreated = new Date();
 
-	private Date dateModified = new Date();
+	//private Date dateModified = new Date();
 
-	private String author;
+	//private String author;
 
 	private String type = getClass().getName();
 
@@ -70,38 +69,7 @@ public class File {
 		this.data = data;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
+	
 	public File getParent() {
 		return parent;
 	}
@@ -134,6 +102,14 @@ public class File {
 
 	public void setParent(File parent) {
 		this.parent = parent;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

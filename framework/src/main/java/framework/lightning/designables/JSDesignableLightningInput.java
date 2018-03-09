@@ -1,15 +1,12 @@
-package framework.lightning.designable;
+package framework.lightning.designables;
 
-import framework.InputField;
 import framework.JSInput;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.Component;
 import framework.core.BeanFactory;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
-import framework.design.Option;
 import framework.design.Parameter;
-import framework.design.ValueParameter;
 import framework.designables.DesignableDelegate;
 import framework.designables.JSDesignableInput;
 import framework.lightning.FormElement;

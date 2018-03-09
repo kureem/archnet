@@ -1,4 +1,4 @@
-package framework.lightning.designable;
+package framework.lightning.designables;
 
 import static def.dom.Globals.console;
 

@@ -17,7 +17,7 @@ public class SingleOptionAttributeEditor extends AbstractCheckBoxPropertyEditor{
 		String attr = parameter.name;
 		String value = designable.getAttribute(attr);
 		if(value != null){
-			setValue(Boolean.valueOf(value));
+			setValue("true".equals(value));
 		}
 	}
 

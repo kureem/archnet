@@ -25,15 +25,15 @@ public class EventEditor extends AbstractEditor<Component> {
 
 	public EventEditor(String name, Designable root, VisualEditor veditor) {
 		super(name, "div", veditor);
-
+		addClass("event-editor");
 		this.editor.setRootEditor(veditor);
 		Grid grid = new Grid("", "div");
 		addChild(grid);
 
 		JSContainer colLeft = new JSContainer("div");
 		JSContainer colRight = new JSContainer("div");
-		grid.addChild(colLeft.addClass("slds-col"));
-		grid.addChild(colRight.addClass("slds-col"));
+		grid.addChild(colLeft.addClass("slds-col").addClass("col-left"));
+		grid.addChild(colRight.addClass("slds-col").addClass("col-right"));
 		this.root = root;
 
 		for (String s : EventTypes.events)
@@ -144,6 +144,12 @@ public class EventEditor extends AbstractEditor<Component> {
 	public void setDesignable(Designable designable) {
 
 		component.setAttribute("desid", designable.getId());
+		events.clearChildren();
+		events.setRendered(false);
+		for (String s : (((JSContainer)designable)).advancedEventTypes())
+			events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
+		for (String s : EventTypes.events)
+			events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
 		fillValue(designable, true);
 	}
 
@@ -189,11 +195,11 @@ public class EventEditor extends AbstractEditor<Component> {
 
 					}
 				}
-				BuilderEventListener l = new BuilderEventListener(src);
+				BuilderEventListener l = new BuilderEventListener(src,des.getName(),type);
 				des.addEventListener(l, type);
 			} else {
 
-				BuilderEventListener l = new BuilderEventListener(src);
+				BuilderEventListener l = new BuilderEventListener(src,des.getName(),type);
 				des.addEventListener(l, type);
 			}
 		}

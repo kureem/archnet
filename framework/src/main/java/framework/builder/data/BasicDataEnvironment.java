@@ -1,5 +1,6 @@
 package framework.builder.data;
 
+import framework.JSContainer;
 import framework.core.BeanFactory;
 import jsweet.lang.Array;
 
@@ -9,9 +10,9 @@ public class BasicDataEnvironment implements DataEnvironment{
 	
 	
 	@Override
-	public void getDataStructures(RemoteDataListener<Array<DataStructure>> listener) {
+	public void getDataStructures(JSContainer source, RemoteDataListener<Array<DataStructure>> listener) {
 		if(structures.length == 0){
-			BeanFactory.getInstance().getBeanOfType(ProjectService.class).getDataStructures(new RemoteDataListener<Object>() {
+			BeanFactory.getInstance().getBeanOfType(ProjectService.class).getDataStructures(source,new RemoteDataListener<Object>() {
 				
 				@SuppressWarnings("unchecked")
 				@Override

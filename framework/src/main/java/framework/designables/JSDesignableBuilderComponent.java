@@ -12,9 +12,10 @@ import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Option;
 import framework.design.Parameter;
+import framework.lightning.LightningApplication;
 import jsweet.lang.Array;
 
-public class JSDesignableBuilderComponent extends JSDesignable{
+public class JSDesignableBuilderComponent extends LightningApplication{
 
 	private Designable content;
 	
@@ -65,6 +66,9 @@ public class JSDesignableBuilderComponent extends JSDesignable{
 					
 				}
 			}
+		}else if(key.equals("src")){
+			content = MarshallUtil.build(value);
+			addChild((JSContainer)content);
 		}
 	}
 
@@ -106,7 +110,8 @@ public class JSDesignableBuilderComponent extends JSDesignable{
 			component.options.push(new Option(f.getName(), f.getName()));
 		}
 		
-		parameters.push(component);
+		AttributeParameter source = new AttributeParameter("src", "Src", "Basic");
+		parameters.push(source);
 		return parameters;
 	}
 

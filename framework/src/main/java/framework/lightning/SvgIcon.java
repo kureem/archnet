@@ -20,7 +20,7 @@ public class SvgIcon extends JSContainer {
 
 	public final static String TEXT_LIGHT = "slds-icon-text-light";
 
-	private String assetsUrl = "/webjars/salesforce-lightning-design-system/2.4.1/assets/icons";
+	private String assetsUrl = "/webjars/salesforce-lightning-design-system/2.5.2/icons";
 
 	private String type = "utility";
 

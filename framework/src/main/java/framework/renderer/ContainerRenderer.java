@@ -10,9 +10,6 @@ import framework.JSContainer;
 import framework.JSHTMLFragment;
 import framework.JSInput;
 import framework.Renderable;
-import framework.core.BeanFactory;
-import framework.core.Decorator;
-import framework.core.DecoratorsRegistry;
 import jsweet.dom.HTMLElement;
 import jsweet.dom.HTMLInputElement;
 import jsweet.dom.HTMLSelectElement;
@@ -20,7 +17,6 @@ import jsweet.dom.HTMLTextAreaElement;
 import jsweet.dom.NamedNodeMap;
 import jsweet.dom.Node;
 import jsweet.lang.Array;
-import jsweet.lang.Date;
 import jsweet.lang.Object;
 
 public class ContainerRenderer implements ExtendedRenderer<JSContainer> {
@@ -49,6 +45,16 @@ public class ContainerRenderer implements ExtendedRenderer<JSContainer> {
 		String name = c.getName();
 		String html = c.getHtml();
 		Renderable parent = c.getParent();
+		/*if(parent != null){
+			try{
+				if(parseInt(parent.getId()) >= parseInt(c.getId())){
+					console.log("sdfsdLLLLLLLLLLLLLLLLL");
+					return;
+				}
+			}catch(Exception e){
+				
+			}
+		}*/
 		if (!rendered) {
 			decorate(c);
 			if (jq != null)
@@ -130,7 +136,7 @@ public class ContainerRenderer implements ExtendedRenderer<JSContainer> {
 		for (String key :  keys) {
 			final Array<EventListener> listeners = (Array<EventListener>)c.getListeners().$get(key);
 			njq.addEventListener(key, (evt) -> {
-				synchronizeFields(c.getRoot().getNative(), c.getRoot());
+				//synchronizeFields(c.getRoot().getNative(), c.getRoot());
 				for (EventListener l : listeners) {
 					
 					l.performAction(c, evt);

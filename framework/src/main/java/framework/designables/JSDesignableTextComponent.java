@@ -1,8 +1,5 @@
 package framework.designables;
 
-import framework.util.HashMap;
-import framework.util.Map;
-
 import framework.JSContainer;
 import framework.TextComponent;
 import framework.builder.marshalling.Component;
@@ -12,22 +9,23 @@ import framework.design.Parameter;
 import framework.design.TagParameter;
 import framework.design.TextParameter;
 import jsweet.lang.Array;
+import jsweet.lang.Object;
 
 public class JSDesignableTextComponent extends TextComponent implements Designable {
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
-	private final static Map<String, String> textTags = new HashMap<>();
+	private final static Object textTags = new Object();
 
 	static {
-		textTags.put("h1", "Heading 1");
-		textTags.put("h2", "Heading 2");
-		textTags.put("h3", "Heading 3");
-		textTags.put("h4", "Heading 4");
-		textTags.put("h5", "Heading 5");
-		textTags.put("label", "Label");
-		textTags.put("paragraph", "Paragraph");
-		textTags.put("span", "Span");
+		textTags.$set("h1", "Heading 1");
+		textTags.$set("h2", "Heading 2");
+		textTags.$set("h3", "Heading 3");
+		textTags.$set("h4", "Heading 4");
+		textTags.$set("h5", "Heading 5");
+		textTags.$set("label", "Label");
+		textTags.$set("paragraph", "Paragraph");
+		textTags.$set("span", "Span");
 
 	}
 
@@ -57,8 +55,8 @@ public class JSDesignableTextComponent extends TextComponent implements Designab
 		Array<Parameter> params = delegate.getParameters();
 		TextParameter textParam = new TextParameter("text", "Text", "Basic");
 		TagParameter tagParam = new TagParameter();
-		for (String key : textTags.keySet()) {
-			tagParam.options.push(new Option(textTags.get(key), key));
+		for (String key : Object.keys(textTags)) {
+			tagParam.options.push(new Option((String)textTags.$get(key), key));
 		}
 
 		params.push(tagParam);

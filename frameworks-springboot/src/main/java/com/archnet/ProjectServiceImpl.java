@@ -37,10 +37,23 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		
 		File data = new File();
-		data.setName("data");
-		data.setTitle("Data");
+		data.setName("datasources");
+		data.setTitle("Datasources");
 		project.addFile(data);
 		fileRepository.save(data);
+		
+		File variables = new File();
+		variables.setName("variables");
+		variables.setTitle("Variables");
+		project.addFile(variables);
+		fileRepository.save(variables);
+		
+		
+		File types = new File();
+		types.setName("types");
+		types.setTitle("Types");
+		project.addFile(types);
+		fileRepository.save(types);
 		
 		
 		File templates = new File();

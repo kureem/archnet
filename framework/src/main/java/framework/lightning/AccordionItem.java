@@ -1,56 +1,94 @@
 package framework.lightning;
 
-import static def.jquery.Globals.$;
-
-import java.util.function.Function;
-
-import def.jquery.JQueryEventObject;
+import framework.EventListener;
 import framework.JSContainer;
-import framework.JSHTMLFragment;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
 import framework.designables.JSDesignable;
-import jsweet.dom.HTMLElement;
+import jsweet.dom.CustomEvent;
+import jsweet.dom.Event;
 import jsweet.lang.Array;
 
-public class AccordionItem extends JSHTMLFragment implements Designable {
+public class AccordionItem extends JSContainer implements Designable {
 
 	private JSContainer accordionContent = (JSDesignable) new JSContainer("accordionContent", "div")
 			.addClass("slds-accordion__content");
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
-	private boolean configured = false;
 
+	private JSContainer accSummary = new JSContainer("div").addClass("slds-accordion__summary");
+	
+	private JSContainer summaryHeading = new JSContainer("h3").addClass("slds-text-heading_small slds-accordion__summary-heading");
+	
+	private JSContainer uititle = new JSContainer("title", "span").addClass("slds-truncate").setHtml("Accordion Item");
+	
+	IconButton btn = new IconButton("summaryAction");
 	public AccordionItem(String name, String title) {
-		super(name, "#accordionSection");
+		super(name, "section");
+		addClass("slds-accordion__section");
+		addChild(accSummary);
+		accSummary.addChild(summaryHeading);
+		
+		
+		summaryHeading.addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				String cls = getAttribute("class");
+				if(cls.contains("slds-is-open")){
+					close();
+				}else{
+					open();
+				}
+			}
+		}, "click");
+		
+		btn.setAttribute("class", "slds-button slds-button_reset slds-accordion__summary-action");
+		summaryHeading.addChild(btn);
+		btn.addChild(uititle.setHtml(title));
+		btn.getIcon().setSvgClass("slds-accordion__summary-action-icon slds-button__icon slds-button__icon_left");
+		btn.getIcon().setIconName("switch");
+		btn.getIcon().setType("utility");
+		
+		IconButton btnArrow = new IconButton("arrow");
+		btnArrow.setAttribute("class", "slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small slds-shrink-none");
+		accSummary.addChild(btnArrow);
+		btnArrow.getIcon().setType("utility");
+		btnArrow.getIcon().setIconName("down");
+		
 		addChild(accordionContent);
 
-		getContext().$set("openClass", "");
-		getContext().$set("iconType", "utility");
-		getContext().$set("iconsLocation", "/webjars/salesforce-lightning-design-system/2.4.1/assets/icons");
-		getContext().$set("iconName", "switch");
-		getContext().$set("title", title);
 	}
 
 	public void open() {
-		getContext().$set("openClass", "slds-is-open");
+		addClass("slds-is-open");
+		CustomEvent evt = new CustomEvent("open");
+		evt.$set("data", this);
+		 getParent().getParent().fireListener("open", evt);
+		//getContext().$set("openClass", "slds-is-open");
 	}
 
 	public void close() {
-		getContext().$set("openClass", "");
+		removeClass("slds-is-open");
+		CustomEvent evt = new CustomEvent("close");
+		evt.$set("data", this);
+		 getParent().getParent().fireListener("close", evt);
 	}
 
 	public void setTitle(String title) {
-		getContext().$set("title", title);
+		uititle.setHtml(title);
 	}
 
 	public void setIcon(String iconType, String iconName) {
-		getContext().$set("iconType", "utility");
-		getContext().$set("iconName", "switch");
+		SvgIcon icon = new SvgIcon("ss");
+		icon.setType(iconType);
+		icon.setIconName(iconName);
+		btn.setIcon(icon);
+		icon.setSvgClass("slds-accordion__summary-action-icon slds-button__icon slds-button__icon_left");
 	}
 
 	@Override
@@ -92,50 +130,7 @@ public class AccordionItem extends JSHTMLFragment implements Designable {
 	}
 
 	@Override
-	public void render(HTMLElement parent) {
-		super.render(parent);
-		if (!configured) {
-			$("#" + getId() + " .slds-accordion__summary").click(new Function<JQueryEventObject, Object>() {
-
-				@Override
-				public Object apply(JQueryEventObject t) {
-					String cls = getContext().$get("openClass").toString();
-					if (cls.length() > 0) {
-						close();
-					} else {
-						open();
-					}
-					configured = false;
-					setRendered(false);
-					render();
-					return null;
-				}
-			});
-		}
-
-		
-
-		configured = true;
-
-	}
-	
-	
-
-	@Override
-	public JSContainer setRendered(boolean b) {
-		 super.setRendered(b);
-		if(!b){
-			configured = false;
-		}
-		
-		return this;
-	}
-
-	@Override
 	public void removeDesignable(Designable designable) {
-	//	JSContainer parent = (JSContainer)designable.getParent();
-		//parent.removeChild(designable);
-		//delegate.removeDesignable(designable);
 		
 		accordionContent.removeChild(designable);
 	}

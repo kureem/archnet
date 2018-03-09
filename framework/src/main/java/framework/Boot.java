@@ -16,11 +16,13 @@
 package framework;
 
 import static def.dom.Globals.window;
+import static jsweet.lang.Globals.eval;
 
 import framework.builder.Builder;
 import framework.builder.Previewer;
 import framework.builder.data.BasicDataEnvironment;
 import framework.builder.data.DataEnvironment;
+import framework.builder.data.HerokuProjectService;
 import framework.builder.data.ProjectService;
 import framework.builder.libraries.AbstractComponentFactory;
 import framework.builder.libraries.BasicComponentFactory;
@@ -33,10 +35,13 @@ import framework.design.Designable;
 import framework.designables.JSDesignableBlockComponent;
 import framework.designables.JSDesignableBuilderComponent;
 import framework.designables.JSDesignableButton;
+import framework.designables.JSDesignableHTTP;
 import framework.designables.JSDesignableImage;
 import framework.designables.JSDesignableInput;
 import framework.designables.JSDesignableLink;
 import framework.designables.JSDesignableList;
+import framework.designables.JSDesignableSelect;
+import framework.designables.JSDesignableService;
 import framework.designables.JSDesignableTextArea;
 import framework.designables.JSDesignableTextComponent;
 import framework.interactions.InteractionsDecorator;
@@ -47,18 +52,23 @@ import framework.lightning.Badge;
 import framework.lightning.BreadCrumbItem;
 import framework.lightning.BreadCrumbs;
 import framework.lightning.ButtonGroup;
+import framework.lightning.Col;
 import framework.lightning.IconButton;
+import framework.lightning.LightningApplication;
 import framework.lightning.Panel;
 import framework.lightning.PanelSection;
-import framework.lightning.designable.JSDesignableFormLayout;
-import framework.lightning.designable.JSDesignableLightningGrid;
-import framework.lightning.designable.JSDesignableLightningInput;
+import framework.lightning.Text;
+import framework.lightning.designables.JSDesignableFormLayout;
+import framework.lightning.designables.JSDesignableLightningGrid;
+import framework.lightning.designables.JSDesignableLightningInput;
+import framework.lightning.designables.JSDesignableTable;
 import framework.rtc.Conference;
 
 public class Boot {
 
 	public static void main(String[] args) {
 
+	
 		// create beanfactory
 		BeanFactory factory = BeanFactory.getInstance();
 
@@ -70,7 +80,7 @@ public class Boot {
 		// --- register component factory registry ---//
 		ComponentFactoryRegistry componentFactoryRegistry = new BasicComponentFactoryRegistry();
 
-		String[] tags = new String[] { "form", "fieldset", "select", "button" };
+		String[] tags = new String[] { "form", "fieldset", "button" };
 
 		componentFactoryRegistry.registerComponentFactory("html:html", new AbstractComponentFactory("html:html") {
 
@@ -88,7 +98,7 @@ public class Boot {
 
 			@Override
 			public Designable createInstance(boolean designMode) {
-				JSDesignableTextComponent cmp = new JSDesignableTextComponent("txtItem", "p");
+				JSDesignableTextComponent cmp = new JSDesignableTextComponent("Text Item", "p");
 				cmp.setHtml("Text Item");
 				return cmp;
 			}
@@ -156,14 +166,48 @@ public class Boot {
 				return input;
 			}
 		});
+		
+		
+		componentFactoryRegistry.registerComponentFactory("html:select", new AbstractComponentFactory("html:select") {
 
-		componentFactoryRegistry.registerComponentFactory("html:textarea", new AbstractComponentFactory("html:input") {
+			@Override
+			public Designable createInstance(boolean designMode) {
+				JSDesignableSelect input = new JSDesignableSelect("Select");
+				return input;
+			}
+		});
+
+
+		componentFactoryRegistry.registerComponentFactory("html:textarea", new AbstractComponentFactory("html:textarea") {
 
 			@Override
 			public Designable createInstance(boolean designMode) {
 				// JSInput input = new JSInput("Input");
 				JSDesignableTextArea input = new JSDesignableTextArea("TextArea");
 				return input;
+			}
+		});
+
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:app", new AbstractComponentFactory("lgt:app") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				LightningApplication app = new LightningApplication("lightning app", "div");
+				//Text t = new Text("Text Item", "span");
+				//t.setHtml("Text Item");
+				return app;
+			}
+		});
+
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:txt", new AbstractComponentFactory("lgt:txt") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				Text t = new Text("Text Item", "span");
+				t.setHtml("Text Item");
+				return t;
 			}
 		});
 
@@ -196,6 +240,16 @@ public class Boot {
 		});
 
 
+		componentFactoryRegistry.registerComponentFactory("lgt:col", new AbstractComponentFactory("lgt:col") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new Col("Col");
+			}
+		});
+
+		
+		
 		componentFactoryRegistry.registerComponentFactory("lgt:avatar", new AbstractComponentFactory("lgt:avatar") {
 
 			@Override
@@ -308,7 +362,29 @@ public class Boot {
 				return new PanelSection("Section", "div");
 			}
 		});
-		
+
+		componentFactoryRegistry.registerComponentFactory("lgt:table", new AbstractComponentFactory("lgt:table") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableTable("Table");
+			}
+		});
+
+		componentFactoryRegistry.registerComponentFactory("zs:http", new AbstractComponentFactory("zs:http") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableHTTP();
+			}
+		});
+		componentFactoryRegistry.registerComponentFactory("zs:service", new AbstractComponentFactory("zs:service") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableService();
+			}
+		});
 		factory.addBean(ComponentFactoryRegistry.class, componentFactoryRegistry);
 
 		// -- added singleton bean for Selector--//
@@ -316,8 +392,14 @@ public class Boot {
 
 		factory.addBean(DataEnvironment.class, new BasicDataEnvironment());
 
-		factory.addBean(ProjectService.class, new ProjectService());
+		factory.addBean(ProjectService.class, new HerokuProjectService());
+		
+		factory.addBean(Adaptor.class, new HerokuAdaptor());
 
+		boolean lightning = false;
+		//eval("lightning = true;");
+		//--toremove 
+		window.$set("lightning", lightning);
 		if (window.location.href.contains("preview.html")) {
 
 			String name = window.location.href.split("#")[1];
@@ -325,6 +407,9 @@ public class Boot {
 		}else if(window.location.href.contains("rtc.html")){
 			new Conference("conference").render();
 			
+		}else if(lightning){
+			
+			eval("window.framework = framework");
 		}else {
 			new Builder("builder").render();
 		}

@@ -57,7 +57,7 @@ public class OpenProject extends ItemSelector implements EventListener, RemoteDa
 	public void init() {
 		getFilesList().clearChildren();
 		getFilesList().setRendered(false);
-		BeanFactory.getInstance().getBeanOfType(ProjectService.class).getProjects(this);
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).getProjects(this,this);
 	}
 
 }

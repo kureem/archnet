@@ -44,7 +44,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 	protected void configureEvents(Designable instance, Component component) {
 		for (BuilderEvent event : component.events) {
 			//alert("evnt found");
-			BuilderEventListener listener = new BuilderEventListener(event.source);
+			BuilderEventListener listener = new BuilderEventListener(event.source,event.name,event.type);
 			instance.addEventListener(listener, event.type);
 		}
 	}
@@ -57,6 +57,7 @@ public abstract class AbstractComponentFactory implements ComponentFactory {
 		configureParameters( thIns, component, designMode);
 		configureEvents(thIns, component);
 		decorateForDesignMode(thIns, designMode);
+		thIns.getComponent().custom = component.custom;
 		return thIns;
 	}
 

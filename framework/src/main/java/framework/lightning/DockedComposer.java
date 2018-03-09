@@ -22,7 +22,7 @@ public class DockedComposer extends Grid implements Draggable{
 	
 	private JSContainer tools= new JSContainer("div").addClass("slds-col_bump-left slds-shrink-none");
 	
-	private IconButton minimize = new IconButton("minimize");
+	protected IconButton minimize = new IconButton("minimize");
 	
 	private IconButton expand = new IconButton("expand");
 	
@@ -32,7 +32,7 @@ public class DockedComposer extends Grid implements Draggable{
 	
 	private JSContainer footer = new JSContainer("footer").addClass("slds-docked-composer__footer slds-shrink-none");
 	
-	private boolean closed = false;
+	protected boolean closed = false;
 	
 	public DockedComposer(String name) {
 		super(name, "section");
@@ -89,11 +89,11 @@ public class DockedComposer extends Grid implements Draggable{
 		toggleClass("slds-is-closed", !b);
 		if(b){
 			body.removeClass("slds-hide");
-			setStyle("height", "300px");
+			//setStyle("height", "300px");
 			minimize.getIcon().setIconName("minimize_window");
 		}else{
 			body.addClass("slds-hide");
-			setStyle("height", "0px");
+			//setStyle("height", "0px");
 			minimize.getIcon().setIconName("erect_window");
 		}
 		return this;
@@ -105,11 +105,11 @@ public class DockedComposer extends Grid implements Draggable{
 		toggleClass("slds-is-open", !b);
 		if(!b){
 			body.removeClass("slds-hide");
-			setStyle("height", "300px");
+			//setStyle("height", "300px");
 			minimize.getIcon().setIconName("minimize_window");
 		}else{
 			body.addClass("slds-hide");
-			setStyle("height", "0px");
+			//setStyle("height", "0px");
 			minimize.getIcon().setIconName("erect_window");
 		}
 		return this;

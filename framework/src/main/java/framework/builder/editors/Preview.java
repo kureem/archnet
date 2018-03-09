@@ -9,11 +9,23 @@ import framework.design.Designable;
 public class Preview extends JSContainer implements DesignableEditor{
 
 	private Designable root;
+	
+	
 
 	public Preview(File file) {
 		super("visualEditor", "div");
 		addClass("visual-editor");
 		consume(unmarshall(file));
+	}
+	
+	public Preview(String file) {
+		super("visualEditor", "div");
+		addClass("visual-editor");
+		consume(unmarshall(file));
+	}
+	
+	public static Preview build(String s){
+		return new Preview(s);
 	}
 
 	public Component unmarshall(File f) {
@@ -21,7 +33,14 @@ public class Preview extends JSContainer implements DesignableEditor{
 		return MarshallUtil.toComponent(f.getData());
 	}
 
+	public Component unmarshall(String f) {
+
+		return MarshallUtil.toComponent(f);
+	}
+
+	
 	public Designable build(Component component) {
+		MarshallUtil.generateController(component);
 		return MarshallUtil.toDesignable(component);
 	}
 

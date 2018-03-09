@@ -62,6 +62,8 @@ public interface Renderable {
 	String getStyle(String key);
 
 	Renderable setAttribute(String key, String value);
+	
+	
 
 /*	void exec(String name, jsweet.lang.Object parameter);
 

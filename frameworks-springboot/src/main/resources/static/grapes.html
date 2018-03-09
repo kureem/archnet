@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Testing the framework</title>
+<link rel="stylesheet" type="text/css" href="css/grapes.min.css">
+<script type="text/javascript" src="/webjars/j4ts/0.2.0-SNAPSHOT/bundle.js"></script>
+<script type="text/javascript" src="/webjars/jquery/1.10.1/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="grapes.min.js"></script>
+
+
+</head>
+<body>
+ 
+
+
+
+<div id="gjs"></div>
+
+<script type="text/javascript">
+  var editor = grapesjs.init({
+      container : '#gjs',
+      components: '<div class="txt-red">Hello world!</div>',
+      style: '.txt-red{color: red}',
+  });
+  
+  
+  editor.BlockManager.add('test-block', {
+	  label: 'Test block',
+	  attributes: {class: 'fa fa-text'},
+	  content: {
+	    script: "alert('Hi'); console.log('the element', this)",
+	    // Add some style just to make the component visible
+	    style: {
+	      width: '100px',
+	      height: '100px',
+	      'background-color': 'red',
+	    }
+	  }
+	});
+</script>
+
+
+</body>
+</html>

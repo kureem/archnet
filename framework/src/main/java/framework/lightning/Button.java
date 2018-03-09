@@ -78,11 +78,11 @@ public class Button extends JSContainer {
 		if (key.equals("state")) {
 			setState(value);
 		} else if (key.equals("stateful")) {
-			setStateful(Boolean.parseBoolean(value));
+			setStateful("true".equals(value));
 		} else if (key.equals("disabled")) {
-			setDisabled(Boolean.parseBoolean(value));
+			setDisabled("true".equals(value));
 		} else if (key.equals("inverse")) {
-			setInverse(Boolean.parseBoolean(value));
+			setInverse("true".equals(value));
 		} else if (key.equals("label")) {
 			setLabel(value);
 		} else {

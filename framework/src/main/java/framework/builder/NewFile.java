@@ -140,7 +140,7 @@ public class NewFile extends ItemSelector {
 			}
 		}
 		File project = builder.getProject();
-		project.createFile(name, type, new RemoteDataListener<Object>() {
+		project.createFile(this,name, type, new RemoteDataListener<Object>() {
 
 			@Override
 			public void dataLoaded(Object data) {
@@ -164,7 +164,7 @@ public class NewFile extends ItemSelector {
 			name = name + ".prj";
 		}
 
-		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createProject(name, name,
+		BeanFactory.getInstance().getBeanOfType(ProjectService.class).createProject(this,name, name,
 				new RemoteDataListener<Object>() {
 
 					@Override

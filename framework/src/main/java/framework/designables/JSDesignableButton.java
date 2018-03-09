@@ -65,7 +65,7 @@ public class JSDesignableButton extends Button implements Designable{
 		p.type = type;
 		p.label = label;
 		if(type.equalsIgnoreCase("boolean")){
-			//p.options.push(new Option("", ""));
+			p.options.push(new Option("", ""));
 		}
 		return p;
 	}

@@ -15,12 +15,17 @@ public class ComponentsLibrary extends Grid {
 	public ComponentsLibrary addComponents(Component... components) {
 
 		for (Component com : components) {
-			JSContainer li = new JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-4");
+			JSContainer li = new JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-2");
 
 			addChild(li);
 			li.addChild(com);
 		}
 		return this;
+	}
+	
+	public void clearComponent(){
+		clearChildren();
+		setRendered(false);
 	}
 	
 	

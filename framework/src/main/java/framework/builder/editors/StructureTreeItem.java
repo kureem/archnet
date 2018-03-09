@@ -1,6 +1,5 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.console;
 import static def.dom.Globals.document;
 
 import framework.EventListener;
@@ -9,17 +8,12 @@ import framework.TreeItem;
 import framework.builder.Builder;
 import framework.builder.Component;
 import framework.builder.Selector;
-import framework.builder.data.File;
-import framework.builder.data.ProjectService;
-import framework.builder.data.RemoteDataListener;
 import framework.builder.marshalling.MarshallUtil;
-import framework.core.BeanFactory;
 import framework.design.Designable;
 import framework.lightning.DropDown;
 import framework.lightning.DropDownItem;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
-import jsweet.lang.JSON;
 
 public class StructureTreeItem extends TreeItem implements EventListener {
 
@@ -56,7 +50,9 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 
 			if (parent != null) {
 				parent.removeDesignable(designable);
-				structure.reload(parent);
+				//designable = null;
+				//structure.reload(parent);
+				getParent().setVisible(false);
 				VisualEditor editor = getAncestorWithClass("visual-editor");
 				editor.dirty();
 			}
@@ -70,8 +66,9 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 		framework.builder.marshalling.Component cmp = MarshallUtil.extract(clip);
 		Designable des = MarshallUtil.toDesignable(cmp);
 		VisualEditor editor = getAncestorWithClass("visual-editor");
+		editor.persist = true;
 		editor.addNewComponent(des, designable);
-		structure.clearClipboard();
+		//structure.clearClipboard();
 		
 		editor.dirty();
 	}
@@ -123,12 +120,14 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 				
 			}
 			
-			
+			VisualEditor editor = getAncestorWithClass("visual-editor");
+			editor.persist = true;
 			for(Designable child : result){
-				parent.addDesignable(child);
+				editor.addNewComponent(child, parent);
+				//parent.addDesignable(child);
 			}
 			parent.setRendered(false);
-			VisualEditor editor = getAncestorWithClass("visual-editor");
+			
 			editor.dirty();
 			
 			structure.reload(parent);
@@ -281,6 +280,8 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 			@Override
 			public void performAction(JSContainer source, Event evt) {
 				evt.preventDefault();
+				//alert("xfsd");
+				jsweet.dom.PointerEvent e = (jsweet.dom.PointerEvent)evt;
 				if (structure.getClipBoard() == null) {
 					paste.getParent().setVisible(false);
 					pasteAfter.getParent().setVisible(false);
@@ -291,6 +292,8 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 					pasteBefore.getParent().setVisible(true);
 				}
 				dropdown.setVisible(true);
+				dropdown.setStyle("left", (e.clientX +80) + "px");
+				dropdown.setStyle("top", (e.clientY-80) + "px");
 
 			}
 		}, "contextmenu");
@@ -353,31 +356,9 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 	}
 
 	public void saveAsComponent() {
-		String marshall = JSON.stringify(MarshallUtil.extract(designable));
-		File project = structure.getFile();
-		String name = designable.getName();
-		if (!name.endsWith(".cmp")) {
-			name = name + ".cmp";
-		}
-		project.createFile(name, "components", new RemoteDataListener<java.lang.Object>() {
-
-			@Override
-			public void dataLoaded(Object data) {
-				File fff = new File((jsweet.lang.Object) data);
-				fff.setData(marshall);
-				BeanFactory.getInstance().getBeanOfType(ProjectService.class).saveFile(fff, new RemoteDataListener<java.lang.Object>() {
-
-					@Override
-					public void dataLoaded(Object data) {
-						console.log(data);
-					}
-				});
-
-				structure.reload("components");
-				structure.render();
-
-			}
-		});
+		VisualEditor ve = structure.getAncestorWithClass("visual-editor");
+		
+		ve.saveAsComponent( designable);
 	}
 
 	public void dblclick(JSContainer source, Event evt) {

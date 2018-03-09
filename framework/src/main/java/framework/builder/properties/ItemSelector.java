@@ -1,5 +1,6 @@
 package framework.builder.properties;
 
+import framework.EventListener;
 import framework.JSContainer;
 import framework.Renderable;
 import framework.lightning.IconButton;
@@ -11,7 +12,7 @@ import framework.lightning.table.Table;
 import framework.lightning.table.TableCellRenderer;
 import framework.lightning.table.TableColumn;
 import framework.lightning.table.TableModel;
-import framework.lightning.table.TableRowsSelectionListener;
+import framework.lightning.table.TableEvent;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
 
@@ -33,7 +34,21 @@ public abstract class ItemSelector<T> extends Modal implements TableCellRenderer
 	}
 
 	public void addOnItemSeletedListener(ItemSelectedListener<T> l) {
-		dataTable.addRowsSelectionListener(new TableRowsSelectionListener() {
+		
+		dataTable.addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				// TODO Auto-generated method stub
+				
+				TableEvent e = (TableEvent)evt;
+				T field = dataList.$get(e.firstIndex);
+				l.onItemSelected(field);
+				
+			}
+		}, "selectRows");
+		
+		/*dataTable.addRowsSelectionListener(new TableEvent() {
 
 			@Override
 			public void onSelectRow(JSContainer source, Event event, Table table, double firstIndex, double lastIndex) {
@@ -42,7 +57,7 @@ public abstract class ItemSelector<T> extends Modal implements TableCellRenderer
 				l.onItemSelected(field);
 			}
 		});
-	}
+*/	}
 
 	public void addColumn(TableColumn column) {
 		tableColumModel.addColumn(column);

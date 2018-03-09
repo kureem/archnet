@@ -18,6 +18,7 @@ package framework;
 import framework.InputField;
 import framework.InputTypes;
 import framework.JSContainer;
+import jsweet.dom.HTMLInputElement;
 
 public class JSCheckBox extends JSContainer implements InputField<Boolean> {
 
@@ -37,6 +38,12 @@ public class JSCheckBox extends JSContainer implements InputField<Boolean> {
 
 	@Override
 	public Boolean getValue() {
+		
+		HTMLInputElement el = (HTMLInputElement)getNative();
+		if(el != null){
+			//setValue(el.checked);
+			return el.checked;
+		}
 		if (getAttribute("value") != null && "true".equalsIgnoreCase(getAttribute("value"))) {
 			return true;
 		}
@@ -52,6 +59,12 @@ public class JSCheckBox extends JSContainer implements InputField<Boolean> {
 			setAttribute("value", "false");
 			setAttribute("checked", null);
 		}
+		HTMLInputElement el = (HTMLInputElement)getNative();
+		if(el != null){
+			setValue(el.checked);
+		//	return el.checked;
+		}
+		
 
 	}
 

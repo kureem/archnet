@@ -30,11 +30,11 @@ public class JSDesignableLink extends JSDesignableTextComponent {
 			}
 		}
 		
-		parameters.push(new AttributeParameter("href", "Href", "Basic"));
-		parameters.push(new AttributeParameter("target", "Target", "Basic"));
+		result.push(new AttributeParameter("href", "Href", "Basic"));
+		result.push(new AttributeParameter("target", "Target", "Basic"));
 		
 		
-		return parameters;
+		return result;
 		
 		
 	}

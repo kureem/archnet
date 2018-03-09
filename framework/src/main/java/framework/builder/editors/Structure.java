@@ -24,7 +24,7 @@ public class Structure extends JSContainer {
 	private Map<String, JSContainer> lis = new HashMap<>();
 
 
-	private JSContainer liRoot = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
+	private JSContainer liRoot = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
 
 	private TreeItem selected = null;
 
@@ -82,7 +82,7 @@ public class Structure extends JSContainer {
 	}
 
 	public Designable getClipBoard() {
-		return clipboardItem;
+		return clipboardItem; 
 	}
 
 	public void clearClipboard() {
@@ -107,8 +107,64 @@ public class Structure extends JSContainer {
 			getSelected().select(false);
 		}
 		StructureTreeItem itemS = getItem(designable, liRoot);
-		setSelected(itemS);
-		getSelected().select(true);
+		
+		if(itemS != null){
+		
+			setSelected(itemS);
+			getSelected().select(true);
+			JSContainer parent = (JSContainer)designable;
+			while(true){
+				parent = (JSContainer)parent.getParent();
+				if(parent == null){
+					return;
+				}
+				if(parent instanceof Designable){
+					StructureTreeItem itemP = getItem((Designable)parent, liRoot);
+					itemP.open();
+				}
+			}
+		}else{
+			
+			//not open in tree
+			//move to parentw
+			
+			JSContainer parent = (JSContainer)designable;
+			Array<Designable> stack = new Array<Designable>();
+			
+			while (true){
+				
+				parent = (JSContainer)parent.getParent();
+				if(parent == null){
+					return;
+				}
+				if(parent instanceof Designable){
+					StructureTreeItem itemP = getItem((Designable)parent, liRoot);
+					
+					if(itemP != null){
+						stack.push((Designable)parent);
+						break;
+					}else{
+						stack.push((Designable)parent);
+					}
+				}
+				
+			}
+			
+			while(stack.length > 0){
+				Designable d = stack.pop();
+				getItem(d, liRoot).open();
+				
+			}
+		
+			 itemS = getItem(designable, liRoot);
+			
+			if(itemS != null){
+			
+				setSelected(itemS);
+				getSelected().select(true);
+			}
+			
+		}
 
 	}
 
@@ -132,16 +188,16 @@ public class Structure extends JSContainer {
 
 		ul.setRendered(false);
 		
-		liRoot = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
+		liRoot = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
 		
 		ul.addChild(liRoot.addClass("type-ui"));
-		addNode(root, liRoot, 0, null);
+		addNode(root, liRoot, 1, null);
 		
 		String[] items = new String[]{"scripts", "stylesheets", "templates", "components", "datasources", "variables", "types"};
 		String[] labels = new String[]{"JS", "CSS", "HTML", "Components", "Datasources", "Variables", "Types"};
 		
 		for(int i = 0; i < items.length; i++){
-			JSContainer li = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "0");
+			JSContainer li = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");
 			addTreeItem(li, items[i], labels[i]);
 			lis.put(items[i], li);
 		}
@@ -193,14 +249,14 @@ public class Structure extends JSContainer {
 	}
 
 	public void reload(String type) {
-		clipboardItem = null;
+		//clipboardItem = null;
 		reload();
 		TreeItem item = getItem(type);
 		item.open();
 	}
 
 	public void reload(Designable designable) {
-		clipboardItem = null;
+		//clipboardItem = null;
 		StructureTreeItem item = getItem(designable, liRoot);
 		if (item != null) {
 			Double level =parseInt(item.getParent().getAttribute("aria-level")); 
@@ -226,7 +282,7 @@ public class Structure extends JSContainer {
 					TreeItem item = new FileTreeItem(f, type, Builder.getInstance(), this);
 					item.addEventListener(toggleSelect, "click");
 					JSContainer li = new JSContainer("li").addChild(item).setAttribute("role", "treeitem")
-							.setAttribute("aria-level", "2");
+							.setAttribute("aria-level", "3");
 					lis.get(type).addChild(cstylesheets.addChild(li));
 				}
 			}else{

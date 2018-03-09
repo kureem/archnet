@@ -22,7 +22,7 @@ public class FieldSelector extends ItemSelector<DataField> {
 		TableColumn actions = new TableColumn("actions", "actins", " ");
 		actions.setWidth("20px");
 		
-		structure.getFields(new RemoteDataListener<Array<DataField>>() {
+		structure.getFields(this,new RemoteDataListener<Array<DataField>>() {
 			
 			@Override
 			public void dataLoaded(Array<DataField> data) {

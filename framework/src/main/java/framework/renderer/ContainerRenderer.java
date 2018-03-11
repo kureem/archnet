@@ -147,75 +147,7 @@ public class ContainerRenderer implements ExtendedRenderer<JSContainer> {
 		}
 	}
 
-	protected void synchronizeFields(HTMLElement njq, Renderable jsfield) {
-
-		if (jsfield instanceof InputField) {
-			InputField<String> inputField = (JSInput) jsfield;
-			if (jsfield.getTag().equals("input") && "checkbox".equals(jsfield.getAttribute("type"))) {
-				HTMLInputElement field = (HTMLInputElement) document.getElementById(jsfield.getId());
-			
-				if(field != null){
-					if (field.checked) {
-						inputField.setRawValue("true");
-					} else {
-						inputField.setRawValue("false");
-					}
-				}else{
-					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-				}
-			} else if (jsfield.getTag().equals("input")) {
-
-				HTMLInputElement field = (HTMLInputElement) document.getElementById(jsfield.getId());
-				
-				if(field != null){
-					if ("checkbox".equals(jsfield.getAttribute("type"))) {
-						if (field.checked) {
-							inputField.setRawValue("true");
-						} else {
-							inputField.setRawValue("false");
-						}
-					} else {
-						if(field != null){
-							String value = field.value;
-							inputField.setRawValue(value);
-						}
-					}
-				}else{
-					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-				}
-			} else if (jsfield.getTag().equalsIgnoreCase("select")) {
-				HTMLSelectElement field = (HTMLSelectElement) document.getElementById(jsfield.getId());
-				if(field != null){
-					String value = field.value;
-					inputField.setRawValue(value);
-				}else{
-					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-				}
-				
-			} else if (jsfield.getTag().equalsIgnoreCase("textarea")) {
-				HTMLTextAreaElement field = (HTMLTextAreaElement) document.getElementById(jsfield.getId());
-				if(field != null){
-					String value = field.value;
-					inputField.setRawValue(value);
-				}else{
-					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-				}
-			} else {
-				HTMLElement field = document.getElementById(jsfield.getId());
-				if(field != null){
-					String value = field.getAttribute("value");
-					inputField.setRawValue(value);
-				}else{
-					console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-				}
-			}
-		}
-
-		for (Renderable c : jsfield.getChildren()) {
-			synchronizeFields(document.getElementById(c.getId()), c);
-		}
-
-	}
+	
 
 	protected void renderAttributes(HTMLElement njq, Renderable c, boolean changed) {
 

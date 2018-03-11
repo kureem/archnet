@@ -12,7 +12,7 @@ public class BasePropertiesEditor extends FormLayout implements PropertiesEditor
 	protected Designable component;
 
 	public BasePropertiesEditor(String name) {
-		super(name, "div");
+		super(name);
 		setHorizontal(true).addClass("slds-form_compact");
 
 	}

@@ -191,7 +191,7 @@ public class ContextEditor extends AbstractEditor<Object>{
 		
 		form.setStyle("padding", "12px");
 		form.setFields(fields);
-		modal.setBody(form);
+		modal.getBody().addChild(form);
 		addChild(modal);
 		Backdrop bd = new Backdrop("bd");
 		addChild(bd);

@@ -41,7 +41,7 @@ public class Preview extends JSContainer implements DesignableEditor{
 	
 	public Designable build(Component component) {
 		MarshallUtil.generateController(component);
-		return MarshallUtil.toDesignable(component);
+		return MarshallUtil.toDesignable(component,false,null);
 	}
 
 	public void consume(Component component) {

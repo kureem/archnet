@@ -12,6 +12,8 @@ public interface Designable extends Renderable {
 	public Array<Designable> getDesignables();
 
 	public Component getComponent();
+	
+	
 
 	public Array<Parameter> getParameters();
 

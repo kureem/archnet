@@ -8,6 +8,7 @@ import framework.design.Option;
 import framework.design.Parameter;
 import framework.design.ValueParameter;
 import jsweet.lang.Array;
+import jsweet.lang.Error;
 
 public class JSDesignableInput extends JSInput implements Designable {
 
@@ -15,13 +16,20 @@ public class JSDesignableInput extends JSInput implements Designable {
 
 	public JSDesignableInput(String name) {
 		super(name);
+		setAttribute("identifier", "html:input");
 	}
 
 	@Override
 	public void applyParam(String key, String value) {
 		delegate.applyParameter(key, value, true);
 		if(key.equalsIgnoreCase("type")){
+			Object curVal = getValue();
+			if(value.equals("date") || value.equals("datetime") || value.equals("currency") || value.equals("number") || value.equals("email")
+					|| value.equals("phone") || value.equals("password") || value.equals("text"))
+				
+			setTag("input");
 			setType(value);
+			setValue((String)curVal);
 		}
 	}
 
@@ -42,27 +50,21 @@ public class JSDesignableInput extends JSInput implements Designable {
 		parameters.push(new ValueParameter("value", "Value", "Basic"));
 		
 		AttributeParameter type = new AttributeParameter("type", "Type", "Basic");
-		type.options.push(new Option("text", "text"));
+		
 		type.options.push(new Option("date", "date"));
 		type.options.push(new Option("datetime", "datetime"));
-		type.options.push(new Option("tel", "tel"));
-		type.options.push(new Option("color", "color"));
-		type.options.push(new Option("checkbox", "checkbox"));
-		type.options.push(new Option("password", "password"));
-		type.options.push(new Option("hidden", "hidden"));
-		type.options.push(new Option("radio", "radio"));
-		type.options.push(new Option("email", "email"));
-		type.options.push(new Option("file", "file"));
-		type.options.push(new Option("image", "image"));
-		type.options.push(new Option("month", "month"));
-		type.options.push(new Option("number", "number"));
-		type.options.push(new Option("range", "range"));
-		type.options.push(new Option("reset", "reset"));
-		type.options.push(new Option("button", "button"));
-		type.options.push(new Option("submit", "submit"));
-		type.options.push(new Option("time", "time"));
-		type.options.push(new Option("url", "url"));
-		type.options.push(new Option("week", "week"));		
+		type.options.push(new Option("Currency", "currency"));
+		type.options.push(new Option("Number", "number"));
+		type.options.push(new Option("Email", "email"));
+		type.options.push(new Option("Phone", "phone"));
+		type.options.push(new Option("Text", "text"));
+		type.options.push(new Option("Password", "password"));
+		type.options.push(new Option("Url", "url"));	
+		
+		
+		
+		
+		
 		
 		parameters.push(type);
 		return parameters;
@@ -70,7 +72,7 @@ public class JSDesignableInput extends JSInput implements Designable {
 
 	@Override
 	public void addDesignable(Designable designable) {
-		//throw new java.lang.RuntimeException("Cannot add children to this component");
+		throw new Error("Cannot add children to this component");
 	}
 
 	@Override

@@ -26,6 +26,12 @@ public class LightningContainerComponentLibrary extends ComponentsLibrary{
 		addComponents(new Component("lgt:acc", "ACC", "Accordion"));
 		addComponents(new Component("lgt:acc-item", "ACCI", "Accordion Item"));
 		
+		addComponents(new Component("lgt:popover", "POPOVER", "Pop Over"));
+		addComponents(new Component("lgt:popover-footer-item", "LSTBXFI", "List Box Footer Item"));
+		addComponents(new Component("lgt:listbox", "LSTBX", "List Box"));
+		addComponents(new Component("lgt:listbox-item", "LSTBXI", "List Box Item"));
+		
+		
 		addComponents(new Component("zs:http", "REST", "Rest Webservice"));
 		addComponents(new Component("zs:service", "SERV", "Remote Service"));
 		addComponents(new Component("lgt:soql", "SOQL", "Salesforce Query"));

@@ -30,7 +30,7 @@ public class WelcomeScreen extends Modal{
 		setStyle("width", "50%");
 		addClass("slds-fade-in-open slds-modal_large slds-app-launcher slds-align_absolute-center");
 		section.addClass("slds-open");
-		setBody(section);
+		getBody().addChild(section);
 		section.getContent().addChild(options);
 		options.setWrap(true);
 		

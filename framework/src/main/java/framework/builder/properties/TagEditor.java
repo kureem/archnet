@@ -21,7 +21,7 @@ public class TagEditor extends AbstractSelectPropertyEditor {
 
 	@Override
 	public void performAction(JSContainer source, Event evt) {
-		designable.applyParam("tag", getValue());
+		designable.applyParam("tag", (String)getValue());
 		VisualEditor veditor = getAncestorWithClass("visual-editor");
 		veditor.dirty();
 	}

@@ -68,10 +68,6 @@ public class JSCheckBox extends JSContainer implements InputField<Boolean> {
 
 	}
 
-	@Override
-	public void setRawValue(String value) {
-		setAttribute("value", value);
-	}
 
 	public boolean isChecked() {
 		return getValue();

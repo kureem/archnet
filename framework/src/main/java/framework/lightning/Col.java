@@ -11,7 +11,7 @@ import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
 import jsweet.lang.Array;
 
-public class Col extends JSContainer implements Designable{
+public class Col extends LTContainer implements Designable{
 	
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
@@ -64,8 +64,10 @@ public class Col extends JSContainer implements Designable{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Array<Designable> getDesignables() {
+		@SuppressWarnings("rawtypes")
 		Array res = getChildren();
 		return res;
 	}

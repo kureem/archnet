@@ -3,17 +3,21 @@ package framework.lightning;
 import framework.InputField;
 import framework.JSContainer;
 
-public class FormElement extends JSContainer {
+public class FormElement extends Col {
 
-	private JSContainer label = new JSContainer("label", "label").addClass("slds-form-element__label");
+	protected JSContainer label = new JSContainer("label", "label").addClass("slds-form-element__label");
 
 	private JSContainer control = new JSContainer("div").addClass("slds-form-element__control");
 
 	public FormElement(String name, String tag) {
-		super(name, tag);
+		super(name);
+		
 		addClass("slds-form-element");
 		addChild(label);
 		addChild(control);
+		setAttribute("sections", "12");
+		setAttribute("span", "12");
+		refreshCls();
 	}
 
 	public FormElement setLabel(String label) {

@@ -1,18 +1,38 @@
 package framework.lightning;
 
+import framework.JSContainer;
+import framework.lightning.designables.JSDesignableLightningGrid;
 import jsweet.lang.Array;
 
-public class FormLayout extends LTContainer {
+public class FormLayout extends JSDesignableLightningGrid {
+	String[] labels = new String[]{"XXX Small","XX Small", "X Small", "Small", "Medium", "Large", "X Large", "XX Large"};
+	
+	public final static String SPACING_XXX_SMALL = PADDING_SIZE_XXX_SMALL;
+	public final static String SPACING_XX_SMALL = PADDING_SIZE_XX_SMALL;
+	public final static String SPACING_X_SMALL = PADDING_SIZE_X_SMALL;
+	public final static String SPACING_SMALL = PADDING_SIZE_SMALL;
+	public final static String SPACING_MEDIUM = PADDING_SIZE_MEDIUM;
+	public final static String SPACING_LARGE = PADDING_SIZE_LARGE;
+	public final static String SPACING_X_LARGE = PADDING_SIZE_X_LARGE;
+	public final static String SPACING_XX_LARGE = PADDING_SIZE_XX_LARGE;
 
-	public FormLayout(String name, String tag) {
-		super(name, tag);
+	public FormLayout(String name) {
+		super(name);
 		addClass("slds-form");
+		applyParam("wrap", "true");
+		
+		setCompound(true);
+	}
+	
+	public FormLayout setSpacing(String spacing){
+		for(JSContainer container : getChildren()){
+			LTContainer lt = (LTContainer)container;
+			lt.setPaddingBottom(spacing).setPaddingLeft(spacing).setPaddingRight(spacing).setPaddingTop(spacing);
+		}
+		return this;
 	}
 
-	protected FormLayout toggleClass(String cls, boolean b) {
-		return (FormLayout)super.toggleClass(cls, b);
-		
-	}
+	
 
 	public FormLayout setStacked(boolean b) {
 		toggleClass("slds-form_stacked", b);

@@ -52,10 +52,7 @@ public class JSTextArea extends JSContainer implements InputField<String>{
 		setAttribute("value", val);
 	}
 
-	@Override
-	public void setRawValue(String value) {
-		setAttribute("value", value);
-	}
+
 	
 	
 

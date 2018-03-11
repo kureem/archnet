@@ -40,8 +40,8 @@ public class ItemSelector extends Modal {
 		saveButton.setState(Button.STATE_NEUTRAL);
 		getHeader().addChild(saveButton);
 
-		getContent().addChild(section);
-		getContent().addClass("slds-app-launcher__content slds-p-around_medium");
+		getBody().addChild(section);
+		getBody().addClass("slds-app-launcher__content slds-p-around_medium");
 
 		section.getContent().addChild(filesList);
 		

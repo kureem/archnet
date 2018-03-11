@@ -14,6 +14,7 @@ public class JSDesignableTextArea extends JSTextArea implements Designable {
 
 	public JSDesignableTextArea(String name) {
 		super(name);
+		setAttribute("identifier", "html:textarea");
 	}
 
 	@Override

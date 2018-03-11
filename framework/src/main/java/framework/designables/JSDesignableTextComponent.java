@@ -31,6 +31,7 @@ public class JSDesignableTextComponent extends TextComponent implements Designab
 
 	public JSDesignableTextComponent(String name, String tag) {
 		super(name, tag);
+		setAttribute("identifier", "html:p");
 	}
 
 	@Override

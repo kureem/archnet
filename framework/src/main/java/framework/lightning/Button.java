@@ -1,18 +1,16 @@
 package framework.lightning;
 
-import framework.JSContainer;
-import framework.builder.marshalling.Component;
+public class Button extends SvgIcon {
 
-public class Button extends JSContainer {
-
-	protected final static String[] states = new String[] { "neutral", "brand", "destructive", "success" };
+	protected final static String[] states = new String[] { "neutral", "brand", "destructive", "success" ,"reset"};
 
 	public final static String STATE_NEUTRAL = "neutral";
 	public final static String STATE_BRAND = "brand";
 	public final static String STATE_DESTRUCTIVE = "destructive";
 	public final static String STATE_SUCCESS = "success";
+	public final static String STATE_RESET = "reset";
 
-	private Component component = new Component();
+	//private Component component = new Component();
 	
 	// private Icon i con;
 
@@ -21,20 +19,19 @@ public class Button extends JSContainer {
 	}
 
 	public Button(String name) {
-		super(name, "button");
+		super(name);
+		setTag("button");
 		addClass("slds-button");
 		setAttribute("state", "neutral");
 		setState(STATE_NEUTRAL);
+		setShowIcon(false);
+		setSvgClass("slds-button__icon slds-button__icon_left");
 	}
 
-	public Button addIcon(SvgIcon icon) {
-		addClass("slds-button_icon");
-		addChild(icon);
-		return this;
-	}
+	
 
 	public Button setLabel(String label) {
-		setHtml(label);
+		setText(label);
 		return this;
 	}
 
@@ -73,22 +70,7 @@ public class Button extends JSContainer {
 		return this;
 	}
 
-	public void setParameter(String key, String value) {
-		component.parameters.$set(key, value);
-		if (key.equals("state")) {
-			setState(value);
-		} else if (key.equals("stateful")) {
-			setStateful("true".equals(value));
-		} else if (key.equals("disabled")) {
-			setDisabled("true".equals(value));
-		} else if (key.equals("inverse")) {
-			setInverse("true".equals(value));
-		} else if (key.equals("label")) {
-			setLabel(value);
-		} else {
-			//throw new java.lang.RuntimeException("Unknow parameter key:" + value + " Class: framework.lightning.Button");
-		}
-	}
+	
 
 	
 }

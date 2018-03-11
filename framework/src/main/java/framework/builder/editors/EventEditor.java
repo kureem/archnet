@@ -52,8 +52,8 @@ public class EventEditor extends AbstractEditor<Component> {
 			public void performAction(JSContainer source, Event evt) {
 
 				if (!justSaved.equals(events.getValue())) {
-					justSaved = events.getValue();
-					save(events.getValue());
+					justSaved = (String)events.getValue();
+					save((String)events.getValue());
 
 				}
 			}
@@ -82,7 +82,7 @@ public class EventEditor extends AbstractEditor<Component> {
 		boolean s = false;
 		component.setHtml(des.getName());
 		if (!updEvtSelect) {
-			Array<EventListener> listeners = (Array<EventListener>)des.getListeners().$get(events.getValue());
+			Array<EventListener> listeners = (Array<EventListener>)des.getListeners().$get((String)events.getValue());
 			if (listeners != null) {
 				for (EventListener e : listeners) {
 					if (e instanceof BuilderEventListener) {
@@ -182,7 +182,7 @@ public class EventEditor extends AbstractEditor<Component> {
 	@Override
 	public void save() {
 
-		String type = events.getValue();
+		String type = (String)events.getValue();
 		save(type);
 
 		clean();

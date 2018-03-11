@@ -58,7 +58,7 @@ public class MultiForm extends Panel implements InputField<jsweet.lang.Object> {
 
 			@Override
 			public void performAction(JSContainer source, Event evt) {
-				String value = select.getValue();
+				String value = (String)select.getValue();
 				for (String name : map.keySet()) {
 
 					map.get(name).setVisible(name.equals(value));
@@ -73,7 +73,7 @@ public class MultiForm extends Panel implements InputField<jsweet.lang.Object> {
 	@Override
 	public Object getValue() {
 		Object result = new Object();
-		String type = select.getValue();
+		String type = (String)select.getValue();
 		result.$set("type", type);
 		for (String name : map.keySet()) {
 			if(name.equals(type)){
@@ -101,11 +101,6 @@ public class MultiForm extends Panel implements InputField<jsweet.lang.Object> {
 
 			map.get(name).setVisible(name.equals(type));
 		}
-	}
-
-	@Override
-	public void setRawValue(String value) {
-
 	}
 
 }

@@ -15,7 +15,6 @@ import framework.builder.Selector;
 import framework.builder.data.File;
 import framework.builder.data.ProjectService;
 import framework.builder.data.RemoteDataListener;
-import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.libraries.LibrariesDockedComposer;
 import framework.builder.marshalling.Component;
 import framework.builder.marshalling.ComponentFactory;
@@ -23,7 +22,6 @@ import framework.builder.marshalling.MarshallUtil;
 import framework.builder.properties.PropertiesDockedComposer;
 import framework.core.BeanFactory;
 import framework.design.Designable;
-import framework.designables.DesignableDelegate;
 import framework.designables.JSDesignableBuilderComponent;
 import framework.lightning.Backdrop;
 import framework.lightning.DockedComposer;
@@ -33,7 +31,6 @@ import framework.lightning.IconButton;
 import framework.lightning.LightningApplication;
 import framework.lightning.Modal;
 import jsweet.dom.Event;
-import jsweet.lang.Array;
 import jsweet.lang.JSON;
 
 public class VisualEditor extends AbstractEditor<Component> implements DesignableEditor {
@@ -58,7 +55,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 
 	private StructureDockedComposer structureDockedComposer;
 
-	private JSContainer templates = new JSContainer("div").setVisible(false);
+	//private JSContainer templates = new JSContainer("div").setVisible(false);
 	
 	private boolean leftOpen = true;
 	
@@ -91,7 +88,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		super(name, "div", null);
 		addClass("visual-editor").addClass("slds-grid").addClass("slds-wrap");
 		
-		FormLayout frmjson = new FormLayout("frmjson", "div");
+		FormLayout frmjson = new FormLayout("frmjson");
 		frmjson.setStyle("margin", "8px");
 		frmjson.addClass("defn-popup");
 		FormElement js = new FormElement("js", "div");
@@ -104,7 +101,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		
 		frmjson.addFormElement(js);
 		frmjson.addFormElement(frmhel);
-		jsonDef.getContent().addChild(frmjson);
+		jsonDef.getBody().addChild(frmjson);
 		addChild(jsonDef);
 		jsonDef.setBackdrop(bd);
 		addChild(bd);
@@ -134,7 +131,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		selector = new Selector();// BeanFactory.getInstance().getBeanOfType(Selector.class);
 		selector.setVisualEditor(this);
 		addChild(selector);
-		addChild(templates);
+		//addChild(templates);
 		composer.getTools().clearChildren();
 		composer.getTools().addChild(new Zoom("zoom", this));
 		composer.getTools().addChild(toggleOutline);
@@ -368,8 +365,8 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		Component component = new Component();
 		component.impl = "lgt:app";
 		component.parameters.$set("name", designable.getName() + "_comp");
-		Designable par = MarshallUtil.toDesignable(component);
-		Designable chi = MarshallUtil.toDesignable(comp);
+		Designable par = MarshallUtil.toDesignable(component,false,null);
+		Designable chi = MarshallUtil.toDesignable(comp,false,null);
 		par.addDesignable(chi);
 		
 		//component = ;
@@ -475,36 +472,14 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 	}
 
 	public Designable cona(Component component) {
-		templates.clearChildren();
-		templates.setRendered(false);
-		for (File temp : file.getTemplates()) {
-			JSTemplate t = new JSTemplate(temp);
-			templates.addChild(t);
-		}
-		Designable des = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class)
-				.getComponentFactory(component.impl).build(component, true);
-		des.addEventListener(new SelectComponentEvent(selector), "click");
-		des.setData(component.data);
-		if (component.children != null) {
-			for (Component c : component.children) {
-				Designable child = cona(c);
-				des.addDesignable(child);
-				String exp = child.getAttribute("exposeAs");
-				if(exp != null && exp.length() > 0){
-					
-					new DesignableDelegate(child).exposeVariable(exp);
-				}
-			}
-		}
-
-		return des;
+		return MarshallUtil.toDesignable(component, true, selector);
+		
 	}
 
 	@Override
 	public void consume(Component component) {
 
 		root = (LightningApplication)cona(component);
-		Array<File> components = file.getComponents();
 		
 		
 		workspace.addChild((JSContainer) root);

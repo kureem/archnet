@@ -66,10 +66,7 @@ public class JSInput extends JSContainer implements InputField<String>{
 	}
 
 
-	@Override
-	public void setRawValue(String value) {
-		setAttribute("value", value);
-	}
+	
 
 
 	

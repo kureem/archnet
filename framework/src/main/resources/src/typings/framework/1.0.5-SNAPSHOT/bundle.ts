@@ -84,8 +84,8 @@ namespace framework.builder.data {
          */
         public deleteStructure(name : string) {
             let tmp : Array<framework.builder.data.DataStructure> = <any>(new Array<any>());
-            for(let index13357=0; index13357 < BasicDataEnvironment.structures_$LI$().length; index13357++) {
-                let structure = BasicDataEnvironment.structures_$LI$()[index13357];
+            for(let index6649=0; index6649 < BasicDataEnvironment.structures_$LI$().length; index6649++) {
+                let structure = BasicDataEnvironment.structures_$LI$()[index6649];
                 {
                     if(!/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(structure.getName(),name))) {
                         tmp.push(structure);
@@ -114,8 +114,8 @@ namespace framework.builder.data {
             public dataLoaded(data : any) {
                 let obj : Object = <Object>data;
                 let sobjects : Array<Object> = <Array<Object>>obj["sobjects"];
-                for(let index13358=0; index13358 < sobjects.length; index13358++) {
-                    let o = sobjects[index13358];
+                for(let index6650=0; index6650 < sobjects.length; index6650++) {
+                    let o = sobjects[index6650];
                     {
                         let structure : framework.builder.data.DataStructure = new framework.builder.data.DataStructure(o);
                         framework.builder.data.BasicDataEnvironment.structures_$LI$().push(structure);
@@ -311,9 +311,9 @@ namespace framework.builder.data {
         public create(type : string, fields : framework.util.Map<string, any>, listener : framework.builder.data.RemoteDataListener<any>) {
             let data : Object = <Object>new Object();
             {
-                let array13360 = fields.keySet();
-                for(let index13359=0; index13359 < array13360.length; index13359++) {
-                    let key = array13360[index13359];
+                let array6652 = fields.keySet();
+                for(let index6651=0; index6651 < array6652.length; index6651++) {
+                    let key = array6652[index6651];
                     {
                         data[key] = fields.get(key);
                     }
@@ -328,9 +328,9 @@ namespace framework.builder.data {
         public update(type : string, objectId : string, fields : framework.util.Map<string, any>, listener : framework.builder.data.RemoteDataListener<any>) {
             let data : Object = <Object>new Object();
             {
-                let array13362 = fields.keySet();
-                for(let index13361=0; index13361 < array13362.length; index13361++) {
-                    let key = array13362[index13361];
+                let array6654 = fields.keySet();
+                for(let index6653=0; index6653 < array6654.length; index6653++) {
+                    let key = array6654[index6653];
                     {
                         data[key] = fields.get(key);
                     }
@@ -453,9 +453,9 @@ namespace framework.builder.data {
 
         public getChild(name : string) : File {
             {
-                let array13364 = this.getChildren();
-                for(let index13363=0; index13363 < array13364.length; index13363++) {
-                    let f = array13364[index13363];
+                let array6656 = this.getChildren();
+                for(let index6655=0; index6655 < array6656.length; index6655++) {
+                    let f = array6656[index6655];
                     {
                         if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(f.getName(), name)) {
                             return f;
@@ -538,9 +538,9 @@ namespace framework.builder.data {
         public removeFile(f : File) {
             let children : Array<Object> = <any>(new Array<Object>());
             {
-                let array13366 = <Array<Object>>this.file["children"];
-                for(let index13365=0; index13365 < array13366.length; index13365++) {
-                    let o = array13366[index13365];
+                let array6658 = <Array<Object>>this.file["children"];
+                for(let index6657=0; index6657 < array6658.length; index6657++) {
+                    let o = array6658[index6657];
                     {
                         if(!/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(o["name"],f.getName()))) {
                             children.push(o);
@@ -554,9 +554,9 @@ namespace framework.builder.data {
         public getChildren() : Array<File> {
             let result : Array<File> = <any>(new Array<any>());
             {
-                let array13368 = <Array<Object>>this.file["children"];
-                for(let index13367=0; index13367 < array13368.length; index13367++) {
-                    let o = array13368[index13367];
+                let array6660 = <Array<Object>>this.file["children"];
+                for(let index6659=0; index6659 < array6660.length; index6659++) {
+                    let o = array6660[index6659];
                     {
                         result.push(new File(o));
                     }
@@ -1086,8 +1086,8 @@ namespace framework.builder.libraries {
 
         configureStyles(instance : framework.design.Designable, component : framework.builder.marshalling.Component) {
             let keys : string[] = Object.keys(component.styles);
-            for(let index13369=0; index13369 < keys.length; index13369++) {
-                let key = keys[index13369];
+            for(let index6661=0; index6661 < keys.length; index6661++) {
+                let key = keys[index6661];
                 {
                     let value : string = component.styles[key].toString();
                     instance.setStyle(key, value);
@@ -1097,8 +1097,8 @@ namespace framework.builder.libraries {
 
         configureParameters(instance : framework.design.Designable, component : framework.builder.marshalling.Component, designMode : boolean) {
             let keys : string[] = Object.keys(component.parameters);
-            for(let index13370=0; index13370 < keys.length; index13370++) {
-                let key = keys[index13370];
+            for(let index6662=0; index6662 < keys.length; index6662++) {
+                let key = keys[index6662];
                 {
                     if(component.parameters[key] != null) {
                         let value : string = component.parameters[key].toString();
@@ -1109,8 +1109,8 @@ namespace framework.builder.libraries {
         }
 
         configureEvents(instance : framework.design.Designable, component : framework.builder.marshalling.Component) {
-            for(let index13371=0; index13371 < component.events.length; index13371++) {
-                let event = component.events[index13371];
+            for(let index6663=0; index6663 < component.events.length; index6663++) {
+                let event = component.events[index6663];
                 {
                     let listener : framework.builder.BuilderEventListener = new framework.builder.BuilderEventListener(event.source, event.name, event.type);
                     instance.addEventListener(listener, event.type);
@@ -1253,29 +1253,29 @@ namespace framework.builder.marshalling {
             c.impl = designable.getAttribute("identifier");
             let parameters : Array<framework.design.Parameter> = designable.getParameters();
             {
-                let array13373 = designable.getStyleNames();
-                for(let index13372=0; index13372 < array13373.length; index13372++) {
-                    let s = array13373[index13372];
+                let array6665 = designable.getStyleNames();
+                for(let index6664=0; index6664 < array6665.length; index6664++) {
+                    let s = array6665[index6664];
                     {
                         c.styles[s] = designable.getStyle(s);
                     }
                 }
             }
-            for(let index13374=0; index13374 < parameters.length; index13374++) {
-                let p = parameters[index13374];
+            for(let index6666=0; index6666 < parameters.length; index6666++) {
+                let p = parameters[index6666];
                 {
                     c.parameters[p.name] = p.extractValue(designable);
                 }
             }
             {
-                let array13376 = Object.keys(designable.getListeners());
-                for(let index13375=0; index13375 < array13376.length; index13375++) {
-                    let key = array13376[index13375];
+                let array6668 = Object.keys(designable.getListeners());
+                for(let index6667=0; index6667 < array6668.length; index6667++) {
+                    let key = array6668[index6667];
                     {
                         {
-                            let array13378 = <Array<framework.EventListener>>designable.getListeners()[key];
-                            for(let index13377=0; index13377 < array13378.length; index13377++) {
-                                let l = array13378[index13377];
+                            let array6670 = <Array<framework.EventListener>>designable.getListeners()[key];
+                            for(let index6669=0; index6669 < array6670.length; index6669++) {
+                                let l = array6670[index6669];
                                 {
                                     if(l != null && l instanceof <any>framework.builder.BuilderEventListener) {
                                         let bel : framework.builder.BuilderEventListener = <framework.builder.BuilderEventListener><any>l;
@@ -1292,9 +1292,9 @@ namespace framework.builder.marshalling {
                 }
             }
             {
-                let array13380 = designable.getDesignables();
-                for(let index13379=0; index13379 < array13380.length; index13379++) {
-                    let child = array13380[index13379];
+                let array6672 = designable.getDesignables();
+                for(let index6671=0; index6671 < array6672.length; index6671++) {
+                    let child = array6672[index6671];
                     {
                         let childC : framework.builder.marshalling.Component = MarshallUtil.extract(child);
                         c.children.push(childC);
@@ -1306,20 +1306,23 @@ namespace framework.builder.marshalling {
             return c;
         }
 
-        public static toDesignable(component : framework.builder.marshalling.Component) : framework.design.Designable {
+        public static toDesignable(component : framework.builder.marshalling.Component, design : boolean, selector : framework.builder.Selector) : framework.design.Designable {
             let des : framework.design.Designable = framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, false);
             des['setData$java_lang_Object'](component.data);
             des.getComponent().custom = component.custom;
+            let exp : string = des.getAttribute("exposeAs");
+            if(exp != null && exp.length > 0) {
+                new framework.designables.DesignableDelegate(des).exposeVariable(exp);
+            }
+            if(design) {
+                des.addEventListener(new framework.builder.SelectComponentEvent(selector), "click");
+            }
             if(component.children != null) {
-                for(let index13381=0; index13381 < component.children.length; index13381++) {
-                    let c = component.children[index13381];
+                for(let index6673=0; index6673 < component.children.length; index6673++) {
+                    let c = component.children[index6673];
                     {
-                        let child : framework.design.Designable = MarshallUtil.toDesignable(c);
+                        let child : framework.design.Designable = MarshallUtil.toDesignable(c, design, selector);
                         des.addDesignable(child);
-                        let exp : string = child.getAttribute("exposeAs");
-                        if(exp != null && exp.length > 0) {
-                            new framework.designables.DesignableDelegate(child).exposeVariable(exp);
-                        }
                     }
                 }
             }
@@ -1335,15 +1338,15 @@ namespace framework.builder.marshalling {
         public static controller(component : framework.builder.marshalling.Component, start : string) {
             let des : framework.design.Designable = framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, false);
             des['setData$java_lang_Object'](component.data);
-            for(let index13382=0; index13382 < component.events.length; index13382++) {
-                let event = component.events[index13382];
+            for(let index6674=0; index6674 < component.events.length; index6674++) {
+                let event = component.events[index6674];
                 {
                     start = start + "\n" + des.getName() + ":function(source,event){\n" + event.source + "\n}";
                 }
             }
             if(component.children != null) {
-                for(let index13383=0; index13383 < component.children.length; index13383++) {
-                    let c = component.children[index13383];
+                for(let index6675=0; index6675 < component.children.length; index6675++) {
+                    let c = component.children[index6675];
                     {
                         MarshallUtil.controller(c, start);
                     }
@@ -1352,7 +1355,7 @@ namespace framework.builder.marshalling {
         }
 
         public static build(s : string) : framework.design.Designable {
-            return MarshallUtil.toDesignable(MarshallUtil.toComponent$java_lang_String(s));
+            return MarshallUtil.toDesignable(MarshallUtil.toComponent$java_lang_String(s), false, null);
         }
 
         public static toComponent$java_lang_String(s : string) : framework.builder.marshalling.Component {
@@ -1370,6 +1373,9 @@ namespace framework.builder.marshalling {
 
         public static toComponent$jsweet_lang_Object(o : Object) : framework.builder.marshalling.Component {
             let cc : framework.builder.marshalling.Component = new framework.builder.marshalling.Component();
+            if(o["impl"] == null) {
+                o["impl"] = "html:div";
+            }
             cc.impl = o["impl"].toString();
             cc.styles = <Object>o["styles"];
             cc.parameters = <Object>o["parameters"];
@@ -1377,8 +1383,8 @@ namespace framework.builder.marshalling {
             let events : Array<Object> = <Array<Object>>o["events"];
             if(events != null && events.length > 0) {
                 let bevents : Array<framework.builder.marshalling.BuilderEvent> = <any>(new Array<framework.builder.marshalling.BuilderEvent>());
-                for(let index13384=0; index13384 < events.length; index13384++) {
-                    let e = events[index13384];
+                for(let index6676=0; index6676 < events.length; index6676++) {
+                    let e = events[index6676];
                     {
                         let event : framework.builder.marshalling.BuilderEvent = new framework.builder.marshalling.BuilderEvent();
                         event.source = e["source"].toString();
@@ -1392,8 +1398,8 @@ namespace framework.builder.marshalling {
             let bchildren : Array<framework.builder.marshalling.Component> = <any>(new Array<framework.builder.marshalling.Component>());
             let children : Array<Object> = <Array<Object>>o["children"];
             if(children != null && children.length > 0) {
-                for(let index13385=0; index13385 < children.length; index13385++) {
-                    let c = children[index13385];
+                for(let index6677=0; index6677 < children.length; index6677++) {
+                    let c = children[index6677];
                     {
                         bchildren.push(MarshallUtil.toComponent$jsweet_lang_Object(c));
                     }
@@ -1521,9 +1527,9 @@ namespace framework.core {
 
         public getBeanOfType<T>(clazz : any) : T {
             {
-                let array13387 = Object.keys(this.beans);
-                for(let index13386=0; index13386 < array13387.length; index13386++) {
-                    let key = array13387[index13386];
+                let array6679 = Object.keys(this.beans);
+                for(let index6678=0; index6678 < array6679.length; index6678++) {
+                    let key = array6679[index6678];
                     {
                         let bean : any = this.beans[key];
                         try {
@@ -1669,6 +1675,11 @@ namespace framework.design {
     Parameter["__class"] = "framework.design.Parameter";
 
 }
+namespace framework.design {
+    export interface Preparable extends framework.design.Designable {
+        prepare();
+    }
+}
 namespace framework.designables {
     export class DataEvent extends Event {
         public data : Object;
@@ -1737,9 +1748,9 @@ namespace framework.designables {
 
         public static containsName$java_lang_String$framework_design_Designable(name : string, ui : framework.design.Designable) : boolean {
             {
-                let array13389 = ui.getChildren();
-                for(let index13388=0; index13388 < array13389.length; index13388++) {
-                    let c = array13389[index13388];
+                let array6681 = ui.getChildren();
+                for(let index6680=0; index6680 < array6681.length; index6680++) {
+                    let c = array6681[index6680];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(c.getName(),name))) {
                             return true;
@@ -1759,8 +1770,8 @@ namespace framework.designables {
         }
 
         /*private*/ static containsName$java_lang_String$jsweet_lang_Array(name : string, children : Array<framework.design.Designable>) : boolean {
-            for(let index13390=0; index13390 < children.length; index13390++) {
-                let c = children[index13390];
+            for(let index6682=0; index6682 < children.length; index6682++) {
+                let c = children[index6682];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(c.getName(),name))) {
                         return true;
@@ -1912,8 +1923,6 @@ namespace framework {
          * @param {boolean} b
          */
         setValue(b? : any) : any;
-
-        setRawValue(value : string);
     }
 }
 namespace framework {
@@ -2200,9 +2209,9 @@ namespace framework {
 
         public clear() : ObjectBuilder {
             {
-                let array13392 = Object.keys(this.obj);
-                for(let index13391=0; index13391 < array13392.length; index13391++) {
-                    let s = array13392[index13391];
+                let array6684 = Object.keys(this.obj);
+                for(let index6683=0; index6683 < array6684.length; index6683++) {
+                    let s = array6684[index6683];
                     {
                         delete this.obj[s];
                     }
@@ -2388,14 +2397,14 @@ namespace framework.renderer {
 
         renderEvents(njq : HTMLElement, c : framework.JSContainer) {
             let keys : string[] = Object.keys(c.getListeners());
-            for(let index13393=0; index13393 < keys.length; index13393++) {
-                let key = keys[index13393];
+            for(let index6685=0; index6685 < keys.length; index6685++) {
+                let key = keys[index6685];
                 {
                     let listeners : Array<framework.EventListener> = <Array<framework.EventListener>>c.getListeners()[key];
                     njq.addEventListener(key, ((listeners) => {
                         return (evt) => {
-                            for(let index13394=0; index13394 < listeners.length; index13394++) {
-                                let l = listeners[index13394];
+                            for(let index6686=0; index6686 < listeners.length; index6686++) {
+                                let l = listeners[index6686];
                                 {
                                     l.performAction(c, evt);
                                 }
@@ -2407,81 +2416,12 @@ namespace framework.renderer {
             }
         }
 
-        synchronizeFields(njq : HTMLElement, jsfield : framework.Renderable) {
-            if(jsfield != null && (jsfield["__interfaces"] != null && jsfield["__interfaces"].indexOf("framework.InputField") >= 0 || jsfield.constructor != null && jsfield.constructor["__interfaces"] != null && jsfield.constructor["__interfaces"].indexOf("framework.InputField") >= 0)) {
-                let inputField : framework.InputField<string> = <framework.JSInput><any>jsfield;
-                if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(jsfield.getTag(),"input")) && /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("checkbox",jsfield.getAttribute("type")))) {
-                    let field : HTMLInputElement = <HTMLInputElement>document.getElementById(jsfield.getId());
-                    if(field != null) {
-                        if(field.checked) {
-                            inputField.setRawValue("true");
-                        } else {
-                            inputField.setRawValue("false");
-                        }
-                    } else {
-                        console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-                    }
-                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(jsfield.getTag(),"input"))) {
-                    let field : HTMLInputElement = <HTMLInputElement>document.getElementById(jsfield.getId());
-                    if(field != null) {
-                        if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("checkbox",jsfield.getAttribute("type")))) {
-                            if(field.checked) {
-                                inputField.setRawValue("true");
-                            } else {
-                                inputField.setRawValue("false");
-                            }
-                        } else {
-                            if(field != null) {
-                                let value : string = field.value;
-                                inputField.setRawValue(value);
-                            }
-                        }
-                    } else {
-                        console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-                    }
-                } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(jsfield.getTag(), "select")) {
-                    let field : HTMLSelectElement = <HTMLSelectElement>document.getElementById(jsfield.getId());
-                    if(field != null) {
-                        let value : string = field.value;
-                        inputField.setRawValue(value);
-                    } else {
-                        console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-                    }
-                } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(jsfield.getTag(), "textarea")) {
-                    let field : HTMLTextAreaElement = <HTMLTextAreaElement>document.getElementById(jsfield.getId());
-                    if(field != null) {
-                        let value : string = field.value;
-                        inputField.setRawValue(value);
-                    } else {
-                        console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-                    }
-                } else {
-                    let field : HTMLElement = document.getElementById(jsfield.getId());
-                    if(field != null) {
-                        let value : string = field.getAttribute("value");
-                        inputField.setRawValue(value);
-                    } else {
-                        console.warn("component #" + jsfield.getId() + " name:" + jsfield.getName() + " not present on page");
-                    }
-                }
-            }
-            {
-                let array13396 = jsfield.getChildren();
-                for(let index13395=0; index13395 < array13396.length; index13395++) {
-                    let c = array13396[index13395];
-                    {
-                        this.synchronizeFields(document.getElementById(c.getId()), c);
-                    }
-                }
-            }
-        }
-
         renderAttributes(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array13398 = c.getChangedAttributes();
-                    for(let index13397=0; index13397 < array13398.length; index13397++) {
-                        let key = array13398[index13397];
+                    let array6688 = c.getChangedAttributes();
+                    for(let index6687=0; index6687 < array6688.length; index6687++) {
+                        let key = array6688[index6687];
                         {
                             if(c.getAttribute(key) == null) {
                                 njq.removeAttribute(key);
@@ -2493,9 +2433,9 @@ namespace framework.renderer {
                 }
             } else {
                 {
-                    let array13400 = c.getAttributeNames();
-                    for(let index13399=0; index13399 < array13400.length; index13399++) {
-                        let key = array13400[index13399];
+                    let array6690 = c.getAttributeNames();
+                    for(let index6689=0; index6689 < array6690.length; index6689++) {
+                        let key = array6690[index6689];
                         {
                             if(c.getAttribute(key) != null) njq.setAttribute(key, c.getAttribute(key));
                         }
@@ -2518,9 +2458,9 @@ namespace framework.renderer {
         renderStyles(njq : HTMLElement, c : framework.Renderable, changed : boolean) {
             if(changed) {
                 {
-                    let array13402 = c.getChangedStyles();
-                    for(let index13401=0; index13401 < array13402.length; index13401++) {
-                        let key = array13402[index13401];
+                    let array6692 = c.getChangedStyles();
+                    for(let index6691=0; index6691 < array6692.length; index6691++) {
+                        let key = array6692[index6691];
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
@@ -2528,9 +2468,9 @@ namespace framework.renderer {
                 }
             } else {
                 {
-                    let array13404 = c.getStyleNames();
-                    for(let index13403=0; index13403 < array13404.length; index13403++) {
-                        let key = array13404[index13403];
+                    let array6694 = c.getStyleNames();
+                    for(let index6693=0; index6693 < array6694.length; index6693++) {
+                        let key = array6694[index6693];
                         {
                             njq.style.setProperty(key, c.getStyle(key));
                         }
@@ -2616,9 +2556,9 @@ namespace framework.util {
         public keySet() : Array<K> {
             let result : Array<any> = <any>(new Array());
             {
-                let array13406 = Object.keys(this.d);
-                for(let index13405=0; index13405 < array13406.length; index13405++) {
-                    let key = array13406[index13405];
+                let array6696 = Object.keys(this.d);
+                for(let index6695=0; index6695 < array6696.length; index6695++) {
+                    let key = array6696[index6695];
                     {
                         result.push(key);
                     }
@@ -2728,8 +2668,8 @@ namespace framework.builder.data {
             } else {
                 let fields : Array<framework.builder.data.DataField> = <any>(new Array<any>());
                 this.object["fields"] = cached;
-                for(let index13407=0; index13407 < cached.length; index13407++) {
-                    let oField = cached[index13407];
+                for(let index6697=0; index6697 < cached.length; index6697++) {
+                    let oField = cached[index6697];
                     {
                         fields.push(new framework.builder.data.DataField(oField));
                     }
@@ -2754,8 +2694,8 @@ namespace framework.builder.data {
                 let fields : Array<framework.builder.data.DataField> = <any>(new Array<any>());
                 let oFields : Array<Object> = <Array<Object>>o["fields"];
                 this.__parent.object["fields"] = oFields;
-                for(let index13408=0; index13408 < oFields.length; index13408++) {
-                    let oField = oFields[index13408];
+                for(let index6698=0; index6698 < oFields.length; index6698++) {
+                    let oField = oFields[index6698];
                     {
                         fields.push(new framework.builder.data.DataField(oField));
                     }
@@ -2785,8 +2725,8 @@ namespace framework {
             componentFactoryRegistry.registerComponentFactory("html:html", new Boot.Boot$0("html:html"));
             componentFactoryRegistry.registerComponentFactory("html:p", new Boot.Boot$1("html:p"));
             componentFactoryRegistry.registerComponentFactory("html:cmp", new Boot.Boot$2("html:cmp"));
-            for(let index13409=0; index13409 < tags.length; index13409++) {
-                let tag = tags[index13409];
+            for(let index6699=0; index6699 < tags.length; index6699++) {
+                let tag = tags[index6699];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -2802,27 +2742,34 @@ namespace framework {
             componentFactoryRegistry.registerComponentFactory("lgt:txt", new Boot.Boot$11("lgt:txt"));
             componentFactoryRegistry.registerComponentFactory("lgt:frm", new Boot.Boot$12("lgt:frm"));
             componentFactoryRegistry.registerComponentFactory("lgt:input", new Boot.Boot$13("lgt:input"));
-            componentFactoryRegistry.registerComponentFactory("lgt:grid", new Boot.Boot$14("lgt:grid"));
-            componentFactoryRegistry.registerComponentFactory("lgt:col", new Boot.Boot$15("lgt:col"));
-            componentFactoryRegistry.registerComponentFactory("lgt:avatar", new Boot.Boot$16("lgt:avatar"));
-            componentFactoryRegistry.registerComponentFactory("lgt:acc", new Boot.Boot$17("lgt:acc"));
-            componentFactoryRegistry.registerComponentFactory("lgt:acc-item", new Boot.Boot$18("lgt:acc-item"));
-            componentFactoryRegistry.registerComponentFactory("lgt:modal", new Boot.Boot$19("lgt:modal"));
-            componentFactoryRegistry.registerComponentFactory("lgt:bcr", new Boot.Boot$20("lgt:bcr"));
-            componentFactoryRegistry.registerComponentFactory("lgt:bcr-item", new Boot.Boot$21("lgt:bcr-item"));
-            componentFactoryRegistry.registerComponentFactory("lgt:accitem", new Boot.Boot$22("lgt:accitem"));
-            componentFactoryRegistry.registerComponentFactory("lgt:btn", new Boot.Boot$23("lgt:btn"));
-            componentFactoryRegistry.registerComponentFactory("lgt:icon-btn", new Boot.Boot$24("lgt:icon-btn"));
-            componentFactoryRegistry.registerComponentFactory("lgt:btn-grp", new Boot.Boot$25("lgt:btn-grp"));
-            componentFactoryRegistry.registerComponentFactory("lgt:badge", new Boot.Boot$26("lgt:badge"));
-            componentFactoryRegistry.registerComponentFactory("lgt:panel", new Boot.Boot$27("lgt:panel"));
-            componentFactoryRegistry.registerComponentFactory("lgt:panel-section", new Boot.Boot$28("lgt:panel-section"));
-            componentFactoryRegistry.registerComponentFactory("lgt:table", new Boot.Boot$29("lgt:table"));
-            componentFactoryRegistry.registerComponentFactory("zs:iterator", new Boot.Boot$30("zs:iterator"));
-            componentFactoryRegistry.registerComponentFactory("zs:iterable", new Boot.Boot$31("zs:iterable"));
-            componentFactoryRegistry.registerComponentFactory("zs:http", new Boot.Boot$32("zs:http"));
-            componentFactoryRegistry.registerComponentFactory("zs:service", new Boot.Boot$33("zs:service"));
-            componentFactoryRegistry.registerComponentFactory("lgt:soql", new Boot.Boot$34("lgt:soql"));
+            componentFactoryRegistry.registerComponentFactory("lgt:checkboxgroup", new Boot.Boot$14("lgt:checkboxgroup"));
+            componentFactoryRegistry.registerComponentFactory("lgt:grid", new Boot.Boot$15("lgt:grid"));
+            componentFactoryRegistry.registerComponentFactory("lgt:col", new Boot.Boot$16("lgt:col"));
+            componentFactoryRegistry.registerComponentFactory("lgt:avatar", new Boot.Boot$17("lgt:avatar"));
+            componentFactoryRegistry.registerComponentFactory("lgt:acc", new Boot.Boot$18("lgt:acc"));
+            componentFactoryRegistry.registerComponentFactory("lgt:acc-item", new Boot.Boot$19("lgt:acc-item"));
+            componentFactoryRegistry.registerComponentFactory("lgt:modal", new Boot.Boot$20("lgt:modal"));
+            componentFactoryRegistry.registerComponentFactory("lgt:modal-body", new Boot.Boot$21("lgt:modal-body"));
+            componentFactoryRegistry.registerComponentFactory("lgt:modal-footer", new Boot.Boot$22("lgt:modal-footer"));
+            componentFactoryRegistry.registerComponentFactory("lgt:bcr", new Boot.Boot$23("lgt:bcr"));
+            componentFactoryRegistry.registerComponentFactory("lgt:bcr-item", new Boot.Boot$24("lgt:bcr-item"));
+            componentFactoryRegistry.registerComponentFactory("lgt:accitem", new Boot.Boot$25("lgt:accitem"));
+            componentFactoryRegistry.registerComponentFactory("lgt:btn", new Boot.Boot$26("lgt:btn"));
+            componentFactoryRegistry.registerComponentFactory("lgt:icon-btn", new Boot.Boot$27("lgt:icon-btn"));
+            componentFactoryRegistry.registerComponentFactory("lgt:btn-grp", new Boot.Boot$28("lgt:btn-grp"));
+            componentFactoryRegistry.registerComponentFactory("lgt:badge", new Boot.Boot$29("lgt:badge"));
+            componentFactoryRegistry.registerComponentFactory("lgt:panel", new Boot.Boot$30("lgt:panel"));
+            componentFactoryRegistry.registerComponentFactory("lgt:panel-section", new Boot.Boot$31("lgt:panel-section"));
+            componentFactoryRegistry.registerComponentFactory("lgt:table", new Boot.Boot$32("lgt:table"));
+            componentFactoryRegistry.registerComponentFactory("lgt:popover", new Boot.Boot$33("lgt:popover"));
+            componentFactoryRegistry.registerComponentFactory("lgt:listbox", new Boot.Boot$34("lgt:listbox"));
+            componentFactoryRegistry.registerComponentFactory("lgt:listbox-item", new Boot.Boot$35("lgt:listbox-item"));
+            componentFactoryRegistry.registerComponentFactory("lgt:popover-footer-item", new Boot.Boot$36("lgt:popover-footer-item"));
+            componentFactoryRegistry.registerComponentFactory("zs:iterator", new Boot.Boot$37("zs:iterator"));
+            componentFactoryRegistry.registerComponentFactory("zs:iterable", new Boot.Boot$38("zs:iterable"));
+            componentFactoryRegistry.registerComponentFactory("zs:http", new Boot.Boot$39("zs:http"));
+            componentFactoryRegistry.registerComponentFactory("zs:service", new Boot.Boot$40("zs:service"));
+            componentFactoryRegistry.registerComponentFactory("lgt:soql", new Boot.Boot$41("lgt:soql"));
             factory.addBean("framework.builder.libraries.ComponentFactoryRegistry", componentFactoryRegistry);
             factory.addBean("framework.builder.data.DataEnvironment", new framework.builder.data.BasicDataEnvironment());
             factory.addBean("framework.builder.data.ProjectService", new framework.builder.data.HerokuProjectService());
@@ -3103,7 +3050,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.designables.JSDesignableLightningInput("Input Element");
+                return new framework.lightning.designables.JSDesignableFormElement("Input Element");
             }
 
             constructor(__arg0: any) {
@@ -3121,7 +3068,11 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.designables.JSDesignableLightningGrid("Grid");
+                let grp : framework.lightning.CheckBoxGroup = new framework.lightning.CheckBoxGroup("Input Element");
+                grp.addOption(new framework.design.Option("Option 1", "opt1"));
+                grp.addOption(new framework.design.Option("Option 2", "opt2"));
+                grp.addOption(new framework.design.Option("Option 3", "opt3"));
+                return grp;
             }
 
             constructor(__arg0: any) {
@@ -3139,7 +3090,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.Col("Col");
+                return new framework.lightning.designables.JSDesignableLightningGrid("Grid");
             }
 
             constructor(__arg0: any) {
@@ -3157,7 +3108,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.Avatar("Avatar");
+                return new framework.lightning.Col("Col");
             }
 
             constructor(__arg0: any) {
@@ -3175,7 +3126,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.Accordion("Accordion");
+                return new framework.lightning.Avatar("Avatar");
             }
 
             constructor(__arg0: any) {
@@ -3193,7 +3144,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.AccordionItem("Item", "Accordion Item");
+                return new framework.lightning.Accordion("Accordion");
             }
 
             constructor(__arg0: any) {
@@ -3211,7 +3162,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.designables.JSDesignableModal("Modal");
+                return new framework.lightning.AccordionItem("Item", "Accordion Item");
             }
 
             constructor(__arg0: any) {
@@ -3229,7 +3180,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.BreadCrumbs("BreadCrumb");
+                return new framework.lightning.designables.JSDesignableModal("Modal");
             }
 
             constructor(__arg0: any) {
@@ -3247,7 +3198,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.BreadCrumbItem("Item", "Item");
+                return new framework.lightning.ModalBody("body");
             }
 
             constructor(__arg0: any) {
@@ -3265,7 +3216,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.AccordionItem("Item", "Accordion Item");
+                return new framework.lightning.ModalFooter("Modal");
             }
 
             constructor(__arg0: any) {
@@ -3283,9 +3234,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                let btn : framework.designables.JSDesignableButton = new framework.designables.JSDesignableButton("Button");
-                btn.setLabel("Button");
-                return btn;
+                return new framework.lightning.BreadCrumbs("BreadCrumb");
             }
 
             constructor(__arg0: any) {
@@ -3303,8 +3252,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                let btn : framework.lightning.IconButton = new framework.lightning.IconButton("Icon Button");
-                return btn;
+                return new framework.lightning.BreadCrumbItem("Item", "Item");
             }
 
             constructor(__arg0: any) {
@@ -3322,7 +3270,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.ButtonGroup("Button Group");
+                return new framework.lightning.AccordionItem("Item", "Accordion Item");
             }
 
             constructor(__arg0: any) {
@@ -3340,7 +3288,9 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.Badge("Badge", "div");
+                let btn : framework.designables.JSDesignableButton = new framework.designables.JSDesignableButton("Button");
+                btn.setLabel("Button");
+                return btn;
             }
 
             constructor(__arg0: any) {
@@ -3358,7 +3308,8 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.Panel("Panel");
+                let btn : framework.lightning.IconButton = new framework.lightning.IconButton("Icon Button");
+                return btn;
             }
 
             constructor(__arg0: any) {
@@ -3376,7 +3327,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.PanelSection("Section", "div");
+                return new framework.lightning.ButtonGroup("Button Group");
             }
 
             constructor(__arg0: any) {
@@ -3394,7 +3345,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.designables.JSDesignableTable("Table");
+                return new framework.lightning.Badge("Badge", "div");
             }
 
             constructor(__arg0: any) {
@@ -3412,7 +3363,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.designables.JSDesignableIterator("Iterator");
+                return new framework.lightning.Panel("Panel");
             }
 
             constructor(__arg0: any) {
@@ -3430,7 +3381,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.designables.JSDesignableIterable("Iterable", "div");
+                return new framework.lightning.PanelSection("Section", "div");
             }
 
             constructor(__arg0: any) {
@@ -3448,7 +3399,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.designables.JSDesignableHTTP();
+                return new framework.lightning.designables.JSDesignableTable("Table");
             }
 
             constructor(__arg0: any) {
@@ -3466,7 +3417,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.designables.JSDesignableService();
+                return new framework.lightning.ListPopOver("Pop Over");
             }
 
             constructor(__arg0: any) {
@@ -3484,7 +3435,7 @@ namespace framework {
              * @return {*}
              */
             public createInstance(designMode : boolean) : framework.design.Designable {
-                return new framework.lightning.designables.JSDesignableSOQL("soql");
+                return new framework.lightning.ListBox("List");
             }
 
             constructor(__arg0: any) {
@@ -3492,6 +3443,132 @@ namespace framework {
             }
         }
         Boot$34["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+
+
+
+        export class Boot$35 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             * 
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            public createInstance(designMode : boolean) : framework.design.Designable {
+                return new framework.lightning.ListBoxItem("List Item");
+            }
+
+            constructor(__arg0: any) {
+                super(__arg0);
+            }
+        }
+        Boot$35["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+
+
+
+        export class Boot$36 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             * 
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            public createInstance(designMode : boolean) : framework.design.Designable {
+                return new framework.lightning.PopOverFooterItem("Footer Item");
+            }
+
+            constructor(__arg0: any) {
+                super(__arg0);
+            }
+        }
+        Boot$36["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+
+
+
+        export class Boot$37 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             * 
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            public createInstance(designMode : boolean) : framework.design.Designable {
+                return new framework.lightning.designables.JSDesignableIterator("Iterator");
+            }
+
+            constructor(__arg0: any) {
+                super(__arg0);
+            }
+        }
+        Boot$37["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+
+
+
+        export class Boot$38 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             * 
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            public createInstance(designMode : boolean) : framework.design.Designable {
+                return new framework.lightning.designables.JSDesignableIterable("Iterable", "div");
+            }
+
+            constructor(__arg0: any) {
+                super(__arg0);
+            }
+        }
+        Boot$38["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+
+
+
+        export class Boot$39 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             * 
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            public createInstance(designMode : boolean) : framework.design.Designable {
+                return new framework.designables.JSDesignableHTTP();
+            }
+
+            constructor(__arg0: any) {
+                super(__arg0);
+            }
+        }
+        Boot$39["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+
+
+
+        export class Boot$40 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             * 
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            public createInstance(designMode : boolean) : framework.design.Designable {
+                return new framework.designables.JSDesignableService();
+            }
+
+            constructor(__arg0: any) {
+                super(__arg0);
+            }
+        }
+        Boot$40["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+
+
+
+        export class Boot$41 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             * 
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            public createInstance(designMode : boolean) : framework.design.Designable {
+                return new framework.lightning.designables.JSDesignableSOQL("soql");
+            }
+
+            constructor(__arg0: any) {
+                super(__arg0);
+            }
+        }
+        Boot$41["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
 
 
     }
@@ -3644,8 +3721,8 @@ namespace framework.design {
          */
         public getEditor(designable : framework.design.Designable) : framework.builder.properties.PropertyEditor {
             let editor : framework.builder.properties.TagEditor = new framework.builder.properties.TagEditor("tagEditor");
-            for(let index13410=0; index13410 < this.options.length; index13410++) {
-                let opt = this.options[index13410];
+            for(let index6700=0; index6700 < this.options.length; index6700++) {
+                let opt = this.options[index6700];
                 {
                     editor.addOption(new framework.JSOption(opt.text, opt.value));
                 }
@@ -3787,8 +3864,8 @@ namespace framework {
         public fireListener(key : string, evt : Event) {
             let listeners : Array<framework.EventListener> = <Array<framework.EventListener>>this.getListeners()[key];
             if(listeners != null && listeners.length > 0) {
-                for(let index13411=0; index13411 < listeners.length; index13411++) {
-                    let l = listeners[index13411];
+                for(let index6701=0; index6701 < listeners.length; index6701++) {
+                    let l = listeners[index6701];
                     {
                         l.performAction(this, evt);
                     }
@@ -3806,8 +3883,8 @@ namespace framework {
             if(/* startsWith */((str, searchString, position = 0) => str.substr(position, searchString.length) === searchString)(path, "/")) {
                 current = (<any>(this.getAncestorWithClass<any>("visual-editor"))).getRootItem();
             }
-            for(let index13412=0; index13412 < sectins.length; index13412++) {
-                let s = sectins[index13412];
+            for(let index6702=0; index6702 < sectins.length; index6702++) {
+                let s = sectins[index6702];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(s,".."))) {
                         while((true)) {
@@ -3859,9 +3936,9 @@ namespace framework {
         /*private*/ findDesignable(des : framework.design.Designable, name : string, index : number) : framework.Renderable {
             let candidates : Array<framework.design.Designable> = <any>(new Array<framework.design.Designable>());
             {
-                let array13414 = des.getDesignables();
-                for(let index13413=0; index13413 < array13414.length; index13413++) {
-                    let d = array13414[index13413];
+                let array6704 = des.getDesignables();
+                for(let index6703=0; index6703 < array6704.length; index6703++) {
+                    let d = array6704[index6703];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(d.getName(),name))) {
                             candidates.push(d);
@@ -3879,9 +3956,9 @@ namespace framework {
 
         public getChild(name : string) : framework.Renderable {
             {
-                let array13416 = this.getChildren();
-                for(let index13415=0; index13415 < array13416.length; index13415++) {
-                    let child = array13416[index13415];
+                let array6706 = this.getChildren();
+                for(let index6705=0; index6705 < array6706.length; index6705++) {
+                    let child = array6706[index6705];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(child.getName(),name))) {
                             return child;
@@ -4013,8 +4090,8 @@ namespace framework {
             }
             let aStyles : string[] = styles.split(" ");
             let add : boolean = true;
-            for(let index13417=0; index13417 < aStyles.length; index13417++) {
-                let style = aStyles[index13417];
+            for(let index6707=0; index6707 < aStyles.length; index6707++) {
+                let style = aStyles[index6707];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(style.trim(),styleClass))) {
                         add = false;
@@ -4062,9 +4139,9 @@ namespace framework {
             let children : Array<JSContainer> = <any>(new Array<JSContainer>());
             let i : number = 0;
             {
-                let array13419 = this.getChildren();
-                for(let index13418=0; index13418 < array13419.length; index13418++) {
-                    let c = array13419[index13418];
+                let array6709 = this.getChildren();
+                for(let index6708=0; index6708 < array6709.length; index6708++) {
+                    let c = array6709[index6708];
                     {
                         if(i === index) {
                             children.push(c);
@@ -4308,9 +4385,9 @@ namespace framework {
             this.d["rendered"] = b;
             if(!b) {
                 {
-                    let array13421 = this.getChildren();
-                    for(let index13420=0; index13420 < array13421.length; index13420++) {
-                        let child = array13421[index13420];
+                    let array6711 = this.getChildren();
+                    for(let index6710=0; index6710 < array6711.length; index6710++) {
+                        let child = array6711[index6710];
                         {
                             child.setRendered(b);
                         }
@@ -4352,8 +4429,8 @@ namespace framework {
         }
 
         contains(lst : Array<any>, o : any) : boolean {
-            for(let index13422=0; index13422 < lst.length; index13422++) {
-                let oo = lst[index13422];
+            for(let index6712=0; index6712 < lst.length; index6712++) {
+                let oo = lst[index6712];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(oo,o))) {
                         return true;
@@ -4373,29 +4450,29 @@ namespace framework {
             if(!this.contains(renderers, JSContainer.defaultRenderer_$LI$())) {
                 let tmp : Array<framework.renderer.Renderer<any>> = <any>(new Array<framework.renderer.Renderer<any>>());
                 tmp.push(JSContainer.defaultRenderer_$LI$());
-                for(let index13423=0; index13423 < renderers.length; index13423++) {
-                    let r = renderers[index13423];
+                for(let index6713=0; index6713 < renderers.length; index6713++) {
+                    let r = renderers[index6713];
                     {
                         tmp.push(r);
                     }
                 }
                 renderers = tmp;
             }
-            for(let index13424=0; index13424 < renderers.length; index13424++) {
-                let renderer = renderers[index13424];
+            for(let index6714=0; index6714 < renderers.length; index6714++) {
+                let renderer = renderers[index6714];
                 renderer.doRender(this, parent)
             }
             {
-                let array13426 = this.getChildren();
-                for(let index13425=0; index13425 < array13426.length; index13425++) {
-                    let child = array13426[index13425];
+                let array6716 = this.getChildren();
+                for(let index6715=0; index6715 < array6716.length; index6715++) {
+                    let child = array6716[index6715];
                     {
                         child.render();
                     }
                 }
             }
-            for(let index13427=0; index13427 < renderers.length; index13427++) {
-                let renderer = renderers[index13427];
+            for(let index6717=0; index6717 < renderers.length; index6717++) {
+                let renderer = renderers[index6717];
                 {
                     if(renderer != null && (renderer["__interfaces"] != null && renderer["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0 || renderer.constructor != null && renderer.constructor["__interfaces"] != null && renderer.constructor["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0)) (<framework.renderer.ExtendedRenderer<any>><any>renderer).postRender(this, parent);
                 }
@@ -4441,9 +4518,9 @@ namespace framework {
             let clsss : string = parent.getAttribute("class");
             if(clsss != null) {
                 {
-                    let array13429 = parent.getAttribute("class").split(" ");
-                    for(let index13428=0; index13428 < array13429.length; index13428++) {
-                        let s = array13429[index13428];
+                    let array6719 = parent.getAttribute("class").split(" ");
+                    for(let index6718=0; index6718 < array6719.length; index6718++) {
+                        let s = array6719[index6718];
                         {
                             if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(s.trim(),cls))) return <T>parent;
                         }
@@ -4889,7 +4966,7 @@ namespace framework.builder.editors {
 
         public build(component : framework.builder.marshalling.Component) : framework.design.Designable {
             framework.builder.marshalling.MarshallUtil.generateController(component);
-            return framework.builder.marshalling.MarshallUtil.toDesignable(component);
+            return framework.builder.marshalling.MarshallUtil.toDesignable(component, false, null);
         }
 
         public consume(component : framework.builder.marshalling.Component) {
@@ -5069,9 +5146,9 @@ namespace framework.builder.editors {
 
         public getItem$framework_design_Designable$framework_JSContainer(designable : framework.design.Designable, currentNode : framework.JSContainer) : framework.builder.editors.StructureTreeItem {
             {
-                let array13431 = currentNode.getChildren();
-                for(let index13430=0; index13430 < array13431.length; index13430++) {
-                    let des = array13431[index13430];
+                let array6721 = currentNode.getChildren();
+                for(let index6720=0; index6720 < array6721.length; index6720++) {
+                    let des = array6721[index6720];
                     {
                         if(des != null && des instanceof <any>framework.builder.editors.StructureTreeItem) {
                             let titem : framework.builder.editors.StructureTreeItem = <framework.builder.editors.StructureTreeItem>des;
@@ -5134,16 +5211,16 @@ namespace framework.builder.editors {
 
         public renderFiles() {
             {
-                let array13433 = this.lis.keySet();
-                for(let index13432=0; index13432 < array13433.length; index13432++) {
-                    let type = array13433[index13432];
+                let array6723 = this.lis.keySet();
+                for(let index6722=0; index6722 < array6723.length; index6722++) {
+                    let type = array6723[index6722];
                     {
                         let cstylesheets : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                         if(this.file.getChild(type) != null) {
                             {
-                                let array13435 = this.file.getChild(type).getChildren();
-                                for(let index13434=0; index13434 < array13435.length; index13434++) {
-                                    let f = array13435[index13434];
+                                let array6725 = this.file.getChild(type).getChildren();
+                                for(let index6724=0; index6724 < array6725.length; index6724++) {
+                                    let f = array6725[index6724];
                                     {
                                         let item : framework.TreeItem = new framework.builder.editors.FileTreeItem(f, type, framework.builder.Builder.getInstance(), this);
                                         item.addEventListener(this.toggleSelect, "click");
@@ -5169,9 +5246,9 @@ namespace framework.builder.editors {
                 let children : framework.JSContainer = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                 li.addChild$framework_JSContainer(children);
                 {
-                    let array13437 = ctn.getDesignables();
-                    for(let index13436=0; index13436 < array13437.length; index13436++) {
-                        let c = array13437[index13436];
+                    let array6727 = ctn.getDesignables();
+                    for(let index6726=0; index6726 < array6727.length; index6726++) {
+                        let c = array6727[index6726];
                         {
                             let child : framework.JSContainer = new framework.JSContainer("li");
                             children.addChild$framework_JSContainer(child);
@@ -5308,8 +5385,8 @@ namespace framework.builder {
         }
 
         public fireItemSelectedListeners(file : framework.builder.UIFile, selector : framework.builder.ItemSelector) {
-            for(let index13438=0; index13438 < this.itemSelectedListeners.length; index13438++) {
-                let l = this.itemSelectedListeners[index13438];
+            for(let index6728=0; index6728 < this.itemSelectedListeners.length; index6728++) {
+                let l = this.itemSelectedListeners[index6728];
                 {
                     l.itemSelected(file, selector);
                 }
@@ -5318,9 +5395,9 @@ namespace framework.builder {
 
         public select(file : framework.builder.UIFile) {
             {
-                let array13440 = this.getChildren();
-                for(let index13439=0; index13439 < array13440.length; index13439++) {
-                    let c = array13440[index13439];
+                let array6730 = this.getChildren();
+                for(let index6729=0; index6729 < array6730.length; index6729++) {
+                    let c = array6730[index6729];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(c.getChildren()[0].getName(),file.getName()))) {
                             this.fireItemSelectedListeners(file, this.selector);
@@ -5449,9 +5526,9 @@ namespace framework.builder {
                 Previewer.project = f;
                 let preview : framework.builder.editors.Preview = new framework.builder.editors.Preview(f);
                 {
-                    let array13442 = f.getStylesheets();
-                    for(let index13441=0; index13441 < array13442.length; index13441++) {
-                        let sc = array13442[index13441];
+                    let array6732 = f.getStylesheets();
+                    for(let index6731=0; index6731 < array6732.length; index6731++) {
+                        let sc = array6732[index6731];
                         {
                             let elem : HTMLElement = document.createElement("style");
                             elem.textContent = sc.getData();
@@ -5460,9 +5537,9 @@ namespace framework.builder {
                     }
                 }
                 {
-                    let array13444 = f.getScripts();
-                    for(let index13443=0; index13443 < array13444.length; index13443++) {
-                        let sc = array13444[index13443];
+                    let array6734 = f.getScripts();
+                    for(let index6733=0; index6733 < array6734.length; index6733++) {
+                        let sc = array6734[index6733];
                         {
                             let elem : HTMLElement = document.createElement("script");
                             elem.textContent = sc.getData();
@@ -5471,9 +5548,9 @@ namespace framework.builder {
                     }
                 }
                 {
-                    let array13446 = f.getTemplates();
-                    for(let index13445=0; index13445 < array13446.length; index13445++) {
-                        let sc = array13446[index13445];
+                    let array6736 = f.getTemplates();
+                    for(let index6735=0; index6735 < array6736.length; index6735++) {
+                        let sc = array6736[index6735];
                         {
                             let elem : HTMLElement = document.createElement("div");
                             elem.setAttribute("id", /* replace */sc.getName().split(".html").join(""));
@@ -5729,6 +5806,7 @@ namespace framework.designables {
 
         public constructor(name : string, tag : string) {
             super(name, tag);
+            this.setAttribute("identifier", "html:div");
         }
 
         /**
@@ -6011,9 +6089,9 @@ namespace framework.designables {
             let dec : string = this.getAttribute("decorate-class");
             if(dec != null) {
                 {
-                    let array13448 = this.getChildren();
-                    for(let index13447=0; index13447 < array13448.length; index13447++) {
-                        let c = array13448[index13447];
+                    let array6738 = this.getChildren();
+                    for(let index6737=0; index6737 < array6738.length; index6737++) {
+                        let c = array6738[index6737];
                         {
                             c.setAttribute("class", dec);
                         }
@@ -6023,9 +6101,9 @@ namespace framework.designables {
             let decStyle : string = this.getAttribute("decorate-style");
             if(decStyle != null) {
                 {
-                    let array13450 = this.getChildren();
-                    for(let index13449=0; index13449 < array13450.length; index13449++) {
-                        let c = array13450[index13449];
+                    let array6740 = this.getChildren();
+                    for(let index6739=0; index6739 < array6740.length; index6739++) {
+                        let c = array6740[index6739];
                         {
                             c.setAttribute("style", decStyle);
                         }
@@ -6087,8 +6165,8 @@ namespace framework.designables {
         public removeDesignable(designable : framework.design.Designable) {
             this.removeChild(designable.getParent());
             let tmp : Array<framework.design.Designable> = <any>(new Array<framework.design.Designable>());
-            for(let index13451=0; index13451 < this.designables.length; index13451++) {
-                let d = this.designables[index13451];
+            for(let index6741=0; index6741 < this.designables.length; index6741++) {
+                let d = this.designables[index6741];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(d,designable))) {
                     } else {
@@ -6168,14 +6246,6 @@ namespace framework {
             } else throw new Error('invalid overload');
         }
 
-        /**
-         * 
-         * @param {string} value
-         */
-        public setRawValue(value : string) {
-            this.setAttribute("value", value);
-        }
-
         public isChecked() : boolean {
             return this.getValue();
         }
@@ -6241,14 +6311,6 @@ namespace framework {
                 return <any>this.setValue$java_lang_String(val);
             } else throw new Error('invalid overload');
         }
-
-        /**
-         * 
-         * @param {string} value
-         */
-        public setRawValue(value : string) {
-            this.setAttribute("value", value);
-        }
     }
     JSInput["__class"] = "framework.JSInput";
     JSInput["__interfaces"] = ["framework.interactions.Droppable","framework.InputField","framework.Renderable"];
@@ -6293,7 +6355,7 @@ namespace framework {
 
 }
 namespace framework {
-    export class JSSelect extends framework.JSContainer implements framework.InputField<string> {
+    export class JSSelect extends framework.JSContainer implements framework.InputField<any> {
         /*private*/ previousValue : string;
 
         public constructor(name : string) {
@@ -6306,23 +6368,52 @@ namespace framework {
             return this;
         }
 
+        public setMultiple(b : boolean) {
+            if(b) {
+                this.setAttribute("multiple", "true");
+            } else {
+                this.setAttribute("multiple", null);
+            }
+        }
+
+        public setSize(size : number) {
+            this.setAttribute("size", size + "");
+        }
+
+        public isMultiple() : boolean {
+            return /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",this.getAttribute("multiple")));
+        }
+
         /**
          * 
-         * @return {string}
+         * @return {*}
          */
-        public getValue() : string {
+        public getValue() : any {
             let ele : HTMLSelectElement = <HTMLSelectElement>this.getNative();
             if(ele != null) {
-                return ele.value;
-            }
-            let val : string = this.getAttribute("value");
-            {
-                let array13453 = this.getChildren();
-                for(let index13452=0; index13452 < array13453.length; index13452++) {
-                    let opt = array13453[index13452];
-                    {
-                        if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
-                            return (<framework.JSOption>opt).getValue();
+                if(ele.multiple) {
+                    let result : Array<string> = <any>(new Array<string>());
+                    for(let index6742=0; index6742 < ele.selectedOptions.length; index6742++) {
+                        let e = ele.selectedOptions[index6742];
+                        {
+                            let opt : HTMLOptionElement = <HTMLOptionElement>e;
+                            result.push(opt.value);
+                        }
+                    }
+                    return result;
+                } else {
+                    return ele.value;
+                }
+            } else {
+                let val : string = this.getAttribute("value");
+                {
+                    let array6744 = this.getChildren();
+                    for(let index6743=0; index6743 < array6744.length; index6743++) {
+                        let opt = array6744[index6743];
+                        {
+                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
+                                return (<framework.JSOption>opt).getValue();
+                            }
                         }
                     }
                 }
@@ -6330,46 +6421,73 @@ namespace framework {
             return null;
         }
 
-        public setValue$java_lang_String(val : string) {
-            this.previousValue = this.getValue();
-            let ele : HTMLSelectElement = <HTMLSelectElement>this.getNative();
-            if(ele != null) {
-                ele.value = val;
-            }
-            this.setAttribute("value", val);
-            {
-                let array13455 = this.getChildren();
-                for(let index13454=0; index13454 < array13455.length; index13454++) {
-                    let opt = array13455[index13454];
-                    {
-                        if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
-                            (<framework.JSOption>opt).setSelected(true);
+        /**
+         * 
+         * @param {boolean} b
+         */
+        public setValue(b? : any) : any {
+            if(((b != null) || b === null)) {
+                return <any>this.setValue$java_lang_Object(b);
+            } else throw new Error('invalid overload');
+        }
+
+        public setValue$java_lang_Object(values : any) {
+            this.previousValue = <string>this.getValue();
+            if(values != null) {
+                let ele : HTMLSelectElement = <HTMLSelectElement>this.getNative();
+                let firstVal : string = values.toString();
+                let arrVal : Array<string> = <any>(new Array<string>());
+                if(values != null && values instanceof <any>Array) {
+                    arrVal = <Array<any>>values;
+                    if(arrVal.length > 0) {
+                        firstVal = arrVal[0];
+                    } else {
+                        firstVal = "";
+                    }
+                } else {
+                    arrVal.push(<string>values);
+                }
+                if(ele != null) {
+                    ele.value = firstVal;
+                }
+                this.setAttribute("value", firstVal);
+                {
+                    let array6746 = this.getChildren();
+                    for(let index6745=0; index6745 < array6746.length; index6745++) {
+                        let opt = array6746[index6745];
+                        {
+                            (<framework.JSOption>opt).setSelected(false);
+                            for(let index6747=0; index6747 < arrVal.length; index6747++) {
+                                let val = arrVal[index6747];
+                                {
+                                    if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(opt.getAttribute("value"),val))) {
+                                        (<framework.JSOption>opt).setSelected(true);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
+            } else {
+                {
+                    let array6749 = this.getChildren();
+                    for(let index6748=0; index6748 < array6749.length; index6748++) {
+                        let opt = array6749[index6748];
+                        {
+                            (<framework.JSOption>opt).setSelected(false);
+                        }
+                    }
+                }
+                let ele : HTMLSelectElement = <HTMLSelectElement>this.getNative();
+                if(ele != null) {
+                    ele.value = "";
+                }
+                this.setAttribute("value", "");
             }
-        }
-
-        /**
-         * 
-         * @param {string} val
-         */
-        public setValue(val? : any) : any {
-            if(((typeof val === 'string') || val === null)) {
-                return <any>this.setValue$java_lang_String(val);
-            } else throw new Error('invalid overload');
         }
 
         public getPreviousValue() : string {
             return this.previousValue;
-        }
-
-        /**
-         * 
-         * @param {string} value
-         */
-        public setRawValue(value : string) {
-            this.setAttribute("value", value);
         }
     }
     JSSelect["__class"] = "framework.JSSelect";
@@ -6420,14 +6538,6 @@ namespace framework {
             if(((typeof val === 'string') || val === null)) {
                 return <any>this.setValue$java_lang_String(val);
             } else throw new Error('invalid overload');
-        }
-
-        /**
-         * 
-         * @param {string} value
-         */
-        public setRawValue(value : string) {
-            this.setAttribute("value", value);
         }
     }
     JSTextArea["__class"] = "framework.JSTextArea";
@@ -6543,8 +6653,8 @@ namespace framework.lightning {
          */
         public removeDesignable(designable : framework.design.Designable) {
             let result : Array<framework.design.Designable> = <any>(new Array<framework.design.Designable>());
-            for(let index13456=0; index13456 < this.designables.length; index13456++) {
-                let des = this.designables[index13456];
+            for(let index6750=0; index6750 < this.designables.length; index6750++) {
+                let des = this.designables[index6750];
                 {
                     if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(des,designable))) {
                     } else {
@@ -7171,116 +7281,6 @@ namespace framework.lightning {
 
 }
 namespace framework.lightning {
-    export class Button extends framework.JSContainer {
-        static states : string[]; public static states_$LI$() : string[] { if(Button.states == null) Button.states = ["neutral", "brand", "destructive", "success"]; return Button.states; };
-
-        public static STATE_NEUTRAL : string = "neutral";
-
-        public static STATE_BRAND : string = "brand";
-
-        public static STATE_DESTRUCTIVE : string = "destructive";
-
-        public static STATE_SUCCESS : string = "success";
-
-        /*private*/ component : framework.builder.marshalling.Component;
-
-        public constructor(name? : any) {
-            if(((typeof name === 'string') || name === null)) {
-                let __args = Array.prototype.slice.call(arguments);
-                super(name, "button");
-                this.component = new framework.builder.marshalling.Component();
-                (() => {
-                    this.addClass("slds-button");
-                    this.setAttribute("state", "neutral");
-                    this.setState(Button.STATE_NEUTRAL);
-                })();
-            } else if(name === undefined) {
-                let __args = Array.prototype.slice.call(arguments);
-                {
-                    let __args = Array.prototype.slice.call(arguments);
-                    let name : any = "Button";
-                    super(name, "button");
-                    this.component = new framework.builder.marshalling.Component();
-                    (() => {
-                        this.addClass("slds-button");
-                        this.setAttribute("state", "neutral");
-                        this.setState(Button.STATE_NEUTRAL);
-                    })();
-                }
-            } else throw new Error('invalid overload');
-        }
-
-        public addIcon(icon : framework.lightning.SvgIcon) : Button {
-            this.addClass("slds-button_icon");
-            this.addChild$framework_JSContainer(icon);
-            return this;
-        }
-
-        public setLabel(label : string) : Button {
-            this.setHtml(label);
-            return this;
-        }
-
-        public setState(state : string) : Button {
-            for(let index13457=0; index13457 < Button.states_$LI$().length; index13457++) {
-                let s = Button.states_$LI$()[index13457];
-                {
-                    this.removeClass("slds-button_" + s);
-                }
-            }
-            this.addClass("slds-button_" + state);
-            return this;
-        }
-
-        public setInverse(b : boolean) : Button {
-            if(b) {
-                this.addClass("slds-button_inverse");
-            } else {
-                this.removeClass("slds-button_inverse");
-            }
-            return this;
-        }
-
-        public setDisabled(b : boolean) : Button {
-            if(b) {
-                this.addClass("slds-button_disabled");
-            } else {
-                this.removeClass("slds-button_disabled");
-            }
-            return this;
-        }
-
-        public setStateful(b : boolean) : Button {
-            if(b) {
-                this.addClass("slds-button_stateful");
-            } else {
-                this.removeClass("slds-button_stateful");
-            }
-            return this;
-        }
-
-        public setParameter(key : string, value : string) {
-            this.component.parameters[key] = value;
-            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"state"))) {
-                this.setState(value);
-            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"stateful"))) {
-                this.setStateful(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
-            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"disabled"))) {
-                this.setDisabled(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
-            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"inverse"))) {
-                this.setInverse(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
-            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"label"))) {
-                this.setLabel(value);
-            } else {
-            }
-        }
-    }
-    Button["__class"] = "framework.lightning.Button";
-    Button["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
-
-
-}
-namespace framework.lightning {
     export class ButtonGroup extends framework.JSContainer implements framework.design.Designable {
         /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
 
@@ -7485,13 +7485,6 @@ namespace framework.lightning {
             } else throw new Error('invalid overload');
         }
 
-        /**
-         * 
-         * @param {string} value
-         */
-        public setRawValue(value : string) {
-        }
-
         public toggle() {
             this.checkbox.setValue$java_lang_Boolean(!this.checkbox.getValue());
         }
@@ -7538,130 +7531,6 @@ namespace framework.lightning {
     }
     CheckBoxButtonGroup["__class"] = "framework.lightning.CheckBoxButtonGroup";
     CheckBoxButtonGroup["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
-
-
-}
-namespace framework.lightning {
-    export class Col extends framework.JSContainer implements framework.design.Designable {
-        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
-
-        public constructor(name : string) {
-            super(name, "div");
-            this.addClass("slds-col");
-            this.setAttribute("sections", "12");
-            this.setAttribute("span", "3");
-            this.refreshCls();
-        }
-
-        public setSections(sections : string) {
-            this.setAttribute("sections", sections);
-            this.refreshCls();
-        }
-
-        public setSpan(span : string) {
-            this.setAttribute("span", span);
-            this.refreshCls();
-        }
-
-        public getSpan() : number {
-            return parseInt(this.getAttribute("span"));
-        }
-
-        public getSections() : number {
-            return parseInt(this.getAttribute("sections"));
-        }
-
-        public refreshCls() {
-            let cls : string[] = this.getAttribute("class").split(" ");
-            let ncls : string = "";
-            for(let index13458=0; index13458 < cls.length; index13458++) {
-                let cl = cls[index13458];
-                {
-                    if(/* startsWith */((str, searchString, position = 0) => str.substr(position, searchString.length) === searchString)(cl, "slds-size_")) {
-                    } else {
-                        ncls = ncls + " " + cl;
-                    }
-                }
-            }
-            this.setAttribute("class", ncls);
-            this.addClass("slds-size_" + this.getAttribute("span") + "-of-" + this.getAttribute("sections"));
-        }
-
-        /**
-         * 
-         * @param {string} key
-         * @param {string} value
-         */
-        public applyParam(key : string, value : string) {
-            this.delegate.applyParameter(key, value, true);
-            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"sections"))) {
-                this.setSections(value);
-            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"span"))) {
-                this.setSpan(value);
-            }
-        }
-
-        /**
-         * 
-         * @return {*[]}
-         */
-        public getDesignables() : Array<framework.design.Designable> {
-            let res : Array<any> = this.getChildren();
-            return res;
-        }
-
-        /**
-         * 
-         * @return {framework.builder.marshalling.Component}
-         */
-        public getComponent() : framework.builder.marshalling.Component {
-            return this.delegate.getComponent();
-        }
-
-        /**
-         * 
-         * @return {framework.design.Parameter[]}
-         */
-        public getParameters() : Array<framework.design.Parameter> {
-            let pa : Array<framework.design.Parameter> = this.delegate.getParameters();
-            let sections : framework.design.AttributeParameter = new framework.design.AttributeParameter("sections", "Grid Size", "Basic");
-            sections.options.push(new framework.design.Option("12", "12"));
-            sections.options.push(new framework.design.Option("6", "6"));
-            sections.options.push(new framework.design.Option("4", "4"));
-            sections.options.push(new framework.design.Option("3", "3"));
-            sections.options.push(new framework.design.Option("2", "2"));
-            sections.options.push(new framework.design.Option("1", "1"));
-            let span : framework.design.AttributeParameter = new framework.design.AttributeParameter("span", "Col Span", "Basic");
-            pa.push(sections, span);
-            return pa;
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public addDesignable(designable : framework.design.Designable) {
-            this.addChild$framework_JSContainer(<framework.JSContainer><any>designable);
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public removeDesignable(designable : framework.design.Designable) {
-            this.removeChild(designable);
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         * @param {number} steps
-         */
-        public moveDesignable(designable : framework.design.Designable, steps : number) {
-        }
-    }
-    Col["__class"] = "framework.lightning.Col";
-    Col["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
 
 
 }
@@ -7716,8 +7585,8 @@ namespace framework.lightning.designables {
             super.setData$java_lang_Object(obj);
             let ls : Array<Object> = <Array<Object>>obj;
             let iterable : framework.lightning.designables.JSDesignableIterable = <framework.lightning.designables.JSDesignableIterable>this.templateCtn.getChildren()[0];
-            for(let index13459=0; index13459 < ls.length; index13459++) {
-                let o = ls[index13459];
+            for(let index6751=0; index6751 < ls.length; index6751++) {
+                let o = ls[index6751];
                 {
                     let ins : framework.lightning.designables.JSDesignableIterable = iterable.Clone();
                     this.list.addChild$framework_JSContainer(ins);
@@ -7911,44 +7780,6 @@ namespace framework.lightning {
 
 
     }
-
-}
-namespace framework.lightning {
-    export class FormElement extends framework.JSContainer {
-        /*private*/ label : framework.JSContainer = new framework.JSContainer("label", "label").addClass("slds-form-element__label");
-
-        /*private*/ control : framework.JSContainer = new framework.JSContainer("div").addClass("slds-form-element__control");
-
-        public constructor(name : string, tag : string) {
-            super(name, tag);
-            this.addClass("slds-form-element");
-            this.addChild$framework_JSContainer(this.label);
-            this.addChild$framework_JSContainer(this.control);
-        }
-
-        public setLabel(label : string) : FormElement {
-            this.label.setHtml(label);
-            return this;
-        }
-
-        public setInput(input : framework.InputField<any>) : FormElement {
-            this.control.clearChildren();
-            this.control.setRendered(false);
-            this.control.addChild$framework_JSContainer(<framework.JSContainer><any>input);
-            return this;
-        }
-
-        public getInput() : framework.InputField<any> {
-            return <framework.InputField<any>><any>this.control.getChildren()[0];
-        }
-
-        public getControl() : framework.JSContainer {
-            return this.control;
-        }
-    }
-    FormElement["__class"] = "framework.lightning.FormElement";
-    FormElement["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
-
 
 }
 namespace framework.lightning {
@@ -8159,6 +7990,396 @@ namespace framework.lightning {
 
 }
 namespace framework.lightning {
+    export class ListBox extends framework.JSContainer implements framework.design.Designable {
+        /*private*/ ul : framework.JSContainer = new framework.JSContainer("ul");
+
+        public static LENGTH_5 : string = "slds-dropdown_length-5";
+
+        public static LENGTH_7 : string = "slds-dropdown_length-7";
+
+        public static LENGTH_10 : string = "slds-dropdown_length-10";
+
+        public static LENGTH_DEFAULT : string = "slds-dropdown_length-def";
+
+        /*private*/ lengthSel : string = ListBox.LENGTH_DEFAULT;
+
+        /*private*/ withIcon : boolean = false;
+
+        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
+
+        public constructor(name : string) {
+            super(name, "div");
+            this.setAttribute("identifier", "lgt:listbox");
+            this.setAttribute("role", "listbox");
+            this.addChild$framework_JSContainer(this.ul);
+            this.ul.addClass("slds-listbox");
+            this.applyParam("direction", "vertical");
+        }
+
+        public setLength(length : string) : ListBox {
+            this.lengthSel = length;
+            return this.ref();
+        }
+
+        public setWithIcon(b : boolean) : ListBox {
+            this.withIcon = b;
+            return this.ref();
+        }
+
+        public ref() : ListBox {
+            this.ul.removeClass(this.lengthSel);
+            if(this.withIcon) {
+                if(/* contains */this.lengthSel.indexOf("_length-with-icon") != -1 === false) this.lengthSel = /* replace */this.lengthSel.split("_length").join("_length-with-icon");
+            } else {
+                this.lengthSel = /* replace */this.lengthSel.split("_length-with-icon").join("_length");
+            }
+            this.ul.addClass(this.lengthSel);
+            return this;
+        }
+
+        public addItem(option : framework.lightning.ListBoxItem) : ListBox {
+            this.ul.addChild$framework_JSContainer(option);
+            return this;
+        }
+
+        public setVertical(b : boolean) : ListBox {
+            if(b) {
+                this.ul.addClass("slds-listbox_vertical");
+            } else {
+                this.ul.removeClass("slds-listbox_vertical");
+            }
+            return this;
+        }
+
+        public setHorizontal(b : boolean) : ListBox {
+            if(b) {
+                this.ul.addClass("slds-listbox_horizontal");
+            } else {
+                this.ul.removeClass("slds-listbox_horizontal");
+            }
+            return this;
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            this.delegate.applyParameter(key, value, true);
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"direction"))) {
+                if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"def"))) {
+                    this.setVertical(false);
+                    this.setHorizontal(false);
+                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"horizontal"))) {
+                    this.setVertical(false);
+                    this.setHorizontal(true);
+                } else {
+                    this.setVertical(true);
+                    this.setHorizontal(false);
+                }
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"withIcon"))) {
+                this.setWithIcon(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"length"))) {
+                this.setLength(value);
+            }
+        }
+
+        /**
+         * 
+         * @return {*[]}
+         */
+        public getDesignables() : Array<framework.design.Designable> {
+            let r : Array<any> = this.ul.getChildren();
+            return r;
+        }
+
+        /**
+         * 
+         * @return {framework.builder.marshalling.Component}
+         */
+        public getComponent() : framework.builder.marshalling.Component {
+            return this.delegate.getComponent();
+        }
+
+        /**
+         * 
+         * @return {framework.design.Parameter[]}
+         */
+        public getParameters() : Array<framework.design.Parameter> {
+            let params : Array<framework.design.Parameter> = this.delegate.getParameters();
+            let withIcon : framework.design.AttributeParameter = new framework.design.AttributeParameter("withIcon", "With Icon", "Basic");
+            withIcon.options.push(new framework.design.Option("", ""));
+            let direction : framework.design.AttributeParameter = new framework.design.AttributeParameter("direction", "Direction", "Basic");
+            direction.options.push(new framework.design.Option("Default", "def"));
+            direction.options.push(new framework.design.Option("Vertical", "vertical"));
+            direction.options.push(new framework.design.Option("Horizontal", "horizontal"));
+            let length : framework.design.AttributeParameter = new framework.design.AttributeParameter("length", "Length", "Basic");
+            length.options.push(new framework.design.Option("Default", ListBox.LENGTH_DEFAULT));
+            length.options.push(new framework.design.Option("5 Items", ListBox.LENGTH_5));
+            length.options.push(new framework.design.Option("7 Items", ListBox.LENGTH_7));
+            length.options.push(new framework.design.Option("10 Item", ListBox.LENGTH_10));
+            params.push(direction, length, withIcon);
+            return params;
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+            if(designable != null && designable instanceof <any>framework.lightning.ListBoxItem) {
+                this.addItem(<framework.lightning.ListBoxItem><any>designable);
+            } else {
+                throw new Error("Can only add component of type List Box Item in this container");
+            }
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+            this.ul.removeChild(designable);
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+        }
+    }
+    ListBox["__class"] = "framework.lightning.ListBox";
+    ListBox["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
+    export class ListBoxItem extends framework.JSContainer implements framework.design.Designable {
+        /*private*/ option : framework.lightning.ListBoxOption;
+
+        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
+
+        public constructor(name : string) {
+            super(name, "li");
+            this.option = null;
+            this.setAttribute("role", "presentation");
+            this.addClass("slds-listbox__item");
+            this.setAttribute("identifier", "lgt:listbox-item");
+            this.option = new framework.lightning.ListBoxOption("option");
+            this.addChild$framework_JSContainer(this.option);
+            this.applyParam("title", "List Item Title");
+            this.applyParam("subTitle", "Subtitle");
+            this.applyParam("type", framework.lightning.ListBoxOption.TYPE_ENTITY);
+            this.applyParam("iconName", "user");
+            this.applyParam("iconType", "utility");
+        }
+
+        public setIconType(type : string) : ListBoxItem {
+            this.option.setIconType(type);
+            return this;
+        }
+
+        public setIconName(name : string) : ListBoxItem {
+            this.option.setIconName(name);
+            return this;
+        }
+
+        public setText(text : string) : ListBoxItem {
+            this.option.setText(text);
+            return this;
+        }
+
+        public setMeta(text : string) : ListBoxItem {
+            this.option.setMeta(text);
+            return this;
+        }
+
+        public setHasMeta(b : boolean) : ListBoxItem {
+            this.option.setHasMeta(b);
+            return this;
+        }
+
+        public setType(type : string) : ListBoxItem {
+            this.option.setType(type);
+            return this;
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            this.delegate.applyParameter(key, value, true);
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"title"))) {
+                this.setText(value);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"subTitle"))) {
+                this.setMeta(value);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"iconName"))) {
+                this.setIconName(value);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"iconType"))) {
+                this.setIconType(value);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"type"))) {
+                this.setType(value);
+            }
+        }
+
+        /**
+         * 
+         * @return {*[]}
+         */
+        public getDesignables() : Array<framework.design.Designable> {
+            return <any>(new Array<framework.design.Designable>());
+        }
+
+        /**
+         * 
+         * @return {framework.builder.marshalling.Component}
+         */
+        public getComponent() : framework.builder.marshalling.Component {
+            return this.delegate.getComponent();
+        }
+
+        /**
+         * 
+         * @return {framework.design.Parameter[]}
+         */
+        public getParameters() : Array<framework.design.Parameter> {
+            let params : Array<framework.design.Parameter> = this.delegate.getParameters();
+            let title : framework.design.AttributeParameter = new framework.design.AttributeParameter("title", "Title", "Basic");
+            let subTitle : framework.design.AttributeParameter = new framework.design.AttributeParameter("subTitle", "Sub Title", "Basic");
+            let type : framework.design.AttributeParameter = new framework.design.AttributeParameter("type", "Type", "Advanced");
+            type.options.push(new framework.design.Option("Plain", framework.lightning.ListBoxOption.TYPE_PLAIN));
+            type.options.push(new framework.design.Option("Entity", framework.lightning.ListBoxOption.TYPE_ENTITY));
+            let iconType : framework.design.AttributeParameter = new framework.design.AttributeParameter("iconType", "Icon Type", "Advanced");
+            let iconName : framework.design.AttributeParameter = new framework.design.AttributeParameter("iconName", "Icon Name", "Advanced");
+            params.push(title, subTitle, type, iconType, iconName);
+            return params;
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+        }
+    }
+    ListBoxItem["__class"] = "framework.lightning.ListBoxItem";
+    ListBoxItem["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
+    export class ListBoxOption extends framework.JSContainer {
+        /*private*/ media : framework.lightning.Media;
+
+        public static TYPE_PLAIN : string = "slds-listbox__option_plain";
+
+        public static TYPE_ENTITY : string = "slds-listbox__option_entity";
+
+        /*private*/ leftIcon : framework.lightning.SvgIcon = new framework.lightning.SvgIcon("icon");
+
+        /*private*/ textElement : framework.JSContainer = new framework.JSContainer("text", "span").addClass("slds-listbox__option-text slds-listbox__option-text_entity");
+
+        /*private*/ metaElement : framework.JSContainer = new framework.JSContainer("text", "span").addClass("slds-listbox__option-meta slds-listbox__option-meta_entity");
+
+        /*private*/ plainTextElement : framework.JSContainer = new framework.JSContainer("text", "h3").addClass("slds-text-title_caps");
+
+        public constructor(name : string) {
+            super(name, "div");
+            this.media = null;
+            this.addClass("slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta");
+            this.media = new framework.lightning.Media("content");
+            this.addChild$framework_JSContainer(this.media);
+            this.media.getFigureContainer().addChild$framework_JSContainer(this.leftIcon);
+            this.leftIcon.addClass("slds-icon_container slds-icon-standard-account");
+            this.leftIcon.setSvgClass("slds-icon slds-icon_small");
+            this.media.getBodyContainer().addChild$framework_JSContainer(this.textElement);
+            this.media.getBodyContainer().addChild$framework_JSContainer(this.metaElement);
+            this.media.addChild$framework_JSContainer(this.plainTextElement);
+            this.setType(ListBoxOption.TYPE_ENTITY);
+        }
+
+        public getMedia() : framework.lightning.Media {
+            return this.media;
+        }
+
+        public setIconType(type : string) : ListBoxOption {
+            this.leftIcon.setType(type);
+            return this;
+        }
+
+        public setIconName(name : string) : ListBoxOption {
+            this.leftIcon.setIconName(name);
+            return this;
+        }
+
+        public setText(text : string) : ListBoxOption {
+            this.textElement.setHtml(text);
+            this.plainTextElement.setHtml(text);
+            return this;
+        }
+
+        public setMeta(text : string) : ListBoxOption {
+            let hasMeta : boolean = false;
+            if(text != null && text.length > 0) {
+                hasMeta = true;
+                this.metaElement.setHtml(text);
+            }
+            this.setHasMeta(hasMeta);
+            return this;
+        }
+
+        public setHasMeta(b : boolean) : ListBoxOption {
+            if(b) {
+                this.addClass("slds-listbox__option_has-meta");
+            } else {
+                this.removeClass("slds-listbox__option_has-meta");
+            }
+            this.metaElement.setVisible(b);
+            return this;
+        }
+
+        public setType(type : string) : ListBoxOption {
+            this.removeClass(ListBoxOption.TYPE_ENTITY);
+            this.removeClass(ListBoxOption.TYPE_PLAIN);
+            this.addClass(type);
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(type,ListBoxOption.TYPE_PLAIN))) {
+                this.media.getBodyContainer().setVisible(false);
+                this.media.getFigureContainer().setVisible(false);
+                this.plainTextElement.setVisible(true);
+            } else {
+                this.media.getBodyContainer().setVisible(true);
+                this.media.getFigureContainer().setVisible(true);
+                this.plainTextElement.setVisible(false);
+            }
+            return this;
+        }
+    }
+    ListBoxOption["__class"] = "framework.lightning.ListBoxOption";
+    ListBoxOption["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
     export class Lookup extends framework.JSContainer {
         public constructor(name : string) {
             super(name, "div");
@@ -8178,8 +8399,55 @@ namespace framework.lightning {
 
         public static FLOAT_NONE : string = "slds-float_none";
 
+        static Sizes : string[]; public static Sizes_$LI$() : string[] { if(LTContainer.Sizes == null) LTContainer.Sizes = ["none", "xxx-small", "xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]; return LTContainer.Sizes; };
+
+        public static PADDING_SIZE_NONE : string; public static PADDING_SIZE_NONE_$LI$() : string { if(LTContainer.PADDING_SIZE_NONE == null) LTContainer.PADDING_SIZE_NONE = LTContainer.Sizes_$LI$()[0]; return LTContainer.PADDING_SIZE_NONE; };
+
+        public static PADDING_SIZE_XXX_SMALL : string; public static PADDING_SIZE_XXX_SMALL_$LI$() : string { if(LTContainer.PADDING_SIZE_XXX_SMALL == null) LTContainer.PADDING_SIZE_XXX_SMALL = LTContainer.Sizes_$LI$()[1]; return LTContainer.PADDING_SIZE_XXX_SMALL; };
+
+        public static PADDING_SIZE_XX_SMALL : string; public static PADDING_SIZE_XX_SMALL_$LI$() : string { if(LTContainer.PADDING_SIZE_XX_SMALL == null) LTContainer.PADDING_SIZE_XX_SMALL = LTContainer.Sizes_$LI$()[2]; return LTContainer.PADDING_SIZE_XX_SMALL; };
+
+        public static PADDING_SIZE_X_SMALL : string; public static PADDING_SIZE_X_SMALL_$LI$() : string { if(LTContainer.PADDING_SIZE_X_SMALL == null) LTContainer.PADDING_SIZE_X_SMALL = LTContainer.Sizes_$LI$()[3]; return LTContainer.PADDING_SIZE_X_SMALL; };
+
+        public static PADDING_SIZE_SMALL : string; public static PADDING_SIZE_SMALL_$LI$() : string { if(LTContainer.PADDING_SIZE_SMALL == null) LTContainer.PADDING_SIZE_SMALL = LTContainer.Sizes_$LI$()[4]; return LTContainer.PADDING_SIZE_SMALL; };
+
+        public static PADDING_SIZE_MEDIUM : string; public static PADDING_SIZE_MEDIUM_$LI$() : string { if(LTContainer.PADDING_SIZE_MEDIUM == null) LTContainer.PADDING_SIZE_MEDIUM = LTContainer.Sizes_$LI$()[5]; return LTContainer.PADDING_SIZE_MEDIUM; };
+
+        public static PADDING_SIZE_LARGE : string; public static PADDING_SIZE_LARGE_$LI$() : string { if(LTContainer.PADDING_SIZE_LARGE == null) LTContainer.PADDING_SIZE_LARGE = LTContainer.Sizes_$LI$()[6]; return LTContainer.PADDING_SIZE_LARGE; };
+
+        public static PADDING_SIZE_X_LARGE : string; public static PADDING_SIZE_X_LARGE_$LI$() : string { if(LTContainer.PADDING_SIZE_X_LARGE == null) LTContainer.PADDING_SIZE_X_LARGE = LTContainer.Sizes_$LI$()[7]; return LTContainer.PADDING_SIZE_X_LARGE; };
+
+        public static PADDING_SIZE_XX_LARGE : string; public static PADDING_SIZE_XX_LARGE_$LI$() : string { if(LTContainer.PADDING_SIZE_XX_LARGE == null) LTContainer.PADDING_SIZE_XX_LARGE = LTContainer.Sizes_$LI$()[8]; return LTContainer.PADDING_SIZE_XX_LARGE; };
+
         public constructor(name : string, tag : string) {
             super(name, tag);
+        }
+
+        public setPaddingTop(size : string) : LTContainer {
+            return this.setSizeAndPosition(size, "top");
+        }
+
+        public setPaddingRight(size : string) : LTContainer {
+            return this.setSizeAndPosition(size, "right");
+        }
+
+        public setPaddingBottom(size : string) : LTContainer {
+            return this.setSizeAndPosition(size, "bottom");
+        }
+
+        public setPaddingLeft(size : string) : LTContainer {
+            return this.setSizeAndPosition(size, "left");
+        }
+
+        /*private*/ setSizeAndPosition(size : string, position : string) : LTContainer {
+            for(let index6752=0; index6752 < LTContainer.Sizes_$LI$().length; index6752++) {
+                let s = LTContainer.Sizes_$LI$()[index6752];
+                {
+                    this.removeClass("slds-p-" + position + "_" + s);
+                }
+            }
+            this.addClass("slds-p-" + position + "_" + size);
+            return this;
         }
 
         public setFloat(sfloat : string) : LTContainer {
@@ -8320,9 +8588,9 @@ namespace framework.lightning {
 
         /*private*/ header : framework.JSContainer = new framework.JSContainer("header").addClass("slds-modal__header");
 
-        /*private*/ content : framework.JSContainer = new framework.designables.JSDesignable("content", "div").addClass("slds-modal__content");
+        /*private*/ content : framework.lightning.ModalBody = new framework.lightning.ModalBody("content");
 
-        /*private*/ footer : framework.JSContainer = new framework.designables.JSDesignable("footer", "footer").addClass("slds-modal__footer");
+        /*private*/ footer : framework.lightning.ModalFooter = new framework.lightning.ModalFooter("footer");
 
         /*private*/ closeButton : framework.lightning.IconButton = new framework.lightning.IconButton("closeButton");
 
@@ -8346,6 +8614,22 @@ namespace framework.lightning {
             this.title.setHtml(stitle);
             this.closeButton.addEventListener(new Modal.Modal$0(this), "click");
             this.close();
+        }
+
+        public setFooter(footer : framework.lightning.ModalFooter) {
+            this.modalContainer.clearChildren();
+            this.modalContainer.addChild$framework_JSContainer(this.header);
+            this.modalContainer.addChild$framework_JSContainer(this.content);
+            this.modalContainer.addChild$framework_JSContainer(footer);
+            this.footer = footer;
+        }
+
+        public setBody(body : framework.lightning.ModalBody) {
+            this.modalContainer.clearChildren();
+            this.modalContainer.addChild$framework_JSContainer(this.header);
+            this.modalContainer.addChild$framework_JSContainer(body);
+            this.modalContainer.addChild$framework_JSContainer(this.footer);
+            this.content = body;
         }
 
         public getBackdrop() : framework.lightning.Backdrop {
@@ -8401,15 +8685,8 @@ namespace framework.lightning {
             return this.header;
         }
 
-        public getContent() : framework.JSContainer {
+        public getBody() : framework.lightning.ModalBody {
             return this.content;
-        }
-
-        public setBody(body : framework.JSContainer) : Modal {
-            this.content.clearChildren();
-            this.content.setRendered(false);
-            this.content.addChild$framework_JSContainer(body);
-            return this;
         }
 
         public getFooter() : framework.JSContainer {
@@ -8446,6 +8723,69 @@ namespace framework.lightning {
 
 
     }
+
+}
+namespace framework.lightning {
+    export class PopOver extends framework.JSContainer {
+        public static NUBIN_NONE : string = "slds-nubbin_none";
+
+        public static NUBIN_BOTTOM_RIGHT : string = "slds-nubbin_bottom-right";
+
+        public static NUBIN_BOTTOM_LEFT : string = "slds-nubbin_bottom-left";
+
+        public static NUBIN_TOP_RIGHT : string = "slds-nubbin_top-right";
+
+        public static NUBIN_TOP_LEFT : string = "slds-nubbin_top-left";
+
+        public static NUBIN_POSITIONS : string[]; public static NUBIN_POSITIONS_$LI$() : string[] { if(PopOver.NUBIN_POSITIONS == null) PopOver.NUBIN_POSITIONS = [PopOver.NUBIN_NONE, PopOver.NUBIN_TOP_LEFT, PopOver.NUBIN_TOP_RIGHT, PopOver.NUBIN_BOTTOM_RIGHT, PopOver.NUBIN_BOTTOM_RIGHT]; return PopOver.NUBIN_POSITIONS; };
+
+        /*private*/ body : framework.designables.JSDesignable = new framework.designables.JSDesignable("body", "div");
+
+        /*private*/ footer : framework.designables.JSDesignable = new framework.designables.JSDesignable("footer", "footer");
+
+        public constructor(name : string) {
+            super(name, "section");
+            this.setAttribute("role", "dialog");
+            this.addClass("slds-popover");
+            this.addClass("slds-dynamic-menu");
+            this.body.addClass("slds-popover__body").addClass("slds-p-horizontal_none");
+            this.footer.addClass("slds-popover__footer");
+            this.addChild$framework_JSContainer(this.body);
+            this.addChild$framework_JSContainer(this.footer);
+        }
+
+        public getFooter() : framework.designables.JSDesignable {
+            return this.footer;
+        }
+
+        public getBody() : framework.designables.JSDesignable {
+            return this.body;
+        }
+
+        public showFooter(b : boolean) : PopOver {
+            this.footer.setVisible(b);
+            return this;
+        }
+
+        public showBody(b : boolean) : PopOver {
+            this.body.setVisible(b);
+            return this;
+        }
+
+        public setNubin(position : string) : PopOver {
+            for(let index6753=0; index6753 < PopOver.NUBIN_POSITIONS_$LI$().length; index6753++) {
+                let s = PopOver.NUBIN_POSITIONS_$LI$()[index6753];
+                {
+                    this.removeClass(s);
+                }
+            }
+            this.addClass(position);
+            return this;
+        }
+    }
+    PopOver["__class"] = "framework.lightning.PopOver";
+    PopOver["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
+
 
 }
 namespace framework.lightning {
@@ -8541,6 +8881,12 @@ namespace framework.lightning {
 
         /*private*/ svgClass : string;
 
+        /*private*/ text : string;
+
+        /*private*/ showIcon : boolean;
+
+        /*private*/ isLeft : boolean;
+
         public constructor(name? : any, type? : any, iconName? : any) {
             if(((typeof name === 'string') || name === null) && ((typeof type === 'string') || type === null) && ((typeof iconName === 'string') || iconName === null)) {
                 let __args = Array.prototype.slice.call(arguments);
@@ -8549,6 +8895,9 @@ namespace framework.lightning {
                 this.type = "utility";
                 this.iconName = "settings";
                 this.svgClass = "slds-icon";
+                this.text = "";
+                this.showIcon = true;
+                this.isLeft = true;
                 (() => {
                     this.type = type;
                     this.iconName = iconName;
@@ -8561,6 +8910,9 @@ namespace framework.lightning {
                 this.type = "utility";
                 this.iconName = "settings";
                 this.svgClass = "slds-icon";
+                this.text = "";
+                this.showIcon = true;
+                this.isLeft = true;
                 (() => {
                     this.refresh();
                 })();
@@ -8572,9 +8924,39 @@ namespace framework.lightning {
             this.refresh();
         }
 
+        public setShowIcon(b : boolean) {
+            this.showIcon = b;
+            this.refresh();
+        }
+
+        public setIconPosition(position : string) {
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(position,"right"))) {
+                this.isLeft = false;
+                this.svgClass = "slds-button__icon slds-button__icon_right";
+            } else {
+                this.svgClass = "slds-button__icon slds-button__icon_left";
+                this.isLeft = true;
+            }
+            this.refresh();
+        }
+
+        public setText(text : string) {
+            this.text = text;
+            this.refresh();
+        }
+
         public refresh() {
-            let html : string = "<svg class=\'" + this.svgClass + "\'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"" + this.assetsUrl + "/" + this.type + "-sprite/svg/symbols.svg#" + this.iconName + "\"></use></svg>";
-            this.setHtml(html);
+            if(this.showIcon) {
+                let html : string = "<svg class=\'" + this.svgClass + "\'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"" + this.assetsUrl + "/" + this.type + "-sprite/svg/symbols.svg#" + this.iconName + "\"></use></svg>";
+                if(this.isLeft) {
+                    html = html + this.text;
+                } else {
+                    html = this.text + html;
+                }
+                this.setHtml(html);
+            } else {
+                this.setHtml(this.text);
+            }
         }
 
         public getAssetsUrl() : string {
@@ -8711,8 +9093,8 @@ namespace framework.lightning {
         }
 
         public fireClose() {
-            for(let index13460=0; index13460 < this.listeners.length; index13460++) {
-                let li = this.listeners[index13460];
+            for(let index6754=0; index6754 < this.listeners.length; index6754++) {
+                let li = this.listeners[index6754];
                 {
                     li.onClose(this);
                 }
@@ -8720,8 +9102,8 @@ namespace framework.lightning {
         }
 
         public fireActivate() {
-            for(let index13461=0; index13461 < this.listeners.length; index13461++) {
-                let li = this.listeners[index13461];
+            for(let index6755=0; index6755 < this.listeners.length; index6755++) {
+                let li = this.listeners[index6755];
                 {
                     li.onActivate(this);
                 }
@@ -8729,8 +9111,8 @@ namespace framework.lightning {
         }
 
         public fireDeActivate() {
-            for(let index13462=0; index13462 < this.listeners.length; index13462++) {
-                let li = this.listeners[index13462];
+            for(let index6756=0; index6756 < this.listeners.length; index6756++) {
+                let li = this.listeners[index6756];
                 {
                     li.onDeactivate(this);
                 }
@@ -9326,9 +9708,9 @@ namespace framework.lightning {
 
         public setActive(item : framework.lightning.TabItem) : Tabs {
             {
-                let array13464 = this.getItems();
-                for(let index13463=0; index13463 < array13464.length; index13463++) {
-                    let tab = array13464[index13463];
+                let array6758 = this.getItems();
+                for(let index6757=0; index6757 < array6758.length; index6757++) {
+                    let tab = array6758[index6757];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(item.getId(),tab.getId()))) {
                             if(!tab.isActive()) {
@@ -9347,9 +9729,9 @@ namespace framework.lightning {
 
         public getTab(body : framework.lightning.TabBody) : framework.lightning.TabItem {
             {
-                let array13466 = this.getItems();
-                for(let index13465=0; index13465 < array13466.length; index13465++) {
-                    let c = array13466[index13465];
+                let array6760 = this.getItems();
+                for(let index6759=0; index6759 < array6760.length; index6759++) {
+                    let c = array6760[index6759];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(c.getBody(),body))) {
                             return c;
@@ -9362,9 +9744,9 @@ namespace framework.lightning {
 
         public getActiveTab() : framework.lightning.TabItem {
             {
-                let array13468 = this.getItems();
-                for(let index13467=0; index13467 < array13468.length; index13467++) {
-                    let item = array13468[index13467];
+                let array6762 = this.getItems();
+                for(let index6761=0; index6761 < array6762.length; index6761++) {
+                    let item = array6762[index6761];
                     {
                         if(item.isActive()) {
                             return item;
@@ -9473,8 +9855,8 @@ namespace framework.lightning {
         }
 
         public setAlign(align : string) : Text {
-            for(let index13469=0; index13469 < Text.ALIGNS_$LI$().length; index13469++) {
-                let s = Text.ALIGNS_$LI$()[index13469];
+            for(let index6763=0; index6763 < Text.ALIGNS_$LI$().length; index6763++) {
+                let s = Text.ALIGNS_$LI$()[index6763];
                 {
                     this.removeClass(s);
                 }
@@ -9484,8 +9866,8 @@ namespace framework.lightning {
         }
 
         public setTextType(type : string) : Text {
-            for(let index13470=0; index13470 < Text.TEXT_TYPES_$LI$().length; index13470++) {
-                let s = Text.TEXT_TYPES_$LI$()[index13470];
+            for(let index6764=0; index6764 < Text.TEXT_TYPES_$LI$().length; index6764++) {
+                let s = Text.TEXT_TYPES_$LI$()[index6764];
                 {
                     this.removeClass(s);
                 }
@@ -9495,8 +9877,8 @@ namespace framework.lightning {
         }
 
         public setColor(color : string) : Text {
-            for(let index13471=0; index13471 < Text.COLORS_$LI$().length; index13471++) {
-                let s = Text.COLORS_$LI$()[index13471];
+            for(let index6765=0; index6765 < Text.COLORS_$LI$().length; index6765++) {
+                let s = Text.COLORS_$LI$()[index6765];
                 {
                     this.removeClass(s);
                 }
@@ -9506,8 +9888,8 @@ namespace framework.lightning {
         }
 
         public setDecoration(decoration : string) : Text {
-            for(let index13472=0; index13472 < Text.DECORATIONS_$LI$().length; index13472++) {
-                let s = Text.DECORATIONS_$LI$()[index13472];
+            for(let index6766=0; index6766 < Text.DECORATIONS_$LI$().length; index6766++) {
+                let s = Text.DECORATIONS_$LI$()[index6766];
                 {
                     this.removeClass(s);
                 }
@@ -9581,9 +9963,9 @@ namespace framework.lightning {
             let params : Array<framework.design.Parameter> = this.delegate.getParameters();
             let tagParam : framework.design.TagParameter = new framework.design.TagParameter();
             {
-                let array13474 = Object.keys(Text.textTags_$LI$());
-                for(let index13473=0; index13473 < array13474.length; index13473++) {
-                    let key = array13474[index13473];
+                let array6768 = Object.keys(Text.textTags_$LI$());
+                for(let index6767=0; index6767 < array6768.length; index6767++) {
+                    let key = array6768[index6767];
                     {
                         tagParam.options.push(new framework.design.Option(<string>Text.textTags_$LI$()[key], key));
                     }
@@ -9978,7 +10360,7 @@ namespace framework.builder.data {
             colFrm.addChild$framework_JSContainer(panel);
             let section : framework.lightning.PanelSection = new framework.lightning.PanelSection("pane", "div");
             panel.addSection(section);
-            let form : framework.lightning.FormLayout = new framework.lightning.FormLayout("form", "div");
+            let form : framework.lightning.FormLayout = new framework.lightning.FormLayout("form");
             this.url.addClass("slds-input");
             this.body.addClass("slds-input");
             form.addFormElement(new framework.lightning.FormElement("url", "div").setInput(this.url).setLabel("Url"));
@@ -10113,7 +10495,7 @@ namespace framework.builder.editors {
             cancel.addEventListener(new ContextEditor.ContextEditor$1(this, modal), "click");
             this.form.setStyle("padding", "12px");
             this.form.setFields(fields);
-            modal.setBody(this.form);
+            modal.getBody().addChild$framework_JSContainer(this.form);
             this.addChild$framework_JSContainer(modal);
             let bd : framework.lightning.Backdrop = new framework.lightning.Backdrop("bd");
             this.addChild$framework_JSContainer(bd);
@@ -10213,8 +10595,8 @@ namespace framework.builder.editors {
             grid.addChild$framework_JSContainer(colLeft.addClass("slds-col").addClass("col-left"));
             grid.addChild$framework_JSContainer(colRight.addClass("slds-col").addClass("col-right"));
             this.root = root;
-            for(let index13475=0; index13475 < framework.builder.editors.EventTypes.events_$LI$().length; index13475++) {
-                let s = framework.builder.editors.EventTypes.events_$LI$()[index13475];
+            for(let index6769=0; index6769 < framework.builder.editors.EventTypes.events_$LI$().length; index6769++) {
+                let s = framework.builder.editors.EventTypes.events_$LI$()[index6769];
                 this.events.addOption(new framework.JSOption(/* replace */s.split("on").join(""), /* replace */s.split("on").join("")))
             }
             colLeft.addChild$framework_JSContainer(this.component.setStyle("width", "100%"));
@@ -10233,10 +10615,10 @@ namespace framework.builder.editors {
             let s : boolean = false;
             this.component.setHtml(des.getName());
             if(!updEvtSelect) {
-                let listeners : Array<framework.EventListener> = <Array<framework.EventListener>>des.getListeners()[this.events.getValue()];
+                let listeners : Array<framework.EventListener> = <Array<framework.EventListener>>des.getListeners()[<string>this.events.getValue()];
                 if(listeners != null) {
-                    for(let index13476=0; index13476 < listeners.length; index13476++) {
-                        let e = listeners[index13476];
+                    for(let index6770=0; index6770 < listeners.length; index6770++) {
+                        let e = listeners[index6770];
                         {
                             if(e != null && e instanceof <any>framework.builder.BuilderEventListener) {
                                 let bel : framework.builder.BuilderEventListener = <framework.builder.BuilderEventListener><any>e;
@@ -10260,9 +10642,9 @@ namespace framework.builder.editors {
             let last : string = "click";
             let lastSrc : string = this.getSource(des, last);
             {
-                let array13478 = this.events.getChildren();
-                for(let index13477=0; index13477 < array13478.length; index13477++) {
-                    let opt = array13478[index13477];
+                let array6772 = this.events.getChildren();
+                for(let index6771=0; index6771 < array6772.length; index6771++) {
+                    let opt = array6772[index6771];
                     {
                         let option : framework.JSOption = <framework.JSOption>opt;
                         let type : string = option.getValue();
@@ -10278,7 +10660,7 @@ namespace framework.builder.editors {
                 }
             }
             if(updEvtSelect && !s) {
-                this.events.setValue$java_lang_String(last);
+                this.events.setValue$java_lang_Object(last);
                 this.editor.setValue$java_lang_String(lastSrc);
                 if(this.editor.getEditor() != null) {
                     this.editor.getEditor().setValue(lastSrc);
@@ -10290,8 +10672,8 @@ namespace framework.builder.editors {
         public getSource(des : framework.design.Designable, type : string) : string {
             let listeners : Array<framework.EventListener> = <Array<framework.EventListener>>des.getListeners()[type];
             if(listeners != null) {
-                for(let index13479=0; index13479 < listeners.length; index13479++) {
-                    let l = listeners[index13479];
+                for(let index6773=0; index6773 < listeners.length; index6773++) {
+                    let l = listeners[index6773];
                     {
                         if(l != null && l instanceof <any>framework.builder.BuilderEventListener) {
                             let evt : framework.builder.BuilderEventListener = <framework.builder.BuilderEventListener><any>l;
@@ -10312,14 +10694,14 @@ namespace framework.builder.editors {
             this.events.clearChildren();
             this.events.setRendered(false);
             {
-                let array13481 = ((<framework.JSContainer><any>designable)).advancedEventTypes();
-                for(let index13480=0; index13480 < array13481.length; index13480++) {
-                    let s = array13481[index13480];
+                let array6775 = ((<framework.JSContainer><any>designable)).advancedEventTypes();
+                for(let index6774=0; index6774 < array6775.length; index6774++) {
+                    let s = array6775[index6774];
                     this.events.addOption(new framework.JSOption(/* replace */s.split("on").join(""), /* replace */s.split("on").join("")))
                 }
             }
-            for(let index13482=0; index13482 < framework.builder.editors.EventTypes.events_$LI$().length; index13482++) {
-                let s = framework.builder.editors.EventTypes.events_$LI$()[index13482];
+            for(let index6776=0; index6776 < framework.builder.editors.EventTypes.events_$LI$().length; index6776++) {
+                let s = framework.builder.editors.EventTypes.events_$LI$()[index6776];
                 this.events.addOption(new framework.JSOption(/* replace */s.split("on").join(""), /* replace */s.split("on").join("")))
             }
             this.fillValue(designable, true);
@@ -10330,9 +10712,9 @@ namespace framework.builder.editors {
                 return parent;
             }
             {
-                let array13484 = parent.getDesignables();
-                for(let index13483=0; index13483 < array13484.length; index13483++) {
-                    let des = array13484[index13483];
+                let array6778 = parent.getDesignables();
+                for(let index6777=0; index6777 < array6778.length; index6777++) {
+                    let des = array6778[index6777];
                     {
                         let res : framework.design.Designable = this.findDesignableById(des, id);
                         if(res != null) {
@@ -10345,7 +10727,7 @@ namespace framework.builder.editors {
         }
 
         public save$() {
-            let type : string = this.events.getValue();
+            let type : string = <string>this.events.getValue();
             this.save$java_lang_String(type);
             this.clean();
         }
@@ -10357,8 +10739,8 @@ namespace framework.builder.editors {
             if(des != null) {
                 let listeners : Array<framework.EventListener> = <Array<framework.EventListener>>des.getListeners()[type];
                 if(listeners != null) {
-                    for(let index13485=0; index13485 < listeners.length; index13485++) {
-                        let l = listeners[index13485];
+                    for(let index6779=0; index6779 < listeners.length; index6779++) {
+                        let l = listeners[index6779];
                         {
                             if(l != null && l instanceof <any>framework.builder.BuilderEventListener) {
                                 let evt : framework.builder.BuilderEventListener = <framework.builder.BuilderEventListener><any>l;
@@ -10441,8 +10823,8 @@ namespace framework.builder.editors {
              */
             public performAction(source : framework.JSContainer, evt : Event) {
                 if(!/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(this.__parent.justSaved,this.__parent.events.getValue()))) {
-                    this.__parent.justSaved = this.__parent.events.getValue();
-                    this.__parent.save(this.__parent.events.getValue());
+                    this.__parent.justSaved = <string>this.__parent.events.getValue();
+                    this.__parent.save(<string>this.__parent.events.getValue());
                 }
             }
 
@@ -10497,8 +10879,6 @@ namespace framework.builder.editors {
 
         /*private*/ structureDockedComposer : framework.builder.editors.StructureDockedComposer;
 
-        /*private*/ templates : framework.JSContainer = new framework.JSContainer("div").setVisible(false);
-
         /*private*/ leftOpen : boolean = true;
 
         /*private*/ rightOpen : boolean = true;
@@ -10530,7 +10910,7 @@ namespace framework.builder.editors {
             this.selector = null;
             this.structureDockedComposer = null;
             this.addClass("visual-editor").addClass("slds-grid").addClass("slds-wrap");
-            let frmjson : framework.lightning.FormLayout = new framework.lightning.FormLayout("frmjson", "div");
+            let frmjson : framework.lightning.FormLayout = new framework.lightning.FormLayout("frmjson");
             frmjson.setStyle("margin", "8px");
             frmjson.addClass("defn-popup");
             let js : framework.lightning.FormElement = new framework.lightning.FormElement("js", "div");
@@ -10541,7 +10921,7 @@ namespace framework.builder.editors {
             frmhel.setLabel("Helper");
             frmjson.addFormElement(js);
             frmjson.addFormElement(frmhel);
-            this.jsonDef.getContent().addChild$framework_JSContainer(frmjson);
+            this.jsonDef.getBody().addChild$framework_JSContainer(frmjson);
             this.addChild$framework_JSContainer(this.jsonDef);
             this.jsonDef.setBackdrop(this.bd);
             this.addChild$framework_JSContainer(this.bd);
@@ -10562,7 +10942,6 @@ namespace framework.builder.editors {
             this.selector = new framework.builder.Selector();
             this.selector.setVisualEditor(this);
             this.addChild$framework_JSContainer(this.selector);
-            this.addChild$framework_JSContainer(this.templates);
             this.composer.getTools().clearChildren();
             this.composer.getTools().addChild$framework_JSContainer(new framework.builder.editors.Zoom("zoom", this));
             this.composer.getTools().addChild$framework_JSContainer(this.toggleOutline);
@@ -10694,9 +11073,9 @@ namespace framework.builder.editors {
         public visit$framework_builder_editors_Visitor$framework_design_Designable(v : framework.builder.editors.Visitor, startAt : framework.design.Designable) {
             v.doVisit(startAt);
             {
-                let array13487 = startAt.getDesignables();
-                for(let index13486=0; index13486 < array13487.length; index13486++) {
-                    let child = array13487[index13486];
+                let array6781 = startAt.getDesignables();
+                for(let index6780=0; index6780 < array6781.length; index6780++) {
+                    let child = array6781[index6780];
                     {
                         this.visit$framework_builder_editors_Visitor$framework_design_Designable(v, child);
                     }
@@ -10736,8 +11115,8 @@ namespace framework.builder.editors {
             let component : framework.builder.marshalling.Component = new framework.builder.marshalling.Component();
             component.impl = "lgt:app";
             component.parameters["name"] = designable.getName() + "_comp";
-            let par : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(component);
-            let chi : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(comp);
+            let par : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(component, false, null);
+            let chi : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(comp, false, null);
             par.addDesignable(chi);
             let marshall : string = JSON.stringify(framework.builder.marshalling.MarshallUtil.extract(par));
             let project : framework.builder.data.File = this.getProject();
@@ -10821,40 +11200,11 @@ namespace framework.builder.editors {
         }
 
         public cona(component : framework.builder.marshalling.Component) : framework.design.Designable {
-            this.templates.clearChildren();
-            this.templates.setRendered(false);
-            {
-                let array13489 = this.file.getTemplates();
-                for(let index13488=0; index13488 < array13489.length; index13488++) {
-                    let temp = array13489[index13488];
-                    {
-                        let t : framework.builder.editors.JSTemplate = new framework.builder.editors.JSTemplate(temp);
-                        this.templates.addChild$framework_JSContainer(t);
-                    }
-                }
-            }
-            let des : framework.design.Designable = framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, true);
-            des.addEventListener(new framework.builder.SelectComponentEvent(this.selector), "click");
-            des['setData$java_lang_Object'](component.data);
-            if(component.children != null) {
-                for(let index13490=0; index13490 < component.children.length; index13490++) {
-                    let c = component.children[index13490];
-                    {
-                        let child : framework.design.Designable = this.cona(c);
-                        des.addDesignable(child);
-                        let exp : string = child.getAttribute("exposeAs");
-                        if(exp != null && exp.length > 0) {
-                            new framework.designables.DesignableDelegate(child).exposeVariable(exp);
-                        }
-                    }
-                }
-            }
-            return des;
+            return framework.builder.marshalling.MarshallUtil.toDesignable(component, true, this.selector);
         }
 
         public consume$framework_builder_marshalling_Component(component : framework.builder.marshalling.Component) {
             this.root = <framework.lightning.LightningApplication><any>this.cona(component);
-            let components : Array<framework.builder.data.File> = this.file.getComponents();
             this.workspace.addChild$framework_JSContainer(<framework.JSContainer>this.root);
             this.libraryDockedComposer.refreshWithProject(this.root);
             this.structureDockedComposer = new framework.builder.editors.StructureDockedComposer("strucutru", this.root, this.file, this.selector);
@@ -11116,9 +11466,9 @@ namespace framework {
             }
             templates.options.push(new framework.design.Option("Default", "#default"));
             {
-                let array13492 = project.getTemplates();
-                for(let index13491=0; index13491 < array13492.length; index13491++) {
-                    let f = array13492[index13491];
+                let array6783 = project.getTemplates();
+                for(let index6782=0; index6782 < array6783.length; index6782++) {
+                    let f = array6783[index6782];
                     {
                         templates.options.push(new framework.design.Option(f.getName(), "#" + /* replace */f.getName().split(".html").join("")));
                     }
@@ -11184,11 +11534,37 @@ namespace framework.lightning.designables {
 
         public Clone() : JSDesignableIterable {
             let cmp : framework.builder.marshalling.Component = framework.builder.marshalling.MarshallUtil.extract(this);
-            return <JSDesignableIterable><any>framework.builder.marshalling.MarshallUtil.toDesignable(cmp);
+            return <JSDesignableIterable><any>framework.builder.marshalling.MarshallUtil.toDesignable(cmp, false, null);
         }
     }
     JSDesignableIterable["__class"] = "framework.lightning.designables.JSDesignableIterable";
     JSDesignableIterable["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
+    export class ModalBody extends framework.designables.JSDesignable {
+        public constructor(name : string) {
+            super(name, "div");
+            this.setAttribute("identifier", "lgt:modal-body");
+            this.addClass("slds-modal__content");
+        }
+    }
+    ModalBody["__class"] = "framework.lightning.ModalBody";
+    ModalBody["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
+    export class ModalFooter extends framework.designables.JSDesignable {
+        public constructor(name : string) {
+            super(name, "footer");
+            this.setAttribute("identifier", "lgt:modal-footer");
+            this.addClass("slds-modal__footer");
+        }
+    }
+    ModalFooter["__class"] = "framework.lightning.ModalFooter";
+    ModalFooter["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
 
 
 }
@@ -11282,6 +11658,7 @@ namespace framework.designables {
 
         public constructor(name : string) {
             super(name);
+            this.setAttribute("identifier", "html:input");
         }
 
         /**
@@ -11292,7 +11669,10 @@ namespace framework.designables {
         public applyParam(key : string, value : string) {
             this.delegate.applyParameter(key, value, true);
             if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "type")) {
+                let curVal : any = this.getValue();
+                if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"date")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"datetime")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"currency")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"number")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"email")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"phone")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"password")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"text"))) this.setTag("input");
                 this.setType(value);
+                this.setValue$java_lang_String(<string>curVal);
             }
         }
 
@@ -11320,27 +11700,15 @@ namespace framework.designables {
             let parameters : Array<framework.design.Parameter> = this.delegate.getParameters();
             parameters.push(new framework.design.ValueParameter("value", "Value", "Basic"));
             let type : framework.design.AttributeParameter = new framework.design.AttributeParameter("type", "Type", "Basic");
-            type.options.push(new framework.design.Option("text", "text"));
             type.options.push(new framework.design.Option("date", "date"));
             type.options.push(new framework.design.Option("datetime", "datetime"));
-            type.options.push(new framework.design.Option("tel", "tel"));
-            type.options.push(new framework.design.Option("color", "color"));
-            type.options.push(new framework.design.Option("checkbox", "checkbox"));
-            type.options.push(new framework.design.Option("password", "password"));
-            type.options.push(new framework.design.Option("hidden", "hidden"));
-            type.options.push(new framework.design.Option("radio", "radio"));
-            type.options.push(new framework.design.Option("email", "email"));
-            type.options.push(new framework.design.Option("file", "file"));
-            type.options.push(new framework.design.Option("image", "image"));
-            type.options.push(new framework.design.Option("month", "month"));
-            type.options.push(new framework.design.Option("number", "number"));
-            type.options.push(new framework.design.Option("range", "range"));
-            type.options.push(new framework.design.Option("reset", "reset"));
-            type.options.push(new framework.design.Option("button", "button"));
-            type.options.push(new framework.design.Option("submit", "submit"));
-            type.options.push(new framework.design.Option("time", "time"));
-            type.options.push(new framework.design.Option("url", "url"));
-            type.options.push(new framework.design.Option("week", "week"));
+            type.options.push(new framework.design.Option("Currency", "currency"));
+            type.options.push(new framework.design.Option("Number", "number"));
+            type.options.push(new framework.design.Option("Email", "email"));
+            type.options.push(new framework.design.Option("Phone", "phone"));
+            type.options.push(new framework.design.Option("Text", "text"));
+            type.options.push(new framework.design.Option("Password", "password"));
+            type.options.push(new framework.design.Option("Url", "url"));
             parameters.push(type);
             return parameters;
         }
@@ -11350,6 +11718,7 @@ namespace framework.designables {
          * @param {*} designable
          */
         public addDesignable(designable : framework.design.Designable) {
+            throw new Error("Cannot add children to this component");
         }
 
         /**
@@ -11636,6 +12005,7 @@ namespace framework.designables {
 
         public constructor(name : string) {
             super(name);
+            this.setAttribute("identifier", "html:textarea");
         }
 
         /**
@@ -11700,110 +12070,6 @@ namespace framework.designables {
     }
     JSDesignableTextArea["__class"] = "framework.designables.JSDesignableTextArea";
     JSDesignableTextArea["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable","framework.InputField"];
-
-
-}
-namespace framework.designables {
-    export class JSDesignableButton extends framework.lightning.Button implements framework.design.Designable {
-        static stateLabels : string[]; public static stateLabels_$LI$() : string[] { if(JSDesignableButton.stateLabels == null) JSDesignableButton.stateLabels = ["Neutral", "Brand", "Destructive", "Success"]; return JSDesignableButton.stateLabels; };
-
-        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
-
-        public constructor(name : string) {
-            super(name);
-        }
-
-        /**
-         * 
-         * @param {string} key
-         * @param {string} value
-         */
-        public applyParam(key : string, value : string) {
-            this.delegate.applyParameter(key, value, true);
-            this.setAttribute(key, value);
-            if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "label")) {
-                this.setLabel(value);
-            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "statefull")) {
-                this.setStateful(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
-            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "ldisabled")) {
-                this.setDisabled(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
-            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "inverse")) {
-                this.setInverse(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
-            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "state")) {
-                this.setState(value);
-            }
-        }
-
-        /**
-         * 
-         * @return {*[]}
-         */
-        public getDesignables() : Array<framework.design.Designable> {
-            return <any>(new Array<any>());
-        }
-
-        public getParameters() : Array<framework.design.Parameter> {
-            let result : Array<framework.design.Parameter> = this.delegate.getParameters();
-            result.push(this.createParameter("label", "Label", "String"));
-            result.push(this.createParameter("statefull", "Statefull", "Boolean"));
-            result.push(this.createParameter("ldisabled", "Disabled", "Boolean"));
-            result.push(this.createParameter("inverse", "Inverse", "Boolean"));
-            let paramstates : framework.design.Parameter = this.createParameter("state", "State", "select");
-            for(let i : number = 0; i < JSDesignableButton.stateLabels_$LI$().length; i++) {
-                let opt : framework.design.Option = new framework.design.Option();
-                opt.text = JSDesignableButton.stateLabels_$LI$()[i];
-                opt.value = framework.lightning.Button.states_$LI$()[i];
-                paramstates.options.push(opt);
-            };
-            result.push(paramstates);
-            return result;
-        }
-
-        /*private*/ createParameter(name : string, label : string, type : string) : framework.design.Parameter {
-            let p : framework.design.AttributeParameter = new framework.design.AttributeParameter(name, label, "Basic");
-            p.name = name;
-            p.type = type;
-            p.label = label;
-            if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "boolean")) {
-                p.options.push(new framework.design.Option("", ""));
-            }
-            return p;
-        }
-
-        /**
-         * 
-         * @return {framework.builder.marshalling.Component}
-         */
-        public getComponent() : framework.builder.marshalling.Component {
-            return this.delegate.getComponent();
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public addDesignable(designable : framework.design.Designable) {
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public removeDesignable(designable : framework.design.Designable) {
-            this.delegate.removeDesignable(designable);
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         * @param {number} steps
-         */
-        public moveDesignable(designable : framework.design.Designable, steps : number) {
-            this.delegate.moveDesignable$framework_design_Designable$int(designable, steps);
-        }
-    }
-    JSDesignableButton["__class"] = "framework.designables.JSDesignableButton";
-    JSDesignableButton["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
 
 
 }
@@ -12093,103 +12359,6 @@ namespace framework.lightning {
 
 
 }
-namespace framework.lightning.designables {
-    export class JSDesignableLightningInput extends framework.lightning.FormElement implements framework.design.Designable {
-        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
-
-        /*private*/ input : framework.designables.JSDesignableInput = null;
-
-        public constructor(name : string) {
-            super(name, "div");
-            this.input = <framework.designables.JSDesignableInput><any>framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory("html:input").build(new framework.builder.marshalling.Component(), true);
-            this.input.addClass("slds-input");
-            this.setInput(this.input);
-            this.getInput().addClass("slds-input");
-            this.setLabel("Label");
-        }
-
-        /**
-         * 
-         * @param {string} key
-         * @param {string} value
-         */
-        public applyParam(key : string, value : string) {
-            this.delegate.applyParameter(key, value, true);
-            if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "type")) {
-                (<framework.JSInput><any>this.getInput()).setType(value);
-            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"label"))) {
-                this.setLabel(value);
-            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "disabled")) {
-                if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))("true", value)) {
-                    this.setDisabled(true);
-                } else {
-                    this.setDisabled(false);
-                }
-            }
-        }
-
-        /**
-         * 
-         * @return {*[]}
-         */
-        public getDesignables() : Array<framework.design.Designable> {
-            return <any>(new Array<any>(this.input));
-        }
-
-        /**
-         * 
-         * @return {framework.builder.marshalling.Component}
-         */
-        public getComponent() : framework.builder.marshalling.Component {
-            return this.delegate.getComponent();
-        }
-
-        /**
-         * 
-         * @return {framework.design.Parameter[]}
-         */
-        public getParameters() : Array<framework.design.Parameter> {
-            let parameters : Array<framework.design.Parameter> = this.delegate.getParameters();
-            let label : framework.design.AttributeParameter = new framework.design.AttributeParameter("label", "Label", "Basic");
-            parameters.push(label);
-            return parameters;
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public addDesignable(designable : framework.design.Designable) {
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public removeDesignable(designable : framework.design.Designable) {
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         * @param {number} steps
-         */
-        public moveDesignable(designable : framework.design.Designable, steps : number) {
-        }
-
-        public setDisabled(b : boolean) {
-            if(b) {
-                this.getInput().setAttribute("disabled", "true");
-            } else {
-                this.getInput().setAttribute("disabled", null);
-            }
-        }
-    }
-    JSDesignableLightningInput["__class"] = "framework.lightning.designables.JSDesignableLightningInput";
-    JSDesignableLightningInput["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
-
-
-}
 namespace framework.builder {
     export class Builder extends framework.lightning.LTContainer {
         /*private*/ topMenu : framework.builder.TopMenu = new framework.builder.TopMenu("header");
@@ -12324,9 +12493,9 @@ namespace framework.builder {
 
         public isOpen(editorName : string) : boolean {
             {
-                let array13494 = this.editorTabs.getItems();
-                for(let index13493=0; index13493 < array13494.length; index13493++) {
-                    let item = array13494[index13493];
+                let array6785 = this.editorTabs.getItems();
+                for(let index6784=0; index6784 < array6785.length; index6784++) {
+                    let item = array6785[index6784];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(item.getName(),"editor_" + editorName))) {
                             return true;
@@ -12339,9 +12508,9 @@ namespace framework.builder {
 
         public activateEditor(editorName : string) : framework.builder.editors.Editor<any> {
             {
-                let array13496 = this.editorTabs.getItems();
-                for(let index13495=0; index13495 < array13496.length; index13495++) {
-                    let item = array13496[index13495];
+                let array6787 = this.editorTabs.getItems();
+                for(let index6786=0; index6786 < array6787.length; index6786++) {
+                    let item = array6787[index6786];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(item.getName(),"editor_" + editorName))) {
                             this.editorTabs.setActive(item);
@@ -12488,6 +12657,130 @@ namespace framework.builder {
 
 }
 namespace framework.lightning {
+    export class Col extends framework.lightning.LTContainer implements framework.design.Designable {
+        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
+
+        public constructor(name : string) {
+            super(name, "div");
+            this.addClass("slds-col");
+            this.setAttribute("sections", "12");
+            this.setAttribute("span", "3");
+            this.refreshCls();
+        }
+
+        public setSections(sections : string) {
+            this.setAttribute("sections", sections);
+            this.refreshCls();
+        }
+
+        public setSpan(span : string) {
+            this.setAttribute("span", span);
+            this.refreshCls();
+        }
+
+        public getSpan() : number {
+            return parseInt(this.getAttribute("span"));
+        }
+
+        public getSections() : number {
+            return parseInt(this.getAttribute("sections"));
+        }
+
+        public refreshCls() {
+            let cls : string[] = this.getAttribute("class").split(" ");
+            let ncls : string = "";
+            for(let index6788=0; index6788 < cls.length; index6788++) {
+                let cl = cls[index6788];
+                {
+                    if(/* startsWith */((str, searchString, position = 0) => str.substr(position, searchString.length) === searchString)(cl, "slds-size_")) {
+                    } else {
+                        ncls = ncls + " " + cl;
+                    }
+                }
+            }
+            this.setAttribute("class", ncls);
+            this.addClass("slds-size_" + this.getAttribute("span") + "-of-" + this.getAttribute("sections"));
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            this.delegate.applyParameter(key, value, true);
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"sections"))) {
+                this.setSections(value);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"span"))) {
+                this.setSpan(value);
+            }
+        }
+
+        /**
+         * 
+         * @return {*[]}
+         */
+        public getDesignables() : Array<framework.design.Designable> {
+            let res : Array<any> = this.getChildren();
+            return res;
+        }
+
+        /**
+         * 
+         * @return {framework.builder.marshalling.Component}
+         */
+        public getComponent() : framework.builder.marshalling.Component {
+            return this.delegate.getComponent();
+        }
+
+        /**
+         * 
+         * @return {framework.design.Parameter[]}
+         */
+        public getParameters() : Array<framework.design.Parameter> {
+            let pa : Array<framework.design.Parameter> = this.delegate.getParameters();
+            let sections : framework.design.AttributeParameter = new framework.design.AttributeParameter("sections", "Grid Size", "Basic");
+            sections.options.push(new framework.design.Option("12", "12"));
+            sections.options.push(new framework.design.Option("6", "6"));
+            sections.options.push(new framework.design.Option("4", "4"));
+            sections.options.push(new framework.design.Option("3", "3"));
+            sections.options.push(new framework.design.Option("2", "2"));
+            sections.options.push(new framework.design.Option("1", "1"));
+            let span : framework.design.AttributeParameter = new framework.design.AttributeParameter("span", "Col Span", "Basic");
+            pa.push(sections, span);
+            return pa;
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+            this.addChild$framework_JSContainer(<framework.JSContainer><any>designable);
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+            this.removeChild(designable);
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+        }
+    }
+    Col["__class"] = "framework.lightning.Col";
+    Col["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
     export class DescriptionList extends framework.lightning.LTContainer {
         public static DEFAULT : string = "";
 
@@ -12505,9 +12798,9 @@ namespace framework.lightning {
             this.currentLayout = layout;
             this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
             {
-                let array13498 = this.getChildren();
-                for(let index13497=0; index13497 < array13498.length; index13497++) {
-                    let child = array13498[index13497];
+                let array6790 = this.getChildren();
+                for(let index6789=0; index6789 < array6790.length; index6789++) {
+                    let child = array6790[index6789];
                     {
                         child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                         child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -12533,78 +12826,6 @@ namespace framework.lightning {
     }
     DescriptionList["__class"] = "framework.lightning.DescriptionList";
     DescriptionList["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
-
-
-}
-namespace framework.lightning {
-    export class FormLayout extends framework.lightning.LTContainer {
-        public constructor(name : string, tag : string) {
-            super(name, tag);
-            this.addClass("slds-form");
-        }
-
-        toggleClass(cls : string, b : boolean) : FormLayout {
-            return <FormLayout>super.toggleClass(cls, b);
-        }
-
-        public setStacked(b : boolean) : FormLayout {
-            this.toggleClass("slds-form_stacked", b);
-            if(b) {
-                this.setInline(false);
-                this.setHorizontal(false);
-                this.setCompound(false);
-            }
-            return this;
-        }
-
-        public setInline(b : boolean) : FormLayout {
-            this.toggleClass("slds-form_inline", b);
-            if(b) {
-                this.setStacked(false);
-                this.setHorizontal(false);
-                this.setCompound(false);
-            }
-            return this;
-        }
-
-        public setCompound(b : boolean) : FormLayout {
-            this.toggleClass("slds-form_compound", b);
-            if(b) {
-                this.setInline(false);
-                this.setHorizontal(false);
-                this.setStacked(false);
-            }
-            return this;
-        }
-
-        public setHorizontal(b : boolean) : FormLayout {
-            this.toggleClass("slds-form_horizontal", b);
-            if(b) {
-                this.setInline(false);
-                this.setStacked(false);
-                this.setCompound(false);
-            }
-            return this;
-        }
-
-        public addFormElement(element : framework.lightning.FormElement) : FormLayout {
-            this.addChild$framework_JSContainer(element);
-            return this;
-        }
-
-        public clear() : FormLayout {
-            this.clearChildren();
-            this.setRendered(false);
-            return this;
-        }
-
-        public getElements() : Array<framework.lightning.FormElement> {
-            let l : Array<any> = this.getChildren();
-            return l;
-        }
-    }
-    FormLayout["__class"] = "framework.lightning.FormLayout";
-    FormLayout["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
 
 
 }
@@ -12751,8 +12972,8 @@ namespace framework.builder {
             this.getHeader().addChild$framework_JSContainer(headerInput);
             this.saveButton.setState(framework.lightning.Button.STATE_NEUTRAL);
             this.getHeader().addChild$framework_JSContainer(this.saveButton);
-            this.getContent().addChild$framework_JSContainer(this.section);
-            this.getContent().addClass("slds-app-launcher__content slds-p-around_medium");
+            this.getBody().addChild$framework_JSContainer(this.section);
+            this.getBody().addClass("slds-app-launcher__content slds-p-around_medium");
             this.section.getContent().addChild$framework_JSContainer(this.filesList);
             this.setSize(framework.lightning.Modal.SIZE_LARGE);
             this.setStyle("width", "80%");
@@ -12793,7 +13014,7 @@ namespace framework.builder.properties {
             super(name, "div");
             this.dataList = null;
             this.addClass("data-item");
-            this.getContent().addChild$framework_JSContainer(this.dataTable);
+            this.getBody().addChild$framework_JSContainer(this.dataTable);
         }
 
         public addOnItemSeletedListener(l : framework.builder.properties.ItemSelectedListener<T>) {
@@ -12940,12 +13161,12 @@ namespace framework.builder {
             this.setStyle("width", "50%");
             this.addClass("slds-fade-in-open slds-modal_large slds-app-launcher slds-align_absolute-center");
             this.section.addClass("slds-open");
-            this.setBody(this.section);
+            this.getBody().addChild$framework_JSContainer(this.section);
             this.section.getContent().addChild$framework_JSContainer(this.options);
             this.options.setWrap(true);
             let items : framework.builder.WelcomeScreenItem[] = [this.newItem, this.openComputerItem, this.openUrlItem, this.openLibrary];
-            for(let index13499=0; index13499 < items.length; index13499++) {
-                let item = items[index13499];
+            for(let index6791=0; index6791 < items.length; index6791++) {
+                let item = items[index6791];
                 {
                     let li : framework.JSContainer = new framework.JSContainer("li");
                     this.options.addChild$framework_JSContainer(li.addClass("slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1"));
@@ -13014,6 +13235,10 @@ namespace framework.lightning.designables {
             this.applyParam("title", "Modal Title");
             this.applyParam("showFooter", "true");
             this.applyParam("showHeader", "true");
+            let bk : framework.lightning.Backdrop = new framework.lightning.Backdrop("f");
+            bk.setStyle("z-index", "-1");
+            this.addChild$framework_JSContainer(bk);
+            this.setBackdrop(bk);
         }
 
         /**
@@ -13040,7 +13265,7 @@ namespace framework.lightning.designables {
          */
         public getDesignables() : Array<framework.design.Designable> {
             let res : Array<any> = <any>(new Array());
-            res.push(this.getContent(), this.getFooter());
+            res.push(this.getBody(), this.getFooter());
             return res;
         }
 
@@ -13076,7 +13301,13 @@ namespace framework.lightning.designables {
          * @param {*} designable
          */
         public addDesignable(designable : framework.design.Designable) {
-            this.getContent().addChild$framework_JSContainer(<framework.JSContainer><any>designable);
+            if(designable != null && designable instanceof <any>framework.lightning.ModalBody) {
+                this.setBody(<framework.lightning.ModalBody><any>designable);
+            } else if(designable != null && designable instanceof <any>framework.lightning.ModalFooter) {
+                this.setFooter(<framework.lightning.ModalFooter><any>designable);
+            } else {
+                throw new Error("Can only add component of Modal Body or Modal Footer is this container");
+            }
         }
 
         /**
@@ -13084,7 +13315,7 @@ namespace framework.lightning.designables {
          * @param {*} designable
          */
         public removeDesignable(designable : framework.design.Designable) {
-            this.getContent().removeChild(designable);
+            throw new Error("Cannot delete component from this container. Rather delete from the body or footer. Or consider hiding the body and or footer");
         }
 
         /**
@@ -13097,6 +13328,207 @@ namespace framework.lightning.designables {
     }
     JSDesignableModal["__class"] = "framework.lightning.designables.JSDesignableModal";
     JSDesignableModal["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
+    export class ListPopOver extends framework.lightning.PopOver implements framework.design.Designable {
+        /*private*/ listBox : framework.lightning.ListBox;
+
+        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
+
+        public constructor(name : string) {
+            super(name);
+            this.listBox = null;
+            this.listBox = new framework.lightning.ListBox("list");
+            this.getBody().addChild$framework_JSContainer(this.listBox);
+            this.setAttribute("identifier", "lgt:popover");
+            this.applyParam("nubin", framework.lightning.PopOver.NUBIN_TOP_LEFT);
+            this.applyParam("showBody", "true");
+            this.applyParam("showFooter", "true");
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            this.delegate.applyParameter(key, value, true);
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"nubin"))) {
+                this.setNubin(value);
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"showBody"))) {
+                super.showBody(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"showFooter"))) {
+                super.showFooter(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
+            }
+        }
+
+        /**
+         * 
+         * @return {*[]}
+         */
+        public getDesignables() : Array<framework.design.Designable> {
+            let res : Array<any> = <any>(new Array());
+            res.push(this.listBox);
+            res.push(this.getFooter());
+            return res;
+        }
+
+        /**
+         * 
+         * @return {framework.builder.marshalling.Component}
+         */
+        public getComponent() : framework.builder.marshalling.Component {
+            return this.delegate.getComponent();
+        }
+
+        /**
+         * 
+         * @return {framework.design.Parameter[]}
+         */
+        public getParameters() : Array<framework.design.Parameter> {
+            let parameters : Array<framework.design.Parameter> = this.delegate.getParameters();
+            let nubin : framework.design.AttributeParameter = new framework.design.AttributeParameter("nubin", "Nubin Position", "Basic");
+            nubin.options.push(new framework.design.Option("None", framework.lightning.PopOver.NUBIN_NONE));
+            nubin.options.push(new framework.design.Option("Top Left", framework.lightning.PopOver.NUBIN_TOP_LEFT));
+            nubin.options.push(new framework.design.Option("Top Right", framework.lightning.PopOver.NUBIN_TOP_RIGHT));
+            nubin.options.push(new framework.design.Option("Bottom Right", framework.lightning.PopOver.NUBIN_BOTTOM_RIGHT));
+            nubin.options.push(new framework.design.Option("Bottom Left", framework.lightning.PopOver.NUBIN_BOTTOM_LEFT));
+            let showBody : framework.design.AttributeParameter = new framework.design.AttributeParameter("showBody", "Show Body", "Basic");
+            showBody.options.push(new framework.design.Option("", ""));
+            let showFooter : framework.design.AttributeParameter = new framework.design.AttributeParameter("showFooter", "Show Footer", "Basic");
+            showFooter.options.push(new framework.design.Option("", ""));
+            parameters.push(nubin, showBody, showFooter);
+            return parameters;
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+            if(designable != null && designable instanceof <any>framework.lightning.ListBox) {
+                let lb : framework.lightning.ListBox = <framework.lightning.ListBox><any>designable;
+                this.listBox = lb;
+                this.getBody().clearChildren();
+                this.getBody().addChild$framework_JSContainer(lb);
+            } else {
+                let fotter : framework.JSContainer = this.getFooter();
+                this.removeChild(fotter);
+                this.addChild$framework_JSContainer(<framework.JSContainer><any>designable);
+            }
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+        }
+    }
+    ListPopOver["__class"] = "framework.lightning.ListPopOver";
+    ListPopOver["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning {
+    export class Button extends framework.lightning.SvgIcon {
+        static states : string[]; public static states_$LI$() : string[] { if(Button.states == null) Button.states = ["neutral", "brand", "destructive", "success", "reset"]; return Button.states; };
+
+        public static STATE_NEUTRAL : string = "neutral";
+
+        public static STATE_BRAND : string = "brand";
+
+        public static STATE_DESTRUCTIVE : string = "destructive";
+
+        public static STATE_SUCCESS : string = "success";
+
+        public static STATE_RESET : string = "reset";
+
+        public constructor(name? : any) {
+            if(((typeof name === 'string') || name === null)) {
+                let __args = Array.prototype.slice.call(arguments);
+                super(name);
+                (() => {
+                    this.setTag("button");
+                    this.addClass("slds-button");
+                    this.setAttribute("state", "neutral");
+                    this.setState(Button.STATE_NEUTRAL);
+                    this.setShowIcon(false);
+                    this.setSvgClass("slds-button__icon slds-button__icon_left");
+                })();
+            } else if(name === undefined) {
+                let __args = Array.prototype.slice.call(arguments);
+                {
+                    let __args = Array.prototype.slice.call(arguments);
+                    let name : any = "Button";
+                    super(name);
+                    (() => {
+                        this.setTag("button");
+                        this.addClass("slds-button");
+                        this.setAttribute("state", "neutral");
+                        this.setState(Button.STATE_NEUTRAL);
+                        this.setShowIcon(false);
+                        this.setSvgClass("slds-button__icon slds-button__icon_left");
+                    })();
+                }
+            } else throw new Error('invalid overload');
+        }
+
+        public setLabel(label : string) : Button {
+            this.setText(label);
+            return this;
+        }
+
+        public setState(state : string) : Button {
+            for(let index6792=0; index6792 < Button.states_$LI$().length; index6792++) {
+                let s = Button.states_$LI$()[index6792];
+                {
+                    this.removeClass("slds-button_" + s);
+                }
+            }
+            this.addClass("slds-button_" + state);
+            return this;
+        }
+
+        public setInverse(b : boolean) : Button {
+            if(b) {
+                this.addClass("slds-button_inverse");
+            } else {
+                this.removeClass("slds-button_inverse");
+            }
+            return this;
+        }
+
+        public setDisabled(b : boolean) : Button {
+            if(b) {
+                this.addClass("slds-button_disabled");
+            } else {
+                this.removeClass("slds-button_disabled");
+            }
+            return this;
+        }
+
+        public setStateful(b : boolean) : Button {
+            if(b) {
+                this.addClass("slds-button_stateful");
+            } else {
+                this.removeClass("slds-button_stateful");
+            }
+            return this;
+        }
+    }
+    Button["__class"] = "framework.lightning.Button";
+    Button["__interfaces"] = ["framework.interactions.Droppable","framework.Renderable"];
 
 
 }
@@ -13207,6 +13639,7 @@ namespace framework.designables {
 
         public constructor(name : string, tag : string) {
             super(name, tag);
+            this.setAttribute("identifier", "html:p");
         }
 
         /**
@@ -13244,9 +13677,9 @@ namespace framework.designables {
             let textParam : framework.design.TextParameter = new framework.design.TextParameter("text", "Text", "Basic");
             let tagParam : framework.design.TagParameter = new framework.design.TagParameter();
             {
-                let array13501 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
-                for(let index13500=0; index13500 < array13501.length; index13500++) {
-                    let key = array13501[index13500];
+                let array6794 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
+                for(let index6793=0; index6793 < array6794.length; index6793++) {
+                    let key = array6794[index6793];
                     {
                         tagParam.options.push(new framework.design.Option(<string>JSDesignableTextComponent.textTags_$LI$()[key], key));
                     }
@@ -13440,7 +13873,7 @@ namespace framework.builder.editors {
         public paste() {
             let clip : framework.design.Designable = this.structure.getClipBoard();
             let cmp : framework.builder.marshalling.Component = framework.builder.marshalling.MarshallUtil.extract(clip);
-            let des : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(cmp);
+            let des : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(cmp, true, this.selector);
             let editor : framework.builder.editors.VisualEditor = <any>(this.getAncestorWithClass<any>("visual-editor"));
             editor.persist = true;
             editor.addNewComponent$framework_design_Designable$framework_design_Designable(des, this.designable);
@@ -13462,15 +13895,15 @@ namespace framework.builder.editors {
             if(parent != null) {
                 let children : Array<framework.design.Designable> = parent.getDesignables();
                 let currentIndex : number = children.indexOf(this.designable);
-                for(let index13502=0; index13502 < children.length; index13502++) {
-                    let child = children[index13502];
+                for(let index6795=0; index6795 < children.length; index6795++) {
+                    let child = children[index6795];
                     {
                         parent.removeDesignable(child);
                     }
                 }
                 let result : Array<framework.design.Designable> = <any>(new Array<framework.design.Designable>());
                 let cmp : framework.builder.marshalling.Component = framework.builder.marshalling.MarshallUtil.extract(clip);
-                let d : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(cmp);
+                let d : framework.design.Designable = framework.builder.marshalling.MarshallUtil.toDesignable(cmp, true, this.selector);
                 for(let i : number = 0; i < children.length; i++) {
                     if(i === currentIndex) {
                         if(before) {
@@ -13486,8 +13919,8 @@ namespace framework.builder.editors {
                 };
                 let editor : framework.builder.editors.VisualEditor = <any>(this.getAncestorWithClass<any>("visual-editor"));
                 editor.persist = true;
-                for(let index13503=0; index13503 < result.length; index13503++) {
-                    let child = result[index13503];
+                for(let index6796=0; index6796 < result.length; index6796++) {
+                    let child = result[index6796];
                     {
                         editor.addNewComponent$framework_design_Designable$framework_design_Designable(child, parent);
                     }
@@ -13662,10 +14095,14 @@ namespace framework.builder.editors {
              */
             public performAction(source : framework.JSContainer, evt : Event) {
                 if(this.__parent.parent != null) {
-                    this.__parent.parent.removeDesignable(this.__parent.designable);
-                    this.__parent.getParent().setVisible(false);
-                    let editor : framework.builder.editors.VisualEditor = <any>(this.__parent.getAncestorWithClass("visual-editor"));
-                    editor.dirty();
+                    try {
+                        this.__parent.parent.removeDesignable(this.__parent.designable);
+                        this.__parent.getParent().setVisible(false);
+                        let editor : framework.builder.editors.VisualEditor = <any>(this.__parent.getAncestorWithClass("visual-editor"));
+                        editor.dirty();
+                    } catch(e) {
+                        alert(e.message);
+                    };
                 }
             }
 
@@ -14373,13 +14810,13 @@ namespace framework.builder.properties {
             let value : string = designable.getAttribute(attr);
             this.clearChildren();
             this.setRendered(false);
-            for(let index13504=0; index13504 < parameter.options.length; index13504++) {
-                let opt = parameter.options[index13504];
+            for(let index6797=0; index6797 < parameter.options.length; index6797++) {
+                let opt = parameter.options[index6797];
                 {
                     this.addOption(new framework.JSOption(opt.text, opt.value));
                 }
             }
-            this.setValue$java_lang_String(value);
+            this.setValue$java_lang_Object(value);
         }
 
         /**
@@ -14389,7 +14826,7 @@ namespace framework.builder.properties {
          */
         public performAction(source : framework.JSContainer, evt : Event) {
             let attr : string = this.parameter.name;
-            let value : string = this.getValue();
+            let value : string = <string>this.getValue();
             this.designable.setAttribute(attr, value);
             this.designable.applyParam(attr, value);
             this.designable.setRendered(false);
@@ -14415,7 +14852,7 @@ namespace framework.builder.properties {
          */
         public initEditor(designable : framework.design.Designable, parameter : framework.design.Parameter) {
             this.designable = designable;
-            this.setValue$java_lang_String(designable.getTag());
+            this.setValue$java_lang_Object(designable.getTag());
         }
 
         /**
@@ -14424,7 +14861,7 @@ namespace framework.builder.properties {
          * @param {Event} evt
          */
         public performAction(source : framework.JSContainer, evt : Event) {
-            this.designable.applyParam("tag", this.getValue());
+            this.designable.applyParam("tag", <string>this.getValue());
             let veditor : framework.builder.editors.VisualEditor = <any>(this.getAncestorWithClass<any>("visual-editor"));
             veditor.dirty();
         }
@@ -14519,9 +14956,9 @@ namespace framework.builder.properties {
             let value : string = "";
             let select : framework.JSSelect = <framework.JSSelect><any>designable;
             {
-                let array13506 = select.getChildren();
-                for(let index13505=0; index13505 < array13506.length; index13505++) {
-                    let c = array13506[index13505];
+                let array6799 = select.getChildren();
+                for(let index6798=0; index6798 < array6799.length; index6798++) {
+                    let c = array6799[index6798];
                     {
                         let opt : framework.JSOption = <framework.JSOption>c;
                         value = value + "\n" + opt.getText();
@@ -14542,8 +14979,8 @@ namespace framework.builder.properties {
             let select : framework.JSSelect = <framework.JSSelect><any>this.designable;
             select.clearChildren();
             select.setRendered(false);
-            for(let index13507=0; index13507 < options.length; index13507++) {
-                let opt = options[index13507];
+            for(let index6800=0; index6800 < options.length; index6800++) {
+                let opt = options[index6800];
                 {
                     let option : framework.JSOption = new framework.JSOption(opt, opt);
                     select.addOption(option);
@@ -14555,6 +14992,47 @@ namespace framework.builder.properties {
     }
     OptionsEditor["__class"] = "framework.builder.properties.OptionsEditor";
     OptionsEditor["__interfaces"] = ["framework.interactions.Droppable","framework.builder.properties.PropertyEditor","framework.EventListener","framework.Renderable","framework.InputField"];
+
+
+}
+namespace framework.lightning {
+    export class FormElement extends framework.lightning.Col {
+        label : framework.JSContainer = new framework.JSContainer("label", "label").addClass("slds-form-element__label");
+
+        /*private*/ control : framework.JSContainer = new framework.JSContainer("div").addClass("slds-form-element__control");
+
+        public constructor(name : string, tag : string) {
+            super(name);
+            this.addClass("slds-form-element");
+            this.addChild$framework_JSContainer(this.label);
+            this.addChild$framework_JSContainer(this.control);
+            this.setAttribute("sections", "12");
+            this.setAttribute("span", "12");
+            this.refreshCls();
+        }
+
+        public setLabel(label : string) : FormElement {
+            this.label.setHtml(label);
+            return this;
+        }
+
+        public setInput(input : framework.InputField<any>) : FormElement {
+            this.control.clearChildren();
+            this.control.setRendered(false);
+            this.control.addChild$framework_JSContainer(<framework.JSContainer><any>input);
+            return this;
+        }
+
+        public getInput() : framework.InputField<any> {
+            return <framework.InputField<any>><any>this.control.getChildren()[0];
+        }
+
+        public getControl() : framework.JSContainer {
+            return this.control;
+        }
+    }
+    FormElement["__class"] = "framework.lightning.FormElement";
+    FormElement["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
 
 
 }
@@ -14634,307 +15112,6 @@ namespace framework.designables {
 
 
 }
-namespace framework.builder.data {
-    export class DynaForm extends framework.lightning.FormLayout implements framework.InputField<Object> {
-        public constructor(name : string) {
-            super(name, "div");
-        }
-
-        public setFields(fields : Array<Object>) {
-            for(let index13508=0; index13508 < fields.length; index13508++) {
-                let o = fields[index13508];
-                {
-                    let name : string = <string>o["name"];
-                    let type : string = <string>o["type"];
-                    let label : string = <string>o["label"];
-                    let element : framework.lightning.FormElement = new framework.lightning.FormElement("elem_" + name, "div");
-                    element.setLabel(label);
-                    let input : framework.InputField<any> = new framework.JSInput(name);
-                    if(type == null || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type.trim(), "") || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "string") || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "text")) {
-                    } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "integer") || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "numeric")) {
-                        input = new framework.JSInput(name).setType(framework.InputTypes.number);
-                    } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "select")) {
-                        let options : Array<Object> = <Array<Object>>o["options"];
-                        let select : framework.JSSelect = new framework.JSSelect(name);
-                        for(let index13509=0; index13509 < options.length; index13509++) {
-                            let opt = options[index13509];
-                            {
-                                let text : string = <string>opt["text"];
-                                let value : string = <string>opt["value"];
-                                select.addOption(new framework.JSOption(text, value));
-                            }
-                        }
-                        input = select;
-                    } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "multi")) {
-                        let multi : framework.builder.data.MultiForm = new framework.builder.data.MultiForm(name);
-                        let options : Array<Object> = <Array<Object>>o["options"];
-                        multi.setConfigs(options);
-                        input = multi;
-                    }
-                    input.addClass("slds-input");
-                    element.setInput(input);
-                    this.addFormElement(element);
-                }
-            }
-        }
-
-        /**
-         * 
-         * @return {Object}
-         */
-        public getValue() : Object {
-            let result : Object = <Object>new Object();
-            {
-                let array13511 = this.getElements();
-                for(let index13510=0; index13510 < array13511.length; index13510++) {
-                    let element = array13511[index13510];
-                    {
-                        let value : any = element.getInput().getValue();
-                        result[element.getInput().getName()] = value;
-                    }
-                }
-            }
-            return result;
-        }
-
-        public setValue$jsweet_lang_Object(val : Object) {
-            {
-                let array13513 = this.getElements();
-                for(let index13512=0; index13512 < array13513.length; index13512++) {
-                    let element = array13513[index13512];
-                    {
-                        let name : string = element.getInput().getName();
-                        if(val[name] != null) {
-                            let o : any = val[name];
-                            let __in : framework.InputField<any> = <framework.InputField<any>><any>element.getInput();
-                            __in.setValue(o);
-                        }
-                    }
-                }
-            }
-        }
-
-        /**
-         * 
-         * @param {Object} val
-         */
-        public setValue(val? : any) : any {
-            if(((val != null && val instanceof <any>Object) || val === null)) {
-                return <any>this.setValue$jsweet_lang_Object(val);
-            } else throw new Error('invalid overload');
-        }
-
-        /**
-         * 
-         * @param {string} value
-         */
-        public setRawValue(value : string) {
-        }
-    }
-    DynaForm["__class"] = "framework.builder.data.DynaForm";
-    DynaForm["__interfaces"] = ["framework.interactions.Droppable","framework.InputField","framework.Renderable"];
-
-
-}
-namespace framework.builder.properties {
-    export class BasePropertiesEditor extends framework.lightning.FormLayout implements framework.builder.properties.PropertiesEditor {
-        component : framework.design.Designable;
-
-        public constructor(name : string) {
-            super(name, "div");
-            this.component = null;
-            this.setHorizontal(true).addClass("slds-form_compact");
-        }
-
-        public setComponent(designable : framework.design.Designable) {
-            this.component = designable;
-        }
-
-        public addProperty$java_lang_String$framework_JSInput(label : string, input : framework.JSInput) : BasePropertiesEditor {
-            let width : framework.lightning.FormElement = new framework.lightning.FormElement("elem", "div");
-            width.setLabel(label);
-            input.addClass("slds-input");
-            width.setInput(input);
-            this.addFormElement(width);
-            return this;
-        }
-
-        public addProperty(label? : any, input? : any) : any {
-            if(((typeof label === 'string') || label === null) && ((input != null && input instanceof <any>framework.JSInput) || input === null)) {
-                return <any>this.addProperty$java_lang_String$framework_JSInput(label, input);
-            } else if(((label != null && label instanceof <any>framework.design.Parameter) || label === null) && ((input != null && (input["__interfaces"] != null && input["__interfaces"].indexOf("framework.design.Designable") >= 0 || input.constructor != null && input.constructor["__interfaces"] != null && input.constructor["__interfaces"].indexOf("framework.design.Designable") >= 0)) || input === null)) {
-                return <any>this.addProperty$framework_design_Parameter$framework_design_Designable(label, input);
-            } else throw new Error('invalid overload');
-        }
-
-        public addProperty$framework_design_Parameter$framework_design_Designable(parameter : framework.design.Parameter, designable : framework.design.Designable) : BasePropertiesEditor {
-            let editor : framework.builder.properties.PropertyEditor = parameter.getEditor(this.component);
-            if(editor != null) {
-                let element : framework.lightning.FormElement = new framework.lightning.FormElement("elem", "div");
-                element.setLabel(parameter.label);
-                element.setInput(<framework.InputField<any>><any>editor);
-                this.addFormElement(element);
-            }
-            return this;
-        }
-    }
-    BasePropertiesEditor["__class"] = "framework.builder.properties.BasePropertiesEditor";
-    BasePropertiesEditor["__interfaces"] = ["framework.interactions.Droppable","framework.builder.properties.PropertiesEditor","framework.Renderable"];
-
-
-}
-namespace framework.lightning.designables {
-    export class JSDesignableFormLayout extends framework.lightning.FormLayout implements framework.design.Designable {
-        public constructor() {
-            super("Form", "div");
-        }
-
-        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
-
-        /**
-         * 
-         * @param {string} key
-         * @param {string} value
-         */
-        public applyParam(key : string, value : string) {
-            this.delegate.applyParameter(key, value, true);
-            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"layout"))) {
-                if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"horizontal"))) {
-                    this.setHorizontal(true);
-                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"stacked"))) {
-                    this.setStacked(true);
-                } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(value, "inline")) {
-                    this.setInline(true);
-                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"compound"))) {
-                    this.setCompound(true);
-                } else {
-                    this.setStacked(true);
-                }
-            }
-        }
-
-        /**
-         * 
-         * @return {*[]}
-         */
-        public getDesignables() : Array<framework.design.Designable> {
-            let designable : Array<framework.design.Designable> = <any>(new Array<any>());
-            {
-                let array13515 = this.getElements();
-                for(let index13514=0; index13514 < array13515.length; index13514++) {
-                    let element = array13515[index13514];
-                    {
-                        if(element != null && element instanceof <any>framework.lightning.designables.JSDesignableLightningInput) designable.push(<framework.design.Designable><any>element); else designable.push(<framework.design.Designable><any>element.getInput());
-                    }
-                }
-            }
-            return designable;
-        }
-
-        /**
-         * 
-         * @return {framework.builder.marshalling.Component}
-         */
-        public getComponent() : framework.builder.marshalling.Component {
-            return this.delegate.getComponent();
-        }
-
-        /**
-         * 
-         * @return {framework.design.Parameter[]}
-         */
-        public getParameters() : Array<framework.design.Parameter> {
-            let parameters : Array<framework.design.Parameter> = this.delegate.getParameters();
-            let parameter : framework.design.AttributeParameter = new framework.design.AttributeParameter("layout", "Layout", "Basic");
-            parameter.options.push(new framework.design.Option("Stacked", "stacked"));
-            parameter.options.push(new framework.design.Option("Horizontal", "horizontal"));
-            parameter.options.push(new framework.design.Option("inline", "inline"));
-            parameter.options.push(new framework.design.Option("Compound", "compound"));
-            parameters.push(parameter);
-            return parameters;
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public addDesignable(designable : framework.design.Designable) {
-            if(designable != null && designable instanceof <any>framework.lightning.FormElement) {
-                this.addFormElement(<framework.lightning.FormElement><any>designable);
-            } else if(designable != null && designable instanceof <any>framework.JSInput) {
-                let element : framework.lightning.FormElement = new framework.lightning.designables.JSDesignableLightningInput(designable.getName());
-                designable.addClass("slds-input");
-                element.setInput(<framework.InputField<any>><any>designable);
-                this.addFormElement(element);
-            } else if(designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.InputField") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.InputField") >= 0)) {
-                let element : framework.lightning.FormElement = new framework.lightning.FormElement(designable.getName(), "div");
-                element.setInput(<framework.InputField<any>><any>designable);
-                this.addFormElement(element);
-            } else {
-                console.error("Designable of type " + /* getName */(c => c["__class"]?c["__class"]:c["name"])((<any>designable.constructor)) + " cannot be added to Form Layout");
-            }
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public removeDesignable(designable : framework.design.Designable) {
-            {
-                let array13517 = this.getElements();
-                for(let index13516=0; index13516 < array13517.length; index13516++) {
-                    let element = array13517[index13516];
-                    {
-                        let b : boolean = (element != null && element instanceof <any>framework.lightning.designables.JSDesignableLightningInput);
-                        if(b) {
-                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getId(),designable.getId()))) {
-                                this.removeChild(element);
-                                this.setRendered(false);
-                                return;
-                            }
-                        } else {
-                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getInput().getId(),designable.getId()))) {
-                                this.removeChild(element);
-                                this.setRendered(false);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         * @param {number} steps
-         */
-        public moveDesignable(designable : framework.design.Designable, steps : number) {
-            {
-                let array13519 = this.getElements();
-                for(let index13518=0; index13518 < array13519.length; index13518++) {
-                    let element = array13519[index13518];
-                    {
-                        let b : boolean = (element != null && element instanceof <any>framework.lightning.designables.JSDesignableLightningInput);
-                        if(b) {
-                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getId(),designable.getId()))) {
-                                this.delegate.moveDesignable$framework_JSContainer$int(element, steps);
-                            }
-                        } else {
-                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getInput().getId(),designable.getId()))) {
-                                this.delegate.moveDesignable$framework_JSContainer$int(element, steps);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    JSDesignableFormLayout["__class"] = "framework.lightning.designables.JSDesignableFormLayout";
-    JSDesignableFormLayout["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
-
-
-}
 namespace framework.builder {
     export class ComponentsLibrary extends framework.lightning.Grid {
         public constructor(name : string) {
@@ -14945,8 +15122,8 @@ namespace framework.builder {
         }
 
         public addComponents(...components : framework.builder.Component[]) : ComponentsLibrary {
-            for(let index13520=0; index13520 < components.length; index13520++) {
-                let com = components[index13520];
+            for(let index6801=0; index6801 < components.length; index6801++) {
+                let com = components[index6801];
                 {
                     let li : framework.JSContainer = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-2");
                     this.addChild$framework_JSContainer(li);
@@ -15935,8 +16112,8 @@ namespace framework.builder {
 
         public dataLoaded$java_lang_Object(data : any) {
             let nprojects : Array<Object> = <Array<Object>>data;
-            for(let index13521=0; index13521 < nprojects.length; index13521++) {
-                let p = nprojects[index13521];
+            for(let index6802=0; index6802 < nprojects.length; index6802++) {
+                let p = nprojects[index6802];
                 {
                     let project : framework.builder.data.File = new framework.builder.data.File(p);
                     let file : framework.builder.UIFile = new framework.builder.UIFile(project.getName());
@@ -16024,6 +16201,132 @@ namespace framework.builder.data {
 
 }
 namespace framework.designables {
+    export class JSDesignableButton extends framework.lightning.Button implements framework.design.Designable {
+        static stateLabels : string[]; public static stateLabels_$LI$() : string[] { if(JSDesignableButton.stateLabels == null) JSDesignableButton.stateLabels = ["Neutral", "Brand", "Destructive", "Success", "Reset"]; return JSDesignableButton.stateLabels; };
+
+        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
+
+        public constructor(name : string) {
+            super(name);
+            this.applyParam("state", framework.lightning.Button.STATE_NEUTRAL);
+            this.applyParam("showIcon", "false");
+            this.applyParam("label", "Button");
+            this.applyParam("position", "left");
+            this.applyParam("iconName", "user");
+            this.applyParam("iconType", "utility");
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            this.delegate.applyParameter(key, value, true);
+            this.setAttribute(key, value);
+            if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "label")) {
+                this.setLabel(value);
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "statefull")) {
+                this.setStateful(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "ldisabled")) {
+                this.setDisabled(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "inverse")) {
+                this.setInverse(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "state")) {
+                this.setState(value);
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "showIcon")) {
+                this.setShowIcon(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "iconName")) {
+                this.setIconName(value);
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "iconType")) {
+                this.setType(value);
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "iconPosition")) {
+                this.setIconPosition(value);
+            }
+        }
+
+        /**
+         * 
+         * @return {*[]}
+         */
+        public getDesignables() : Array<framework.design.Designable> {
+            return <any>(new Array<any>());
+        }
+
+        public getParameters() : Array<framework.design.Parameter> {
+            let result : Array<framework.design.Parameter> = this.delegate.getParameters();
+            result.push(this.createParameter("label", "Label", "String"));
+            result.push(this.createParameter("statefull", "Statefull", "Boolean"));
+            result.push(this.createParameter("ldisabled", "Disabled", "Boolean"));
+            result.push(this.createParameter("inverse", "Inverse", "Boolean"));
+            let paramstates : framework.design.Parameter = this.createParameter("state", "State", "select");
+            for(let i : number = 0; i < JSDesignableButton.stateLabels_$LI$().length; i++) {
+                let opt : framework.design.Option = new framework.design.Option();
+                opt.text = JSDesignableButton.stateLabels_$LI$()[i];
+                opt.value = framework.lightning.Button.states_$LI$()[i];
+                paramstates.options.push(opt);
+            };
+            let showIcon : framework.design.AttributeParameter = new framework.design.AttributeParameter("showIcon", "Show Icon", "Advanced");
+            showIcon.options.push(new framework.design.Option("", ""));
+            let iconType : framework.design.AttributeParameter = new framework.design.AttributeParameter("iconType", "Icon Type", "Advanced");
+            let iconName : framework.design.AttributeParameter = new framework.design.AttributeParameter("iconName", "Icon Name", "Advanced");
+            let iconPosition : framework.design.AttributeParameter = new framework.design.AttributeParameter("iconPosition", "Icon Position", "Advanced");
+            iconPosition.options.push(new framework.design.Option("Left", "left"));
+            iconPosition.options.push(new framework.design.Option("Right", "right"));
+            result.push(paramstates, showIcon, iconType, iconName, iconPosition);
+            return result;
+        }
+
+        /*private*/ createParameter(name : string, label : string, type : string) : framework.design.Parameter {
+            let p : framework.design.AttributeParameter = new framework.design.AttributeParameter(name, label, "Basic");
+            p.name = name;
+            p.type = type;
+            p.label = label;
+            if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "boolean")) {
+                p.options.push(new framework.design.Option("", ""));
+            }
+            return p;
+        }
+
+        /**
+         * 
+         * @return {framework.builder.marshalling.Component}
+         */
+        public getComponent() : framework.builder.marshalling.Component {
+            return this.delegate.getComponent();
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+            throw new Error("Cannot add children to this component");
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+            this.delegate.removeDesignable(designable);
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+            this.delegate.moveDesignable$framework_design_Designable$int(designable, steps);
+        }
+    }
+    JSDesignableButton["__class"] = "framework.designables.JSDesignableButton";
+    JSDesignableButton["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.designables {
     export class JSDesignableLink extends framework.designables.JSDesignableTextComponent {
         public constructor(name : string) {
             super(name, "a");
@@ -16045,8 +16348,8 @@ namespace framework.designables {
         public getParameters() : Array<framework.design.Parameter> {
             let parameters : Array<framework.design.Parameter> = super.getParameters();
             let result : Array<framework.design.Parameter> = <any>(new Array<framework.design.Parameter>());
-            for(let index13522=0; index13522 < parameters.length; index13522++) {
-                let p = parameters[index13522];
+            for(let index6803=0; index6803 < parameters.length; index6803++) {
+                let p = parameters[index6803];
                 {
                     if(p != null && p instanceof <any>framework.design.TagParameter) {
                     } else {
@@ -16090,17 +16393,17 @@ namespace framework.designables {
                     project = framework.builder.Previewer.project;
                 }
                 {
-                    let array13524 = project.getChild("components").getChildren();
-                    for(let index13523=0; index13523 < array13524.length; index13523++) {
-                        let f = array13524[index13523];
+                    let array6805 = project.getChild("components").getChildren();
+                    for(let index6804=0; index6804 < array6805.length; index6804++) {
+                        let f = array6805[index6804];
                         {
                             if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(f.getName(),value))) {
                                 this.content = framework.builder.marshalling.MarshallUtil.build(f.getData());
                                 this.addChild$framework_JSContainer(<framework.JSContainer><any>this.content);
                                 {
-                                    let array13526 = f.getStylesheets();
-                                    for(let index13525=0; index13525 < array13526.length; index13525++) {
-                                        let sc = array13526[index13525];
+                                    let array6807 = f.getStylesheets();
+                                    for(let index6806=0; index6806 < array6807.length; index6806++) {
+                                        let sc = array6807[index6806];
                                         {
                                             let elem : HTMLElement = document.createElement("style");
                                             elem.textContent = sc.getData();
@@ -16109,9 +16412,9 @@ namespace framework.designables {
                                     }
                                 }
                                 {
-                                    let array13528 = f.getScripts();
-                                    for(let index13527=0; index13527 < array13528.length; index13527++) {
-                                        let sc = array13528[index13527];
+                                    let array6809 = f.getScripts();
+                                    for(let index6808=0; index6808 < array6809.length; index6808++) {
+                                        let sc = array6809[index6808];
                                         {
                                             let elem : HTMLElement = document.createElement("script");
                                             elem.textContent = sc.getData();
@@ -16120,9 +16423,9 @@ namespace framework.designables {
                                     }
                                 }
                                 {
-                                    let array13530 = f.getTemplates();
-                                    for(let index13529=0; index13529 < array13530.length; index13529++) {
-                                        let sc = array13530[index13529];
+                                    let array6811 = f.getTemplates();
+                                    for(let index6810=0; index6810 < array6811.length; index6810++) {
+                                        let sc = array6811[index6810];
                                         {
                                             let elem : HTMLElement = document.createElement("div");
                                             elem.setAttribute("id", sc.getName());
@@ -16182,9 +16485,9 @@ namespace framework.designables {
             let project : framework.builder.data.File = framework.builder.Builder.getInstance().getProject();
             component.options.push(new framework.design.Option("None", ""));
             {
-                let array13532 = project.getChild("components").getChildren();
-                for(let index13531=0; index13531 < array13532.length; index13531++) {
-                    let f = array13532[index13531];
+                let array6813 = project.getChild("components").getChildren();
+                for(let index6812=0; index6812 < array6813.length; index6812++) {
+                    let f = array6813[index6812];
                     {
                         component.options.push(new framework.design.Option(f.getName(), f.getName()));
                     }
@@ -16197,6 +16500,173 @@ namespace framework.designables {
     }
     JSDesignableBuilderComponent["__class"] = "framework.designables.JSDesignableBuilderComponent";
     JSDesignableBuilderComponent["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.lightning.designables {
+    export class JSDesignableFormElement extends framework.lightning.FormElement implements framework.design.Designable, framework.design.Preparable {
+        /*private*/ input : framework.InputField<any> = null;
+
+        public constructor(name : string) {
+            super(name, "div");
+            let padding : string = framework.lightning.LTContainer.PADDING_SIZE_XX_SMALL_$LI$();
+            this.setPaddingBottom(padding).setPaddingLeft(padding).setPaddingTop(padding).setPaddingRight(padding);
+            this.input = <framework.designables.JSDesignableInput><any>framework.core.BeanFactory.getInstance().getBeanOfType<any>("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory("html:input").build(new framework.builder.marshalling.Component(), true);
+            this.input.addClass("slds-input");
+            this.setInput(this.input);
+            this.getInput().addClass("slds-input");
+            this.applyParam("label", "Label");
+            this.setAttribute("identifier", "lgt:input");
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            super.applyParam(key, value);
+            if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "type")) {
+                let curVal : any = this.getValue();
+                if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"date")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"datetime")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"currency")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"number")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"email")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"phone")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"password")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"text"))) {
+                    let des : framework.designables.JSDesignableInput = new framework.designables.JSDesignableInput(this.input.getName());
+                    des.applyParam("type", value);
+                    this.addDesignable(des);
+                    this.label.setVisible(true);
+                    this.setTag("div");
+                    this.input.addClass("slds-input");
+                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"checkbox"))) {
+                    let des : framework.lightning.CheckBox = new framework.lightning.CheckBox(this.input.getName());
+                    this.addDesignable(<framework.design.Designable><any>des);
+                    des.setLabel(this.label.getHtml());
+                    this.label.setVisible(false);
+                    this.setTag("fieldset");
+                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"picklist")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"multipicklist"))) {
+                    let des : framework.designables.JSDesignableSelect = new framework.designables.JSDesignableSelect(this.input.getName());
+                    this.label.setVisible(true);
+                    this.setTag("div");
+                    this.addDesignable(des);
+                    if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"multipicklist"))) {
+                        des.setMultiple(true);
+                        des.setSize(6);
+                    }
+                    des.addClass("slds-select");
+                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"textarea")) || /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"richtext"))) {
+                    let des : framework.designables.JSDesignableTextArea = new framework.designables.JSDesignableTextArea(this.input.getName());
+                    this.label.setVisible(true);
+                    this.setTag("div");
+                    this.addDesignable(des);
+                    des.addClass("slds-textarea");
+                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"lookup"))) {
+                }
+                this.setRendered(false);
+                let editor : framework.builder.editors.VisualEditor = <any>(this.getAncestorWithClass<any>("visual-editor"));
+                if(editor != null) {
+                    editor.getStructure().reload$framework_design_Designable(this);
+                }
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"label"))) {
+                this.setLabel(value);
+            } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(key, "disabled")) {
+                if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))("true", value)) {
+                    this.setDisabled(true);
+                } else {
+                    this.setDisabled(false);
+                }
+            }
+        }
+
+        public getValue() : any {
+            return this.input.getValue();
+        }
+
+        /**
+         * 
+         * @return {*[]}
+         */
+        public getDesignables() : Array<framework.design.Designable> {
+            return <any>(new Array<framework.design.Designable>(<framework.design.Designable><any>this.input));
+        }
+
+        /**
+         * 
+         * @return {framework.builder.marshalling.Component}
+         */
+        public getComponent() : framework.builder.marshalling.Component {
+            return super.getComponent();
+        }
+
+        /**
+         * 
+         * @return {framework.design.Parameter[]}
+         */
+        public getParameters() : Array<framework.design.Parameter> {
+            let parameters : Array<framework.design.Parameter> = super.getParameters();
+            let type : framework.design.AttributeParameter = new framework.design.AttributeParameter("type", "Type", "Basic");
+            type.options.push(new framework.design.Option("date", "date"));
+            type.options.push(new framework.design.Option("datetime", "datetime"));
+            type.options.push(new framework.design.Option("Currency", "currency"));
+            type.options.push(new framework.design.Option("Number", "number"));
+            type.options.push(new framework.design.Option("Email", "email"));
+            type.options.push(new framework.design.Option("Phone", "phone"));
+            type.options.push(new framework.design.Option("Text", "text"));
+            type.options.push(new framework.design.Option("Password", "password"));
+            type.options.push(new framework.design.Option("Url", "url"));
+            type.options.push(new framework.design.Option("Checkbox", "checkbox"));
+            type.options.push(new framework.design.Option("Lookup", "lookup"));
+            type.options.push(new framework.design.Option("Ext Lookup", "extlookup"));
+            type.options.push(new framework.design.Option("Pick List", "picklist"));
+            type.options.push(new framework.design.Option("Multi Pick List", "multipicklist"));
+            type.options.push(new framework.design.Option("Long Text", "textarea"));
+            type.options.push(new framework.design.Option("Rich Text", "richtext"));
+            let label : framework.design.AttributeParameter = new framework.design.AttributeParameter("label", "Label", "Basic");
+            parameters.push(type, label);
+            return parameters;
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+            if(designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.InputField") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.InputField") >= 0)) {
+                this.input = <framework.InputField<any>><any>designable;
+                this.setInput(<framework.InputField<any>><any>designable);
+            } else {
+                throw new Error("Can only add component of type Input");
+            }
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+        }
+
+        public setDisabled(b : boolean) {
+            if(b) {
+                this.getInput().setAttribute("disabled", "true");
+            } else {
+                this.getInput().setAttribute("disabled", null);
+            }
+        }
+
+        /**
+         * 
+         */
+        public prepare() {
+        }
+    }
+    JSDesignableFormElement["__class"] = "framework.lightning.designables.JSDesignableFormElement";
+    JSDesignableFormElement["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.design.Preparable","framework.Renderable"];
 
 
 }
@@ -16347,62 +16817,6 @@ namespace framework.lightning.designables {
 
 
 }
-namespace framework.builder.properties {
-    export class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
-        public constructor() {
-            super("advanced");
-        }
-
-        public setComponent(designable : framework.design.Designable) {
-            super.setComponent(designable);
-            this.clear();
-            {
-                let array13534 = this.component.getParameters();
-                for(let index13533=0; index13533 < array13534.length; index13533++) {
-                    let p = array13534[index13533];
-                    {
-                        if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(p.category, "advanced")) this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
-                    }
-                }
-            }
-        }
-    }
-    AdvancedPropertiesEditor["__class"] = "framework.builder.properties.AdvancedPropertiesEditor";
-    AdvancedPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable","framework.builder.properties.PropertiesEditor","framework.Renderable"];
-
-
-}
-namespace framework.builder.properties {
-    export class BasicPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
-        public constructor(name : string) {
-            super(name);
-        }
-
-        /**
-         * 
-         * @param {*} designable
-         */
-        public setComponent(designable : framework.design.Designable) {
-            super.setComponent(designable);
-            this.clear();
-            {
-                let array13536 = designable.getParameters();
-                for(let index13535=0; index13535 < array13536.length; index13535++) {
-                    let param = array13536[index13535];
-                    {
-                        if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(param.category,"Basic"))) {
-                            this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    BasicPropertiesEditor["__class"] = "framework.builder.properties.BasicPropertiesEditor";
-    BasicPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable","framework.builder.properties.PropertiesEditor","framework.Renderable"];
-
-
-}
 namespace framework.builder.libraries {
     export class BasicComponentLibrary extends framework.builder.ComponentsLibrary {
         public constructor() {
@@ -16460,6 +16874,10 @@ namespace framework.builder.libraries {
             this.addComponents(new framework.builder.Component("lgt:modal", "MODAL", "Modal"));
             this.addComponents(new framework.builder.Component("lgt:acc", "ACC", "Accordion"));
             this.addComponents(new framework.builder.Component("lgt:acc-item", "ACCI", "Accordion Item"));
+            this.addComponents(new framework.builder.Component("lgt:popover", "POPOVER", "Pop Over"));
+            this.addComponents(new framework.builder.Component("lgt:popover-footer-item", "LSTBXFI", "List Box Footer Item"));
+            this.addComponents(new framework.builder.Component("lgt:listbox", "LSTBX", "List Box"));
+            this.addComponents(new framework.builder.Component("lgt:listbox-item", "LSTBXI", "List Box Item"));
             this.addComponents(new framework.builder.Component("zs:http", "REST", "Rest Webservice"));
             this.addComponents(new framework.builder.Component("zs:service", "SERV", "Remote Service"));
             this.addComponents(new framework.builder.Component("lgt:soql", "SOQL", "Salesforce Query"));
@@ -16476,6 +16894,7 @@ namespace framework.designables {
 
         public constructor(name : string) {
             super(name);
+            this.setAttribute("identifier", "html:select");
         }
 
         /**
@@ -16491,9 +16910,9 @@ namespace framework.designables {
                     this.clearChildren();
                     this.setRendered(false);
                     {
-                        let array13538 = Object.keys(o);
-                        for(let index13537=0; index13537 < array13538.length; index13537++) {
-                            let val = array13538[index13537];
+                        let array6815 = Object.keys(o);
+                        for(let index6814=0; index6814 < array6815.length; index6814++) {
+                            let val = array6815[index6814];
                             {
                                 let txt : string = <string>o[val];
                                 this.addOption(new framework.JSOption(txt, val));
@@ -16501,6 +16920,10 @@ namespace framework.designables {
                         }
                     }
                 }
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"size"))) {
+                this.setSize(parseInt(value));
+            } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"multiple"))) {
+                this.setMultiple(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })("true",value)));
             }
         }
 
@@ -16528,6 +16951,10 @@ namespace framework.designables {
             let params : Array<framework.design.Parameter> = this.delegate.getParameters();
             let options : framework.design.AttributeParameter = new framework.design.AttributeParameter("options", "Options", "Extended");
             params.push(options);
+            let multiple : framework.design.AttributeParameter = new framework.design.AttributeParameter("multiple", "Multiple", "Basic");
+            multiple.options.push(new framework.design.Option("", ""));
+            let size : framework.design.AttributeParameter = new framework.design.AttributeParameter("size", "Size", "Basic");
+            params.push(options, multiple, size);
             return params;
         }
 
@@ -16643,6 +17070,268 @@ namespace framework.designables {
     }
 
 }
+namespace framework.lightning {
+    export class CheckBoxGroup extends framework.JSContainer implements framework.design.ExtDesignable, framework.InputField<Array<string>> {
+        /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
+
+        public constructor(name : string) {
+            super(name, "div");
+            this.setAttribute("identifier", "lgt:checkboxgroup");
+            this.addClass("slds-form-element__control");
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            this.delegate.applyParameter(key, value, true);
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"options"))) {
+                this.clearChildren();
+                this.setRendered(false);
+                let options : Object = <Object>JSON.parse(value);
+                {
+                    let array6817 = Object.keys(options);
+                    for(let index6816=0; index6816 < array6817.length; index6816++) {
+                        let optval = array6817[index6816];
+                        {
+                            let checkbox : framework.lightning.CheckBox = new framework.lightning.CheckBox(optval);
+                            checkbox.setLabel(<string>options[optval]);
+                            this.addChild$framework_JSContainer(checkbox);
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * 
+         * @return {*[]}
+         */
+        public getDesignables() : Array<framework.design.Designable> {
+            return <any>(new Array<framework.design.Designable>());
+        }
+
+        /**
+         * 
+         * @return {framework.builder.marshalling.Component}
+         */
+        public getComponent() : framework.builder.marshalling.Component {
+            return this.delegate.getComponent();
+        }
+
+        /**
+         * 
+         * @return {framework.design.Parameter[]}
+         */
+        public getParameters() : Array<framework.design.Parameter> {
+            let params : Array<framework.design.Parameter> = this.delegate.getParameters();
+            let options : framework.design.AttributeParameter = new framework.design.AttributeParameter("options", "Options", "Extended");
+            params.push(options);
+            return params;
+        }
+
+        public setData(obj : any) {
+            if(obj != null && obj instanceof <any>Array) {
+                let options : Array<framework.design.Option> = <Array<framework.design.Option>>obj;
+                this.setOptions(options);
+            } else {
+                this.applyParam("options", JSON.stringify(obj));
+            }
+        }
+
+        public setOptions(options : Array<framework.design.Option>) {
+            this.clearChildren();
+            for(let index6818=0; index6818 < options.length; index6818++) {
+                let opt = options[index6818];
+                {
+                    this.addOption(opt);
+                }
+            }
+        }
+
+        public addOption(option : framework.design.Option) {
+            let checkbox : framework.lightning.CheckBox = new framework.lightning.CheckBox(option.value);
+            checkbox.setLabel(option.text);
+            this.addChild$framework_JSContainer(checkbox);
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+        }
+
+        /**
+         * 
+         * @return {string[]}
+         */
+        public getValue() : Array<string> {
+            let result : Array<string> = <any>(new Array<string>());
+            {
+                let array6820 = this.getChildren();
+                for(let index6819=0; index6819 < array6820.length; index6819++) {
+                    let child = array6820[index6819];
+                    {
+                        let cb : framework.lightning.CheckBox = <framework.lightning.CheckBox>child;
+                        if(cb.getValue() === true) {
+                            result.push(cb.getName());
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public setValue$jsweet_lang_Array(val : Array<string>) {
+            this.clearAll();
+            for(let index6821=0; index6821 < val.length; index6821++) {
+                let s = val[index6821];
+                {
+                    {
+                        let array6823 = this.getChildren();
+                        for(let index6822=0; index6822 < array6823.length; index6822++) {
+                            let child = array6823[index6822];
+                            {
+                                let cb : framework.lightning.CheckBox = <framework.lightning.CheckBox>child;
+                                if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(cb.getName(),s))) {
+                                    cb.setValue$java_lang_Boolean(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * 
+         * @param {string[]} val
+         */
+        public setValue(val? : any) : any {
+            if(((val != null && val instanceof <any>Array) || val === null)) {
+                return <any>this.setValue$jsweet_lang_Array(val);
+            } else throw new Error('invalid overload');
+        }
+
+        public clearAll() {
+            {
+                let array6825 = this.getChildren();
+                for(let index6824=0; index6824 < array6825.length; index6824++) {
+                    let child = array6825[index6824];
+                    {
+                        let cb : framework.lightning.CheckBox = <framework.lightning.CheckBox>child;
+                        cb.setValue$java_lang_Boolean(false);
+                    }
+                }
+            }
+        }
+
+        /**
+         * 
+         * @return {Array}
+         */
+        public getExtEditors() : framework.builder.properties.ExtPropertiesEditor[] {
+            let options : framework.builder.properties.KeyValueEditor = new CheckBoxGroup.CheckBoxGroup$0(this, "options");
+            options.setKeyLabel("Value");
+            options.setValueLabel("Text");
+            options.setTabLabel("Options");
+            let customPropertiesEditorBody : framework.builder.properties.KeyValueEditor = new CheckBoxGroup.CheckBoxGroup$1(this, "custom");
+            customPropertiesEditorBody.setTabLabel("Custom");
+            return [options, customPropertiesEditorBody];
+        }
+    }
+    CheckBoxGroup["__class"] = "framework.lightning.CheckBoxGroup";
+    CheckBoxGroup["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.design.ExtDesignable","framework.Renderable","framework.InputField"];
+
+
+
+    export namespace CheckBoxGroup {
+
+        export class CheckBoxGroup$0 extends framework.builder.properties.KeyValueEditor {
+            public __parent: any;
+            /**
+             * 
+             * @param {*} designable
+             * @param {Object} data
+             */
+            public applyDataOnDesignable(designable : framework.design.Designable, data : Object) {
+                designable.applyParam("options", JSON.stringify(data));
+            }
+
+            /**
+             * 
+             * @param {*} designable
+             * @return {Object}
+             */
+            public getDataFromDesignable(designable : framework.design.Designable) : Object {
+                let options : string = designable.getAttribute("options");
+                if(options != null && options.length > 0) {
+                    let data : Object = <Object>JSON.parse(options);
+                    if(data != null) {
+                        return data;
+                    }
+                }
+                return <Object>new Object();
+            }
+
+            constructor(__parent: any, __arg0: any) {
+                super(__arg0);
+                this.__parent = __parent;
+            }
+        }
+        CheckBoxGroup$0["__interfaces"] = ["framework.builder.properties.ExtPropertiesEditor","framework.interactions.Droppable","framework.EventListener","framework.builder.properties.PropertiesEditor","framework.Renderable"];
+
+
+
+        export class CheckBoxGroup$1 extends framework.builder.properties.KeyValueEditor {
+            public __parent: any;
+            /**
+             * 
+             * @param {*} designable
+             * @param {Object} data
+             */
+            public applyDataOnDesignable(designable : framework.design.Designable, data : Object) {
+                designable['setData$java_lang_Object'](data);
+            }
+
+            /**
+             * 
+             * @param {*} designable
+             * @return {Object}
+             */
+            public getDataFromDesignable(designable : framework.design.Designable) : Object {
+                return <Object>designable.getData();
+            }
+
+            constructor(__parent: any, __arg0: any) {
+                super(__arg0);
+                this.__parent = __parent;
+            }
+        }
+        CheckBoxGroup$1["__interfaces"] = ["framework.builder.properties.ExtPropertiesEditor","framework.interactions.Droppable","framework.EventListener","framework.builder.properties.PropertiesEditor","framework.Renderable"];
+
+
+    }
+
+}
 namespace framework.lightning.designables {
     export class JSDesignableTable extends framework.lightning.table.Table implements framework.design.ExtDesignable, framework.lightning.table.TableColumnModel, framework.lightning.table.TableModel, framework.lightning.table.TableCellRenderer {
         /*private*/ delegate : framework.designables.DesignableDelegate = new framework.designables.DesignableDelegate(this);
@@ -16716,9 +17405,9 @@ namespace framework.lightning.designables {
                 if(value != null) {
                     let o : Object = <Object>JSON.parse(value);
                     {
-                        let array13540 = Object.keys(o);
-                        for(let index13539=0; index13539 < array13540.length; index13539++) {
-                            let val = array13540[index13539];
+                        let array6827 = Object.keys(o);
+                        for(let index6826=0; index6826 < array6827.length; index6826++) {
+                            let val = array6827[index6826];
                             {
                                 let txt : string = <string>o[val];
                                 let col : framework.lightning.table.TableColumn = new framework.lightning.table.TableColumn(val, val, txt);
@@ -16772,8 +17461,8 @@ namespace framework.lightning.designables {
             let options : framework.design.AttributeParameter = new framework.design.AttributeParameter("fields", "Fields", "Extended");
             params.push(options);
             let boolParams : string[] = ["Bordered", "CellBuffered", "ColBordered", "FixedLayout", "MultiSelectable", "NoRowHover", "Striped", "Selectable", "ResizableCol"];
-            for(let index13541=0; index13541 < boolParams.length; index13541++) {
-                let param = boolParams[index13541];
+            for(let index6828=0; index6828 < boolParams.length; index6828++) {
+                let param = boolParams[index6828];
                 {
                     let parameter : framework.design.AttributeParameter = new framework.design.AttributeParameter(param, param, "Advanced");
                     parameter.options.push(new framework.design.Option("", ""));
@@ -16968,6 +17657,108 @@ namespace framework.lightning.designables {
     }
 
 }
+namespace framework.lightning {
+    export class FormLayout extends framework.lightning.designables.JSDesignableLightningGrid {
+        labels : string[] = ["XXX Small", "XX Small", "X Small", "Small", "Medium", "Large", "X Large", "XX Large"];
+
+        public static SPACING_XXX_SMALL : string; public static SPACING_XXX_SMALL_$LI$() : string { if(FormLayout.SPACING_XXX_SMALL == null) FormLayout.SPACING_XXX_SMALL = framework.lightning.LTContainer.PADDING_SIZE_XXX_SMALL_$LI$(); return FormLayout.SPACING_XXX_SMALL; };
+
+        public static SPACING_XX_SMALL : string; public static SPACING_XX_SMALL_$LI$() : string { if(FormLayout.SPACING_XX_SMALL == null) FormLayout.SPACING_XX_SMALL = framework.lightning.LTContainer.PADDING_SIZE_XX_SMALL_$LI$(); return FormLayout.SPACING_XX_SMALL; };
+
+        public static SPACING_X_SMALL : string; public static SPACING_X_SMALL_$LI$() : string { if(FormLayout.SPACING_X_SMALL == null) FormLayout.SPACING_X_SMALL = framework.lightning.LTContainer.PADDING_SIZE_X_SMALL_$LI$(); return FormLayout.SPACING_X_SMALL; };
+
+        public static SPACING_SMALL : string; public static SPACING_SMALL_$LI$() : string { if(FormLayout.SPACING_SMALL == null) FormLayout.SPACING_SMALL = framework.lightning.LTContainer.PADDING_SIZE_SMALL_$LI$(); return FormLayout.SPACING_SMALL; };
+
+        public static SPACING_MEDIUM : string; public static SPACING_MEDIUM_$LI$() : string { if(FormLayout.SPACING_MEDIUM == null) FormLayout.SPACING_MEDIUM = framework.lightning.LTContainer.PADDING_SIZE_MEDIUM_$LI$(); return FormLayout.SPACING_MEDIUM; };
+
+        public static SPACING_LARGE : string; public static SPACING_LARGE_$LI$() : string { if(FormLayout.SPACING_LARGE == null) FormLayout.SPACING_LARGE = framework.lightning.LTContainer.PADDING_SIZE_LARGE_$LI$(); return FormLayout.SPACING_LARGE; };
+
+        public static SPACING_X_LARGE : string; public static SPACING_X_LARGE_$LI$() : string { if(FormLayout.SPACING_X_LARGE == null) FormLayout.SPACING_X_LARGE = framework.lightning.LTContainer.PADDING_SIZE_X_LARGE_$LI$(); return FormLayout.SPACING_X_LARGE; };
+
+        public static SPACING_XX_LARGE : string; public static SPACING_XX_LARGE_$LI$() : string { if(FormLayout.SPACING_XX_LARGE == null) FormLayout.SPACING_XX_LARGE = framework.lightning.LTContainer.PADDING_SIZE_XX_LARGE_$LI$(); return FormLayout.SPACING_XX_LARGE; };
+
+        public constructor(name : string) {
+            super(name);
+            this.addClass("slds-form");
+            this.applyParam("wrap", "true");
+            this.setCompound(true);
+        }
+
+        public setSpacing(spacing : string) : FormLayout {
+            {
+                let array6830 = this.getChildren();
+                for(let index6829=0; index6829 < array6830.length; index6829++) {
+                    let container = array6830[index6829];
+                    {
+                        let lt : framework.lightning.LTContainer = <framework.lightning.LTContainer>container;
+                        lt.setPaddingBottom(spacing).setPaddingLeft(spacing).setPaddingRight(spacing).setPaddingTop(spacing);
+                    }
+                }
+            }
+            return this;
+        }
+
+        public setStacked(b : boolean) : FormLayout {
+            this.toggleClass("slds-form_stacked", b);
+            if(b) {
+                this.setInline(false);
+                this.setHorizontal(false);
+                this.setCompound(false);
+            }
+            return this;
+        }
+
+        public setInline(b : boolean) : FormLayout {
+            this.toggleClass("slds-form_inline", b);
+            if(b) {
+                this.setStacked(false);
+                this.setHorizontal(false);
+                this.setCompound(false);
+            }
+            return this;
+        }
+
+        public setCompound(b : boolean) : FormLayout {
+            this.toggleClass("slds-form_compound", b);
+            if(b) {
+                this.setInline(false);
+                this.setHorizontal(false);
+                this.setStacked(false);
+            }
+            return this;
+        }
+
+        public setHorizontal(b : boolean) : FormLayout {
+            this.toggleClass("slds-form_horizontal", b);
+            if(b) {
+                this.setInline(false);
+                this.setStacked(false);
+                this.setCompound(false);
+            }
+            return this;
+        }
+
+        public addFormElement(element : framework.lightning.FormElement) : FormLayout {
+            this.addChild$framework_JSContainer(element);
+            return this;
+        }
+
+        public clear() : FormLayout {
+            this.clearChildren();
+            this.setRendered(false);
+            return this;
+        }
+
+        public getElements() : Array<framework.lightning.FormElement> {
+            let l : Array<any> = this.getChildren();
+            return l;
+        }
+    }
+    FormLayout["__class"] = "framework.lightning.FormLayout";
+    FormLayout["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
 namespace framework.builder.editors {
     export class StructureDockedComposer extends framework.lightning.DockedComposer {
         /*private*/ structure : framework.builder.editors.Structure;
@@ -17043,9 +17834,9 @@ namespace framework.builder.libraries {
             let customs : Object = des.getComponent().custom;
             this.customComponents.clearComponent();
             {
-                let array13543 = Object.keys(customs);
-                for(let index13542=0; index13542 < array13543.length; index13542++) {
-                    let s = array13543[index13542];
+                let array6832 = Object.keys(customs);
+                for(let index6831=0; index6831 < array6832.length; index6831++) {
+                    let s = array6832[index6831];
                     {
                         this.customComponents.addComponents(new framework.builder.Component("html:cmp", <string>customs[s], s));
                     }
@@ -17094,8 +17885,8 @@ namespace framework.builder.properties {
             if(designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0)) {
                 let editors : framework.builder.properties.ExtPropertiesEditor[] = (<framework.design.ExtDesignable><any>designable).getExtEditors();
                 if(editors != null && editors.length > 0) {
-                    for(let index13544=0; index13544 < editors.length; index13544++) {
-                        let e = editors[index13544];
+                    for(let index6833=0; index6833 < editors.length; index6833++) {
+                        let e = editors[index6833];
                         {
                             e.setComponent(designable);
                             this.mainEditor.addItem$java_lang_String$framework_builder_properties_PropertiesEditor(e.getLabel(<framework.design.ExtDesignable><any>designable), e).setActive(false);
@@ -17202,8 +17993,8 @@ namespace framework.builder.data {
 
         public setFields(fields : Array<Object>) {
             this.configs["fields"] = fields;
-            for(let index13545=0; index13545 < fields.length; index13545++) {
-                let field = fields[index13545];
+            for(let index6834=0; index6834 < fields.length; index6834++) {
+                let field = fields[index6834];
                 {
                     let name : string = <string>field["name"];
                     let label : string = <string>field["label"];
@@ -17346,8 +18137,8 @@ namespace framework.builder.data {
 
         public setConfigs(fields : Array<Object>) {
             let count : number = 0;
-            for(let index13546=0; index13546 < fields.length; index13546++) {
-                let opt = fields[index13546];
+            for(let index6835=0; index6835 < fields.length; index6835++) {
+                let opt = fields[index6835];
                 {
                     let name : string = <string>opt["name"];
                     let label : string = <string>opt["label"];
@@ -17378,12 +18169,12 @@ namespace framework.builder.data {
          */
         public getValue() : Object {
             let result : Object = <Object>new Object();
-            let type : string = this.select.getValue();
+            let type : string = <string>this.select.getValue();
             result["type"] = type;
             {
-                let array13548 = this.map.keySet();
-                for(let index13547=0; index13547 < array13548.length; index13547++) {
-                    let name = array13548[index13547];
+                let array6837 = this.map.keySet();
+                for(let index6836=0; index6836 < array6837.length; index6836++) {
+                    let name = array6837[index6836];
                     {
                         if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(name,type))) {
                             let form : framework.builder.data.DynaForm = <framework.builder.data.DynaForm>this.map.get(name).getChildren()[0];
@@ -17398,9 +18189,9 @@ namespace framework.builder.data {
 
         public setValue$jsweet_lang_Object(val : Object) {
             {
-                let array13550 = this.map.keySet();
-                for(let index13549=0; index13549 < array13550.length; index13549++) {
-                    let name = array13550[index13549];
+                let array6839 = this.map.keySet();
+                for(let index6838=0; index6838 < array6839.length; index6838++) {
+                    let name = array6839[index6838];
                     {
                         if(val[name] != null) {
                             let form : framework.builder.data.DynaForm = <framework.builder.data.DynaForm>this.map.get(name).getChildren()[0];
@@ -17410,11 +18201,11 @@ namespace framework.builder.data {
                 }
             }
             let type : string = <string>val["type"];
-            this.select.setValue$java_lang_String(type);
+            this.select.setValue$java_lang_Object(type);
             {
-                let array13552 = this.map.keySet();
-                for(let index13551=0; index13551 < array13552.length; index13551++) {
-                    let name = array13552[index13551];
+                let array6841 = this.map.keySet();
+                for(let index6840=0; index6840 < array6841.length; index6840++) {
+                    let name = array6841[index6840];
                     {
                         this.map.get(name).setVisible(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(name,type)));
                     }
@@ -17430,13 +18221,6 @@ namespace framework.builder.data {
             if(((val != null && val instanceof <any>Object) || val === null)) {
                 return <any>this.setValue$jsweet_lang_Object(val);
             } else throw new Error('invalid overload');
-        }
-
-        /**
-         * 
-         * @param {string} value
-         */
-        public setRawValue(value : string) {
         }
     }
     MultiForm["__class"] = "framework.builder.data.MultiForm";
@@ -17454,11 +18238,11 @@ namespace framework.builder.data {
              * @param {Event} evt
              */
             public performAction(source : framework.JSContainer, evt : Event) {
-                let value : string = this.__parent.select.getValue();
+                let value : string = <string>this.__parent.select.getValue();
                 {
-                    let array13554 = this.__parent.map.keySet();
-                    for(let index13553=0; index13553 < array13554.length; index13553++) {
-                        let name = array13554[index13553];
+                    let array6843 = this.__parent.map.keySet();
+                    for(let index6842=0; index6842 < array6843.length; index6842++) {
+                        let name = array6843[index6842];
                         {
                             this.__parent.map.get(name).setVisible(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(name,value)));
                         }
@@ -17476,15 +18260,380 @@ namespace framework.builder.data {
     }
 
 }
+namespace framework.lightning {
+    export class PopOverFooterItem extends framework.designables.JSDesignableButton {
+        public constructor(name? : any) {
+            if(((typeof name === 'string') || name === null)) {
+                let __args = Array.prototype.slice.call(arguments);
+                super(name);
+                (() => {
+                    this.setAttribute("identifier", "lgt:popover-footer-item");
+                    this.applyParam("state", framework.lightning.Button.STATE_RESET);
+                    this.addClass("slds-p-vertical").addClass("xx-small slds-size_1-of-1");
+                    this.applyParam("label", "Footer Item");
+                })();
+            } else if(name === undefined) {
+                let __args = Array.prototype.slice.call(arguments);
+                {
+                    let __args = Array.prototype.slice.call(arguments);
+                    let name : any = "item";
+                    super(name);
+                    (() => {
+                        this.setAttribute("identifier", "lgt:popover-footer-item");
+                        this.applyParam("state", framework.lightning.Button.STATE_RESET);
+                        this.addClass("slds-p-vertical").addClass("xx-small slds-size_1-of-1");
+                        this.applyParam("label", "Footer Item");
+                    })();
+                }
+            } else throw new Error('invalid overload');
+        }
+    }
+    PopOverFooterItem["__class"] = "framework.lightning.PopOverFooterItem";
+    PopOverFooterItem["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
 
+
+}
+namespace framework.builder.data {
+    export class DynaForm extends framework.lightning.FormLayout implements framework.InputField<Object> {
+        public constructor(name : string) {
+            super(name);
+        }
+
+        public setFields(fields : Array<Object>) {
+            for(let index6844=0; index6844 < fields.length; index6844++) {
+                let o = fields[index6844];
+                {
+                    let name : string = <string>o["name"];
+                    let type : string = <string>o["type"];
+                    let label : string = <string>o["label"];
+                    let element : framework.lightning.FormElement = new framework.lightning.FormElement("elem_" + name, "div");
+                    element.setLabel(label);
+                    let input : framework.InputField<any> = new framework.JSInput(name);
+                    if(type == null || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type.trim(), "") || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "string") || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "text")) {
+                    } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "integer") || /* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "numeric")) {
+                        input = new framework.JSInput(name).setType(framework.InputTypes.number);
+                    } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "select")) {
+                        let options : Array<Object> = <Array<Object>>o["options"];
+                        let select : framework.JSSelect = new framework.JSSelect(name);
+                        for(let index6845=0; index6845 < options.length; index6845++) {
+                            let opt = options[index6845];
+                            {
+                                let text : string = <string>opt["text"];
+                                let value : string = <string>opt["value"];
+                                select.addOption(new framework.JSOption(text, value));
+                            }
+                        }
+                        input = select;
+                    } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(type, "multi")) {
+                        let multi : framework.builder.data.MultiForm = new framework.builder.data.MultiForm(name);
+                        let options : Array<Object> = <Array<Object>>o["options"];
+                        multi.setConfigs(options);
+                        input = multi;
+                    }
+                    input.addClass("slds-input");
+                    element.setInput(input);
+                    this.addFormElement(element);
+                }
+            }
+        }
+
+        /**
+         * 
+         * @return {Object}
+         */
+        public getValue() : Object {
+            let result : Object = <Object>new Object();
+            {
+                let array6847 = this.getElements();
+                for(let index6846=0; index6846 < array6847.length; index6846++) {
+                    let element = array6847[index6846];
+                    {
+                        let value : any = element.getInput().getValue();
+                        result[element.getInput().getName()] = value;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public setValue$jsweet_lang_Object(val : Object) {
+            {
+                let array6849 = this.getElements();
+                for(let index6848=0; index6848 < array6849.length; index6848++) {
+                    let element = array6849[index6848];
+                    {
+                        let name : string = element.getInput().getName();
+                        if(val[name] != null) {
+                            let o : any = val[name];
+                            let __in : framework.InputField<any> = <framework.InputField<any>><any>element.getInput();
+                            __in.setValue(o);
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * 
+         * @param {Object} val
+         */
+        public setValue(val? : any) : any {
+            if(((val != null && val instanceof <any>Object) || val === null)) {
+                return <any>this.setValue$jsweet_lang_Object(val);
+            } else throw new Error('invalid overload');
+        }
+    }
+    DynaForm["__class"] = "framework.builder.data.DynaForm";
+    DynaForm["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.InputField","framework.Renderable"];
+
+
+}
+namespace framework.builder.properties {
+    export class BasePropertiesEditor extends framework.lightning.FormLayout implements framework.builder.properties.PropertiesEditor {
+        component : framework.design.Designable;
+
+        public constructor(name : string) {
+            super(name);
+            this.component = null;
+            this.setHorizontal(true).addClass("slds-form_compact");
+        }
+
+        public setComponent(designable : framework.design.Designable) {
+            this.component = designable;
+        }
+
+        public addProperty$java_lang_String$framework_JSInput(label : string, input : framework.JSInput) : BasePropertiesEditor {
+            let width : framework.lightning.FormElement = new framework.lightning.FormElement("elem", "div");
+            width.setLabel(label);
+            input.addClass("slds-input");
+            width.setInput(input);
+            this.addFormElement(width);
+            return this;
+        }
+
+        public addProperty(label? : any, input? : any) : any {
+            if(((typeof label === 'string') || label === null) && ((input != null && input instanceof <any>framework.JSInput) || input === null)) {
+                return <any>this.addProperty$java_lang_String$framework_JSInput(label, input);
+            } else if(((label != null && label instanceof <any>framework.design.Parameter) || label === null) && ((input != null && (input["__interfaces"] != null && input["__interfaces"].indexOf("framework.design.Designable") >= 0 || input.constructor != null && input.constructor["__interfaces"] != null && input.constructor["__interfaces"].indexOf("framework.design.Designable") >= 0)) || input === null)) {
+                return <any>this.addProperty$framework_design_Parameter$framework_design_Designable(label, input);
+            } else throw new Error('invalid overload');
+        }
+
+        public addProperty$framework_design_Parameter$framework_design_Designable(parameter : framework.design.Parameter, designable : framework.design.Designable) : BasePropertiesEditor {
+            let editor : framework.builder.properties.PropertyEditor = parameter.getEditor(this.component);
+            if(editor != null) {
+                let element : framework.lightning.FormElement = new framework.lightning.FormElement("elem", "div");
+                element.setLabel(parameter.label);
+                element.setInput(<framework.InputField<any>><any>editor);
+                this.addFormElement(element);
+            }
+            return this;
+        }
+    }
+    BasePropertiesEditor["__class"] = "framework.builder.properties.BasePropertiesEditor";
+    BasePropertiesEditor["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.builder.properties.PropertiesEditor","framework.Renderable"];
+
+
+}
+namespace framework.lightning.designables {
+    export class JSDesignableFormLayout extends framework.lightning.FormLayout {
+        public constructor() {
+            super("Form Layout");
+            this.applyParam("layout", "compound");
+        }
+
+        /**
+         * 
+         * @param {string} key
+         * @param {string} value
+         */
+        public applyParam(key : string, value : string) {
+            super.applyParam(key, value);
+            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(key,"layout"))) {
+                if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"horizontal"))) {
+                    this.setHorizontal(true);
+                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"stacked"))) {
+                    this.setStacked(true);
+                } else if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(value, "inline")) {
+                    this.setInline(true);
+                } else if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(value,"compound"))) {
+                    this.setCompound(true);
+                } else {
+                    this.setStacked(true);
+                }
+            }
+        }
+
+        /**
+         * 
+         * @return {framework.design.Parameter[]}
+         */
+        public getParameters() : Array<framework.design.Parameter> {
+            let parameters : Array<framework.design.Parameter> = super.getParameters();
+            let parameter : framework.design.AttributeParameter = new framework.design.AttributeParameter("layout", "Layout", "Basic");
+            parameter.options.push(new framework.design.Option("Stacked", "stacked"));
+            parameter.options.push(new framework.design.Option("Horizontal", "horizontal"));
+            parameter.options.push(new framework.design.Option("inline", "inline"));
+            parameter.options.push(new framework.design.Option("Compound", "compound"));
+            parameters.push(parameter);
+            return parameters;
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public addDesignable(designable : framework.design.Designable) {
+            if(designable != null && designable instanceof <any>framework.lightning.FormElement) {
+                this.addFormElement(<framework.lightning.FormElement><any>designable);
+            } else {
+                console.error("Designable of type " + /* getName */(c => c["__class"]?c["__class"]:c["name"])((<any>designable.constructor)) + " cannot be added to Form Layout");
+            }
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public removeDesignable(designable : framework.design.Designable) {
+            {
+                let array6851 = this.getElements();
+                for(let index6850=0; index6850 < array6851.length; index6850++) {
+                    let element = array6851[index6850];
+                    {
+                        let b : boolean = (element != null && element instanceof <any>framework.lightning.designables.JSDesignableFormElement);
+                        if(b) {
+                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getId(),designable.getId()))) {
+                                this.removeChild(element);
+                                this.setRendered(false);
+                                return;
+                            }
+                        } else {
+                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getInput().getId(),designable.getId()))) {
+                                this.removeChild(element);
+                                this.setRendered(false);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         * @param {number} steps
+         */
+        public moveDesignable(designable : framework.design.Designable, steps : number) {
+            {
+                let array6853 = this.getElements();
+                for(let index6852=0; index6852 < array6853.length; index6852++) {
+                    let element = array6853[index6852];
+                    {
+                        let b : boolean = (element != null && element instanceof <any>framework.lightning.designables.JSDesignableFormElement);
+                        if(b) {
+                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getId(),designable.getId()))) {
+                                super.moveDesignable(element, steps);
+                            }
+                        } else {
+                            if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(element.getInput().getId(),designable.getId()))) {
+                                super.moveDesignable(element, steps);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    JSDesignableFormLayout["__class"] = "framework.lightning.designables.JSDesignableFormLayout";
+    JSDesignableFormLayout["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.Renderable"];
+
+
+}
+namespace framework.builder.properties {
+    export class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
+        public constructor() {
+            super("advanced");
+        }
+
+        public setComponent(designable : framework.design.Designable) {
+            super.setComponent(designable);
+            this.clear();
+            {
+                let array6855 = this.component.getParameters();
+                for(let index6854=0; index6854 < array6855.length; index6854++) {
+                    let p = array6855[index6854];
+                    {
+                        if(/* equalsIgnoreCase */((o1, o2) => o1.toUpperCase() === (o2===null?o2:o2.toUpperCase()))(p.category, "advanced")) this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
+                    }
+                }
+            }
+        }
+    }
+    AdvancedPropertiesEditor["__class"] = "framework.builder.properties.AdvancedPropertiesEditor";
+    AdvancedPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.builder.properties.PropertiesEditor","framework.Renderable"];
+
+
+}
+namespace framework.builder.properties {
+    export class BasicPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
+        public constructor(name : string) {
+            super(name);
+        }
+
+        /**
+         * 
+         * @param {*} designable
+         */
+        public setComponent(designable : framework.design.Designable) {
+            super.setComponent(designable);
+            this.clear();
+            {
+                let array6857 = designable.getParameters();
+                for(let index6856=0; index6856 < array6857.length; index6856++) {
+                    let param = array6857[index6856];
+                    {
+                        if(/* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(param.category,"Basic"))) {
+                            this.addProperty$framework_design_Parameter$framework_design_Designable(param, designable);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    BasicPropertiesEditor["__class"] = "framework.builder.properties.BasicPropertiesEditor";
+    BasicPropertiesEditor["__interfaces"] = ["framework.interactions.Droppable","framework.design.Designable","framework.builder.properties.PropertiesEditor","framework.Renderable"];
+
+
+}
+
+
+framework.lightning.FormLayout.SPACING_XX_LARGE_$LI$();
+
+framework.lightning.FormLayout.SPACING_X_LARGE_$LI$();
+
+framework.lightning.FormLayout.SPACING_LARGE_$LI$();
+
+framework.lightning.FormLayout.SPACING_MEDIUM_$LI$();
+
+framework.lightning.FormLayout.SPACING_SMALL_$LI$();
+
+framework.lightning.FormLayout.SPACING_X_SMALL_$LI$();
+
+framework.lightning.FormLayout.SPACING_XX_SMALL_$LI$();
+
+framework.lightning.FormLayout.SPACING_XXX_SMALL_$LI$();
+
+framework.designables.JSDesignableButton.stateLabels_$LI$();
 
 framework.designables.JSDesignableTextComponent.textTags_$LI$();
 
 framework.designables.JSDesignableTextComponent.__static_initialize();
 
-framework.builder.Builder.websocket_$LI$();
+framework.lightning.Button.states_$LI$();
 
-framework.designables.JSDesignableButton.stateLabels_$LI$();
+framework.builder.Builder.websocket_$LI$();
 
 framework.lightning.Text.textTags_$LI$();
 
@@ -17508,7 +18657,27 @@ framework.lightning.Text.__static_initialize();
 
 framework.lightning.table.Table.SELECT_ROW_EVT_$LI$();
 
-framework.lightning.Button.states_$LI$();
+framework.lightning.PopOver.NUBIN_POSITIONS_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_XX_LARGE_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_X_LARGE_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_LARGE_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_MEDIUM_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_SMALL_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_X_SMALL_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_XX_SMALL_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_XXX_SMALL_$LI$();
+
+framework.lightning.LTContainer.PADDING_SIZE_NONE_$LI$();
+
+framework.lightning.LTContainer.Sizes_$LI$();
 
 framework.JSContainer.defaultRenderer_$LI$();
 

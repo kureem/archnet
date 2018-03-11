@@ -21,7 +21,7 @@ public interface InputField<T> extends Renderable{
 	
 	public void setValue(T val);
 	
-	public void setRawValue(String value);
+	
 	 
 }
  

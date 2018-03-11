@@ -27,6 +27,12 @@ public class SvgIcon extends JSContainer {
 	private String iconName = "settings";
 	
 	private String svgClass = "slds-icon";
+	
+	private String text = "";
+	
+	private boolean showIcon = true;
+	
+	private boolean isLeft = true;
 
 	public SvgIcon(String name, String type, String iconName) {
 		super(name, "div");
@@ -45,10 +51,40 @@ public class SvgIcon extends JSContainer {
 		this.svgClass = cls;
 		refresh();
 	}
+	
+	public void setShowIcon(boolean b){
+		showIcon = b;
+		refresh();
+	}
+	
+	public void setIconPosition(String position){
+		if(position.equals("right")){
+			isLeft = false;
+			svgClass ="slds-button__icon slds-button__icon_right";
+ 		}else{
+ 			svgClass ="slds-button__icon slds-button__icon_left";
+			isLeft = true;
+		}
+		refresh();
+	}
+	
+	public void setText(String text){
+		this.text = text;
+		refresh();
+	}
 
 	public void refresh() {
-		String html = "<svg class='"+svgClass+"'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\""+assetsUrl+"/"+type+"-sprite/svg/symbols.svg#"+iconName+"\"></use></svg>";
-		setHtml(html);
+		if(showIcon){
+			String html = "<svg class='"+svgClass+"'><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\""+assetsUrl+"/"+type+"-sprite/svg/symbols.svg#"+iconName+"\"></use></svg>";
+			if(isLeft){
+				html = html + text;
+			}else{
+				html = text + html;
+			}
+			setHtml(html);
+		}else{
+			setHtml(text);
+		}
 	}
 
 	public String getAssetsUrl() {

@@ -2,7 +2,6 @@ package framework.lightning;
 
 import framework.EventListener;
 import framework.JSContainer;
-import framework.designables.JSDesignable;
 import jsweet.dom.Event;
 
 public class Modal extends JSContainer {
@@ -11,9 +10,9 @@ public class Modal extends JSContainer {
 
 	private JSContainer header = new JSContainer("header").addClass("slds-modal__header");
 	
-	private JSContainer content = new JSDesignable("content","div").addClass("slds-modal__content");
+	private ModalBody content = new ModalBody("content");
 
-	private JSContainer footer = new JSDesignable("footer","footer").addClass("slds-modal__footer");
+	private ModalFooter footer = new ModalFooter("footer");
 	
 	private IconButton closeButton = new IconButton("closeButton");
 	
@@ -47,6 +46,23 @@ public class Modal extends JSContainer {
 
 	}
 	
+	
+	public void setFooter(ModalFooter footer){
+		modalContainer.clearChildren();
+		modalContainer.addChild(header);
+		modalContainer.addChild(content);
+		modalContainer.addChild(footer);
+		this.footer = footer;
+		
+	}
+	
+	public void setBody(ModalBody body){
+		modalContainer.clearChildren();
+		modalContainer.addChild(header);
+		modalContainer.addChild(body);
+		modalContainer.addChild(footer);
+		this.content = body;
+	}
 	
 	
 	public Backdrop getBackdrop(){
@@ -101,17 +117,12 @@ public class Modal extends JSContainer {
 		return header;
 	}
 
-	public JSContainer getContent() {
+	public ModalBody getBody() {
 		return content;
 	}
 	
 	
-	public Modal setBody(JSContainer body){
-		content.clearChildren();
-		content.setRendered(false);
-		content.addChild(body);
-		return this;
-	}
+	
 
 	public JSContainer getFooter() {
 		return footer;

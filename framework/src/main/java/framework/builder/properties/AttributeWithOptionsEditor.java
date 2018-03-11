@@ -30,7 +30,7 @@ public class AttributeWithOptionsEditor extends AbstractSelectPropertyEditor{
 	@Override
 	public void performAction(JSContainer source, Event evt) {
 		String attr = parameter.name;
-		String value = getValue();
+		String value = (String)getValue();
 		designable.setAttribute(attr, value);
 		designable.applyParam(attr, value);
 		designable.setRendered(false);

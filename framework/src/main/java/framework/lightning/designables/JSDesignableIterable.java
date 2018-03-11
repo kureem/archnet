@@ -26,7 +26,7 @@ public class JSDesignableIterable extends JSDesignable{
 	
 	public JSDesignableIterable Clone(){
 		Component cmp = MarshallUtil.extract(this);
-		return (JSDesignableIterable)MarshallUtil.toDesignable(cmp);
+		return (JSDesignableIterable)MarshallUtil.toDesignable(cmp,false,null);
 	}
 
 }

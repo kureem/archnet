@@ -4,6 +4,8 @@ import static jsweet.dom.Globals.console;
 
 import framework.EventListener;
 import framework.builder.BuilderEventListener;
+import framework.builder.SelectComponentEvent;
+import framework.builder.Selector;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.core.BeanFactory;
 import framework.design.Designable;
@@ -55,19 +57,23 @@ public class MarshallUtil {
 		return c;
 	}
 
-	public static Designable toDesignable(Component component) {
+	public static Designable toDesignable(Component component,boolean design, Selector selector) {
 		Designable des = BeanFactory.getInstance().getBeanOfType(ComponentFactoryRegistry.class)
 				.getComponentFactory(component.impl).build(component, false);
 		des.setData(component.data);
 		des.getComponent().custom = component.custom;
+		String exp = des.getAttribute("exposeAs");
+		if(exp != null && exp.length() > 0){
+			new DesignableDelegate(des).exposeVariable(exp);
+		}
+		if(design){
+			des.addEventListener(new SelectComponentEvent(selector), "click");
+		}
 		if (component.children != null) {
 			for (Component c : component.children) {
-				Designable child = toDesignable(c);
+				Designable child = toDesignable(c,design,selector);
 				des.addDesignable(child);
-				String exp = child.getAttribute("exposeAs");
-				if(exp != null && exp.length() > 0){
-					new DesignableDelegate(child).exposeVariable(exp);
-				}
+				
 			}
 		}
 
@@ -100,7 +106,7 @@ public class MarshallUtil {
 	}
 
 	public static Designable build(String s) {
-		return toDesignable(toComponent(s));
+		return toDesignable(toComponent(s),false,null);
 	}
 
 	public static Component toComponent(String s) {
@@ -111,6 +117,9 @@ public class MarshallUtil {
 	@SuppressWarnings("unchecked")
 	public static Component toComponent(Object o) {
 		Component cc = new Component();
+		if(o.$get("impl") == null){
+			o.$set("impl", "html:div");
+		}
 		cc.impl = o.$get("impl").toString();
 		cc.styles = (Object) o.$get("styles");
 		cc.parameters = (Object) o.$get("parameters");

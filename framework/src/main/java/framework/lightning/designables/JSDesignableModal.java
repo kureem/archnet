@@ -1,14 +1,17 @@
 package framework.lightning.designables;
 
-import framework.JSContainer;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Option;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
+import framework.lightning.Backdrop;
 import framework.lightning.Modal;
+import framework.lightning.ModalBody;
+import framework.lightning.ModalFooter;
 import jsweet.lang.Array;
+import jsweet.lang.Error;
 
 public class JSDesignableModal extends Modal implements Designable{
 	
@@ -19,6 +22,12 @@ public class JSDesignableModal extends Modal implements Designable{
 		applyParam("title", "Modal Title");
 		applyParam("showFooter", "true");
 		applyParam("showHeader", "true");
+		
+		Backdrop bk = new Backdrop("f");
+		bk.setStyle("z-index", "-1");
+		addChild(bk);
+		setBackdrop(bk);
+		//open();
 	}
 
 	
@@ -42,7 +51,7 @@ public class JSDesignableModal extends Modal implements Designable{
 	public Array<Designable> getDesignables() {
 		
 		Array res = new Array();
-		res.push(getContent(),getFooter());
+		res.push(getBody(),getFooter());
 		//Array arr = getContent().getChildren();
 		return res;
 	}
@@ -75,17 +84,21 @@ public class JSDesignableModal extends Modal implements Designable{
 
 	@Override
 	public void addDesignable(Designable designable) {
-		getContent().addChild((JSContainer)designable);
-		// TODO Auto-generated method stub
+		if(designable instanceof ModalBody){
+			setBody((ModalBody)designable);
+		}else if(designable instanceof ModalFooter){
+			setFooter((ModalFooter)designable);
+		}else{
+			throw new Error("Can only add component of Modal Body or Modal Footer is this container");
+		}
+		
 		
 	}
 
 	@Override
 	public void removeDesignable(Designable designable) {
-		// TODO Auto-generated method stub
-		
-		getContent().removeChild(designable);
-		
+	
+		throw new Error("Cannot delete component from this container. Rather delete from the body or footer. Or consider hiding the body and or footer");
 	}
 
 	@Override

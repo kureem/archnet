@@ -43,7 +43,7 @@ public class DataSourcesEditor extends AbstractEditor<DataSource<Object>> {
 		
 		PanelSection section = new PanelSection("pane", "div");
 		panel.addSection(section);
-		FormLayout form = new FormLayout("form", "div");
+		FormLayout form = new FormLayout("form");
 		url.addClass("slds-input");
 		body.addClass("slds-input");
 

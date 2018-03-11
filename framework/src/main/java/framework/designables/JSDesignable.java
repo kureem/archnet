@@ -13,6 +13,7 @@ public class JSDesignable extends JSContainer implements Designable{
 	
 	public JSDesignable(String name, String tag) {
 		super(name, tag);
+		setAttribute("identifier", "html:div");
 	}
 
 	

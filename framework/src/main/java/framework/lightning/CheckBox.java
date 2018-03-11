@@ -45,9 +45,7 @@ public class CheckBox extends JSContainer implements InputField<Boolean>, EventL
 		checkbox.setValue(val);
 	}
 
-	@Override
-	public void setRawValue(String value) {
-	}
+
 	
 	public void toggle(){
 		checkbox.setValue(!checkbox.getValue());

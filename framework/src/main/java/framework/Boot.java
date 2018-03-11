@@ -32,6 +32,7 @@ import framework.core.BasicDecoratorRegistry;
 import framework.core.BeanFactory;
 import framework.core.DecoratorsRegistry;
 import framework.design.Designable;
+import framework.design.Option;
 import framework.designables.JSDesignableBlockComponent;
 import framework.designables.JSDesignableBuilderComponent;
 import framework.designables.JSDesignableButton;
@@ -52,17 +53,24 @@ import framework.lightning.Badge;
 import framework.lightning.BreadCrumbItem;
 import framework.lightning.BreadCrumbs;
 import framework.lightning.ButtonGroup;
+import framework.lightning.CheckBoxGroup;
 import framework.lightning.Col;
 import framework.lightning.IconButton;
 import framework.lightning.LightningApplication;
+import framework.lightning.ListBox;
+import framework.lightning.ListBoxItem;
+import framework.lightning.ListPopOver;
+import framework.lightning.ModalBody;
+import framework.lightning.ModalFooter;
 import framework.lightning.Panel;
 import framework.lightning.PanelSection;
+import framework.lightning.PopOverFooterItem;
 import framework.lightning.Text;
 import framework.lightning.designables.JSDesignableFormLayout;
 import framework.lightning.designables.JSDesignableIterable;
 import framework.lightning.designables.JSDesignableIterator;
 import framework.lightning.designables.JSDesignableLightningGrid;
-import framework.lightning.designables.JSDesignableLightningInput;
+import framework.lightning.designables.JSDesignableFormElement;
 import framework.lightning.designables.JSDesignableModal;
 import framework.lightning.designables.JSDesignableSOQL;
 import framework.lightning.designables.JSDesignableTable;
@@ -230,10 +238,23 @@ public class Boot {
 
 			@Override
 			public Designable createInstance(boolean designMode) {
-				return new JSDesignableLightningInput("Input Element");
+				return new JSDesignableFormElement("Input Element");
 			}
 		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:checkboxgroup", new AbstractComponentFactory("lgt:checkboxgroup") {
 
+			@Override
+			public Designable createInstance(boolean designMode) {
+				CheckBoxGroup grp = new CheckBoxGroup("Input Element");
+				grp.addOption(new Option("Option 1", "opt1"));
+				grp.addOption(new Option("Option 2", "opt2"));
+				grp.addOption(new Option("Option 3", "opt3"));
+				return grp;
+				//return new JSDesignableLightningInput("Input Element");
+			}
+		});
+		
 
 		componentFactoryRegistry.registerComponentFactory("lgt:grid", new AbstractComponentFactory("lgt:grid") {
 
@@ -288,7 +309,21 @@ public class Boot {
 				return new JSDesignableModal("Modal");
 			}
 		});
+		componentFactoryRegistry.registerComponentFactory("lgt:modal-body", new AbstractComponentFactory("lgt:modal-body") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new ModalBody("body");
+			}
+		});
 		
+		componentFactoryRegistry.registerComponentFactory("lgt:modal-footer", new AbstractComponentFactory("lgt:modal-footer") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new ModalFooter("Modal");
+			}
+		});
 		
 		
 		componentFactoryRegistry.registerComponentFactory("lgt:bcr", new AbstractComponentFactory("lgt:bcr") {
@@ -379,6 +414,39 @@ public class Boot {
 			@Override
 			public Designable createInstance(boolean designMode) {
 				return new JSDesignableTable("Table");
+			}
+		});
+		
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:popover", new AbstractComponentFactory("lgt:popover") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new ListPopOver("Pop Over");
+			}
+		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:listbox", new AbstractComponentFactory("lgt:listbox") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new ListBox("List");
+			}
+		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:listbox-item", new AbstractComponentFactory("lgt:listbox-item") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new ListBoxItem("List Item");
+			}
+		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:popover-footer-item", new AbstractComponentFactory("lgt:popover-footer-item") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new PopOverFooterItem("Footer Item");
 			}
 		});
 		

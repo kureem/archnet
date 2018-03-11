@@ -1,6 +1,7 @@
 package framework.builder.editors;
 
 import static def.dom.Globals.document;
+import static jsweet.dom.Globals.alert;
 
 import framework.EventListener;
 import framework.JSContainer;
@@ -49,12 +50,16 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 		public void performAction(JSContainer source, Event evt) {
 
 			if (parent != null) {
+				try{
 				parent.removeDesignable(designable);
 				//designable = null;
 				//structure.reload(parent);
 				getParent().setVisible(false);
 				VisualEditor editor = getAncestorWithClass("visual-editor");
 				editor.dirty();
+				}catch(Exception e){
+					alert(e.getMessage());
+				}
 			}
 			
 
@@ -64,7 +69,7 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 	public void paste() {
 		Designable clip = structure.getClipBoard();
 		framework.builder.marshalling.Component cmp = MarshallUtil.extract(clip);
-		Designable des = MarshallUtil.toDesignable(cmp);
+		Designable des = MarshallUtil.toDesignable(cmp,true,selector);
 		VisualEditor editor = getAncestorWithClass("visual-editor");
 		editor.persist = true;
 		editor.addNewComponent(des, designable);
@@ -102,7 +107,7 @@ public class StructureTreeItem extends TreeItem implements EventListener {
 			
 			
 			framework.builder.marshalling.Component cmp = MarshallUtil.extract(clip);
-			Designable d = MarshallUtil.toDesignable(cmp);
+			Designable d = MarshallUtil.toDesignable(cmp,true,selector);
 			for(double i = 0; i < children.length; i++){
 				
 				if(i == currentIndex){

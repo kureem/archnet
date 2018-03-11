@@ -30,7 +30,7 @@ public abstract class ItemSelector<T> extends Modal implements TableCellRenderer
 		super(name, "div");
 		addClass("data-item");
 
-		getContent().addChild(this.dataTable);
+		getBody().addChild(this.dataTable);
 	}
 
 	public void addOnItemSeletedListener(ItemSelectedListener<T> l) {

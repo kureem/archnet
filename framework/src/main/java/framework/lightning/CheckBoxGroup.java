@@ -1,10 +1,7 @@
-package framework.designables;
+package framework.lightning;
 
-import static jsweet.lang.Globals.parseInt;
-
-import def.js.JSON;
-import framework.JSOption;
-import framework.JSSelect;
+import framework.InputField;
+import framework.JSContainer;
 import framework.builder.marshalling.Component;
 import framework.builder.properties.ExtPropertiesEditor;
 import framework.builder.properties.KeyValueEditor;
@@ -13,44 +10,41 @@ import framework.design.Designable;
 import framework.design.ExtDesignable;
 import framework.design.Option;
 import framework.design.Parameter;
+import framework.designables.DesignableDelegate;
 import jsweet.lang.Array;
+import jsweet.lang.JSON;
 import jsweet.lang.Object;
 
-public class JSDesignableSelect extends JSSelect implements ExtDesignable{
-
-
-	private DesignableDelegate delegate = new DesignableDelegate(this);
+public class CheckBoxGroup extends JSContainer implements ExtDesignable,InputField<Array<String>>{
 	
-	public JSDesignableSelect(String name) {
-		super(name);
-		setAttribute("identifier", "html:select");
+	private DesignableDelegate delegate = new DesignableDelegate(this);
+
+	public CheckBoxGroup(String name) {
+		super(name, "div");
+		setAttribute("identifier", "lgt:checkboxgroup");
+		addClass("slds-form-element__control");
 	}
 
-	
-	
 	@Override
 	public void applyParam(String key, String value) {
 		delegate.applyParameter(key, value, true);
 		if(key.equals("options")){
-			if(value != null){
-				Object o = (Object)JSON.parse(value);
-				clearChildren();
-				setRendered(false);
-				for(String val: Object.keys(o)){
-					String txt = (String)o.$get(val);
-					addOption(new JSOption(txt, val));
-				}
+			clearChildren();
+			setRendered(false);
+			Object options = (Object)JSON.parse(value);
+			for(String optval : Object.keys(options)){
+				CheckBox checkbox = new CheckBox(optval);
+				checkbox.setLabel((String)options.$get(optval));
+				addChild(checkbox);
 			}
-		}else if(key.equals("size")){
-			setSize(parseInt(value));
-		}else if(key.equals("multiple")){
-			setMultiple("true".equals(value));
 		}
+		
 	}
 
 	@Override
 	public Array<Designable> getDesignables() {
-		return  new Array<Designable>();
+		
+		return new Array<Designable>();
 	}
 
 	@Override
@@ -60,19 +54,36 @@ public class JSDesignableSelect extends JSSelect implements ExtDesignable{
 
 	@Override
 	public Array<Parameter> getParameters() {
+		
 		Array<Parameter> params = delegate.getParameters();
 		
 		AttributeParameter options = new AttributeParameter("options", "Options", "Extended");
 		params.push(options);
 		
-		AttributeParameter multiple = new AttributeParameter("multiple", "Multiple", "Basic");
-		multiple.options.push(new Option("",""));
 		
-		AttributeParameter size = new AttributeParameter("size", "Size", "Basic");
-		
-		
-		params.push(options,multiple,size);
 		return params;
+	}
+	
+	public void setData(java.lang.Object obj){
+		if(obj instanceof Array<?>){
+			Array<Option> options = (Array<Option>)obj;
+			setOptions(options);
+		}else{
+			applyParam("options", JSON.stringify(obj));
+		}
+	}
+	
+	public void setOptions(Array<Option> options){
+		clearChildren();
+		for(Option opt : options){
+			addOption(opt);
+		}
+	}
+	
+	public void addOption(Option option){
+		CheckBox checkbox = new CheckBox(option.value);
+		checkbox.setLabel(option.text);
+		addChild(checkbox);
 	}
 
 	@Override
@@ -82,12 +93,46 @@ public class JSDesignableSelect extends JSSelect implements ExtDesignable{
 
 	@Override
 	public void removeDesignable(Designable designable) {
-		delegate.removeDesignable(designable);
+		
 	}
 
 	@Override
 	public void moveDesignable(Designable designable, int steps) {
-		delegate.moveDesignable(designable, steps);
+		
+	}
+
+
+	@Override
+	public Array<String> getValue() {
+		Array<String> result = new Array<String>();
+		for(JSContainer child : getChildren()){
+			CheckBox cb = (CheckBox)child;
+			if(cb.getValue() == true){
+				result.push(cb.getName());
+			}
+		}
+		return result;
+	}
+
+
+	@Override
+	public void setValue(Array<String> val) {
+		clearAll();
+		for(String s : val){
+			for(JSContainer child : getChildren()){
+				CheckBox cb = (CheckBox)child;
+				if(cb.getName().equals(s)){
+					cb.setValue(true);
+				}
+			}
+		}
+	}
+	
+	public void clearAll(){
+		for(JSContainer child : getChildren()){
+			CheckBox cb = (CheckBox)child;
+			cb.setValue(false);
+		}
 	}
 
 	@Override
@@ -139,11 +184,6 @@ public class JSDesignableSelect extends JSSelect implements ExtDesignable{
 		
 		
 		return new ExtPropertiesEditor[]{ options, customPropertiesEditorBody};
-		/*options.iterate((k)->{
-			String key = k[0].getNative().innerHTML;
-			String value =
-		})*/
-		
 	}
 
 }

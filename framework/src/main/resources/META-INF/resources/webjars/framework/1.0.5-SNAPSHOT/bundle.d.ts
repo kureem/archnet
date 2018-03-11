@@ -473,7 +473,7 @@ declare namespace framework.builder.marshalling {
 declare namespace framework.builder.marshalling {
     class MarshallUtil {
         static extract(designable: framework.design.Designable): framework.builder.marshalling.Component;
-        static toDesignable(component: framework.builder.marshalling.Component): framework.design.Designable;
+        static toDesignable(component: framework.builder.marshalling.Component, design: boolean, selector: framework.builder.Selector): framework.design.Designable;
         static generateController(component: framework.builder.marshalling.Component): void;
         static controller(component: framework.builder.marshalling.Component, start: string): void;
         static build(s: string): framework.design.Designable;
@@ -617,6 +617,11 @@ declare namespace framework.design {
         abstract getEditor(designable: framework.design.Designable): framework.builder.properties.PropertyEditor;
     }
 }
+declare namespace framework.design {
+    interface Preparable extends framework.design.Designable {
+        prepare(): any;
+    }
+}
 declare namespace framework.designables {
     class DataEvent extends Event {
         data: Object;
@@ -664,7 +669,6 @@ declare namespace framework {
          * @param {boolean} b
          */
         setValue(b?: any): any;
-        setRawValue(value: string): any;
     }
 }
 declare namespace framework {
@@ -879,7 +883,6 @@ declare namespace framework.renderer {
         doRender(c?: any, root?: any): any;
         execCommands(njq: HTMLElement, container: framework.Renderable): void;
         renderEvents(njq: HTMLElement, c: framework.JSContainer): void;
-        synchronizeFields(njq: HTMLElement, jsfield: framework.Renderable): void;
         renderAttributes(njq: HTMLElement, c: framework.Renderable, changed: boolean): void;
         clearAttributes(elem: HTMLElement): void;
         clearStyles(jq: HTMLElement): void;
@@ -1304,6 +1307,69 @@ declare namespace framework {
             constructor(__arg0: any);
         }
         class Boot$34 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$35 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$36 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$37 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$38 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$39 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$40 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$41 extends framework.builder.libraries.AbstractComponentFactory {
             /**
              *
              * @param {boolean} designMode
@@ -2244,11 +2310,6 @@ declare namespace framework {
          * @param {boolean} b
          */
         setValue(b?: any): any;
-        /**
-         *
-         * @param {string} value
-         */
-        setRawValue(value: string): void;
         isChecked(): boolean;
         setChecked(b: boolean): void;
     }
@@ -2269,11 +2330,6 @@ declare namespace framework {
          * @param {string} val
          */
         setValue(val?: any): any;
-        /**
-         *
-         * @param {string} value
-         */
-        setRawValue(value: string): void;
     }
 }
 declare namespace framework {
@@ -2287,27 +2343,25 @@ declare namespace framework {
     }
 }
 declare namespace framework {
-    class JSSelect extends framework.JSContainer implements framework.InputField<string> {
+    class JSSelect extends framework.JSContainer implements framework.InputField<any> {
         previousValue: string;
         constructor(name: string);
         addOption(option: framework.JSOption): JSSelect;
+        setMultiple(b: boolean): void;
+        setSize(size: number): void;
+        isMultiple(): boolean;
         /**
          *
-         * @return {string}
+         * @return {*}
          */
-        getValue(): string;
-        setValue$java_lang_String(val: string): void;
+        getValue(): any;
         /**
          *
-         * @param {string} val
+         * @param {boolean} b
          */
-        setValue(val?: any): any;
+        setValue(b?: any): any;
+        setValue$java_lang_Object(values: any): void;
         getPreviousValue(): string;
-        /**
-         *
-         * @param {string} value
-         */
-        setRawValue(value: string): void;
     }
 }
 declare namespace framework {
@@ -2325,11 +2379,6 @@ declare namespace framework {
          * @param {string} val
          */
         setValue(val?: any): any;
-        /**
-         *
-         * @param {string} value
-         */
-        setRawValue(value: string): void;
     }
 }
 declare namespace framework {
@@ -2665,25 +2714,6 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning {
-    class Button extends framework.JSContainer {
-        static states: string[];
-        static states_$LI$(): string[];
-        static STATE_NEUTRAL: string;
-        static STATE_BRAND: string;
-        static STATE_DESTRUCTIVE: string;
-        static STATE_SUCCESS: string;
-        component: framework.builder.marshalling.Component;
-        constructor(name?: any);
-        addIcon(icon: framework.lightning.SvgIcon): Button;
-        setLabel(label: string): Button;
-        setState(state: string): Button;
-        setInverse(b: boolean): Button;
-        setDisabled(b: boolean): Button;
-        setStateful(b: boolean): Button;
-        setParameter(key: string, value: string): void;
-    }
-}
-declare namespace framework.lightning {
     class ButtonGroup extends framework.JSContainer implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
         constructor(name: string);
@@ -2763,11 +2793,6 @@ declare namespace framework.lightning {
          * @param {boolean} val
          */
         setValue(val?: any): any;
-        /**
-         *
-         * @param {string} value
-         */
-        setRawValue(value: string): void;
         toggle(): void;
         /**
          *
@@ -2788,54 +2813,6 @@ declare namespace framework.lightning {
     class CheckBoxButtonGroup extends framework.JSContainer {
         constructor(name: string);
         addCheckBoxButton(btn: framework.lightning.CheckBox): CheckBoxButtonGroup;
-    }
-}
-declare namespace framework.lightning {
-    class Col extends framework.JSContainer implements framework.design.Designable {
-        delegate: framework.designables.DesignableDelegate;
-        constructor(name: string);
-        setSections(sections: string): void;
-        setSpan(span: string): void;
-        getSpan(): number;
-        getSections(): number;
-        refreshCls(): void;
-        /**
-         *
-         * @param {string} key
-         * @param {string} value
-         */
-        applyParam(key: string, value: string): void;
-        /**
-         *
-         * @return {*[]}
-         */
-        getDesignables(): Array<framework.design.Designable>;
-        /**
-         *
-         * @return {framework.builder.marshalling.Component}
-         */
-        getComponent(): framework.builder.marshalling.Component;
-        /**
-         *
-         * @return {framework.design.Parameter[]}
-         */
-        getParameters(): Array<framework.design.Parameter>;
-        /**
-         *
-         * @param {*} designable
-         */
-        addDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         */
-        removeDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         * @param {number} steps
-         */
-        moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
 declare namespace framework.lightning.designables {
@@ -2935,17 +2912,6 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning {
-    class FormElement extends framework.JSContainer {
-        label: framework.JSContainer;
-        control: framework.JSContainer;
-        constructor(name: string, tag: string);
-        setLabel(label: string): FormElement;
-        setInput(input: framework.InputField<any>): FormElement;
-        getInput(): framework.InputField<any>;
-        getControl(): framework.JSContainer;
-    }
-}
-declare namespace framework.lightning {
     class HorizontalList extends framework.JSContainer {
         constructor(name: string);
     }
@@ -3012,6 +2978,131 @@ declare namespace framework.lightning {
     }
 }
 declare namespace framework.lightning {
+    class ListBox extends framework.JSContainer implements framework.design.Designable {
+        ul: framework.JSContainer;
+        static LENGTH_5: string;
+        static LENGTH_7: string;
+        static LENGTH_10: string;
+        static LENGTH_DEFAULT: string;
+        lengthSel: string;
+        withIcon: boolean;
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        setLength(length: string): ListBox;
+        setWithIcon(b: boolean): ListBox;
+        ref(): ListBox;
+        addItem(option: framework.lightning.ListBoxItem): ListBox;
+        setVertical(b: boolean): ListBox;
+        setHorizontal(b: boolean): ListBox;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.lightning {
+    class ListBoxItem extends framework.JSContainer implements framework.design.Designable {
+        option: framework.lightning.ListBoxOption;
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        setIconType(type: string): ListBoxItem;
+        setIconName(name: string): ListBoxItem;
+        setText(text: string): ListBoxItem;
+        setMeta(text: string): ListBoxItem;
+        setHasMeta(b: boolean): ListBoxItem;
+        setType(type: string): ListBoxItem;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.lightning {
+    class ListBoxOption extends framework.JSContainer {
+        media: framework.lightning.Media;
+        static TYPE_PLAIN: string;
+        static TYPE_ENTITY: string;
+        leftIcon: framework.lightning.SvgIcon;
+        textElement: framework.JSContainer;
+        metaElement: framework.JSContainer;
+        plainTextElement: framework.JSContainer;
+        constructor(name: string);
+        getMedia(): framework.lightning.Media;
+        setIconType(type: string): ListBoxOption;
+        setIconName(name: string): ListBoxOption;
+        setText(text: string): ListBoxOption;
+        setMeta(text: string): ListBoxOption;
+        setHasMeta(b: boolean): ListBoxOption;
+        setType(type: string): ListBoxOption;
+    }
+}
+declare namespace framework.lightning {
     class Lookup extends framework.JSContainer {
         constructor(name: string);
     }
@@ -3021,7 +3112,32 @@ declare namespace framework.lightning {
         static FLOAT_LEFT: string;
         static FLOAT_RIGHT: string;
         static FLOAT_NONE: string;
+        static Sizes: string[];
+        static Sizes_$LI$(): string[];
+        static PADDING_SIZE_NONE: string;
+        static PADDING_SIZE_NONE_$LI$(): string;
+        static PADDING_SIZE_XXX_SMALL: string;
+        static PADDING_SIZE_XXX_SMALL_$LI$(): string;
+        static PADDING_SIZE_XX_SMALL: string;
+        static PADDING_SIZE_XX_SMALL_$LI$(): string;
+        static PADDING_SIZE_X_SMALL: string;
+        static PADDING_SIZE_X_SMALL_$LI$(): string;
+        static PADDING_SIZE_SMALL: string;
+        static PADDING_SIZE_SMALL_$LI$(): string;
+        static PADDING_SIZE_MEDIUM: string;
+        static PADDING_SIZE_MEDIUM_$LI$(): string;
+        static PADDING_SIZE_LARGE: string;
+        static PADDING_SIZE_LARGE_$LI$(): string;
+        static PADDING_SIZE_X_LARGE: string;
+        static PADDING_SIZE_X_LARGE_$LI$(): string;
+        static PADDING_SIZE_XX_LARGE: string;
+        static PADDING_SIZE_XX_LARGE_$LI$(): string;
         constructor(name: string, tag: string);
+        setPaddingTop(size: string): LTContainer;
+        setPaddingRight(size: string): LTContainer;
+        setPaddingBottom(size: string): LTContainer;
+        setPaddingLeft(size: string): LTContainer;
+        setSizeAndPosition(size: string, position: string): LTContainer;
         setFloat(sfloat: string): LTContainer;
         toggleClass(cls: string, b: boolean): LTContainer;
         setBorderTop(b: boolean): LTContainer;
@@ -3059,12 +3175,14 @@ declare namespace framework.lightning {
     class Modal extends framework.JSContainer {
         modalContainer: framework.JSContainer;
         header: framework.JSContainer;
-        content: framework.JSContainer;
-        footer: framework.JSContainer;
+        content: framework.lightning.ModalBody;
+        footer: framework.lightning.ModalFooter;
         closeButton: framework.lightning.IconButton;
         title: framework.JSContainer;
         backdrop: framework.lightning.Backdrop;
         constructor(name: string, stitle: string);
+        setFooter(footer: framework.lightning.ModalFooter): void;
+        setBody(body: framework.lightning.ModalBody): void;
         getBackdrop(): framework.lightning.Backdrop;
         setBackdrop(backdrop: framework.lightning.Backdrop): void;
         open(): void;
@@ -3077,8 +3195,7 @@ declare namespace framework.lightning {
         getTitle(): framework.JSContainer;
         getModalContainer(): framework.JSContainer;
         getHeader(): framework.JSContainer;
-        getContent(): framework.JSContainer;
-        setBody(body: framework.JSContainer): Modal;
+        getBody(): framework.lightning.ModalBody;
         getFooter(): framework.JSContainer;
         getCloseButton(): framework.lightning.IconButton;
     }
@@ -3093,6 +3210,25 @@ declare namespace framework.lightning {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
+    }
+}
+declare namespace framework.lightning {
+    class PopOver extends framework.JSContainer {
+        static NUBIN_NONE: string;
+        static NUBIN_BOTTOM_RIGHT: string;
+        static NUBIN_BOTTOM_LEFT: string;
+        static NUBIN_TOP_RIGHT: string;
+        static NUBIN_TOP_LEFT: string;
+        static NUBIN_POSITIONS: string[];
+        static NUBIN_POSITIONS_$LI$(): string[];
+        body: framework.designables.JSDesignable;
+        footer: framework.designables.JSDesignable;
+        constructor(name: string);
+        getFooter(): framework.designables.JSDesignable;
+        getBody(): framework.designables.JSDesignable;
+        showFooter(b: boolean): PopOver;
+        showBody(b: boolean): PopOver;
+        setNubin(position: string): PopOver;
     }
 }
 declare namespace framework.lightning {
@@ -3129,8 +3265,14 @@ declare namespace framework.lightning {
         type: string;
         iconName: string;
         svgClass: string;
+        text: string;
+        showIcon: boolean;
+        isLeft: boolean;
         constructor(name?: any, type?: any, iconName?: any);
         setSvgClass(cls: string): void;
+        setShowIcon(b: boolean): void;
+        setIconPosition(position: string): void;
+        setText(text: string): void;
         refresh(): void;
         getAssetsUrl(): string;
         setAssetsUrl(assetsUrl: string): void;
@@ -3634,7 +3776,6 @@ declare namespace framework.builder.editors {
         propertiesDockedComposer: framework.builder.properties.PropertiesDockedComposer;
         libraryDockedComposer: framework.builder.libraries.LibrariesDockedComposer;
         structureDockedComposer: framework.builder.editors.StructureDockedComposer;
-        templates: framework.JSContainer;
         leftOpen: boolean;
         rightOpen: boolean;
         iframe: framework.JSContainer;
@@ -3811,6 +3952,16 @@ declare namespace framework.lightning.designables {
         advancedEventTypes(): string[];
         setData(data: any): void;
         Clone(): JSDesignableIterable;
+    }
+}
+declare namespace framework.lightning {
+    class ModalBody extends framework.designables.JSDesignable {
+        constructor(name: string);
+    }
+}
+declare namespace framework.lightning {
+    class ModalFooter extends framework.designables.JSDesignable {
+        constructor(name: string);
     }
 }
 declare namespace framework.lightning {
@@ -4044,48 +4195,6 @@ declare namespace framework.designables {
         moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
-declare namespace framework.designables {
-    class JSDesignableButton extends framework.lightning.Button implements framework.design.Designable {
-        static stateLabels: string[];
-        static stateLabels_$LI$(): string[];
-        delegate: framework.designables.DesignableDelegate;
-        constructor(name: string);
-        /**
-         *
-         * @param {string} key
-         * @param {string} value
-         */
-        applyParam(key: string, value: string): void;
-        /**
-         *
-         * @return {*[]}
-         */
-        getDesignables(): Array<framework.design.Designable>;
-        getParameters(): Array<framework.design.Parameter>;
-        createParameter(name: string, label: string, type: string): framework.design.Parameter;
-        /**
-         *
-         * @return {framework.builder.marshalling.Component}
-         */
-        getComponent(): framework.builder.marshalling.Component;
-        /**
-         *
-         * @param {*} designable
-         */
-        addDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         */
-        removeDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         * @param {number} steps
-         */
-        moveDesignable(designable: framework.design.Designable, steps: number): void;
-    }
-}
 declare namespace framework.builder.libraries {
     class DataItem extends framework.lightning.Card implements framework.lightning.table.TableCellRenderer {
         title: framework.JSContainer;
@@ -4171,51 +4280,6 @@ declare namespace framework.lightning {
         constructor(name: string);
     }
 }
-declare namespace framework.lightning.designables {
-    class JSDesignableLightningInput extends framework.lightning.FormElement implements framework.design.Designable {
-        delegate: framework.designables.DesignableDelegate;
-        input: framework.designables.JSDesignableInput;
-        constructor(name: string);
-        /**
-         *
-         * @param {string} key
-         * @param {string} value
-         */
-        applyParam(key: string, value: string): void;
-        /**
-         *
-         * @return {*[]}
-         */
-        getDesignables(): Array<framework.design.Designable>;
-        /**
-         *
-         * @return {framework.builder.marshalling.Component}
-         */
-        getComponent(): framework.builder.marshalling.Component;
-        /**
-         *
-         * @return {framework.design.Parameter[]}
-         */
-        getParameters(): Array<framework.design.Parameter>;
-        /**
-         *
-         * @param {*} designable
-         */
-        addDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         */
-        removeDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         * @param {number} steps
-         */
-        moveDesignable(designable: framework.design.Designable, steps: number): void;
-        setDisabled(b: boolean): void;
-    }
-}
 declare namespace framework.builder {
     class Builder extends framework.lightning.LTContainer {
         topMenu: framework.builder.TopMenu;
@@ -4298,6 +4362,54 @@ declare namespace framework.builder {
     }
 }
 declare namespace framework.lightning {
+    class Col extends framework.lightning.LTContainer implements framework.design.Designable {
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        setSections(sections: string): void;
+        setSpan(span: string): void;
+        getSpan(): number;
+        getSections(): number;
+        refreshCls(): void;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.lightning {
     class DescriptionList extends framework.lightning.LTContainer {
         static DEFAULT: string;
         static INLINE: string;
@@ -4306,19 +4418,6 @@ declare namespace framework.lightning {
         constructor(name: string);
         setLayout(layout: string): DescriptionList;
         addItem(label: string, item: framework.JSContainer): DescriptionList;
-    }
-}
-declare namespace framework.lightning {
-    class FormLayout extends framework.lightning.LTContainer {
-        constructor(name: string, tag: string);
-        toggleClass(cls: string, b: boolean): FormLayout;
-        setStacked(b: boolean): FormLayout;
-        setInline(b: boolean): FormLayout;
-        setCompound(b: boolean): FormLayout;
-        setHorizontal(b: boolean): FormLayout;
-        addFormElement(element: framework.lightning.FormElement): FormLayout;
-        clear(): FormLayout;
-        getElements(): Array<framework.lightning.FormElement>;
     }
 }
 declare namespace framework.lightning {
@@ -4508,6 +4607,67 @@ declare namespace framework.lightning.designables {
          * @param {number} steps
          */
         moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.lightning {
+    class ListPopOver extends framework.lightning.PopOver implements framework.design.Designable {
+        listBox: framework.lightning.ListBox;
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.lightning {
+    class Button extends framework.lightning.SvgIcon {
+        static states: string[];
+        static states_$LI$(): string[];
+        static STATE_NEUTRAL: string;
+        static STATE_BRAND: string;
+        static STATE_DESTRUCTIVE: string;
+        static STATE_SUCCESS: string;
+        static STATE_RESET: string;
+        constructor(name?: any);
+        setLabel(label: string): Button;
+        setState(state: string): Button;
+        setInverse(b: boolean): Button;
+        setDisabled(b: boolean): Button;
+        setStateful(b: boolean): Button;
     }
 }
 declare namespace framework.lightning {
@@ -5039,6 +5199,17 @@ declare namespace framework.builder.properties {
         performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
+declare namespace framework.lightning {
+    class FormElement extends framework.lightning.Col {
+        label: framework.JSContainer;
+        control: framework.JSContainer;
+        constructor(name: string, tag: string);
+        setLabel(label: string): FormElement;
+        setInput(input: framework.InputField<any>): FormElement;
+        getInput(): framework.InputField<any>;
+        getControl(): framework.JSContainer;
+    }
+}
 declare namespace framework.designables {
     abstract class JSDesignableDataProvider extends framework.lightning.DescriptionList implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
@@ -5070,81 +5241,6 @@ declare namespace framework.designables {
          * @return {framework.design.Parameter[]}
          */
         abstract getParameters(): Array<framework.design.Parameter>;
-        /**
-         *
-         * @param {*} designable
-         */
-        addDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         */
-        removeDesignable(designable: framework.design.Designable): void;
-        /**
-         *
-         * @param {*} designable
-         * @param {number} steps
-         */
-        moveDesignable(designable: framework.design.Designable, steps: number): void;
-    }
-}
-declare namespace framework.builder.data {
-    class DynaForm extends framework.lightning.FormLayout implements framework.InputField<Object> {
-        constructor(name: string);
-        setFields(fields: Array<Object>): void;
-        /**
-         *
-         * @return {Object}
-         */
-        getValue(): Object;
-        setValue$jsweet_lang_Object(val: Object): void;
-        /**
-         *
-         * @param {Object} val
-         */
-        setValue(val?: any): any;
-        /**
-         *
-         * @param {string} value
-         */
-        setRawValue(value: string): void;
-    }
-}
-declare namespace framework.builder.properties {
-    class BasePropertiesEditor extends framework.lightning.FormLayout implements framework.builder.properties.PropertiesEditor {
-        component: framework.design.Designable;
-        constructor(name: string);
-        setComponent(designable: framework.design.Designable): void;
-        addProperty$java_lang_String$framework_JSInput(label: string, input: framework.JSInput): BasePropertiesEditor;
-        addProperty(label?: any, input?: any): any;
-        addProperty$framework_design_Parameter$framework_design_Designable(parameter: framework.design.Parameter, designable: framework.design.Designable): BasePropertiesEditor;
-    }
-}
-declare namespace framework.lightning.designables {
-    class JSDesignableFormLayout extends framework.lightning.FormLayout implements framework.design.Designable {
-        constructor();
-        delegate: framework.designables.DesignableDelegate;
-        /**
-         *
-         * @param {string} key
-         * @param {string} value
-         */
-        applyParam(key: string, value: string): void;
-        /**
-         *
-         * @return {*[]}
-         */
-        getDesignables(): Array<framework.design.Designable>;
-        /**
-         *
-         * @return {framework.builder.marshalling.Component}
-         */
-        getComponent(): framework.builder.marshalling.Component;
-        /**
-         *
-         * @return {framework.design.Parameter[]}
-         */
-        getParameters(): Array<framework.design.Parameter>;
         /**
          *
          * @param {*} designable
@@ -5501,6 +5597,48 @@ declare namespace framework.builder.data {
     }
 }
 declare namespace framework.designables {
+    class JSDesignableButton extends framework.lightning.Button implements framework.design.Designable {
+        static stateLabels: string[];
+        static stateLabels_$LI$(): string[];
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        getParameters(): Array<framework.design.Parameter>;
+        createParameter(name: string, label: string, type: string): framework.design.Parameter;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.designables {
     class JSDesignableLink extends framework.designables.JSDesignableTextComponent {
         constructor(name: string);
         /**
@@ -5554,6 +5692,55 @@ declare namespace framework.designables {
         getParameters(): Array<framework.design.Parameter>;
     }
 }
+declare namespace framework.lightning.designables {
+    class JSDesignableFormElement extends framework.lightning.FormElement implements framework.design.Designable, framework.design.Preparable {
+        input: framework.InputField<any>;
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        getValue(): any;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+        setDisabled(b: boolean): void;
+        /**
+         *
+         */
+        prepare(): void;
+    }
+}
 declare namespace framework.designables {
     class JSDesignableHTTP extends framework.designables.JSDesignableDataProvider implements framework.design.Designable {
         constructor();
@@ -5588,22 +5775,6 @@ declare namespace framework.lightning.designables {
          * @return {framework.design.Parameter[]}
          */
         getParameters(): Array<framework.design.Parameter>;
-    }
-}
-declare namespace framework.builder.properties {
-    class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
-        constructor();
-        setComponent(designable: framework.design.Designable): void;
-    }
-}
-declare namespace framework.builder.properties {
-    class BasicPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
-        constructor(name: string);
-        /**
-         *
-         * @param {*} designable
-         */
-        setComponent(designable: framework.design.Designable): void;
     }
 }
 declare namespace framework.builder.libraries {
@@ -5691,6 +5862,103 @@ declare namespace framework.designables {
             constructor(__parent: any, __arg0: any);
         }
         class JSDesignableSelect$1 extends framework.builder.properties.KeyValueEditor {
+            __parent: any;
+            /**
+             *
+             * @param {*} designable
+             * @param {Object} data
+             */
+            applyDataOnDesignable(designable: framework.design.Designable, data: Object): void;
+            /**
+             *
+             * @param {*} designable
+             * @return {Object}
+             */
+            getDataFromDesignable(designable: framework.design.Designable): Object;
+            constructor(__parent: any, __arg0: any);
+        }
+    }
+}
+declare namespace framework.lightning {
+    class CheckBoxGroup extends framework.JSContainer implements framework.design.ExtDesignable, framework.InputField<Array<string>> {
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        setData(obj: any): void;
+        setOptions(options: Array<framework.design.Option>): void;
+        addOption(option: framework.design.Option): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+        /**
+         *
+         * @return {string[]}
+         */
+        getValue(): Array<string>;
+        setValue$jsweet_lang_Array(val: Array<string>): void;
+        /**
+         *
+         * @param {string[]} val
+         */
+        setValue(val?: any): any;
+        clearAll(): void;
+        /**
+         *
+         * @return {Array}
+         */
+        getExtEditors(): framework.builder.properties.ExtPropertiesEditor[];
+    }
+    namespace CheckBoxGroup {
+        class CheckBoxGroup$0 extends framework.builder.properties.KeyValueEditor {
+            __parent: any;
+            /**
+             *
+             * @param {*} designable
+             * @param {Object} data
+             */
+            applyDataOnDesignable(designable: framework.design.Designable, data: Object): void;
+            /**
+             *
+             * @param {*} designable
+             * @return {Object}
+             */
+            getDataFromDesignable(designable: framework.design.Designable): Object;
+            constructor(__parent: any, __arg0: any);
+        }
+        class CheckBoxGroup$1 extends framework.builder.properties.KeyValueEditor {
             __parent: any;
             /**
              *
@@ -5833,6 +6101,36 @@ declare namespace framework.lightning.designables {
             getDataFromDesignable(designable: framework.design.Designable): Object;
             constructor(__parent: any, __arg0: any);
         }
+    }
+}
+declare namespace framework.lightning {
+    class FormLayout extends framework.lightning.designables.JSDesignableLightningGrid {
+        labels: string[];
+        static SPACING_XXX_SMALL: string;
+        static SPACING_XXX_SMALL_$LI$(): string;
+        static SPACING_XX_SMALL: string;
+        static SPACING_XX_SMALL_$LI$(): string;
+        static SPACING_X_SMALL: string;
+        static SPACING_X_SMALL_$LI$(): string;
+        static SPACING_SMALL: string;
+        static SPACING_SMALL_$LI$(): string;
+        static SPACING_MEDIUM: string;
+        static SPACING_MEDIUM_$LI$(): string;
+        static SPACING_LARGE: string;
+        static SPACING_LARGE_$LI$(): string;
+        static SPACING_X_LARGE: string;
+        static SPACING_X_LARGE_$LI$(): string;
+        static SPACING_XX_LARGE: string;
+        static SPACING_XX_LARGE_$LI$(): string;
+        constructor(name: string);
+        setSpacing(spacing: string): FormLayout;
+        setStacked(b: boolean): FormLayout;
+        setInline(b: boolean): FormLayout;
+        setCompound(b: boolean): FormLayout;
+        setHorizontal(b: boolean): FormLayout;
+        addFormElement(element: framework.lightning.FormElement): FormLayout;
+        clear(): FormLayout;
+        getElements(): Array<framework.lightning.FormElement>;
     }
 }
 declare namespace framework.builder.editors {
@@ -5983,11 +6281,6 @@ declare namespace framework.builder.data {
          * @param {Object} val
          */
         setValue(val?: any): any;
-        /**
-         *
-         * @param {string} value
-         */
-        setRawValue(value: string): void;
     }
     namespace MultiForm {
         class MultiForm$0 implements framework.EventListener {
@@ -6000,5 +6293,85 @@ declare namespace framework.builder.data {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
+    }
+}
+declare namespace framework.lightning {
+    class PopOverFooterItem extends framework.designables.JSDesignableButton {
+        constructor(name?: any);
+    }
+}
+declare namespace framework.builder.data {
+    class DynaForm extends framework.lightning.FormLayout implements framework.InputField<Object> {
+        constructor(name: string);
+        setFields(fields: Array<Object>): void;
+        /**
+         *
+         * @return {Object}
+         */
+        getValue(): Object;
+        setValue$jsweet_lang_Object(val: Object): void;
+        /**
+         *
+         * @param {Object} val
+         */
+        setValue(val?: any): any;
+    }
+}
+declare namespace framework.builder.properties {
+    class BasePropertiesEditor extends framework.lightning.FormLayout implements framework.builder.properties.PropertiesEditor {
+        component: framework.design.Designable;
+        constructor(name: string);
+        setComponent(designable: framework.design.Designable): void;
+        addProperty$java_lang_String$framework_JSInput(label: string, input: framework.JSInput): BasePropertiesEditor;
+        addProperty(label?: any, input?: any): any;
+        addProperty$framework_design_Parameter$framework_design_Designable(parameter: framework.design.Parameter, designable: framework.design.Designable): BasePropertiesEditor;
+    }
+}
+declare namespace framework.lightning.designables {
+    class JSDesignableFormLayout extends framework.lightning.FormLayout {
+        constructor();
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.builder.properties {
+    class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
+        constructor();
+        setComponent(designable: framework.design.Designable): void;
+    }
+}
+declare namespace framework.builder.properties {
+    class BasicPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
+        constructor(name: string);
+        /**
+         *
+         * @param {*} designable
+         */
+        setComponent(designable: framework.design.Designable): void;
     }
 }

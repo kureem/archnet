@@ -15,7 +15,7 @@ public class DynaForm extends FormLayout implements InputField<Object> {
 	//private Array<Object> fields = new Array<Object>();
 
 	public DynaForm(String name) {
-		super(name, "div");
+		super(name);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -82,8 +82,5 @@ public class DynaForm extends FormLayout implements InputField<Object> {
 		}
 	}
 
-	@Override
-	public void setRawValue(String value) {
-	}
 
 }

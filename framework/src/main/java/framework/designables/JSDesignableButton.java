@@ -11,12 +11,19 @@ import jsweet.lang.Array;
 public class JSDesignableButton extends Button implements Designable{
 	
 	
-	private final static String[] stateLabels = new String[] { "Neutral", "Brand", "Destructive", "Success" };
+	private final static String[] stateLabels = new String[] { "Neutral", "Brand", "Destructive", "Success", "Reset" };
 
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	public JSDesignableButton(String name) {
 		super(name);
+		applyParam("state", STATE_NEUTRAL);
+		applyParam("showIcon", "false");
+		applyParam("label", "Button");
+		applyParam("position", "left");
+		applyParam("iconName", "user");
+		applyParam("iconType", "utility");
+		
 	}
 	@Override
 	public void applyParam(String key, String value) {
@@ -32,6 +39,15 @@ public class JSDesignableButton extends Button implements Designable{
 			setInverse("true".equals(value));
 		}else if(key.equalsIgnoreCase("state")){
 			setState(value);
+		}else if(key.equalsIgnoreCase("showIcon")){
+			//setDisabled("true".equals(value));
+			setShowIcon("true".equals(value));
+		}else if(key.equalsIgnoreCase("iconName")){
+			setIconName(value);
+		}else if(key.equalsIgnoreCase("iconType")){
+			setType(value);
+		}else if(key.equalsIgnoreCase("iconPosition")){
+			setIconPosition(value);
 		}
 	}
 	@Override
@@ -52,8 +68,17 @@ public class JSDesignableButton extends Button implements Designable{
 			opt.value = states[i];
 			paramstates.options.push(opt);
 		}
-
-		result.push(paramstates);
+		
+		AttributeParameter showIcon = new AttributeParameter("showIcon", "Show Icon", "Advanced");
+		showIcon.options.push(new Option("",""));
+		
+		AttributeParameter iconType = new AttributeParameter("iconType", "Icon Type", "Advanced");
+		AttributeParameter iconName = new AttributeParameter("iconName", "Icon Name", "Advanced");
+		AttributeParameter iconPosition = new AttributeParameter("iconPosition", "Icon Position", "Advanced");
+		iconPosition.options.push(new Option("Left", "left"));
+		iconPosition.options.push(new Option("Right", "right"));
+		
+		result.push(paramstates, showIcon, iconType,iconName,iconPosition);
 
 		return result;
 
@@ -76,8 +101,7 @@ public class JSDesignableButton extends Button implements Designable{
 	@Override
 	public void addDesignable(Designable designable) {
 		
-		//throw new java.lang.RuntimeException("Cannot add children to this component");
-		// TODO Auto-generated method stub
+		throw new jsweet.lang.Error("Cannot add children to this component");
 		
 	}
 	@Override

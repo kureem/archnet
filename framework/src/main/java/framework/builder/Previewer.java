@@ -1,6 +1,7 @@
 package framework.builder;
 
 import static def.dom.Globals.document;
+import static def.dom.Globals.window;
 
 import java.util.function.Function;
 
@@ -22,7 +23,7 @@ public class Previewer extends JSContainer{
 		super("div");
 		
 		
-		WebSocket websocket = new WebSocket("ws:localhost:8080/preview");
+		WebSocket websocket = new WebSocket(window.location.origin.replace("http://", "ws://").replace("https://", "wss://") +"/preview");
 		websocket.onopen = new Function<Event, Object>() {
 			
 			@Override

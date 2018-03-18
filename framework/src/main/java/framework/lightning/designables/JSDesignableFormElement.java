@@ -1,7 +1,6 @@
 package framework.lightning.designables;
 
 import framework.InputField;
-import framework.JSInput;
 import framework.builder.editors.VisualEditor;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.Component;
@@ -15,7 +14,9 @@ import framework.designables.JSDesignableInput;
 import framework.designables.JSDesignableSelect;
 import framework.designables.JSDesignableTextArea;
 import framework.lightning.CheckBox;
+import framework.lightning.ComboBox;
 import framework.lightning.FormElement;
+import framework.salesforce.SalesforceLookup;
 import jsweet.lang.Array;
 
 public class JSDesignableFormElement extends FormElement implements Designable, Preparable{
@@ -39,10 +40,14 @@ public class JSDesignableFormElement extends FormElement implements Designable, 
 	public void applyParam(String key, String value) {
 		super.applyParam(key, value);
 		
+		if(key.equalsIgnoreCase("required")){
+			setRequired("true".equals(value));
+		}
+		
 		if(key.equalsIgnoreCase("type")){
-			Object curVal = getValue();
+			//Object curVal = getValue();
 			if(value.equals("date") || value.equals("datetime") || value.equals("currency") || value.equals("number") || value.equals("email")
-					|| value.equals("phone") || value.equals("password") || value.equals("text")){
+					|| value.equals("phone") || value.equals("password") || value.equals("text")  || value.equals("string")  || value.equals("int")  || value.equals("double")){
 				
 				JSDesignableInput des = new JSDesignableInput(input.getName());
 				des.applyParam("type", value);
@@ -74,8 +79,17 @@ public class JSDesignableFormElement extends FormElement implements Designable, 
 				setTag("div");
 				addDesignable(des);
 				des.addClass("slds-textarea");
-			}else if(value.equals("lookup")){
-				
+			}else if(value.equals("ext-lookup")){
+				ComboBox des = new ComboBox(input.getName());
+				label.setVisible(true);
+				setTag("div");
+				addDesignable(des);
+				//des.addClass("slds-textarea");
+			}else if(value.equals("reference")){
+				SalesforceLookup des = new SalesforceLookup(input.getName());
+				label.setVisible(true);
+				setTag("div");
+				addDesignable(des);
 			}
 				
 			setRendered(false);
@@ -114,6 +128,11 @@ public class JSDesignableFormElement extends FormElement implements Designable, 
 		return super.getComponent();
 	}
 
+	
+	public boolean validate(){
+		return true;
+	}
+	
 	@Override
 	public Array<Parameter> getParameters() {
 		Array<Parameter> parameters = super.getParameters();
@@ -124,17 +143,19 @@ public class JSDesignableFormElement extends FormElement implements Designable, 
 		type.options.push(new Option("datetime", "datetime"));
 		type.options.push(new Option("Currency", "currency"));
 		type.options.push(new Option("Number", "number"));
+		type.options.push(new Option("Double", "double"));
+		type.options.push(new Option("Integer", "int"));
 		type.options.push(new Option("Email", "email"));
 		type.options.push(new Option("Phone", "phone"));
-		type.options.push(new Option("Text", "text"));
+		type.options.push(new Option("Text", "string"));
 		type.options.push(new Option("Password", "password"));
 		type.options.push(new Option("Url", "url"));	
 		
 		
 		type.options.push(new Option("Checkbox", "checkbox"));
 		
-		type.options.push(new Option("Lookup", "lookup"));
-		type.options.push(new Option("Ext Lookup", "extlookup"));
+		type.options.push(new Option("Lookup", "reference"));
+		type.options.push(new Option("Ext Lookup", "ext-lookup"));
 		
 		
 		type.options.push(new Option("Pick List", "picklist"));
@@ -145,11 +166,16 @@ public class JSDesignableFormElement extends FormElement implements Designable, 
 		type.options.push(new Option("Rich Text", "richtext"));
 		
 		AttributeParameter label = new AttributeParameter("label", "Label", "Basic");
-		parameters.push(type,label);
-				
+		
+		AttributeParameter required = new AttributeParameter("required", "Required", "Basic");
+		required.options.push(new Option("",""));
+		
+		parameters.push(type,label,required);
+				//reference,string,int,double
 		return parameters;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void addDesignable(Designable designable) {
 		if(designable instanceof InputField){

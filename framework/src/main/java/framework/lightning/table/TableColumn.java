@@ -16,6 +16,8 @@ public class TableColumn extends JSContainer {
 	
 	private JSContainer title = new JSContainer("div").addClass("slds-truncate");
 	
+	private boolean detailLink = false;
+	
 	
 	//private Icon icon = new Icon("", "utility", "arrowdown");
 	
@@ -39,6 +41,10 @@ public class TableColumn extends JSContainer {
 	
 
 	public TableColumn(String name, Object identifier,String label) {
+		this(name,identifier,label,false);
+	}
+	
+	public TableColumn(String name, Object identifier,String label, boolean detailLnk) {
 		super(name, "th");
 		this.identifier = identifier;
 		//title.addChild(innerTitle);
@@ -59,6 +65,7 @@ public class TableColumn extends JSContainer {
 		//setResizable(false);
 	//	setTitleCaps(true);
 		setAttribute("scope", "col");
+		this.detailLink = detailLnk;
 	}
 	
 	public Object getIdentifier(){
@@ -94,6 +101,16 @@ public class TableColumn extends JSContainer {
 			removeClass(cls);
 		}
 	}
+
+	public boolean isDetailLink() {
+		return detailLink;
+	}
+
+	public void setDetailLink(boolean detailLink) {
+		this.detailLink = detailLink;
+	}
+	
+	
 
 	/*public void setAlign(Alignment alignmen) {
 		if (alignmen.equals(Alignment.LEFT)) {

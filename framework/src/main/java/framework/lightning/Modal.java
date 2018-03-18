@@ -46,6 +46,11 @@ public class Modal extends JSContainer {
 
 	}
 	
+	public Modal show(){
+		open();
+		return this;
+	}
+	
 	
 	public void setFooter(ModalFooter footer){
 		modalContainer.clearChildren();

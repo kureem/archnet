@@ -52,6 +52,7 @@ public class TreeItem extends JSContainer implements EventListener{
 		button.addEventListener(this, "click");
 		addChild(buttonsCtn);
 		setLeftIcon("file", "utility");
+		setAttribute("title", title);
 	}
 	
 	

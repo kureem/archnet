@@ -10,6 +10,7 @@ import framework.lightning.Card;
 import framework.lightning.Grid;
 import framework.lightning.IconButton;
 import framework.lightning.SvgIcon;
+import framework.lightning.designables.JSDesignableTable;
 import framework.lightning.table.DefaultTableCellRenderer;
 import framework.lightning.table.DefaultTableColumnModel;
 import framework.lightning.table.Table;
@@ -27,7 +28,7 @@ public class DataItem extends Card implements TableCellRenderer {
 
 	private SvgIcon figure = new SvgIcon("figure");
 
-	private Table fields = new Table("fields");
+	private JSDesignableTable fields = new JSDesignableTable("fields");
 
 	private DataStructure dataStructure = null;
 

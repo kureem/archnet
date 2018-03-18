@@ -24,6 +24,8 @@ import framework.builder.data.BasicDataEnvironment;
 import framework.builder.data.DataEnvironment;
 import framework.builder.data.HerokuProjectService;
 import framework.builder.data.ProjectService;
+import framework.builder.data.SalesforceObjectService;
+import framework.builder.data.SalesforceObjectServiceImpl;
 import framework.builder.libraries.AbstractComponentFactory;
 import framework.builder.libraries.BasicComponentFactory;
 import framework.builder.libraries.BasicComponentFactoryRegistry;
@@ -36,6 +38,8 @@ import framework.design.Option;
 import framework.designables.JSDesignableBlockComponent;
 import framework.designables.JSDesignableBuilderComponent;
 import framework.designables.JSDesignableButton;
+import framework.designables.JSDesignableCardLayout;
+import framework.designables.JSDesignableCardLayoutItem;
 import framework.designables.JSDesignableHTTP;
 import framework.designables.JSDesignableImage;
 import framework.designables.JSDesignableInput;
@@ -55,6 +59,7 @@ import framework.lightning.BreadCrumbs;
 import framework.lightning.ButtonGroup;
 import framework.lightning.CheckBoxGroup;
 import framework.lightning.Col;
+import framework.lightning.ComboBox;
 import framework.lightning.IconButton;
 import framework.lightning.LightningApplication;
 import framework.lightning.ListBox;
@@ -66,15 +71,19 @@ import framework.lightning.Panel;
 import framework.lightning.PanelSection;
 import framework.lightning.PopOverFooterItem;
 import framework.lightning.Text;
+import framework.lightning.designables.JSDesignableFormElement;
 import framework.lightning.designables.JSDesignableFormLayout;
 import framework.lightning.designables.JSDesignableIterable;
 import framework.lightning.designables.JSDesignableIterator;
 import framework.lightning.designables.JSDesignableLightningGrid;
-import framework.lightning.designables.JSDesignableFormElement;
 import framework.lightning.designables.JSDesignableModal;
 import framework.lightning.designables.JSDesignableSOQL;
 import framework.lightning.designables.JSDesignableTable;
 import framework.rtc.Conference;
+import framework.salesforce.SalesforceCrud;
+import framework.salesforce.SalesforceForm;
+import framework.salesforce.SalesforceLookup;
+import framework.salesforce.SalesforceTable;
 
 public class Boot {
 
@@ -417,6 +426,23 @@ public class Boot {
 			}
 		});
 		
+		componentFactoryRegistry.registerComponentFactory("lgt:combobox", new AbstractComponentFactory("lgt:combobox") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new ComboBox("Combo Box");
+			}
+		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:lookup", new AbstractComponentFactory("lgt:lookup") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new SalesforceLookup("Lookup");
+			}
+		});
+		
+		
 		
 		componentFactoryRegistry.registerComponentFactory("lgt:popover", new AbstractComponentFactory("lgt:popover") {
 
@@ -465,7 +491,23 @@ public class Boot {
 				return new JSDesignableIterable("Iterable", "div");
 			}
 		});
+		
+		
+		componentFactoryRegistry.registerComponentFactory("zs:cardlayout", new AbstractComponentFactory("zs:cardlayout") {
 
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableCardLayout("Card Layout", "div");
+			}
+		});
+
+		componentFactoryRegistry.registerComponentFactory("zs:cardlayout-item", new AbstractComponentFactory("zs:cardlayout-item") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableCardLayoutItem("Item", "div");
+			}
+		});
 
 		componentFactoryRegistry.registerComponentFactory("zs:http", new AbstractComponentFactory("zs:http") {
 
@@ -490,6 +532,30 @@ public class Boot {
 				return new JSDesignableSOQL("soql");
 			}
 		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:crud", new AbstractComponentFactory("lgt:crud") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new SalesforceCrud("Salesforce");
+			}
+		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:crud-table", new AbstractComponentFactory("lgt:crud-table") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new SalesforceTable("Salesforce");
+			}
+		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:crud-form", new AbstractComponentFactory("lgt:crud-form") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new SalesforceForm();
+			}
+		});
 
 		factory.addBean(ComponentFactoryRegistry.class, componentFactoryRegistry);
 
@@ -501,13 +567,15 @@ public class Boot {
 		factory.addBean(ProjectService.class, new HerokuProjectService());
 		
 		factory.addBean(Adaptor.class, new HerokuAdaptor());
+		
+		factory.addBean(SalesforceObjectService.class, new SalesforceObjectServiceImpl());
 
 		boolean lightning = false;
 		//eval("lightning = true;");
 		//--toremove 
 		window.$set("lightning", lightning);
 		if (window.location.href.contains("preview.html")) {
-
+			
 			String name = window.location.href.split("#")[1];
 			new Previewer(name).render();
 		}else if(window.location.href.contains("rtc.html")){

@@ -18,6 +18,8 @@ public class ListPopOver extends PopOver implements Designable{
 	public ListPopOver(String name) {
 		super(name);
 		listBox = new ListBox("list");
+		
+		
 		getBody().addChild(listBox);
 		setAttribute("identifier", "lgt:popover");
 		applyParam("nubin", NUBIN_TOP_LEFT);
@@ -25,6 +27,10 @@ public class ListPopOver extends PopOver implements Designable{
 		applyParam("showFooter", "true");
 	}
 
+	public ListBox getListBox(){
+		return listBox;
+	}
+	
 	@Override
 	public void applyParam(String key, String value) {
 		delegate.applyParameter(key, value, true);
@@ -38,6 +44,7 @@ public class ListPopOver extends PopOver implements Designable{
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Array<Designable> getDesignables() {
 		Array res = new Array();

@@ -21,11 +21,11 @@ public class WelcomeScreen extends Modal{
 	
 	private WelcomeScreenItem openLibrary = new WelcomeScreenItem("openLibrary", "LIB", "Open project from library", "Project stored on server", 4);
 	
-	private Builder builder;
+	//private Builder builder;
 	
 	public WelcomeScreen(String name, Builder builder) {
 		super(name, "div");
-		this.builder = builder;
+		//this.builder = builder;
 		addClass("welcome-screen");
 		setStyle("width", "50%");
 		addClass("slds-fade-in-open slds-modal_large slds-app-launcher slds-align_absolute-center");

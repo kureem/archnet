@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.salesforce.api.QueryResult;
@@ -36,11 +38,14 @@ public class SObjectController {
 
 	}
 
-	@RequestMapping(path = "/describe",method = RequestMethod.GET)
+	@RequestMapping(path = "/describe", method = RequestMethod.GET)
 	public Object describe() throws Exception {
-
-		loadAPI();
-		return salesforce.sObjectsOperations().getSObjects();
+		try {
+			loadAPI();
+			return salesforce.sObjectsOperations().getSObjects();
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	@RequestMapping(path = "/describe/{type}", method = RequestMethod.GET)
@@ -52,40 +57,55 @@ public class SObjectController {
 	}
 
 	@RequestMapping(path = "/query", method = RequestMethod.GET)
-	public Object query(@RequestParam(name = "q") String query) {
-		
-		
+	public Object query(@RequestParam(name = "query") String query) {
 
-		loadAPI();
-		QueryResult result = salesforce.queryOperations().query(query);
-		
-		List<Object> ret = new ArrayList<>(result.getTotalSize());
-		for(ResultItem item : result.getRecords()){
-			ret.add(item.getAttributes());
+		try {
+			loadAPI();
+			QueryResult result = salesforce.queryOperations().query(query);
+
+			List<Object> ret = new ArrayList<>(result.getTotalSize());
+			for (ResultItem item : result.getRecords()) {
+				ret.add(item.getAttributes());
+			}
+
+			return ret;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
-		
-		return ret;
 	}
 
 	@RequestMapping(path = "/create", method = RequestMethod.POST)
-	public Object create(@RequestParam("name") String name, Map<String, Object> fields) {
+	public Object create(@RequestParam("name") String name, @RequestParam("fields") Map<String, Object> fields) {
 
-		loadAPI();
-		return salesforce.sObjectsOperations().create(name, fields);
+		try {
+			loadAPI();
+			return salesforce.sObjectsOperations().create(name, fields);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	@RequestMapping(path = "/update", method = RequestMethod.POST)
 	public Object update(@RequestParam("name") String name, @RequestParam("id") String objectId,
-			Map<String, Object> fields) {
-		loadAPI();
-		return salesforce.sObjectsOperations().update(name, objectId, fields);
+			@RequestParam("fields") Map<String, Object> fields) {
+		try {
+			loadAPI();
+			return salesforce.sObjectsOperations().update(name, objectId, fields);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	@RequestMapping(path = "/delete", method = RequestMethod.POST)
 	public Object delete(@RequestParam("name") String name, @RequestParam("id") String objectId) {
-		loadAPI();
-		salesforce.sObjectsOperations().delete(name, objectId);
-		return true;
+		try {
+			loadAPI();
+			salesforce.sObjectsOperations().delete(name, objectId);
+			return true;
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 }

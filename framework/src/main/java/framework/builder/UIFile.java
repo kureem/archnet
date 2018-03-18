@@ -1,7 +1,6 @@
 package framework.builder;
 
 import framework.JSContainer;
-import framework.JSHTMLFragment;
 
 public class UIFile extends JSContainer {
 	

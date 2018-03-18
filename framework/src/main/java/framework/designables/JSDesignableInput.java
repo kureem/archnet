@@ -25,10 +25,16 @@ public class JSDesignableInput extends JSInput implements Designable {
 		if(key.equalsIgnoreCase("type")){
 			Object curVal = getValue();
 			if(value.equals("date") || value.equals("datetime") || value.equals("currency") || value.equals("number") || value.equals("email")
-					|| value.equals("phone") || value.equals("password") || value.equals("text"))
+					|| value.equals("phone") || value.equals("password") || value.equals("text")   || value.equals("string")  || value.equals("int")  || value.equals("double"))
 				
 			setTag("input");
-			setType(value);
+			if(value.equals("currency")  || value.equals("int")  || value.equals("double")){
+				setType("number");
+			}else{
+				if(value.equals("string"))
+					value = "text";
+				setType(value);
+			}
 			setValue((String)curVal);
 		}
 	}

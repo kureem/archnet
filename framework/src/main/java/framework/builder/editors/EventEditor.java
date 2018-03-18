@@ -74,9 +74,7 @@ public class EventEditor extends AbstractEditor<Component> {
 	}
 	
 
-	private void decoName(){
-		
-	}
+	
 	@SuppressWarnings("unchecked")
 	public void fillValue(Designable des, boolean updEvtSelect) {
 		boolean s = false;

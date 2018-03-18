@@ -46,7 +46,8 @@ public class JSDesignableModal extends Modal implements Designable{
 			getHeader().setVisible("true".equals(value));
 		}
 	}
-
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Array<Designable> getDesignables() {
 		

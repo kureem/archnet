@@ -154,6 +154,7 @@ public class JSDesignableLightningGrid extends Grid implements Designable{
 		for(int i = 0; i < labels.length; i++){
 			boolean basic = labels[i].startsWith("Border") || labels[i].startsWith("Scrollable");
 			AttributeParameter parameter = new AttributeParameter(keys[i], labels[i], basic?"Basic":"Advanced");
+			parameter.options.push(new Option("",""));
 			parameters.push(parameter);
 		}
 		

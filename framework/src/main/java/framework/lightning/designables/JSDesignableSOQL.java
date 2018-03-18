@@ -1,7 +1,8 @@
 package framework.lightning.designables;
 
-import static def.jquery.Globals.$;
-
+import framework.Adaptor;
+import framework.ServiceCallback;
+import framework.core.BeanFactory;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.NameParameter;
@@ -13,6 +14,8 @@ import jsweet.lang.Array;
 import jsweet.lang.Object;
 
 public class JSDesignableSOQL extends JSDesignableDataProvider implements Designable{
+	
+	private Adaptor adaptor = BeanFactory.getInstance().getBeanOfType(Adaptor.class);
 
 	public JSDesignableSOQL(String name) {
 		super(name);
@@ -39,15 +42,38 @@ public class JSDesignableSOQL extends JSDesignableDataProvider implements Design
 		Object payload = new Object();
 		payload.$set("q", query);
 		
-		$.get("/objects/query", payload, (a, b, c) -> {
-			//DataEvent evt = new DataEvent("success",(jsweet.lang.Object)a);
-			CustomEvent evt = new CustomEvent("success");
-			evt.$set("data", a);
-			fireListener("success",evt );
-			return true;
+		adaptor.Execute(this, "query", payload, new ServiceCallback() {
+			
+			@Override
+			public boolean consume(java.lang.Object response, double statusCode) {
+				CustomEvent evt = new CustomEvent("success");
+				evt.$set("data", response);
+				fireListener("success",evt );
+				return true;
+			}
 		});
+		
+		
 	}
 
+	
+	public JSDesignableSOQL setQuery(String query){
+		applyParam("query", query);
+		return this;
+	}
+	
+	public JSDesignableSOQL setOffSet(int offset){
+		applyParam("offset",offset + "");
+		return this;
+	}
+	
+	public JSDesignableSOQL setLimit(int limit){
+		applyParam("limit",limit + "");
+		return this;
+	}
+	
+	
+		// TODO Auto-generated cons
 	@Override
 	public Array<Parameter> getParameters() {
 	//	Array<Parameter> params = delegate.getParameters();

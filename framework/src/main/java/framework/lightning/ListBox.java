@@ -64,6 +64,11 @@ public class ListBox extends JSContainer implements Designable{
 		return this;
 	}
 	
+	public void clearItems(){
+		ul.clearChildren();
+		ul.setRendered(false);
+	}
+	
 	public ListBox setVertical(boolean b){
 		if(b){
 			ul.addClass("slds-listbox_vertical");
@@ -105,6 +110,7 @@ public class ListBox extends JSContainer implements Designable{
 		
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Array<Designable> getDesignables() {
 		Array r = ul.getChildren();

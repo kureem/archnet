@@ -280,6 +280,69 @@ declare namespace framework.builder.data {
     }
 }
 declare namespace framework.builder.data {
+    interface SalesforceObjectService {
+        types(component: any, callback: framework.ServiceCallback): any;
+        describe(component: any, type: string, callback: framework.ServiceCallback): any;
+        query(component: any, query: string, offset: number, max: number, callback: framework.ServiceCallback): any;
+        create(component: any, name: string, fields: any, callback: framework.ServiceCallback): any;
+        update(component: any, name: string, objectId: string, fields: any, callback: framework.ServiceCallback): any;
+        delete(component: any, name: string, objectId: string, callback: framework.ServiceCallback): any;
+    }
+}
+declare namespace framework.builder.data {
+    class SalesforceObjectServiceImpl implements framework.builder.data.SalesforceObjectService {
+        adaptor: framework.Adaptor;
+        /**
+         *
+         * @param {*} component
+         * @param {*} callback
+         */
+        types(component: any, callback: framework.ServiceCallback): void;
+        /**
+         *
+         * @param {*} component
+         * @param {string} type
+         * @param {*} callback
+         */
+        describe(component: any, type: string, callback: framework.ServiceCallback): void;
+        /**
+         *
+         * @param {*} component
+         * @param {string} query
+         * @param {number} offset
+         * @param {number} max
+         * @param {*} callback
+         */
+        query(component: any, query: string, offset: number, max: number, callback: framework.ServiceCallback): void;
+        /**
+         *
+         * @param {*} component
+         * @param {string} name
+         * @param {*} fields
+         * @param {*} callback
+         */
+        create(component: any, name: string, fields: any, callback: framework.ServiceCallback): void;
+        /**
+         *
+         * @param {*} component
+         * @param {string} name
+         * @param {string} objectId
+         * @param {*} fields
+         * @param {*} callback
+         */
+        update(component: any, name: string, objectId: string, fields: any, callback: framework.ServiceCallback): void;
+        /**
+         *
+         * @param {*} component
+         * @param {string} name
+         * @param {string} objectId
+         * @param {*} callback
+         */
+        delete(component: any, name: string, objectId: string, callback: framework.ServiceCallback): void;
+        constructor();
+    }
+}
+declare namespace framework.builder.data {
     class SalesforceProjectService implements framework.builder.data.ProjectService {
         /**
          *
@@ -360,6 +423,7 @@ declare namespace framework.builder.editors {
         type: string;
         file: framework.builder.data.File;
         structure: framework.builder.editors.Structure;
+        __importTypes: framework.salesforce.ObjectListSelectModal;
         constructor(type: string, file: framework.builder.data.File, structure: framework.builder.editors.Structure);
         /**
          *
@@ -367,6 +431,7 @@ declare namespace framework.builder.editors {
          * @param {Event} evt
          */
         performAction(source: framework.JSContainer, evt: Event): void;
+        importTypes(): void;
     }
     namespace NewFileStructureEventListener {
         class NewFileStructureEventListener$0 implements framework.builder.data.RemoteDataListener<any> {
@@ -377,6 +442,27 @@ declare namespace framework.builder.editors {
              */
             dataLoaded(data: any): void;
             constructor(__parent: any);
+        }
+        class NewFileStructureEventListener$1 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        namespace NewFileStructureEventListener$1 {
+            class NewFileStructureEventListener$1$0 implements framework.builder.data.RemoteDataListener<any> {
+                __parent: any;
+                /**
+                 *
+                 * @param {*} data
+                 */
+                dataLoaded(data: any): void;
+                constructor(__parent: any);
+            }
         }
     }
 }
@@ -863,7 +949,7 @@ declare namespace framework {
         getListeners(): Object;
         render(root?: any): any;
         getData(): any;
-        setData(data?: any): any;
+        setData(options?: any): any;
         /**
          *
          * @param {string} id
@@ -925,7 +1011,7 @@ declare namespace framework {
 }
 declare namespace framework {
     interface ServiceCallback {
-        (response: any, statusCode: number): boolean;
+        consume(response: any, statusCode: number): boolean;
     }
 }
 declare namespace framework.util {
@@ -1378,6 +1464,69 @@ declare namespace framework {
             createInstance(designMode: boolean): framework.design.Designable;
             constructor(__arg0: any);
         }
+        class Boot$42 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$43 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$44 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$45 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$46 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$47 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$48 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
     }
 }
 declare namespace framework.builder.libraries {
@@ -1412,6 +1561,24 @@ declare namespace framework.design {
          * @return {string}
          */
         extractValue(designable: framework.design.Designable): string;
+    }
+}
+declare namespace framework.design {
+    abstract class ExtAttributeParameter extends framework.design.Parameter {
+        constructor(name: string, label: string, category: string);
+        /**
+         *
+         * @param {*} designable
+         * @return {string}
+         */
+        extractValue(designable: framework.design.Designable): string;
+        abstract getPrompt(designable: framework.design.Designable): framework.builder.properties.ExtendedPropertyEditorPrompt;
+        /**
+         *
+         * @param {*} designable
+         * @return {framework.builder.properties.ExtendedPropertyEditor}
+         */
+        getEditor(designable: framework.design.Designable): framework.builder.properties.ExtendedPropertyEditor;
     }
 }
 declare namespace framework.design {
@@ -1722,7 +1889,7 @@ declare namespace framework {
          * @return {*}
          */
         getData(): any;
-        setData(data?: any): any;
+        setData(options?: any): any;
         setData$java_lang_Object(data: any): void;
         getAncestorWithClass<T extends JSContainer>(cls: string): T;
         /**
@@ -1930,16 +2097,6 @@ declare namespace framework.builder.editors {
             performAction(source: framework.JSContainer, evt: Event): void;
             constructor(__parent: any);
         }
-        class Structure$1 implements framework.EventListener {
-            __parent: any;
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor(__parent: any);
-        }
     }
 }
 declare namespace framework.builder.editors {
@@ -2023,6 +2180,27 @@ declare namespace framework.builder {
     class Previewer extends framework.JSContainer {
         static project: framework.builder.data.File;
         constructor(name: string);
+    }
+}
+declare namespace framework.builder.properties {
+    class ExtendedPropertyEditor extends framework.JSContainer implements framework.builder.properties.PropertyEditor, framework.EventListener {
+        designable: framework.design.Designable;
+        parameter: framework.design.Parameter;
+        prompt: framework.builder.properties.ExtendedPropertyEditorPrompt;
+        button: framework.lightning.Button;
+        constructor(name: string, prompt: framework.builder.properties.ExtendedPropertyEditorPrompt);
+        /**
+         *
+         * @param {*} designable
+         * @param {framework.design.Parameter} parameter
+         */
+        setProperty(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
     }
 }
 declare namespace framework.builder {
@@ -2818,7 +2996,6 @@ declare namespace framework.lightning {
 declare namespace framework.lightning.designables {
     class JSDesignableIterator extends framework.JSContainer implements framework.design.Designable {
         delegate: framework.designables.DesignableDelegate;
-        data: Array<Object>;
         templateCtn: framework.JSContainer;
         list: framework.JSContainer;
         constructor(name: string);
@@ -2992,6 +3169,7 @@ declare namespace framework.lightning {
         setWithIcon(b: boolean): ListBox;
         ref(): ListBox;
         addItem(option: framework.lightning.ListBoxItem): ListBox;
+        clearItems(): void;
         setVertical(b: boolean): ListBox;
         setHorizontal(b: boolean): ListBox;
         /**
@@ -3112,8 +3290,8 @@ declare namespace framework.lightning {
         static FLOAT_LEFT: string;
         static FLOAT_RIGHT: string;
         static FLOAT_NONE: string;
-        static Sizes: string[];
-        static Sizes_$LI$(): string[];
+        static SIZES: string[];
+        static SIZES_$LI$(): string[];
         static PADDING_SIZE_NONE: string;
         static PADDING_SIZE_NONE_$LI$(): string;
         static PADDING_SIZE_XXX_SMALL: string;
@@ -3132,12 +3310,52 @@ declare namespace framework.lightning {
         static PADDING_SIZE_X_LARGE_$LI$(): string;
         static PADDING_SIZE_XX_LARGE: string;
         static PADDING_SIZE_XX_LARGE_$LI$(): string;
+        static PULL_PADDED_NONE: string;
+        static PULL_PADDED_XXX_SMALL: string;
+        static PULL_PADDED_XX_SMALL: string;
+        static PULL_PADDED_X_SMALL: string;
+        static PULL_PADDED_SMALL: string;
+        static PULL_PADDED_MEDIUM: string;
+        static PULL_PADDED_LARGE: string;
+        static PULL_PADDED_X_LARGE: string;
+        static PULL_PADDED_XX_LARGE: string;
+        static MARGIN_SIZE_NONE: string;
+        static MARGIN_SIZE_NONE_$LI$(): string;
+        static MARGIN_SIZE_XXX_SMALL: string;
+        static MARGIN_SIZE_XXX_SMALL_$LI$(): string;
+        static MARGIN_SIZE_XX_SMALL: string;
+        static MARGIN_SIZE_XX_SMALL_$LI$(): string;
+        static MARGIN_SIZE_X_SMALL: string;
+        static MARGIN_SIZE_X_SMALL_$LI$(): string;
+        static MARGIN_SIZE_SMALL: string;
+        static MARGIN_SIZE_SMALL_$LI$(): string;
+        static MARGIN_SIZE_MEDIUM: string;
+        static MARGIN_SIZE_MEDIUM_$LI$(): string;
+        static MARGIN_SIZE_LARGE: string;
+        static MARGIN_SIZE_LARGE_$LI$(): string;
+        static MARGIN_SIZE_X_LARGE: string;
+        static MARGIN_SIZE_X_LARGE_$LI$(): string;
+        static MARGIN_SIZE_XX_LARGE: string;
+        static MARGIN_SIZE_XX_LARGE_$LI$(): string;
+        static POSITION_STATIC: string;
+        static POSITION_FIXED: string;
+        static POSITION_RELATIVE: string;
+        static POSITION_ABSOLUTE: string;
+        static POSITIONS: string[];
+        static POSITIONS_$LI$(): string[];
         constructor(name: string, tag: string);
+        setPosition(position: string): LTContainer;
+        setHasTopMagnet(b: boolean): LTContainer;
+        setHasBottomMagnet(b: boolean): LTContainer;
+        setMarginTop(size: string): LTContainer;
+        setMarginRight(size: string): LTContainer;
+        setMarginBottom(size: string): LTContainer;
+        setMarginLeft(size: string): LTContainer;
         setPaddingTop(size: string): LTContainer;
         setPaddingRight(size: string): LTContainer;
         setPaddingBottom(size: string): LTContainer;
         setPaddingLeft(size: string): LTContainer;
-        setSizeAndPosition(size: string, position: string): LTContainer;
+        setSizeAndPosition(pref: string, size: string, position: string): LTContainer;
         setFloat(sfloat: string): LTContainer;
         toggleClass(cls: string, b: boolean): LTContainer;
         setBorderTop(b: boolean): LTContainer;
@@ -3147,7 +3365,11 @@ declare namespace framework.lightning {
         setGrow(b: boolean): LTContainer;
         setScrollableY(b: boolean): LTContainer;
         setScrollableX(b: boolean): LTContainer;
+        setScrollableNone(b: boolean): LTContainer;
+        setScrollableAuto(b: boolean): LTContainer;
         setAbsoluteCenter(b: boolean): LTContainer;
+        setPullPadded(b: boolean): LTContainer;
+        setPullPaddedSize(size: string): LTContainer;
     }
 }
 declare namespace framework.lightning {
@@ -3181,6 +3403,7 @@ declare namespace framework.lightning {
         title: framework.JSContainer;
         backdrop: framework.lightning.Backdrop;
         constructor(name: string, stitle: string);
+        show(): Modal;
         setFooter(footer: framework.lightning.ModalFooter): void;
         setBody(body: framework.lightning.ModalBody): void;
         getBackdrop(): framework.lightning.Backdrop;
@@ -3364,19 +3587,14 @@ declare namespace framework.lightning.table {
         ftr: framework.JSContainer;
         ftd: framework.JSContainer;
         paginator: framework.lightning.table.Paginator;
-        selectable: boolean;
         multiSelectable: boolean;
-        selecteRowOn: string;
         emptyTableMessage: string;
-        static SELECT_ROW_EVT: framework.EventListener;
-        static SELECT_ROW_EVT_$LI$(): framework.EventListener;
         constructor(name: string);
         /**
          *
          * @return {Array}
          */
         advancedEventTypes(): string[];
-        setSelectRowOn(on: string): void;
         addEmptyRow(): framework.JSContainer;
         loading(): void;
         emptyData(): void;
@@ -3395,8 +3613,6 @@ declare namespace framework.lightning.table {
         refreshData(): void;
         getRow(index: number): framework.JSContainer;
         getBody(): framework.JSContainer;
-        setSelectable(b: boolean): void;
-        isSelectable(): boolean;
         setMultiSelectable(b: boolean): void;
         isMultiSelectable(): boolean;
         refreshColumns(): void;
@@ -3410,27 +3626,19 @@ declare namespace framework.lightning.table {
         setNoRowHover(b: boolean): Table;
         setStriped(b: boolean): Table;
     }
-    namespace Table {
-        class Table$0 implements framework.EventListener {
-            /**
-             *
-             * @param {framework.JSContainer} source
-             * @param {Event} evt
-             */
-            performAction(source: framework.JSContainer, evt: Event): void;
-            constructor();
-        }
-    }
 }
 declare namespace framework.lightning.table {
     class TableColumn extends framework.JSContainer {
         identifier: any;
         title: framework.JSContainer;
-        constructor(name: string, identifier: any, label: string);
+        detailLink: boolean;
+        constructor(name?: any, identifier?: any, label?: any, detailLnk?: any);
         getIdentifier(): any;
         setWidth(width: string): TableColumn;
         setLabel(title: string): TableColumn;
         setFeature(cls: string, b: boolean): void;
+        isDetailLink(): boolean;
+        setDetailLink(detailLink: boolean): void;
     }
 }
 declare namespace framework.lightning {
@@ -3577,6 +3785,84 @@ declare namespace framework.rtc {
         postRender(c?: any, root?: any): any;
     }
 }
+declare namespace framework.salesforce {
+    class SalesforceCrud extends framework.JSContainer implements framework.design.Designable {
+        table: framework.salesforce.SalesforceTable;
+        form: framework.salesforce.SalesforceForm;
+        soql: framework.lightning.designables.JSDesignableSOQL;
+        listPanel: framework.JSContainer;
+        detailPanel: framework.JSContainer;
+        objectType: string;
+        delegate: framework.designables.DesignableDelegate;
+        constructor(name: string);
+        refresh(): void;
+        showDetail(data: Object): void;
+        showList(): void;
+        setObjectType(type: string): void;
+        setColumns(fields: Array<Object>): void;
+        setFields(fields: Array<Object>): void;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        mirrorCopy(source: framework.design.Designable, dest: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+    namespace SalesforceCrud {
+        class SalesforceCrud$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class SalesforceCrud$1 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+    }
+}
 declare namespace framework {
     class TextComponent extends framework.JSContainer {
         constructor(name: string, tag: string);
@@ -3708,7 +3994,6 @@ declare namespace framework.builder.editors {
         editor: framework.builder.editors.JavascriptEditor;
         justSaved: string;
         constructor(name: string, root: framework.design.Designable, veditor: framework.builder.editors.VisualEditor);
-        decoName(): void;
         fillValue(des: framework.design.Designable, updEvtSelect: boolean): void;
         getSource(des: framework.design.Designable, type: string): string;
         reactivate(): void;
@@ -3785,10 +4070,13 @@ declare namespace framework.builder.editors {
         jsonDef: framework.lightning.Modal;
         json: framework.JSTextArea;
         helper: framework.JSTextArea;
+        fieldList: framework.salesforce.FieldListSelectModal;
         hRule: framework.builder.Ruler;
         composer: framework.lightning.DockedComposer;
         bd: framework.lightning.Backdrop;
         constructor(name: string);
+        hideOutline(): void;
+        showFields(type: string): void;
         showDef: boolean;
         toggleDefns(): void;
         escape(): void;
@@ -3914,6 +4202,29 @@ declare namespace framework.designables {
          * @return {framework.design.Parameter[]}
          */
         getParameters(): Array<framework.design.Parameter>;
+    }
+}
+declare namespace framework.designables {
+    class JSDesignableCardLayout extends framework.designables.JSDesignable {
+        currentActive: string;
+        constructor(name: string, tag: string);
+        addItem(item: framework.designables.JSDesignableCardLayoutItem): JSDesignableCardLayout;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        activate(name: string): void;
+    }
+}
+declare namespace framework.designables {
+    class JSDesignableCardLayoutItem extends framework.designables.JSDesignable {
+        constructor(name: string, tag: string);
+        /**
+         *
+         * @return {Array}
+         */
+        advancedEventTypes(): string[];
     }
 }
 declare namespace framework {
@@ -4199,7 +4510,7 @@ declare namespace framework.builder.libraries {
     class DataItem extends framework.lightning.Card implements framework.lightning.table.TableCellRenderer {
         title: framework.JSContainer;
         figure: framework.lightning.SvgIcon;
-        fields: framework.lightning.table.Table;
+        fields: framework.lightning.designables.JSDesignableTable;
         dataStructure: framework.builder.data.DataStructure;
         delegate: framework.lightning.table.DefaultTableCellRenderer;
         labels: string[];
@@ -4282,7 +4593,6 @@ declare namespace framework.lightning {
 }
 declare namespace framework.builder {
     class Builder extends framework.lightning.LTContainer {
-        topMenu: framework.builder.TopMenu;
         editorTabs: framework.lightning.Tabs;
         project: framework.builder.data.File;
         saveButton: framework.lightning.IconButton;
@@ -4422,23 +4732,12 @@ declare namespace framework.lightning {
 }
 declare namespace framework.lightning {
     class Grid extends framework.lightning.LTContainer {
-        static PULL_PADDED_NONE: string;
-        static PULL_PADDED_XXX_SMALL: string;
-        static PULL_PADDED_XX_SMALL: string;
-        static PULL_PADDED_X_SMALL: string;
-        static PULL_PADDED_SMALL: string;
-        static PULL_PADDED_MEDIUM: string;
-        static PULL_PADDED_LARGE: string;
-        static PULL_PADDED_X_LARGE: string;
-        static PULL_PADDED_XX_LARGE: string;
         constructor(name: string, tag: string);
         toggleClass(cls: string, b: boolean): Grid;
         setFrame(b: boolean): Grid;
         setVertical(b: boolean): Grid;
         setVerticalReverse(b: boolean): Grid;
         setReverse(b: boolean): Grid;
-        setPullPadded(b: boolean): Grid;
-        setPullPaddedSize(size: string): Grid;
         setAlignCenter(b: boolean): Grid;
         setAlignSpace(b: boolean): Grid;
         setAlignSpread(b: boolean): Grid;
@@ -4538,7 +4837,6 @@ declare namespace framework.builder {
         openComputerItem: framework.builder.WelcomeScreenItem;
         openUrlItem: framework.builder.WelcomeScreenItem;
         openLibrary: framework.builder.WelcomeScreenItem;
-        builder: framework.builder.Builder;
         constructor(name: string, builder: framework.builder.Builder);
     }
     namespace WelcomeScreen {
@@ -4614,6 +4912,7 @@ declare namespace framework.lightning {
         listBox: framework.lightning.ListBox;
         delegate: framework.designables.DesignableDelegate;
         constructor(name: string);
+        getListBox(): framework.lightning.ListBox;
         /**
          *
          * @param {string} key
@@ -4905,6 +5204,34 @@ declare namespace framework.builder.editors {
         }
     }
 }
+declare namespace framework.builder.editors {
+    class TypeTreeItem extends framework.TreeItem implements framework.EventListener {
+        dataType: Object;
+        structure: framework.builder.editors.Structure;
+        types: framework.builder.data.File;
+        constructor(types: framework.builder.data.File, dataType: Object, structure: framework.builder.editors.Structure);
+        click(source: framework.JSContainer, evt: Event): void;
+        deleteMe(): void;
+        /**
+         *
+         * @param {framework.JSContainer} source
+         * @param {Event} evt
+         */
+        performAction(source: framework.JSContainer, evt: Event): void;
+    }
+    namespace TypeTreeItem {
+        class TypeTreeItem$0 implements framework.builder.data.RemoteDataListener<any> {
+            __parent: any;
+            /**
+             *
+             * @param {framework.builder.data.DataField[]} data_
+             */
+            dataLoaded(data_?: any): any;
+            dataLoaded$java_lang_Object(data: any): void;
+            constructor(__parent: any);
+        }
+    }
+}
 declare namespace framework.lightning {
     class LightningApplication extends framework.designables.JSDesignableBlockComponent {
         scope: Object;
@@ -4922,6 +5249,54 @@ declare namespace framework.lightning {
         postRender(c?: any, root?: any): any;
         postRender$jsweet_dom_HTMLElement(root: HTMLElement): void;
         exposeAsVariable(variableName: string, item: framework.design.Designable): void;
+    }
+}
+declare namespace framework.lightning {
+    class WizardStep extends framework.designables.JSDesignableCardLayoutItem {
+        constructor(name: string, tag: string);
+    }
+}
+declare namespace framework.salesforce {
+    class FieldsList extends framework.designables.JSDesignableCardLayoutItem implements framework.ServiceCallback {
+        table: framework.lightning.designables.JSDesignableTable;
+        service: framework.builder.data.SalesforceObjectService;
+        constructor(name: string);
+        getTable(): framework.lightning.designables.JSDesignableTable;
+        setType(type: string): void;
+        /**
+         *
+         * @param {*} response
+         * @param {number} statusCode
+         * @return {boolean}
+         */
+        consume(response: any, statusCode: number): boolean;
+    }
+}
+declare namespace framework.salesforce {
+    class ObjectList extends framework.designables.JSDesignableCardLayoutItem implements framework.ServiceCallback {
+        table: framework.lightning.designables.JSDesignableTable;
+        service: framework.builder.data.SalesforceObjectService;
+        constructor(name: string);
+        getSelectedItems(): Array<Object>;
+        /**
+         *
+         * @param {*} response
+         * @param {number} statusCode
+         * @return {boolean}
+         */
+        consume(response: any, statusCode: number): boolean;
+    }
+    namespace ObjectList {
+        class ObjectList$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
     }
 }
 declare namespace framework.rtc {
@@ -5203,9 +5578,14 @@ declare namespace framework.lightning {
     class FormElement extends framework.lightning.Col {
         label: framework.JSContainer;
         control: framework.JSContainer;
+        help: framework.JSContainer;
+        asterix: framework.JSContainer;
         constructor(name: string, tag: string);
+        setError(msg: string): void;
+        clearError(): void;
         setLabel(label: string): FormElement;
         setInput(input: framework.InputField<any>): FormElement;
+        setRequired(b: boolean): void;
         getInput(): framework.InputField<any>;
         getControl(): framework.JSContainer;
     }
@@ -5241,6 +5621,52 @@ declare namespace framework.designables {
          * @return {framework.design.Parameter[]}
          */
         abstract getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+    }
+}
+declare namespace framework.lightning.designables {
+    class JSDesignableObjectType extends framework.lightning.DescriptionList implements framework.design.Designable {
+        delegate: framework.designables.DesignableDelegate;
+        fields: Array<any>;
+        constructor(name: string);
+        getFields(): Array<any>;
+        setFields(fields: Array<any>): void;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
         /**
          *
          * @param {*} designable
@@ -5596,6 +6022,95 @@ declare namespace framework.builder.data {
         }
     }
 }
+declare namespace framework.lightning {
+    class Prompt extends framework.lightning.designables.JSDesignableModal {
+        constructor(name: string, title: string);
+        clearButtons(): Prompt;
+        addCancelButton(label: string): Prompt;
+        addButton(name: string, label: string): Prompt;
+        getButton(name: string): framework.lightning.Button;
+    }
+    namespace Prompt {
+        class Prompt$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class Prompt$1 implements framework.EventListener {
+            private name;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, name: any);
+        }
+    }
+}
+declare namespace framework.salesforce {
+    class FieldListSelectModal extends framework.lightning.designables.JSDesignableModal {
+        fields: framework.salesforce.FieldsList;
+        constructor(name: string, title: string);
+        getList(): framework.salesforce.FieldsList;
+    }
+}
+declare namespace framework.salesforce {
+    class ObjectListSelectModal extends framework.lightning.designables.JSDesignableModal {
+        list: framework.salesforce.ObjectList;
+        fields: framework.salesforce.FieldsList;
+        cardLayout: framework.designables.JSDesignableCardLayout;
+        saveButton: framework.lightning.Button;
+        backButton: framework.lightning.Button;
+        constructor(name: string, title: string);
+    }
+    namespace ObjectListSelectModal {
+        class ObjectListSelectModal$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class ObjectListSelectModal$1 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class ObjectListSelectModal$2 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+    }
+}
+declare namespace framework.salesforce {
+    class SalesforceCrudModal extends framework.lightning.designables.JSDesignableModal {
+        crud: framework.salesforce.SalesforceCrud;
+        constructor(name: string);
+        setColumns(fields: Array<Object>): void;
+        setFields(fields: Array<Object>): void;
+    }
+}
 declare namespace framework.designables {
     class JSDesignableButton extends framework.lightning.Button implements framework.design.Designable {
         static stateLabels: string[];
@@ -5713,6 +6228,7 @@ declare namespace framework.lightning.designables {
          * @return {framework.builder.marshalling.Component}
          */
         getComponent(): framework.builder.marshalling.Component;
+        validate(): boolean;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -5762,19 +6278,49 @@ declare namespace framework.designables {
          */
         getParameters(): Array<framework.design.Parameter>;
     }
+    namespace JSDesignableService {
+        class JSDesignableService$0 implements framework.ServiceCallback {
+            __parent: any;
+            /**
+             *
+             * @param {*} response
+             * @param {number} statusCode
+             * @return {boolean}
+             */
+            consume(response: any, statusCode: number): boolean;
+            constructor(__parent: any);
+        }
+    }
 }
 declare namespace framework.lightning.designables {
     class JSDesignableSOQL extends framework.designables.JSDesignableDataProvider implements framework.design.Designable {
+        adaptor: framework.Adaptor;
         constructor(name: string);
         /**
          *
          */
         execute(): void;
+        setQuery(query: string): JSDesignableSOQL;
+        setOffSet(offset: number): JSDesignableSOQL;
+        setLimit(limit: number): JSDesignableSOQL;
         /**
          *
          * @return {framework.design.Parameter[]}
          */
         getParameters(): Array<framework.design.Parameter>;
+    }
+    namespace JSDesignableSOQL {
+        class JSDesignableSOQL$0 implements framework.ServiceCallback {
+            __parent: any;
+            /**
+             *
+             * @param {*} response
+             * @param {number} statusCode
+             * @return {boolean}
+             */
+            consume(response: any, statusCode: number): boolean;
+            constructor(__parent: any);
+        }
     }
 }
 declare namespace framework.builder.libraries {
@@ -5976,16 +6522,159 @@ declare namespace framework.lightning {
         }
     }
 }
+declare namespace framework.lightning {
+    class ComboBox extends framework.JSContainer implements framework.design.ExtDesignable, framework.InputField<Object> {
+        delegate: framework.designables.DesignableDelegate;
+        combo: framework.JSContainer;
+        input: framework.JSInput;
+        listBox: framework.lightning.ListPopOver;
+        value: Object;
+        options: Array<Object>;
+        inputIcon: framework.lightning.SvgIcon;
+        currentIconType: string;
+        currentIconName: string;
+        constructor(name: string);
+        setLoading(b: boolean): void;
+        getTypedText(): string;
+        getInput(): framework.JSInput;
+        /**
+         *
+         * @return {Array}
+         */
+        advancedEventTypes(): string[];
+        setPlaceHolder(value: string): void;
+        close(): void;
+        open(): void;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        createItem(option: Object): framework.lightning.ListBoxItem;
+        addOption(option: Object): void;
+        setData$jsweet_lang_Array(options: Array<Object>): void;
+        setData(options?: any): any;
+        setOptions(options: Array<Object>): void;
+        clearOptions(): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+        /**
+         *
+         * @return {Array}
+         */
+        getExtEditors(): framework.builder.properties.ExtPropertiesEditor[];
+        /**
+         *
+         * @return {Object}
+         */
+        getValue(): Object;
+        getLabelProperty(): string;
+        setValue$jsweet_lang_Object(val: Object): void;
+        /**
+         *
+         * @param {Object} val
+         */
+        setValue(val?: any): any;
+    }
+    namespace ComboBox {
+        class ComboBox$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class ComboBox$1 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class ComboBox$2 extends framework.builder.properties.KeyValueEditor {
+            __parent: any;
+            /**
+             *
+             * @param {*} designable
+             * @param {Object} data
+             */
+            applyDataOnDesignable(designable: framework.design.Designable, data: Object): void;
+            /**
+             *
+             * @param {*} designable
+             * @return {Object}
+             */
+            getDataFromDesignable(designable: framework.design.Designable): Object;
+            constructor(__parent: any, __arg0: any);
+        }
+        class ComboBox$3 extends framework.builder.properties.KeyValueEditor {
+            __parent: any;
+            /**
+             *
+             * @param {*} designable
+             * @param {Object} data
+             */
+            applyDataOnDesignable(designable: framework.design.Designable, data: Object): void;
+            /**
+             *
+             * @param {*} designable
+             * @return {Object}
+             */
+            getDataFromDesignable(designable: framework.design.Designable): Object;
+            constructor(__parent: any, __arg0: any);
+        }
+    }
+}
 declare namespace framework.lightning.designables {
     class JSDesignableTable extends framework.lightning.table.Table implements framework.design.ExtDesignable, framework.lightning.table.TableColumnModel, framework.lightning.table.TableModel, framework.lightning.table.TableCellRenderer {
         delegate: framework.designables.DesignableDelegate;
         fields: Array<framework.lightning.table.TableColumn>;
         tableData: Array<Object>;
+        selected: Array<Object>;
+        selectable: boolean;
         constructor(name: string);
-        /**
-         *
-         */
-        refreshData(): void;
+        setIdField(field: string): void;
+        getIdField(): string;
+        setSelectable(b: boolean): void;
+        getSelectedItems(): Array<Object>;
+        setSelectedItems(items: Array<Object>): void;
+        isSelected(item: Object, items: Array<Object>): boolean;
         getComponent$framework_lightning_table_Table$java_lang_Object$int$int(table: framework.lightning.table.Table, value: any, row: number, column: number): framework.Renderable;
         /**
          *
@@ -6002,6 +6691,7 @@ declare namespace framework.lightning.designables {
          * @param {string} value
          */
         applyParam(key: string, value: string): void;
+        clearColumns(): void;
         /**
          *
          * @return {*[]}
@@ -6071,11 +6761,11 @@ declare namespace framework.lightning.designables {
         isCellEditable(rowIndex: number, columnIndex: number): boolean;
         /**
          *
-         * @param {number} rowIndex
-         * @param {number} columnIndex
+         * @param {number} rowIndex_
+         * @param {number} columnIndex_
          * @return {*}
          */
-        getValueAt(rowIndex: number, columnIndex: number): any;
+        getValueAt(rowIndex_: number, columnIndex_: number): any;
         /**
          *
          * @param {*} aValue
@@ -6085,7 +6775,30 @@ declare namespace framework.lightning.designables {
         setValueAt(aValue: any, rowIndex: number, columnIndex: number): void;
     }
     namespace JSDesignableTable {
-        class JSDesignableTable$0 extends framework.builder.properties.KeyValueEditor {
+        class JSDesignableTable$0 implements framework.EventListener {
+            private row;
+            private ch;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, row: any, ch: any);
+        }
+        class JSDesignableTable$1 implements framework.EventListener {
+            private row;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, row: any);
+        }
+        class JSDesignableTable$2 extends framework.builder.properties.KeyValueEditor {
             __parent: any;
             /**
              *
@@ -6105,7 +6818,9 @@ declare namespace framework.lightning.designables {
 }
 declare namespace framework.lightning {
     class FormLayout extends framework.lightning.designables.JSDesignableLightningGrid {
-        labels: string[];
+        SPACINGS: string[];
+        static SPACING_NONE: string;
+        static SPACING_NONE_$LI$(): string;
         static SPACING_XXX_SMALL: string;
         static SPACING_XXX_SMALL_$LI$(): string;
         static SPACING_XX_SMALL: string;
@@ -6122,6 +6837,7 @@ declare namespace framework.lightning {
         static SPACING_X_LARGE_$LI$(): string;
         static SPACING_XX_LARGE: string;
         static SPACING_XX_LARGE_$LI$(): string;
+        currentSpacing: string;
         constructor(name: string);
         setSpacing(spacing: string): FormLayout;
         setStacked(b: boolean): FormLayout;
@@ -6130,7 +6846,9 @@ declare namespace framework.lightning {
         setHorizontal(b: boolean): FormLayout;
         addFormElement(element: framework.lightning.FormElement): FormLayout;
         clear(): FormLayout;
+        clearFields(): FormLayout;
         getElements(): Array<framework.lightning.FormElement>;
+        getElement(name: string): framework.lightning.FormElement;
     }
 }
 declare namespace framework.builder.editors {
@@ -6295,9 +7013,69 @@ declare namespace framework.builder.data {
         }
     }
 }
+declare namespace framework.builder.properties {
+    abstract class ExtendedPropertyEditorPrompt extends framework.lightning.Prompt implements framework.builder.properties.PropertyEditor {
+        constructor(name: string, title: string);
+        abstract setProperty(designable?: any, parameter?: any): any;
+    }
+}
+declare namespace framework.lightning {
+    class WizardPrompt extends framework.lightning.Prompt {
+        wizardBody: framework.designables.JSDesignableCardLayout;
+        constructor(name: string, title: string);
+        getWizardBody(): framework.designables.JSDesignableCardLayout;
+        addStep(ctn: framework.lightning.WizardStep): WizardPrompt;
+    }
+}
 declare namespace framework.lightning {
     class PopOverFooterItem extends framework.designables.JSDesignableButton {
         constructor(name?: any);
+    }
+}
+declare namespace framework.salesforce {
+    class SalesforceLookup extends framework.lightning.ComboBox {
+        soql: framework.lightning.designables.JSDesignableSOQL;
+        searching: boolean;
+        constructor(name: string);
+        getLabelProperty(): string;
+        setObjectType(type: string): void;
+        setIconType(type: string): void;
+        setIconName(name: string): void;
+        setMetadataProperty(property: string): void;
+        setLabelProperty(property: string): void;
+        setIdProperty(property: string): void;
+        createItem(option: Object): framework.lightning.ListBoxItem;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        includeField(uni: Object, query: string, fieldName: string): string;
+        search(term: string): void;
+        setValue$java_lang_String(value: string): void;
+        setValue(value?: any): any;
+    }
+    namespace SalesforceLookup {
+        class SalesforceLookup$0 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
+        class SalesforceLookup$1 implements framework.EventListener {
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any);
+        }
     }
 }
 declare namespace framework.builder.data {
@@ -6336,6 +7114,8 @@ declare namespace framework.lightning.designables {
          * @param {string} value
          */
         applyParam(key: string, value: string): void;
+        setData(options?: any): any;
+        setData$jsweet_lang_Object(data: Object): void;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -6359,6 +7139,62 @@ declare namespace framework.lightning.designables {
         moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
+declare namespace framework.salesforce {
+    class SalesforceTable extends framework.lightning.designables.JSDesignableTable {
+        columns: Array<Object>;
+        constructor(name: string);
+        setObjectType(type: string): void;
+        setColumns(fields: Array<Object>): void;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        getColumns(): Array<Object>;
+    }
+    namespace SalesforceTable {
+        class SalesforceTable$0 extends framework.design.ExtAttributeParameter {
+            __parent: any;
+            /**
+             *
+             * @param {*} designable
+             * @return {framework.builder.properties.ExtendedPropertyEditorPrompt}
+             */
+            getPrompt(designable: framework.design.Designable): framework.builder.properties.ExtendedPropertyEditorPrompt;
+            constructor(__parent: any, __arg0: any, __arg1: any, __arg2: any);
+        }
+        namespace SalesforceTable$0 {
+            class SalesforceTable$0$0 extends framework.builder.properties.ExtendedPropertyEditorPrompt {
+                __parent: any;
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                setProperty(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+                constructor(__parent: any, __arg0: any, __arg1: any);
+            }
+            class SalesforceTable$0$1 implements framework.EventListener {
+                private prompt;
+                private designable;
+                __parent: any;
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                performAction(source: framework.JSContainer, evt: Event): void;
+                constructor(__parent: any, prompt: any, designable: any);
+            }
+        }
+    }
+}
 declare namespace framework.builder.properties {
     class AdvancedPropertiesEditor extends framework.builder.properties.BasePropertiesEditor {
         constructor();
@@ -6373,5 +7209,61 @@ declare namespace framework.builder.properties {
          * @param {*} designable
          */
         setComponent(designable: framework.design.Designable): void;
+    }
+}
+declare namespace framework.salesforce {
+    class SalesforceForm extends framework.lightning.designables.JSDesignableFormLayout {
+        constructor();
+        fields: Array<Object>;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        setObjectType(type: string): void;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        setFields(fields: Array<Object>): void;
+        getFields(): Array<Object>;
+    }
+    namespace SalesforceForm {
+        class SalesforceForm$0 extends framework.design.ExtAttributeParameter {
+            __parent: any;
+            /**
+             *
+             * @param {*} designable
+             * @return {framework.builder.properties.ExtendedPropertyEditorPrompt}
+             */
+            getPrompt(designable: framework.design.Designable): framework.builder.properties.ExtendedPropertyEditorPrompt;
+            constructor(__parent: any, __arg0: any, __arg1: any, __arg2: any);
+        }
+        namespace SalesforceForm$0 {
+            class SalesforceForm$0$0 extends framework.builder.properties.ExtendedPropertyEditorPrompt {
+                __parent: any;
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                setProperty(designable: framework.design.Designable, parameter: framework.design.Parameter): void;
+                constructor(__parent: any, __arg0: any, __arg1: any);
+            }
+            class SalesforceForm$0$1 implements framework.EventListener {
+                private prompt;
+                private designable;
+                __parent: any;
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                performAction(source: framework.JSContainer, evt: Event): void;
+                constructor(__parent: any, prompt: any, designable: any);
+            }
+        }
     }
 }

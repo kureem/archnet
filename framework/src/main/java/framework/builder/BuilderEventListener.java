@@ -1,11 +1,12 @@
 package framework.builder;
 
+import static jsweet.dom.Globals.alert;
+import static jsweet.dom.Globals.console;
 import static jsweet.dom.Globals.window;
 import static jsweet.lang.Globals.eval;
 
 import framework.EventListener;
 import framework.JSContainer;
-import framework.designables.DesignableDelegate;
 import jsweet.dom.Event;
 import jsweet.lang.Object;
 
@@ -35,6 +36,7 @@ public class BuilderEventListener implements EventListener {
 
 	@Override
 	public void performAction(JSContainer source, Event evt) {
+		try{
 		if (jsSource != null) {
 			Object $scope = source.getScope();
 			$scope.$set("xx", "");
@@ -46,6 +48,10 @@ public class BuilderEventListener implements EventListener {
 			}else{
 				eval(jsSource);
 			}
+		}
+		}catch(Exception e){
+			alert(e.getMessage());
+			console.error(e);
 		}
 	}
 

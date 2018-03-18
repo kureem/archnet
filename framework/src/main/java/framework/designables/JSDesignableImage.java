@@ -1,8 +1,5 @@
 package framework.designables;
 
-import static def.dom.Globals.window;
-import static jsweet.lang.Globals.encodeURI;
-
 import framework.JSContainer;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;

@@ -28,19 +28,26 @@ var framework;
              * @param {Event} evt
              */
             BuilderEventListener.prototype.performAction = function (source, evt) {
-                if (this.jsSource != null) {
-                    var $scope = source.getScope();
-                    $scope["xx"] = "";
-                    if (window["lightning"]) {
-                        var fn = this.name + "_" + this.type;
-                        var myapp = source.getRoot();
-                        myapp.constructor;
-                        eval("myapp.helper." + fn + "(source,evt);");
-                    }
-                    else {
-                        eval(this.jsSource);
+                try {
+                    if (this.jsSource != null) {
+                        var $scope = source.getScope();
+                        $scope["xx"] = "";
+                        if (window["lightning"]) {
+                            var fn = this.name + "_" + this.type;
+                            var myapp = source.getRoot();
+                            myapp.constructor;
+                            eval("myapp.helper." + fn + "(source,evt);");
+                        }
+                        else {
+                            eval(this.jsSource);
+                        }
                     }
                 }
+                catch (e) {
+                    alert(e.message);
+                    console.error(e);
+                }
+                ;
             };
             return BuilderEventListener;
         }());
@@ -85,8 +92,8 @@ var framework;
                  */
                 BasicDataEnvironment.prototype.deleteStructure = function (name) {
                     var tmp = (new Array());
-                    for (var index6440 = 0; index6440 < BasicDataEnvironment.structures_$LI$().length; index6440++) {
-                        var structure = BasicDataEnvironment.structures_$LI$()[index6440];
+                    for (var index20651 = 0; index20651 < BasicDataEnvironment.structures_$LI$().length; index20651++) {
+                        var structure = BasicDataEnvironment.structures_$LI$()[index20651];
                         {
                             if (!(function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -118,8 +125,8 @@ var framework;
                     BasicDataEnvironment$0.prototype.dataLoaded = function (data) {
                         var obj = data;
                         var sobjects = obj["sobjects"];
-                        for (var index6441 = 0; index6441 < sobjects.length; index6441++) {
-                            var o = sobjects[index6441];
+                        for (var index20652 = 0; index20652 < sobjects.length; index20652++) {
+                            var o = sobjects[index20652];
                             {
                                 var structure = new framework.builder.data.DataStructure(o);
                                 framework.builder.data.BasicDataEnvironment.structures_$LI$().push(structure);
@@ -286,9 +293,9 @@ var framework;
                 DataService.prototype.create = function (type, fields, listener) {
                     var data = new Object();
                     {
-                        var array6443 = fields.keySet();
-                        for (var index6442 = 0; index6442 < array6443.length; index6442++) {
-                            var key = array6443[index6442];
+                        var array20654 = fields.keySet();
+                        for (var index20653 = 0; index20653 < array20654.length; index20653++) {
+                            var key = array20654[index20653];
                             {
                                 data[key] = fields.get(key);
                             }
@@ -302,9 +309,9 @@ var framework;
                 DataService.prototype.update = function (type, objectId, fields, listener) {
                     var data = new Object();
                     {
-                        var array6445 = fields.keySet();
-                        for (var index6444 = 0; index6444 < array6445.length; index6444++) {
-                            var key = array6445[index6444];
+                        var array20656 = fields.keySet();
+                        for (var index20655 = 0; index20655 < array20656.length; index20655++) {
+                            var key = array20656[index20655];
                             {
                                 data[key] = fields.get(key);
                             }
@@ -395,9 +402,9 @@ var framework;
                 };
                 File.prototype.getChild = function (name) {
                     {
-                        var array6447 = this.getChildren();
-                        for (var index6446 = 0; index6446 < array6447.length; index6446++) {
-                            var f = array6447[index6446];
+                        var array20658 = this.getChildren();
+                        for (var index20657 = 0; index20657 < array20658.length; index20657++) {
+                            var f = array20658[index20657];
                             {
                                 if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(f.getName(), name)) {
                                     return f;
@@ -466,9 +473,9 @@ var framework;
                 File.prototype.removeFile = function (f) {
                     var children = (new Array());
                     {
-                        var array6449 = this.file["children"];
-                        for (var index6448 = 0; index6448 < array6449.length; index6448++) {
-                            var o = array6449[index6448];
+                        var array20660 = this.file["children"];
+                        for (var index20659 = 0; index20659 < array20660.length; index20659++) {
+                            var o = array20660[index20659];
                             {
                                 if (!(function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -486,9 +493,9 @@ var framework;
                 File.prototype.getChildren = function () {
                     var result = (new Array());
                     {
-                        var array6451 = this.file["children"];
-                        for (var index6450 = 0; index6450 < array6451.length; index6450++) {
-                            var o = array6451[index6450];
+                        var array20662 = this.file["children"];
+                        for (var index20661 = 0; index20661 < array20662.length; index20661++) {
+                            var o = array20662[index20661];
                             {
                                 result.push(new File(o));
                             }
@@ -742,6 +749,98 @@ var framework;
     (function (builder) {
         var data;
         (function (data) {
+            var SalesforceObjectServiceImpl = (function () {
+                function SalesforceObjectServiceImpl() {
+                    /*private*/ this.adaptor = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor"));
+                }
+                /**
+                 *
+                 * @param {*} component
+                 * @param {*} callback
+                 */
+                SalesforceObjectServiceImpl.prototype.types = function (component, callback) {
+                    this.adaptor.Execute(component, "types", new Object(), callback);
+                };
+                /**
+                 *
+                 * @param {*} component
+                 * @param {string} type
+                 * @param {*} callback
+                 */
+                SalesforceObjectServiceImpl.prototype.describe = function (component, type, callback) {
+                    var req = new Object();
+                    req["type"] = type;
+                    this.adaptor.Execute(component, "describe", req, callback);
+                };
+                /**
+                 *
+                 * @param {*} component
+                 * @param {string} query
+                 * @param {number} offset
+                 * @param {number} max
+                 * @param {*} callback
+                 */
+                SalesforceObjectServiceImpl.prototype.query = function (component, query, offset, max, callback) {
+                    var req = new Object();
+                    req["query"] = query;
+                    req["offset"] = offset;
+                    req["max"] = max;
+                    this.adaptor.Execute(component, "query", req, callback);
+                };
+                /**
+                 *
+                 * @param {*} component
+                 * @param {string} name
+                 * @param {*} fields
+                 * @param {*} callback
+                 */
+                SalesforceObjectServiceImpl.prototype.create = function (component, name, fields, callback) {
+                    var req = new Object();
+                    req["name"] = name;
+                    req["fields"] = fields;
+                    this.adaptor.Execute(component, "create", req, callback);
+                };
+                /**
+                 *
+                 * @param {*} component
+                 * @param {string} name
+                 * @param {string} objectId
+                 * @param {*} fields
+                 * @param {*} callback
+                 */
+                SalesforceObjectServiceImpl.prototype.update = function (component, name, objectId, fields, callback) {
+                    var req = new Object();
+                    req["name"] = name;
+                    req["fields"] = fields;
+                    req["objectId"] = objectId;
+                    this.adaptor.Execute(component, "update", req, callback);
+                };
+                /**
+                 *
+                 * @param {*} component
+                 * @param {string} name
+                 * @param {string} objectId
+                 * @param {*} callback
+                 */
+                SalesforceObjectServiceImpl.prototype.delete = function (component, name, objectId, callback) {
+                    var req = new Object();
+                    req["name"] = name;
+                    req["objectId"] = objectId;
+                    this.adaptor.Execute(component, "delete", req, callback);
+                };
+                return SalesforceObjectServiceImpl;
+            }());
+            data.SalesforceObjectServiceImpl = SalesforceObjectServiceImpl;
+            SalesforceObjectServiceImpl["__class"] = "framework.builder.data.SalesforceObjectServiceImpl";
+            SalesforceObjectServiceImpl["__interfaces"] = ["framework.builder.data.SalesforceObjectService"];
+        })(data = builder.data || (builder.data = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var data;
+        (function (data) {
             var SalesforceProjectService = (function () {
                 function SalesforceProjectService() {
                 }
@@ -757,10 +856,10 @@ var framework;
                     request["name"] = name;
                     request["title"] = title;
                     request["method"] = "createProject";
-                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, function (a, b) {
-                        listener.dataLoaded(a);
-                        return true;
-                    });
+                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, { consume: function (a, b) {
+                            listener.dataLoaded(a);
+                            return true;
+                        } });
                 };
                 /**
                  *
@@ -770,10 +869,10 @@ var framework;
                 SalesforceProjectService.prototype.getProjects = function (source, listener) {
                     var request = new Object();
                     request["method"] = "getProjects";
-                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, function (a, b) {
-                        listener.dataLoaded(a);
-                        return true;
-                    });
+                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, { consume: function (a, b) {
+                            listener.dataLoaded(a);
+                            return true;
+                        } });
                 };
                 /**
                  *
@@ -785,10 +884,10 @@ var framework;
                     var request = new Object();
                     request["file"] = file;
                     request["method"] = "saveFile";
-                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, function (a, b) {
-                        listener.dataLoaded(a);
-                        return true;
-                    });
+                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, { consume: function (a, b) {
+                            listener.dataLoaded(a);
+                            return true;
+                        } });
                 };
                 /**
                  *
@@ -804,10 +903,10 @@ var framework;
                     request["title"] = title;
                     request["dir"] = dir;
                     request["method"] = "createFile";
-                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, function (a, b) {
-                        listener.dataLoaded(a);
-                        return true;
-                    });
+                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, { consume: function (a, b) {
+                            listener.dataLoaded(a);
+                            return true;
+                        } });
                 };
                 /**
                  *
@@ -819,10 +918,10 @@ var framework;
                     var request = new Object();
                     request["path"] = path;
                     request["method"] = "deleteFile";
-                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, function (a, b) {
-                        listener.dataLoaded(a);
-                        return true;
-                    });
+                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(source, "ProjectService", request, { consume: function (a, b) {
+                            listener.dataLoaded(a);
+                            return true;
+                        } });
                 };
                 /**
                  *
@@ -872,6 +971,7 @@ var framework;
         (function (editors) {
             var NewFileStructureEventListener = (function () {
                 function NewFileStructureEventListener(type, file, structure) {
+                    /*private*/ this.__importTypes = null;
                     this.type = null;
                     this.file = null;
                     this.structure = null;
@@ -885,43 +985,58 @@ var framework;
                  * @param {Event} evt
                  */
                 NewFileStructureEventListener.prototype.performAction = function (source, evt) {
+                    if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "types")) {
+                        this.importTypes();
+                        return;
+                    }
                     var name = prompt("Enter the name");
-                    if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "stylesheets")) {
-                        if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".css")) {
-                            name = name + ".css";
+                    if (name != null && name.trim().length > 0) {
+                        if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "stylesheets")) {
+                            if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".css")) {
+                                name = name + ".css";
+                            }
                         }
-                    }
-                    else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "scripts")) {
-                        if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".js")) {
-                            name = name + ".js";
+                        else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "scripts")) {
+                            if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".js")) {
+                                name = name + ".js";
+                            }
                         }
-                    }
-                    else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "templates")) {
-                        if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".html")) {
-                            name = name + ".html";
+                        else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "templates")) {
+                            if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".html")) {
+                                name = name + ".html";
+                            }
                         }
-                    }
-                    else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "data")) {
-                        if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".dat")) {
-                            name = name + ".dat";
+                        else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "data")) {
+                            if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".dat")) {
+                                name = name + ".dat";
+                            }
                         }
-                    }
-                    else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "components")) {
-                        if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".cmp")) {
-                            name = name + ".cmp";
+                        else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "components")) {
+                            if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".cmp")) {
+                                name = name + ".cmp";
+                            }
                         }
-                    }
-                    else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "datasources")) {
-                        if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".ds")) {
-                            name = name + ".ds";
+                        else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "datasources")) {
+                            if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".ds")) {
+                                name = name + ".ds";
+                            }
                         }
-                    }
-                    else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "variables")) {
-                        if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".var")) {
-                            name = name + ".var";
+                        else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(this.type, "variables")) {
+                            if (!(function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(name, ".var")) {
+                                name = name + ".var";
+                            }
                         }
+                        this.file.createFile$framework_JSContainer$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(source, name, this.type, new NewFileStructureEventListener.NewFileStructureEventListener$0(this));
                     }
-                    this.file.createFile$framework_JSContainer$java_lang_String$java_lang_String$framework_builder_data_RemoteDataListener(source, name, this.type, new NewFileStructureEventListener.NewFileStructureEventListener$0(this));
+                };
+                /*private*/ NewFileStructureEventListener.prototype.importTypes = function () {
+                    var editor = (this.structure.getAncestorWithClass("visual-editor"));
+                    if (editor.getChild("importTypes") == null) {
+                        this.__importTypes = new framework.salesforce.ObjectListSelectModal("importTypes", "Select Object Types to work with");
+                        this.__importTypes.addEventListener(new NewFileStructureEventListener.NewFileStructureEventListener$1(this), "selectItems");
+                        editor.addChild$framework_JSContainer(this.__importTypes);
+                    }
+                    this.__importTypes.open();
                 };
                 return NewFileStructureEventListener;
             }());
@@ -945,6 +1060,43 @@ var framework;
                 }());
                 NewFileStructureEventListener.NewFileStructureEventListener$0 = NewFileStructureEventListener$0;
                 NewFileStructureEventListener$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+                var NewFileStructureEventListener$1 = (function () {
+                    function NewFileStructureEventListener$1(__parent) {
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    NewFileStructureEventListener$1.prototype.performAction = function (source, evt) {
+                        var types = this.__parent.file.getChild("types");
+                        types.setData(JSON.stringify(evt["data"]));
+                        framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.ProjectService").saveFile(source, types, new NewFileStructureEventListener$1.NewFileStructureEventListener$1$0(this));
+                        alert(JSON.stringify(evt["data"]));
+                    };
+                    return NewFileStructureEventListener$1;
+                }());
+                NewFileStructureEventListener.NewFileStructureEventListener$1 = NewFileStructureEventListener$1;
+                NewFileStructureEventListener$1["__interfaces"] = ["framework.EventListener"];
+                (function (NewFileStructureEventListener$1) {
+                    var NewFileStructureEventListener$1$0 = (function () {
+                        function NewFileStructureEventListener$1$0(__parent) {
+                            this.__parent = __parent;
+                        }
+                        /**
+                         *
+                         * @param {*} data
+                         */
+                        NewFileStructureEventListener$1$0.prototype.dataLoaded = function (data) {
+                            this.__parent.__parent.structure.reload$java_lang_String(this.__parent.__parent.type);
+                            this.__parent.__parent.structure.render();
+                        };
+                        return NewFileStructureEventListener$1$0;
+                    }());
+                    NewFileStructureEventListener$1.NewFileStructureEventListener$1$0 = NewFileStructureEventListener$1$0;
+                    NewFileStructureEventListener$1$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+                })(NewFileStructureEventListener$1 = NewFileStructureEventListener.NewFileStructureEventListener$1 || (NewFileStructureEventListener.NewFileStructureEventListener$1 = {}));
             })(NewFileStructureEventListener = editors.NewFileStructureEventListener || (editors.NewFileStructureEventListener = {}));
         })(editors = builder.editors || (builder.editors = {}));
     })(builder = framework.builder || (framework.builder = {}));
@@ -974,8 +1126,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index6452 = 0; index6452 < keys.length; index6452++) {
-                        var key = keys[index6452];
+                    for (var index20663 = 0; index20663 < keys.length; index20663++) {
+                        var key = keys[index20663];
                         {
                             var value = component.styles[key].toString();
                             instance.setStyle(key, value);
@@ -984,8 +1136,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index6453 = 0; index6453 < keys.length; index6453++) {
-                        var key = keys[index6453];
+                    for (var index20664 = 0; index20664 < keys.length; index20664++) {
+                        var key = keys[index20664];
                         {
                             if (component.parameters[key] != null) {
                                 var value = component.parameters[key].toString();
@@ -995,8 +1147,8 @@ var framework;
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index6454 = 0; index6454 < component.events.length; index6454++) {
-                        var event_1 = component.events[index6454];
+                    for (var index20665 = 0; index20665 < component.events.length; index20665++) {
+                        var event_1 = component.events[index20665];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source, event_1.name, event_1.type);
                             instance.addEventListener(listener, event_1.type);
@@ -1130,29 +1282,29 @@ var framework;
                     c.impl = designable.getAttribute("identifier");
                     var parameters = designable.getParameters();
                     {
-                        var array6456 = designable.getStyleNames();
-                        for (var index6455 = 0; index6455 < array6456.length; index6455++) {
-                            var s = array6456[index6455];
+                        var array20667 = designable.getStyleNames();
+                        for (var index20666 = 0; index20666 < array20667.length; index20666++) {
+                            var s = array20667[index20666];
                             {
                                 c.styles[s] = designable.getStyle(s);
                             }
                         }
                     }
-                    for (var index6457 = 0; index6457 < parameters.length; index6457++) {
-                        var p = parameters[index6457];
+                    for (var index20668 = 0; index20668 < parameters.length; index20668++) {
+                        var p = parameters[index20668];
                         {
                             c.parameters[p.name] = p.extractValue(designable);
                         }
                     }
                     {
-                        var array6459 = Object.keys(designable.getListeners());
-                        for (var index6458 = 0; index6458 < array6459.length; index6458++) {
-                            var key = array6459[index6458];
+                        var array20670 = Object.keys(designable.getListeners());
+                        for (var index20669 = 0; index20669 < array20670.length; index20669++) {
+                            var key = array20670[index20669];
                             {
                                 {
-                                    var array6461 = designable.getListeners()[key];
-                                    for (var index6460 = 0; index6460 < array6461.length; index6460++) {
-                                        var l = array6461[index6460];
+                                    var array20672 = designable.getListeners()[key];
+                                    for (var index20671 = 0; index20671 < array20672.length; index20671++) {
+                                        var l = array20672[index20671];
                                         {
                                             if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                                 var bel = l;
@@ -1169,9 +1321,9 @@ var framework;
                         }
                     }
                     {
-                        var array6463 = designable.getDesignables();
-                        for (var index6462 = 0; index6462 < array6463.length; index6462++) {
-                            var child = array6463[index6462];
+                        var array20674 = designable.getDesignables();
+                        for (var index20673 = 0; index20673 < array20674.length; index20673++) {
+                            var child = array20674[index20673];
                             {
                                 var childC = MarshallUtil.extract(child);
                                 c.children.push(childC);
@@ -1187,19 +1339,19 @@ var framework;
                     var des = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, false);
                     des['setData$java_lang_Object'](component.data);
                     des.getComponent().custom = component.custom;
-                    var exp = des.getAttribute("exposeAs");
-                    if (exp != null && exp.length > 0) {
-                        new framework.designables.DesignableDelegate(des).exposeVariable(exp);
-                    }
                     if (design) {
                         des.addEventListener(new framework.builder.SelectComponentEvent(selector), "click");
                     }
                     if (component.children != null) {
-                        for (var index6464 = 0; index6464 < component.children.length; index6464++) {
-                            var c = component.children[index6464];
+                        for (var index20675 = 0; index20675 < component.children.length; index20675++) {
+                            var c = component.children[index20675];
                             {
                                 var child = MarshallUtil.toDesignable(c, design, selector);
                                 des.addDesignable(child);
+                                var exp = child.getAttribute("exposeAs");
+                                if (exp != null && exp.length > 0) {
+                                    new framework.designables.DesignableDelegate(child).exposeVariable(exp);
+                                }
                             }
                         }
                     }
@@ -1213,15 +1365,15 @@ var framework;
                 MarshallUtil.controller = function (component, start) {
                     var des = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, false);
                     des['setData$java_lang_Object'](component.data);
-                    for (var index6465 = 0; index6465 < component.events.length; index6465++) {
-                        var event_2 = component.events[index6465];
+                    for (var index20676 = 0; index20676 < component.events.length; index20676++) {
+                        var event_2 = component.events[index20676];
                         {
                             start = start + "\n" + des.getName() + ":function(source,event){\n" + event_2.source + "\n}";
                         }
                     }
                     if (component.children != null) {
-                        for (var index6466 = 0; index6466 < component.children.length; index6466++) {
-                            var c = component.children[index6466];
+                        for (var index20677 = 0; index20677 < component.children.length; index20677++) {
+                            var c = component.children[index20677];
                             {
                                 MarshallUtil.controller(c, start);
                             }
@@ -1257,8 +1409,8 @@ var framework;
                     var events = o["events"];
                     if (events != null && events.length > 0) {
                         var bevents = (new Array());
-                        for (var index6467 = 0; index6467 < events.length; index6467++) {
-                            var e = events[index6467];
+                        for (var index20678 = 0; index20678 < events.length; index20678++) {
+                            var e = events[index20678];
                             {
                                 var event_3 = new framework.builder.marshalling.BuilderEvent();
                                 event_3.source = e["source"].toString();
@@ -1272,8 +1424,8 @@ var framework;
                     var bchildren = (new Array());
                     var children = o["children"];
                     if (children != null && children.length > 0) {
-                        for (var index6468 = 0; index6468 < children.length; index6468++) {
-                            var c = children[index6468];
+                        for (var index20679 = 0; index20679 < children.length; index20679++) {
+                            var c = children[index20679];
                             {
                                 bchildren.push(MarshallUtil.toComponent$jsweet_lang_Object(c));
                             }
@@ -1396,9 +1548,9 @@ var framework;
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
                 {
-                    var array6470 = Object.keys(this.beans);
-                    for (var index6469 = 0; index6469 < array6470.length; index6469++) {
-                        var key = array6470[index6469];
+                    var array20681 = Object.keys(this.beans);
+                    for (var index20680 = 0; index20680 < array20681.length; index20680++) {
+                        var key = array20681[index20680];
                         {
                             var bean = this.beans[key];
                             try {
@@ -1584,16 +1736,14 @@ var framework;
                     }
                 }
                 else {
-                    if (value.length < 200) {
-                        this.ui.setAttribute(key, value);
-                    }
+                    this.ui.setAttribute(key, value);
                 }
             };
             DesignableDelegate.containsName$java_lang_String$framework_design_Designable = function (name, ui) {
                 {
-                    var array6472 = ui.getChildren();
-                    for (var index6471 = 0; index6471 < array6472.length; index6471++) {
-                        var c = array6472[index6471];
+                    var array20683 = ui.getChildren();
+                    for (var index20682 = 0; index20682 < array20683.length; index20682++) {
+                        var c = array20683[index20682];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -1619,8 +1769,8 @@ var framework;
                     throw new Error('invalid overload');
             };
             /*private*/ DesignableDelegate.containsName$java_lang_String$jsweet_lang_Array = function (name, children) {
-                for (var index6473 = 0; index6473 < children.length; index6473++) {
-                    var c = children[index6473];
+                for (var index20684 = 0; index20684 < children.length; index20684++) {
+                    var c = children[index20684];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -1751,8 +1901,8 @@ var framework;
         function HerokuAdaptor() {
         }
         HerokuAdaptor.prototype.Execute = function (component, serviceName, request, callback) {
-            $.get("/service/dispatch/" + serviceName, request, function (t, u, v) {
-                callback(t, v.status);
+            $.get("/service/" + serviceName, request, function (t, u, v) {
+                callback.consume(t, v.status);
                 return true;
             }, "json");
         };
@@ -2027,9 +2177,9 @@ var framework;
         };
         ObjectBuilder.prototype.clear = function () {
             {
-                var array6475 = Object.keys(this.obj);
-                for (var index6474 = 0; index6474 < array6475.length; index6474++) {
-                    var s = array6475[index6474];
+                var array20686 = Object.keys(this.obj);
+                for (var index20685 = 0; index20685 < array20686.length; index20685++) {
+                    var s = array20686[index20685];
                     {
                         delete this.obj[s];
                     }
@@ -2130,14 +2280,14 @@ var framework;
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var keys = Object.keys(c.getListeners());
-                for (var index6476 = 0; index6476 < keys.length; index6476++) {
-                    var key = keys[index6476];
+                for (var index20687 = 0; index20687 < keys.length; index20687++) {
+                    var key = keys[index20687];
                     {
                         var listeners = c.getListeners()[key];
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
-                                for (var index6477 = 0; index6477 < listeners.length; index6477++) {
-                                    var l = listeners[index6477];
+                                for (var index20688 = 0; index20688 < listeners.length; index20688++) {
+                                    var l = listeners[index20688];
                                     {
                                         l.performAction(c, evt);
                                     }
@@ -2151,9 +2301,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array6479 = c.getChangedAttributes();
-                        for (var index6478 = 0; index6478 < array6479.length; index6478++) {
-                            var key = array6479[index6478];
+                        var array20690 = c.getChangedAttributes();
+                        for (var index20689 = 0; index20689 < array20690.length; index20689++) {
+                            var key = array20690[index20689];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -2167,9 +2317,9 @@ var framework;
                 }
                 else {
                     {
-                        var array6481 = c.getAttributeNames();
-                        for (var index6480 = 0; index6480 < array6481.length; index6480++) {
-                            var key = array6481[index6480];
+                        var array20692 = c.getAttributeNames();
+                        for (var index20691 = 0; index20691 < array20692.length; index20691++) {
+                            var key = array20692[index20691];
                             {
                                 if (c.getAttribute(key) != null)
                                     njq.setAttribute(key, c.getAttribute(key));
@@ -2197,9 +2347,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array6483 = c.getChangedStyles();
-                        for (var index6482 = 0; index6482 < array6483.length; index6482++) {
-                            var key = array6483[index6482];
+                        var array20694 = c.getChangedStyles();
+                        for (var index20693 = 0; index20693 < array20694.length; index20693++) {
+                            var key = array20694[index20693];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -2208,9 +2358,9 @@ var framework;
                 }
                 else {
                     {
-                        var array6485 = c.getStyleNames();
-                        for (var index6484 = 0; index6484 < array6485.length; index6484++) {
-                            var key = array6485[index6484];
+                        var array20696 = c.getStyleNames();
+                        for (var index20695 = 0; index20695 < array20696.length; index20695++) {
+                            var key = array20696[index20695];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -2272,9 +2422,9 @@ var framework;
             HashMap.prototype.keySet = function () {
                 var result = (new Array());
                 {
-                    var array6487 = Object.keys(this.d);
-                    for (var index6486 = 0; index6486 < array6487.length; index6486++) {
-                        var key = array6487[index6486];
+                    var array20698 = Object.keys(this.d);
+                    for (var index20697 = 0; index20697 < array20698.length; index20697++) {
+                        var key = array20698[index20697];
                         {
                             result.push(key);
                         }
@@ -2366,8 +2516,8 @@ ui["__class"] = "ui";
                     else {
                         var fields = (new Array());
                         this.object["fields"] = cached;
-                        for (var index6488 = 0; index6488 < cached.length; index6488++) {
-                            var oField = cached[index6488];
+                        for (var index20699 = 0; index20699 < cached.length; index20699++) {
+                            var oField = cached[index20699];
                             {
                                 fields.push(new framework.builder.data.DataField(oField));
                             }
@@ -2394,8 +2544,8 @@ ui["__class"] = "ui";
                         var fields = (new Array());
                         var oFields = o["fields"];
                         this.__parent.object["fields"] = oFields;
-                        for (var index6489 = 0; index6489 < oFields.length; index6489++) {
-                            var oField = oFields[index6489];
+                        for (var index20700 = 0; index20700 < oFields.length; index20700++) {
+                            var oField = oFields[index20700];
                             {
                                 fields.push(new framework.builder.data.DataField(oField));
                             }
@@ -2424,8 +2574,8 @@ ui["__class"] = "ui";
             componentFactoryRegistry.registerComponentFactory("html:html", new Boot.Boot$0("html:html"));
             componentFactoryRegistry.registerComponentFactory("html:p", new Boot.Boot$1("html:p"));
             componentFactoryRegistry.registerComponentFactory("html:cmp", new Boot.Boot$2("html:cmp"));
-            for (var index6490 = 0; index6490 < tags.length; index6490++) {
-                var tag = tags[index6490];
+            for (var index20701 = 0; index20701 < tags.length; index20701++) {
+                var tag = tags[index20701];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -2460,19 +2610,27 @@ ui["__class"] = "ui";
             componentFactoryRegistry.registerComponentFactory("lgt:panel", new Boot.Boot$30("lgt:panel"));
             componentFactoryRegistry.registerComponentFactory("lgt:panel-section", new Boot.Boot$31("lgt:panel-section"));
             componentFactoryRegistry.registerComponentFactory("lgt:table", new Boot.Boot$32("lgt:table"));
-            componentFactoryRegistry.registerComponentFactory("lgt:popover", new Boot.Boot$33("lgt:popover"));
-            componentFactoryRegistry.registerComponentFactory("lgt:listbox", new Boot.Boot$34("lgt:listbox"));
-            componentFactoryRegistry.registerComponentFactory("lgt:listbox-item", new Boot.Boot$35("lgt:listbox-item"));
-            componentFactoryRegistry.registerComponentFactory("lgt:popover-footer-item", new Boot.Boot$36("lgt:popover-footer-item"));
-            componentFactoryRegistry.registerComponentFactory("zs:iterator", new Boot.Boot$37("zs:iterator"));
-            componentFactoryRegistry.registerComponentFactory("zs:iterable", new Boot.Boot$38("zs:iterable"));
-            componentFactoryRegistry.registerComponentFactory("zs:http", new Boot.Boot$39("zs:http"));
-            componentFactoryRegistry.registerComponentFactory("zs:service", new Boot.Boot$40("zs:service"));
-            componentFactoryRegistry.registerComponentFactory("lgt:soql", new Boot.Boot$41("lgt:soql"));
+            componentFactoryRegistry.registerComponentFactory("lgt:combobox", new Boot.Boot$33("lgt:combobox"));
+            componentFactoryRegistry.registerComponentFactory("lgt:lookup", new Boot.Boot$34("lgt:lookup"));
+            componentFactoryRegistry.registerComponentFactory("lgt:popover", new Boot.Boot$35("lgt:popover"));
+            componentFactoryRegistry.registerComponentFactory("lgt:listbox", new Boot.Boot$36("lgt:listbox"));
+            componentFactoryRegistry.registerComponentFactory("lgt:listbox-item", new Boot.Boot$37("lgt:listbox-item"));
+            componentFactoryRegistry.registerComponentFactory("lgt:popover-footer-item", new Boot.Boot$38("lgt:popover-footer-item"));
+            componentFactoryRegistry.registerComponentFactory("zs:iterator", new Boot.Boot$39("zs:iterator"));
+            componentFactoryRegistry.registerComponentFactory("zs:iterable", new Boot.Boot$40("zs:iterable"));
+            componentFactoryRegistry.registerComponentFactory("zs:cardlayout", new Boot.Boot$41("zs:cardlayout"));
+            componentFactoryRegistry.registerComponentFactory("zs:cardlayout-item", new Boot.Boot$42("zs:cardlayout-item"));
+            componentFactoryRegistry.registerComponentFactory("zs:http", new Boot.Boot$43("zs:http"));
+            componentFactoryRegistry.registerComponentFactory("zs:service", new Boot.Boot$44("zs:service"));
+            componentFactoryRegistry.registerComponentFactory("lgt:soql", new Boot.Boot$45("lgt:soql"));
+            componentFactoryRegistry.registerComponentFactory("lgt:crud", new Boot.Boot$46("lgt:crud"));
+            componentFactoryRegistry.registerComponentFactory("lgt:crud-table", new Boot.Boot$47("lgt:crud-table"));
+            componentFactoryRegistry.registerComponentFactory("lgt:crud-form", new Boot.Boot$48("lgt:crud-form"));
             factory.addBean("framework.builder.libraries.ComponentFactoryRegistry", componentFactoryRegistry);
             factory.addBean("framework.builder.data.DataEnvironment", new framework.builder.data.BasicDataEnvironment());
             factory.addBean("framework.builder.data.ProjectService", new framework.builder.data.HerokuProjectService());
             factory.addBean("framework.Adaptor", new framework.HerokuAdaptor());
+            factory.addBean("framework.builder.data.SalesforceObjectService", new framework.builder.data.SalesforceObjectServiceImpl());
             var lightning = false;
             window["lightning"] = lightning;
             if (window.location.href.indexOf("preview.html") != -1) {
@@ -3089,7 +3247,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$33.prototype.createInstance = function (designMode) {
-                return new framework.lightning.ListPopOver("Pop Over");
+                return new framework.lightning.ComboBox("Combo Box");
             };
             return Boot$33;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3106,7 +3264,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$34.prototype.createInstance = function (designMode) {
-                return new framework.lightning.ListBox("List");
+                return new framework.salesforce.SalesforceLookup("Lookup");
             };
             return Boot$34;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3123,7 +3281,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$35.prototype.createInstance = function (designMode) {
-                return new framework.lightning.ListBoxItem("List Item");
+                return new framework.lightning.ListPopOver("Pop Over");
             };
             return Boot$35;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3140,7 +3298,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$36.prototype.createInstance = function (designMode) {
-                return new framework.lightning.PopOverFooterItem("Footer Item");
+                return new framework.lightning.ListBox("List");
             };
             return Boot$36;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3157,7 +3315,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$37.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableIterator("Iterator");
+                return new framework.lightning.ListBoxItem("List Item");
             };
             return Boot$37;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3174,7 +3332,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$38.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableIterable("Iterable", "div");
+                return new framework.lightning.PopOverFooterItem("Footer Item");
             };
             return Boot$38;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3191,7 +3349,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$39.prototype.createInstance = function (designMode) {
-                return new framework.designables.JSDesignableHTTP();
+                return new framework.lightning.designables.JSDesignableIterator("Iterator");
             };
             return Boot$39;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3208,7 +3366,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$40.prototype.createInstance = function (designMode) {
-                return new framework.designables.JSDesignableService();
+                return new framework.lightning.designables.JSDesignableIterable("Iterable", "div");
             };
             return Boot$40;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3225,12 +3383,131 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$41.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableSOQL("soql");
+                return new framework.designables.JSDesignableCardLayout("Card Layout", "div");
             };
             return Boot$41;
         }(framework.builder.libraries.AbstractComponentFactory));
         Boot.Boot$41 = Boot$41;
         Boot$41["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$42 = (function (_super) {
+            __extends(Boot$42, _super);
+            function Boot$42(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$42.prototype.createInstance = function (designMode) {
+                return new framework.designables.JSDesignableCardLayoutItem("Item", "div");
+            };
+            return Boot$42;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$42 = Boot$42;
+        Boot$42["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$43 = (function (_super) {
+            __extends(Boot$43, _super);
+            function Boot$43(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$43.prototype.createInstance = function (designMode) {
+                return new framework.designables.JSDesignableHTTP();
+            };
+            return Boot$43;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$43 = Boot$43;
+        Boot$43["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$44 = (function (_super) {
+            __extends(Boot$44, _super);
+            function Boot$44(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$44.prototype.createInstance = function (designMode) {
+                return new framework.designables.JSDesignableService();
+            };
+            return Boot$44;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$44 = Boot$44;
+        Boot$44["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$45 = (function (_super) {
+            __extends(Boot$45, _super);
+            function Boot$45(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$45.prototype.createInstance = function (designMode) {
+                return new framework.lightning.designables.JSDesignableSOQL("soql");
+            };
+            return Boot$45;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$45 = Boot$45;
+        Boot$45["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$46 = (function (_super) {
+            __extends(Boot$46, _super);
+            function Boot$46(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$46.prototype.createInstance = function (designMode) {
+                return new framework.salesforce.SalesforceCrud("Salesforce");
+            };
+            return Boot$46;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$46 = Boot$46;
+        Boot$46["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$47 = (function (_super) {
+            __extends(Boot$47, _super);
+            function Boot$47(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$47.prototype.createInstance = function (designMode) {
+                return new framework.salesforce.SalesforceTable("Salesforce");
+            };
+            return Boot$47;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$47 = Boot$47;
+        Boot$47["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$48 = (function (_super) {
+            __extends(Boot$48, _super);
+            function Boot$48(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$48.prototype.createInstance = function (designMode) {
+                return new framework.salesforce.SalesforceForm();
+            };
+            return Boot$48;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$48 = Boot$48;
+        Boot$48["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
     })(Boot = framework.Boot || (framework.Boot = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -3327,6 +3604,38 @@ ui["__class"] = "ui";
 (function (framework) {
     var design;
     (function (design) {
+        var ExtAttributeParameter = (function (_super) {
+            __extends(ExtAttributeParameter, _super);
+            function ExtAttributeParameter(name, label, category) {
+                return _super.call(this, name, label, "String", category) || this;
+            }
+            /**
+             *
+             * @param {*} designable
+             * @return {string}
+             */
+            ExtAttributeParameter.prototype.extractValue = function (designable) {
+                return designable.getAttribute(this.name);
+            };
+            /**
+             *
+             * @param {*} designable
+             * @return {framework.builder.properties.ExtendedPropertyEditor}
+             */
+            ExtAttributeParameter.prototype.getEditor = function (designable) {
+                var editor = new framework.builder.properties.ExtendedPropertyEditor(this.name, this.getPrompt(designable));
+                editor.setProperty(designable, this);
+                return editor;
+            };
+            return ExtAttributeParameter;
+        }(framework.design.Parameter));
+        design.ExtAttributeParameter = ExtAttributeParameter;
+        ExtAttributeParameter["__class"] = "framework.design.ExtAttributeParameter";
+    })(design = framework.design || (framework.design = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var design;
+    (function (design) {
         var NameParameter = (function (_super) {
             __extends(NameParameter, _super);
             function NameParameter(label, category) {
@@ -3403,8 +3712,8 @@ ui["__class"] = "ui";
              */
             TagParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.TagEditor("tagEditor");
-                for (var index6491 = 0; index6491 < this.options.length; index6491++) {
-                    var opt = this.options[index6491];
+                for (var index20702 = 0; index20702 < this.options.length; index20702++) {
+                    var opt = this.options[index20702];
                     {
                         editor.addOption(new framework.JSOption(opt.text, opt.value));
                     }
@@ -3576,8 +3885,8 @@ ui["__class"] = "ui";
         JSContainer.prototype.fireListener = function (key, evt) {
             var listeners = this.getListeners()[key];
             if (listeners != null && listeners.length > 0) {
-                for (var index6492 = 0; index6492 < listeners.length; index6492++) {
-                    var l = listeners[index6492];
+                for (var index20703 = 0; index20703 < listeners.length; index20703++) {
+                    var l = listeners[index20703];
                     {
                         l.performAction(this, evt);
                     }
@@ -3596,8 +3905,8 @@ ui["__class"] = "ui";
             })(path, "/")) {
                 current = (this.getAncestorWithClass("visual-editor")).getRootItem();
             }
-            for (var index6493 = 0; index6493 < sectins.length; index6493++) {
-                var s = sectins[index6493];
+            for (var index20704 = 0; index20704 < sectins.length; index20704++) {
+                var s = sectins[index20704];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -3671,9 +3980,9 @@ ui["__class"] = "ui";
         /*private*/ JSContainer.prototype.findDesignable = function (des, name, index) {
             var candidates = (new Array());
             {
-                var array6495 = des.getDesignables();
-                for (var index6494 = 0; index6494 < array6495.length; index6494++) {
-                    var d = array6495[index6494];
+                var array20706 = des.getDesignables();
+                for (var index20705 = 0; index20705 < array20706.length; index20705++) {
+                    var d = array20706[index20705];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -3696,9 +4005,9 @@ ui["__class"] = "ui";
         };
         JSContainer.prototype.getChild = function (name) {
             {
-                var array6497 = this.getChildren();
-                for (var index6496 = 0; index6496 < array6497.length; index6496++) {
-                    var child = array6497[index6496];
+                var array20708 = this.getChildren();
+                for (var index20707 = 0; index20707 < array20708.length; index20707++) {
+                    var child = array20708[index20707];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -3838,8 +4147,8 @@ ui["__class"] = "ui";
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index6498 = 0; index6498 < aStyles.length; index6498++) {
-                var style = aStyles[index6498];
+            for (var index20709 = 0; index20709 < aStyles.length; index20709++) {
+                var style = aStyles[index20709];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -3891,9 +4200,9 @@ ui["__class"] = "ui";
             var children = (new Array());
             var i = 0;
             {
-                var array6500 = this.getChildren();
-                for (var index6499 = 0; index6499 < array6500.length; index6499++) {
-                    var c = array6500[index6499];
+                var array20711 = this.getChildren();
+                for (var index20710 = 0; index20710 < array20711.length; index20710++) {
+                    var c = array20711[index20710];
                     {
                         if (i === index) {
                             children.push(c);
@@ -4122,9 +4431,9 @@ ui["__class"] = "ui";
             this.d["rendered"] = b;
             if (!b) {
                 {
-                    var array6502 = this.getChildren();
-                    for (var index6501 = 0; index6501 < array6502.length; index6501++) {
-                        var child = array6502[index6501];
+                    var array20713 = this.getChildren();
+                    for (var index20712 = 0; index20712 < array20713.length; index20712++) {
+                        var child = array20713[index20712];
                         {
                             child.setRendered(b);
                         }
@@ -4166,8 +4475,8 @@ ui["__class"] = "ui";
         JSContainer.prototype.postRender$jsweet_dom_HTMLElement = function (root) {
         };
         JSContainer.prototype.contains = function (lst, o) {
-            for (var index6503 = 0; index6503 < lst.length; index6503++) {
-                var oo = lst[index6503];
+            for (var index20714 = 0; index20714 < lst.length; index20714++) {
+                var oo = lst[index20714];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -4192,29 +4501,29 @@ ui["__class"] = "ui";
             if (!this.contains(renderers, JSContainer.defaultRenderer_$LI$())) {
                 var tmp = (new Array());
                 tmp.push(JSContainer.defaultRenderer_$LI$());
-                for (var index6504 = 0; index6504 < renderers.length; index6504++) {
-                    var r = renderers[index6504];
+                for (var index20715 = 0; index20715 < renderers.length; index20715++) {
+                    var r = renderers[index20715];
                     {
                         tmp.push(r);
                     }
                 }
                 renderers = tmp;
             }
-            for (var index6505 = 0; index6505 < renderers.length; index6505++) {
-                var renderer_1 = renderers[index6505];
+            for (var index20716 = 0; index20716 < renderers.length; index20716++) {
+                var renderer_1 = renderers[index20716];
                 renderer_1.doRender(this, parent);
             }
             {
-                var array6507 = this.getChildren();
-                for (var index6506 = 0; index6506 < array6507.length; index6506++) {
-                    var child = array6507[index6506];
+                var array20718 = this.getChildren();
+                for (var index20717 = 0; index20717 < array20718.length; index20717++) {
+                    var child = array20718[index20717];
                     {
                         child.render();
                     }
                 }
             }
-            for (var index6508 = 0; index6508 < renderers.length; index6508++) {
-                var renderer_2 = renderers[index6508];
+            for (var index20719 = 0; index20719 < renderers.length; index20719++) {
+                var renderer_2 = renderers[index20719];
                 {
                     if (renderer_2 != null && (renderer_2["__interfaces"] != null && renderer_2["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0 || renderer_2.constructor != null && renderer_2.constructor["__interfaces"] != null && renderer_2.constructor["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0))
                         renderer_2.postRender(this, parent);
@@ -4243,9 +4552,9 @@ ui["__class"] = "ui";
         JSContainer.prototype.getData = function () {
             return this.d["data"];
         };
-        JSContainer.prototype.setData = function (data) {
-            if (((data != null) || data === null)) {
-                return this.setData$java_lang_Object(data);
+        JSContainer.prototype.setData = function (options) {
+            if (((options != null) || options === null)) {
+                return this.setData$java_lang_Object(options);
             }
             else
                 throw new Error('invalid overload');
@@ -4261,9 +4570,9 @@ ui["__class"] = "ui";
             var clsss = parent.getAttribute("class");
             if (clsss != null) {
                 {
-                    var array6510 = parent.getAttribute("class").split(" ");
-                    for (var index6509 = 0; index6509 < array6510.length; index6509++) {
-                        var s = array6510[index6509];
+                    var array20721 = parent.getAttribute("class").split(" ");
+                    for (var index20720 = 0; index20720 < array20721.length; index20720++) {
+                        var s = array20721[index20720];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -4860,9 +5169,16 @@ ui["__class"] = "ui";
                 };
                 /*private*/ Structure.prototype.addTreeItem = function (li, type, label) {
                     var item = new framework.TreeItem("", label);
-                    item.addIcon("add", "utility", new framework.builder.editors.NewFileStructureEventListener(type, this.file, this));
-                    if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "types")) {
-                        item.addIcon("import", "utility", new Structure.Structure$1(this));
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(type, "types")) {
+                        item.addIcon("import", "utility", new framework.builder.editors.NewFileStructureEventListener(type, this.file, this));
+                    }
+                    else {
+                        item.addIcon("add", "utility", new framework.builder.editors.NewFileStructureEventListener(type, this.file, this));
                     }
                     item.addClass("type-" + type).addEventListener(this.toggleSelect, "click");
                     li.addChild$framework_JSContainer(item);
@@ -4870,9 +5186,9 @@ ui["__class"] = "ui";
                 };
                 Structure.prototype.getItem$framework_design_Designable$framework_JSContainer = function (designable, currentNode) {
                     {
-                        var array6512 = currentNode.getChildren();
-                        for (var index6511 = 0; index6511 < array6512.length; index6511++) {
-                            var des = array6512[index6511];
+                        var array20723 = currentNode.getChildren();
+                        for (var index20722 = 0; index20722 < array20723.length; index20722++) {
+                            var des = array20723[index20722];
                             {
                                 if (des != null && des instanceof framework.builder.editors.StructureTreeItem) {
                                     var titem = des;
@@ -4940,21 +5256,43 @@ ui["__class"] = "ui";
                 };
                 Structure.prototype.renderFiles = function () {
                     {
-                        var array6514 = this.lis.keySet();
-                        for (var index6513 = 0; index6513 < array6514.length; index6513++) {
-                            var type = array6514[index6513];
+                        var array20725 = this.lis.keySet();
+                        for (var index20724 = 0; index20724 < array20725.length; index20724++) {
+                            var type = array20725[index20724];
                             {
                                 var cstylesheets = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                                 if (this.file.getChild(type) != null) {
-                                    {
-                                        var array6516 = this.file.getChild(type).getChildren();
-                                        for (var index6515 = 0; index6515 < array6516.length; index6515++) {
-                                            var f = array6516[index6515];
-                                            {
-                                                var item = new framework.builder.editors.FileTreeItem(f, type, framework.builder.Builder.getInstance(), this);
-                                                item.addEventListener(this.toggleSelect, "click");
-                                                var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "3");
-                                                this.lis.get(type).addChild$framework_JSContainer(cstylesheets.addChild$framework_JSContainer(li));
+                                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                                        return o1.equals(o2);
+                                    }
+                                    else {
+                                        return o1 === o2;
+                                    } })(type, "types")) {
+                                        var ftype = this.file.getChild("types");
+                                        var arrTypes = JSON.parse(ftype.getData());
+                                        if (arrTypes != null) {
+                                            for (var index20726 = 0; index20726 < arrTypes.length; index20726++) {
+                                                var o = arrTypes[index20726];
+                                                {
+                                                    var item = new framework.builder.editors.TypeTreeItem(ftype, o, this);
+                                                    item.addEventListener(this.toggleSelect, "click");
+                                                    var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "3");
+                                                    this.lis.get(type).addChild$framework_JSContainer(cstylesheets.addChild$framework_JSContainer(li));
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        {
+                                            var array20728 = this.file.getChild(type).getChildren();
+                                            for (var index20727 = 0; index20727 < array20728.length; index20727++) {
+                                                var f = array20728[index20727];
+                                                {
+                                                    var item = new framework.builder.editors.FileTreeItem(f, type, framework.builder.Builder.getInstance(), this);
+                                                    item.addEventListener(this.toggleSelect, "click");
+                                                    var li = new framework.JSContainer("li").addChild$framework_JSContainer(item).setAttribute("role", "treeitem").setAttribute("aria-level", "3");
+                                                    this.lis.get(type).addChild$framework_JSContainer(cstylesheets.addChild$framework_JSContainer(li));
+                                                }
                                             }
                                         }
                                     }
@@ -4975,9 +5313,9 @@ ui["__class"] = "ui";
                         var children = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                         li.addChild$framework_JSContainer(children);
                         {
-                            var array6518 = ctn.getDesignables();
-                            for (var index6517 = 0; index6517 < array6518.length; index6517++) {
-                                var c = array6518[index6517];
+                            var array20730 = ctn.getDesignables();
+                            for (var index20729 = 0; index20729 < array20730.length; index20729++) {
+                                var c = array20730[index20729];
                                 {
                                     var child = new framework.JSContainer("li");
                                     children.addChild$framework_JSContainer(child);
@@ -5017,22 +5355,6 @@ ui["__class"] = "ui";
                 }());
                 Structure.Structure$0 = Structure$0;
                 Structure$0["__interfaces"] = ["framework.EventListener"];
-                var Structure$1 = (function () {
-                    function Structure$1(__parent) {
-                        this.__parent = __parent;
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    Structure$1.prototype.performAction = function (source, evt) {
-                        alert("to implement: Import from salesforce");
-                    };
-                    return Structure$1;
-                }());
-                Structure.Structure$1 = Structure$1;
-                Structure$1["__interfaces"] = ["framework.EventListener"];
             })(Structure = editors.Structure || (editors.Structure = {}));
         })(editors = builder.editors || (builder.editors = {}));
     })(builder = framework.builder || (framework.builder = {}));
@@ -5109,8 +5431,8 @@ ui["__class"] = "ui";
                 this.itemSelectedListeners.push(l);
             };
             FilesList.prototype.fireItemSelectedListeners = function (file, selector) {
-                for (var index6519 = 0; index6519 < this.itemSelectedListeners.length; index6519++) {
-                    var l = this.itemSelectedListeners[index6519];
+                for (var index20731 = 0; index20731 < this.itemSelectedListeners.length; index20731++) {
+                    var l = this.itemSelectedListeners[index20731];
                     {
                         l.itemSelected(file, selector);
                     }
@@ -5118,9 +5440,9 @@ ui["__class"] = "ui";
             };
             FilesList.prototype.select = function (file) {
                 {
-                    var array6521 = this.getChildren();
-                    for (var index6520 = 0; index6520 < array6521.length; index6520++) {
-                        var c = array6521[index6520];
+                    var array20733 = this.getChildren();
+                    for (var index20732 = 0; index20732 < array20733.length; index20732++) {
+                        var c = array20733[index20732];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -5232,7 +5554,7 @@ ui["__class"] = "ui";
             __extends(Previewer, _super);
             function Previewer(name) {
                 var _this = _super.call(this, "div") || this;
-                var websocket = new WebSocket("ws:localhost:8080/preview");
+                var websocket = new WebSocket(/* replace */ /* replace */ window.location.origin.split("http://").join("ws://").split("https://").join("wss://") + "/preview");
                 websocket.onopen = function (t) {
                     websocket.send("open:" + name);
                     return null;
@@ -5250,9 +5572,9 @@ ui["__class"] = "ui";
                     Previewer.project = f;
                     var preview = new framework.builder.editors.Preview(f);
                     {
-                        var array6523 = f.getStylesheets();
-                        for (var index6522 = 0; index6522 < array6523.length; index6522++) {
-                            var sc = array6523[index6522];
+                        var array20735 = f.getStylesheets();
+                        for (var index20734 = 0; index20734 < array20735.length; index20734++) {
+                            var sc = array20735[index20734];
                             {
                                 var elem = document.createElement("style");
                                 elem.textContent = sc.getData();
@@ -5261,9 +5583,9 @@ ui["__class"] = "ui";
                         }
                     }
                     {
-                        var array6525 = f.getScripts();
-                        for (var index6524 = 0; index6524 < array6525.length; index6524++) {
-                            var sc = array6525[index6524];
+                        var array20737 = f.getScripts();
+                        for (var index20736 = 0; index20736 < array20737.length; index20736++) {
+                            var sc = array20737[index20736];
                             {
                                 var elem = document.createElement("script");
                                 elem.textContent = sc.getData();
@@ -5272,9 +5594,9 @@ ui["__class"] = "ui";
                         }
                     }
                     {
-                        var array6527 = f.getTemplates();
-                        for (var index6526 = 0; index6526 < array6527.length; index6526++) {
-                            var sc = array6527[index6526];
+                        var array20739 = f.getTemplates();
+                        for (var index20738 = 0; index20738 < array20739.length; index20738++) {
+                            var sc = array20739[index20738];
                             {
                                 var elem = document.createElement("div");
                                 elem.setAttribute("id", /* replace */ sc.getName().split(".html").join(""));
@@ -5294,6 +5616,56 @@ ui["__class"] = "ui";
         builder.Previewer = Previewer;
         Previewer["__class"] = "framework.builder.Previewer";
         Previewer["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var properties;
+        (function (properties) {
+            var ExtendedPropertyEditor = (function (_super) {
+                __extends(ExtendedPropertyEditor, _super);
+                function ExtendedPropertyEditor(name, prompt) {
+                    var _this = _super.call(this, name) || this;
+                    /*private*/ _this.button = new framework.lightning.Button("btn");
+                    _this.designable = null;
+                    _this.parameter = null;
+                    _this.prompt = null;
+                    _this.button.setLabel("....");
+                    _this.prompt = prompt;
+                    _this.addChild$framework_JSContainer(_this.button);
+                    _this.addChild$framework_JSContainer(prompt);
+                    _this.button.addEventListener(_this, "click");
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {framework.design.Parameter} parameter
+                 */
+                ExtendedPropertyEditor.prototype.setProperty = function (designable, parameter) {
+                    this.parameter = parameter;
+                    this.designable = designable;
+                };
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ExtendedPropertyEditor.prototype.performAction = function (source, evt) {
+                    if (this.prompt.getAttribute("class").indexOf("slds-fade-in-open") != -1) {
+                    }
+                    else {
+                        this.prompt.setProperty(this.designable, this.parameter);
+                        this.prompt.open();
+                    }
+                };
+                return ExtendedPropertyEditor;
+            }(framework.JSContainer));
+            properties.ExtendedPropertyEditor = ExtendedPropertyEditor;
+            ExtendedPropertyEditor["__class"] = "framework.builder.properties.ExtendedPropertyEditor";
+            ExtendedPropertyEditor["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.EventListener", "framework.Renderable"];
+        })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -5814,9 +6186,9 @@ ui["__class"] = "ui";
                 var dec = this.getAttribute("decorate-class");
                 if (dec != null) {
                     {
-                        var array6529 = this.getChildren();
-                        for (var index6528 = 0; index6528 < array6529.length; index6528++) {
-                            var c = array6529[index6528];
+                        var array20741 = this.getChildren();
+                        for (var index20740 = 0; index20740 < array20741.length; index20740++) {
+                            var c = array20741[index20740];
                             {
                                 c.setAttribute("class", dec);
                             }
@@ -5826,9 +6198,9 @@ ui["__class"] = "ui";
                 var decStyle = this.getAttribute("decorate-style");
                 if (decStyle != null) {
                     {
-                        var array6531 = this.getChildren();
-                        for (var index6530 = 0; index6530 < array6531.length; index6530++) {
-                            var c = array6531[index6530];
+                        var array20743 = this.getChildren();
+                        for (var index20742 = 0; index20742 < array20743.length; index20742++) {
+                            var c = array20743[index20742];
                             {
                                 c.setAttribute("style", decStyle);
                             }
@@ -5885,8 +6257,8 @@ ui["__class"] = "ui";
             JSDesignableList.prototype.removeDesignable = function (designable) {
                 this.removeChild(designable.getParent());
                 var tmp = (new Array());
-                for (var index6532 = 0; index6532 < this.designables.length; index6532++) {
-                    var d = this.designables[index6532];
+                for (var index20744 = 0; index20744 < this.designables.length; index20744++) {
+                    var d = this.designables[index20744];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -5959,7 +6331,7 @@ ui["__class"] = "ui";
             }
             var el = this.getNative();
             if (el != null) {
-                this.setValue$java_lang_Boolean(el.checked);
+                el.checked = b;
             }
         };
         /**
@@ -6118,8 +6490,8 @@ ui["__class"] = "ui";
             if (ele != null) {
                 if (ele.multiple) {
                     var result = (new Array());
-                    for (var index6533 = 0; index6533 < ele.selectedOptions.length; index6533++) {
-                        var e = ele.selectedOptions[index6533];
+                    for (var index20745 = 0; index20745 < ele.selectedOptions.length; index20745++) {
+                        var e = ele.selectedOptions[index20745];
                         {
                             var opt = e;
                             result.push(opt.value);
@@ -6134,9 +6506,9 @@ ui["__class"] = "ui";
             else {
                 var val = this.getAttribute("value");
                 {
-                    var array6535 = this.getChildren();
-                    for (var index6534 = 0; index6534 < array6535.length; index6534++) {
-                        var opt = array6535[index6534];
+                    var array20747 = this.getChildren();
+                    for (var index20746 = 0; index20746 < array20747.length; index20746++) {
+                        var opt = array20747[index20746];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -6186,13 +6558,13 @@ ui["__class"] = "ui";
                 }
                 this.setAttribute("value", firstVal);
                 {
-                    var array6537 = this.getChildren();
-                    for (var index6536 = 0; index6536 < array6537.length; index6536++) {
-                        var opt = array6537[index6536];
+                    var array20749 = this.getChildren();
+                    for (var index20748 = 0; index20748 < array20749.length; index20748++) {
+                        var opt = array20749[index20748];
                         {
                             opt.setSelected(false);
-                            for (var index6538 = 0; index6538 < arrVal.length; index6538++) {
-                                var val = arrVal[index6538];
+                            for (var index20750 = 0; index20750 < arrVal.length; index20750++) {
+                                var val = arrVal[index20750];
                                 {
                                     if ((function (o1, o2) { if (o1 && o1.equals) {
                                         return o1.equals(o2);
@@ -6210,9 +6582,9 @@ ui["__class"] = "ui";
             }
             else {
                 {
-                    var array6540 = this.getChildren();
-                    for (var index6539 = 0; index6539 < array6540.length; index6539++) {
-                        var opt = array6540[index6539];
+                    var array20752 = this.getChildren();
+                    for (var index20751 = 0; index20751 < array20752.length; index20751++) {
+                        var opt = array20752[index20751];
                         {
                             opt.setSelected(false);
                         }
@@ -6325,7 +6697,6 @@ ui["__class"] = "ui";
              */
             Accordion.prototype.addItem = function (item) {
                 this.addDesignable(item);
-                var i;
                 return this;
             };
             /**
@@ -6386,8 +6757,8 @@ ui["__class"] = "ui";
              */
             Accordion.prototype.removeDesignable = function (designable) {
                 var result = (new Array());
-                for (var index6541 = 0; index6541 < this.designables.length; index6541++) {
-                    var des = this.designables[index6541];
+                for (var index20753 = 0; index20753 < this.designables.length; index20753++) {
+                    var des = this.designables[index20753];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -7210,7 +7581,7 @@ ui["__class"] = "ui";
              * @return {boolean}
              */
             CheckBox.prototype.getValue = function () {
-                return this.getAttribute("checked") != null;
+                return this.checkbox.getValue();
             };
             CheckBox.prototype.setValue$java_lang_Boolean = function (val) {
                 this.checkbox.setValue$java_lang_Boolean(val);
@@ -7288,7 +7659,6 @@ ui["__class"] = "ui";
                 function JSDesignableIterator(name) {
                     var _this = _super.call(this, name, "div") || this;
                     /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
-                    /*private*/ _this.data = (new Array());
                     /*private*/ _this.templateCtn = new framework.JSContainer("tmp", "div");
                     /*private*/ _this.list = new framework.JSContainer("list", "div");
                     _this.addChild$framework_JSContainer(_this.templateCtn);
@@ -7327,8 +7697,8 @@ ui["__class"] = "ui";
                     _super.prototype.setData$java_lang_Object.call(this, obj);
                     var ls = obj;
                     var iterable = this.templateCtn.getChildren()[0];
-                    for (var index6542 = 0; index6542 < ls.length; index6542++) {
-                        var o = ls[index6542];
+                    for (var index20754 = 0; index20754 < ls.length; index20754++) {
+                        var o = ls[index20754];
                         {
                             var ins = iterable.Clone();
                             this.list.addChild$framework_JSContainer(ins);
@@ -7879,6 +8249,10 @@ ui["__class"] = "ui";
                 this.ul.addChild$framework_JSContainer(option);
                 return this;
             };
+            ListBox.prototype.clearItems = function () {
+                this.ul.clearChildren();
+                this.ul.setRendered(false);
+            };
             ListBox.prototype.setVertical = function (b) {
                 if (b) {
                     this.ul.addClass("slds-listbox_vertical");
@@ -8290,53 +8664,111 @@ ui["__class"] = "ui";
             function LTContainer(name, tag) {
                 return _super.call(this, name, tag) || this;
             }
-            LTContainer.Sizes_$LI$ = function () { if (LTContainer.Sizes == null)
-                LTContainer.Sizes = ["none", "xxx-small", "xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]; return LTContainer.Sizes; };
+            LTContainer.SIZES_$LI$ = function () { if (LTContainer.SIZES == null)
+                LTContainer.SIZES = ["none", "xxx-small", "xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"]; return LTContainer.SIZES; };
             ;
             LTContainer.PADDING_SIZE_NONE_$LI$ = function () { if (LTContainer.PADDING_SIZE_NONE == null)
-                LTContainer.PADDING_SIZE_NONE = LTContainer.Sizes_$LI$()[0]; return LTContainer.PADDING_SIZE_NONE; };
+                LTContainer.PADDING_SIZE_NONE = LTContainer.SIZES_$LI$()[0]; return LTContainer.PADDING_SIZE_NONE; };
             ;
             LTContainer.PADDING_SIZE_XXX_SMALL_$LI$ = function () { if (LTContainer.PADDING_SIZE_XXX_SMALL == null)
-                LTContainer.PADDING_SIZE_XXX_SMALL = LTContainer.Sizes_$LI$()[1]; return LTContainer.PADDING_SIZE_XXX_SMALL; };
+                LTContainer.PADDING_SIZE_XXX_SMALL = LTContainer.SIZES_$LI$()[1]; return LTContainer.PADDING_SIZE_XXX_SMALL; };
             ;
             LTContainer.PADDING_SIZE_XX_SMALL_$LI$ = function () { if (LTContainer.PADDING_SIZE_XX_SMALL == null)
-                LTContainer.PADDING_SIZE_XX_SMALL = LTContainer.Sizes_$LI$()[2]; return LTContainer.PADDING_SIZE_XX_SMALL; };
+                LTContainer.PADDING_SIZE_XX_SMALL = LTContainer.SIZES_$LI$()[2]; return LTContainer.PADDING_SIZE_XX_SMALL; };
             ;
             LTContainer.PADDING_SIZE_X_SMALL_$LI$ = function () { if (LTContainer.PADDING_SIZE_X_SMALL == null)
-                LTContainer.PADDING_SIZE_X_SMALL = LTContainer.Sizes_$LI$()[3]; return LTContainer.PADDING_SIZE_X_SMALL; };
+                LTContainer.PADDING_SIZE_X_SMALL = LTContainer.SIZES_$LI$()[3]; return LTContainer.PADDING_SIZE_X_SMALL; };
             ;
             LTContainer.PADDING_SIZE_SMALL_$LI$ = function () { if (LTContainer.PADDING_SIZE_SMALL == null)
-                LTContainer.PADDING_SIZE_SMALL = LTContainer.Sizes_$LI$()[4]; return LTContainer.PADDING_SIZE_SMALL; };
+                LTContainer.PADDING_SIZE_SMALL = LTContainer.SIZES_$LI$()[4]; return LTContainer.PADDING_SIZE_SMALL; };
             ;
             LTContainer.PADDING_SIZE_MEDIUM_$LI$ = function () { if (LTContainer.PADDING_SIZE_MEDIUM == null)
-                LTContainer.PADDING_SIZE_MEDIUM = LTContainer.Sizes_$LI$()[5]; return LTContainer.PADDING_SIZE_MEDIUM; };
+                LTContainer.PADDING_SIZE_MEDIUM = LTContainer.SIZES_$LI$()[5]; return LTContainer.PADDING_SIZE_MEDIUM; };
             ;
             LTContainer.PADDING_SIZE_LARGE_$LI$ = function () { if (LTContainer.PADDING_SIZE_LARGE == null)
-                LTContainer.PADDING_SIZE_LARGE = LTContainer.Sizes_$LI$()[6]; return LTContainer.PADDING_SIZE_LARGE; };
+                LTContainer.PADDING_SIZE_LARGE = LTContainer.SIZES_$LI$()[6]; return LTContainer.PADDING_SIZE_LARGE; };
             ;
             LTContainer.PADDING_SIZE_X_LARGE_$LI$ = function () { if (LTContainer.PADDING_SIZE_X_LARGE == null)
-                LTContainer.PADDING_SIZE_X_LARGE = LTContainer.Sizes_$LI$()[7]; return LTContainer.PADDING_SIZE_X_LARGE; };
+                LTContainer.PADDING_SIZE_X_LARGE = LTContainer.SIZES_$LI$()[7]; return LTContainer.PADDING_SIZE_X_LARGE; };
             ;
             LTContainer.PADDING_SIZE_XX_LARGE_$LI$ = function () { if (LTContainer.PADDING_SIZE_XX_LARGE == null)
-                LTContainer.PADDING_SIZE_XX_LARGE = LTContainer.Sizes_$LI$()[8]; return LTContainer.PADDING_SIZE_XX_LARGE; };
+                LTContainer.PADDING_SIZE_XX_LARGE = LTContainer.SIZES_$LI$()[8]; return LTContainer.PADDING_SIZE_XX_LARGE; };
             ;
+            LTContainer.MARGIN_SIZE_NONE_$LI$ = function () { if (LTContainer.MARGIN_SIZE_NONE == null)
+                LTContainer.MARGIN_SIZE_NONE = LTContainer.SIZES_$LI$()[0]; return LTContainer.MARGIN_SIZE_NONE; };
+            ;
+            LTContainer.MARGIN_SIZE_XXX_SMALL_$LI$ = function () { if (LTContainer.MARGIN_SIZE_XXX_SMALL == null)
+                LTContainer.MARGIN_SIZE_XXX_SMALL = LTContainer.SIZES_$LI$()[1]; return LTContainer.MARGIN_SIZE_XXX_SMALL; };
+            ;
+            LTContainer.MARGIN_SIZE_XX_SMALL_$LI$ = function () { if (LTContainer.MARGIN_SIZE_XX_SMALL == null)
+                LTContainer.MARGIN_SIZE_XX_SMALL = LTContainer.SIZES_$LI$()[2]; return LTContainer.MARGIN_SIZE_XX_SMALL; };
+            ;
+            LTContainer.MARGIN_SIZE_X_SMALL_$LI$ = function () { if (LTContainer.MARGIN_SIZE_X_SMALL == null)
+                LTContainer.MARGIN_SIZE_X_SMALL = LTContainer.SIZES_$LI$()[3]; return LTContainer.MARGIN_SIZE_X_SMALL; };
+            ;
+            LTContainer.MARGIN_SIZE_SMALL_$LI$ = function () { if (LTContainer.MARGIN_SIZE_SMALL == null)
+                LTContainer.MARGIN_SIZE_SMALL = LTContainer.SIZES_$LI$()[4]; return LTContainer.MARGIN_SIZE_SMALL; };
+            ;
+            LTContainer.MARGIN_SIZE_MEDIUM_$LI$ = function () { if (LTContainer.MARGIN_SIZE_MEDIUM == null)
+                LTContainer.MARGIN_SIZE_MEDIUM = LTContainer.SIZES_$LI$()[5]; return LTContainer.MARGIN_SIZE_MEDIUM; };
+            ;
+            LTContainer.MARGIN_SIZE_LARGE_$LI$ = function () { if (LTContainer.MARGIN_SIZE_LARGE == null)
+                LTContainer.MARGIN_SIZE_LARGE = LTContainer.SIZES_$LI$()[6]; return LTContainer.MARGIN_SIZE_LARGE; };
+            ;
+            LTContainer.MARGIN_SIZE_X_LARGE_$LI$ = function () { if (LTContainer.MARGIN_SIZE_X_LARGE == null)
+                LTContainer.MARGIN_SIZE_X_LARGE = LTContainer.SIZES_$LI$()[7]; return LTContainer.MARGIN_SIZE_X_LARGE; };
+            ;
+            LTContainer.MARGIN_SIZE_XX_LARGE_$LI$ = function () { if (LTContainer.MARGIN_SIZE_XX_LARGE == null)
+                LTContainer.MARGIN_SIZE_XX_LARGE = LTContainer.SIZES_$LI$()[8]; return LTContainer.MARGIN_SIZE_XX_LARGE; };
+            ;
+            LTContainer.POSITIONS_$LI$ = function () { if (LTContainer.POSITIONS == null)
+                LTContainer.POSITIONS = [LTContainer.POSITION_STATIC, LTContainer.POSITION_FIXED, LTContainer.POSITION_RELATIVE, LTContainer.POSITION_ABSOLUTE]; return LTContainer.POSITIONS; };
+            ;
+            LTContainer.prototype.setPosition = function (position) {
+                for (var index20755 = 0; index20755 < LTContainer.POSITIONS_$LI$().length; index20755++) {
+                    var pos = LTContainer.POSITIONS_$LI$()[index20755];
+                    {
+                        this.removeClass("slds-is-" + pos);
+                    }
+                }
+                this.addClass("slds-is-" + position);
+                return this;
+            };
+            LTContainer.prototype.setHasTopMagnet = function (b) {
+                return this.toggleClass("slds-has-top-magnet", b);
+            };
+            LTContainer.prototype.setHasBottomMagnet = function (b) {
+                return this.toggleClass("slds-has-bottom-magnet", b);
+            };
+            LTContainer.prototype.setMarginTop = function (size) {
+                return this.setSizeAndPosition("m", size, "top");
+            };
+            LTContainer.prototype.setMarginRight = function (size) {
+                return this.setSizeAndPosition("m", size, "right");
+            };
+            LTContainer.prototype.setMarginBottom = function (size) {
+                return this.setSizeAndPosition("m", size, "bottom");
+            };
+            LTContainer.prototype.setMarginLeft = function (size) {
+                return this.setSizeAndPosition("m", size, "left");
+            };
             LTContainer.prototype.setPaddingTop = function (size) {
-                return this.setSizeAndPosition(size, "top");
+                return this.setSizeAndPosition("p", size, "top");
             };
             LTContainer.prototype.setPaddingRight = function (size) {
-                return this.setSizeAndPosition(size, "right");
+                return this.setSizeAndPosition("p", size, "right");
             };
             LTContainer.prototype.setPaddingBottom = function (size) {
-                return this.setSizeAndPosition(size, "bottom");
+                return this.setSizeAndPosition("p", size, "bottom");
             };
             LTContainer.prototype.setPaddingLeft = function (size) {
-                return this.setSizeAndPosition(size, "left");
+                return this.setSizeAndPosition("p", size, "left");
             };
-            /*private*/ LTContainer.prototype.setSizeAndPosition = function (size, position) {
-                for (var index6543 = 0; index6543 < LTContainer.Sizes_$LI$().length; index6543++) {
-                    var s = LTContainer.Sizes_$LI$()[index6543];
+            /*private*/ LTContainer.prototype.setSizeAndPosition = function (pref, size, position) {
+                for (var index20756 = 0; index20756 < LTContainer.SIZES_$LI$().length; index20756++) {
+                    var s = LTContainer.SIZES_$LI$()[index20756];
                     {
-                        this.removeClass("slds-p-" + position + "_" + s);
+                        this.removeClass("slds-" + pref + "-" + position + "_" + s);
                     }
                 }
                 this.addClass("slds-p-" + position + "_" + size);
@@ -8377,14 +8809,57 @@ ui["__class"] = "ui";
             LTContainer.prototype.setScrollableX = function (b) {
                 return this.toggleClass("slds-scrollable_x", b);
             };
+            LTContainer.prototype.setScrollableNone = function (b) {
+                if (b) {
+                    this.setScrollableX(false);
+                    this.setScrollableY(false);
+                }
+                this.toggleClass("slds-scrollable_none", b);
+                return this;
+            };
+            LTContainer.prototype.setScrollableAuto = function (b) {
+                if (b) {
+                    this.setScrollableX(false);
+                    this.setScrollableY(false);
+                }
+                this.toggleClass("slds-scrollable_auto", b);
+                return this;
+            };
             LTContainer.prototype.setAbsoluteCenter = function (b) {
                 return this.toggleClass("slds-align_absolute-center", b);
+            };
+            LTContainer.prototype.setPullPadded = function (b) {
+                return this.toggleClass("slds-grid_pull-padded", b);
+            };
+            LTContainer.prototype.setPullPaddedSize = function (size) {
+                if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(LTContainer.PULL_PADDED_NONE, size)) {
+                    this.setPullPadded(false);
+                    this.removeClass(LTContainer.PULL_PADDED_X_LARGE).removeClass(LTContainer.PULL_PADDED_XX_LARGE).removeClass(LTContainer.PULL_PADDED_LARGE).removeClass(LTContainer.PULL_PADDED_MEDIUM).removeClass(LTContainer.PULL_PADDED_SMALL).removeClass(LTContainer.PULL_PADDED_X_SMALL).removeClass(LTContainer.PULL_PADDED_XX_SMALL).removeClass(LTContainer.PULL_PADDED_XXX_SMALL).addClass(size);
+                }
+                else {
+                    this.setPullPadded(true);
+                    this.removeClass(LTContainer.PULL_PADDED_X_LARGE).removeClass(LTContainer.PULL_PADDED_XX_LARGE).removeClass(LTContainer.PULL_PADDED_LARGE).removeClass(LTContainer.PULL_PADDED_MEDIUM).removeClass(LTContainer.PULL_PADDED_SMALL).removeClass(LTContainer.PULL_PADDED_X_SMALL).removeClass(LTContainer.PULL_PADDED_XX_SMALL).removeClass(LTContainer.PULL_PADDED_XXX_SMALL).addClass(size);
+                }
+                return this;
             };
             return LTContainer;
         }(framework.JSContainer));
         LTContainer.FLOAT_LEFT = "slds-float_left";
         LTContainer.FLOAT_RIGHT = "slds-float_right";
         LTContainer.FLOAT_NONE = "slds-float_none";
+        LTContainer.PULL_PADDED_NONE = "none";
+        LTContainer.PULL_PADDED_XXX_SMALL = "slds-grid_pull-padded-xxx-small";
+        LTContainer.PULL_PADDED_XX_SMALL = "slds-grid_pull-padded-xx-small";
+        LTContainer.PULL_PADDED_X_SMALL = "slds-grid_pull-padded-x-small";
+        LTContainer.PULL_PADDED_SMALL = "slds-grid_pull-padded-small";
+        LTContainer.PULL_PADDED_MEDIUM = "slds-grid_pull-padded-medium";
+        LTContainer.PULL_PADDED_LARGE = "slds-grid_pull-padded-large";
+        LTContainer.PULL_PADDED_X_LARGE = "slds-grid_pull-padded-x-large";
+        LTContainer.PULL_PADDED_XX_LARGE = "slds-grid_pull-padded-xx-large";
+        LTContainer.POSITION_STATIC = "static";
+        LTContainer.POSITION_FIXED = "fixed";
+        LTContainer.POSITION_RELATIVE = "relative";
+        LTContainer.POSITION_ABSOLUTE = "absolute";
         lightning.LTContainer = LTContainer;
         LTContainer["__class"] = "framework.lightning.LTContainer";
         LTContainer["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
@@ -8493,6 +8968,10 @@ ui["__class"] = "ui";
                 _this.close();
                 return _this;
             }
+            Modal.prototype.show = function () {
+                this.open();
+                return this;
+            };
             Modal.prototype.setFooter = function (footer) {
                 this.modalContainer.clearChildren();
                 this.modalContainer.addChild$framework_JSContainer(this.header);
@@ -8618,8 +9097,8 @@ ui["__class"] = "ui";
                 return this;
             };
             PopOver.prototype.setNubin = function (position) {
-                for (var index6544 = 0; index6544 < PopOver.NUBIN_POSITIONS_$LI$().length; index6544++) {
-                    var s = PopOver.NUBIN_POSITIONS_$LI$()[index6544];
+                for (var index20757 = 0; index20757 < PopOver.NUBIN_POSITIONS_$LI$().length; index20757++) {
+                    var s = PopOver.NUBIN_POSITIONS_$LI$()[index20757];
                     {
                         this.removeClass(s);
                     }
@@ -8923,24 +9402,24 @@ ui["__class"] = "ui";
                 return this.active;
             };
             TabItem.prototype.fireClose = function () {
-                for (var index6545 = 0; index6545 < this.listeners.length; index6545++) {
-                    var li = this.listeners[index6545];
+                for (var index20758 = 0; index20758 < this.listeners.length; index20758++) {
+                    var li = this.listeners[index20758];
                     {
                         li.onClose(this);
                     }
                 }
             };
             TabItem.prototype.fireActivate = function () {
-                for (var index6546 = 0; index6546 < this.listeners.length; index6546++) {
-                    var li = this.listeners[index6546];
+                for (var index20759 = 0; index20759 < this.listeners.length; index20759++) {
+                    var li = this.listeners[index20759];
                     {
                         li.onActivate(this);
                     }
                 }
             };
             TabItem.prototype.fireDeActivate = function () {
-                for (var index6547 = 0; index6547 < this.listeners.length; index6547++) {
-                    var li = this.listeners[index6547];
+                for (var index20760 = 0; index20760 < this.listeners.length; index20760++) {
+                    var li = this.listeners[index20760];
                     {
                         li.onDeactivate(this);
                     }
@@ -9185,7 +9664,7 @@ ui["__class"] = "ui";
     var lightning;
     (function (lightning) {
         var table;
-        (function (table_3) {
+        (function (table) {
             var Table = (function (_super) {
                 __extends(Table, _super);
                 function Table(name) {
@@ -9200,9 +9679,7 @@ ui["__class"] = "ui";
                     _this.ftr = new framework.JSContainer("tr");
                     _this.ftd = new framework.JSContainer("td");
                     /*private*/ _this.paginator = new framework.lightning.table.Paginator("paginator");
-                    /*private*/ _this.selectable = false;
                     /*private*/ _this.multiSelectable = false;
-                    /*private*/ _this.selecteRowOn = "click";
                     /*private*/ _this.emptyTableMessage = "No data available";
                     _this.model = null;
                     _this.addClass("slds-table");
@@ -9216,18 +9693,12 @@ ui["__class"] = "ui";
                     _this.loading();
                     return _this;
                 }
-                Table.SELECT_ROW_EVT_$LI$ = function () { if (Table.SELECT_ROW_EVT == null)
-                    Table.SELECT_ROW_EVT = new Table.Table$0(); return Table.SELECT_ROW_EVT; };
-                ;
                 /**
                  *
                  * @return {Array}
                  */
                 Table.prototype.advancedEventTypes = function () {
-                    return ["selectRows", "sort", "changePage"];
-                };
-                Table.prototype.setSelectRowOn = function (on) {
-                    this.selecteRowOn = on;
+                    return ["selectRows", "sort", "changePage", "showDetail"];
                 };
                 /*private*/ Table.prototype.addEmptyRow = function () {
                     this.tbody.clearChildren();
@@ -9313,13 +9784,10 @@ ui["__class"] = "ui";
                                 break;
                             }
                             var tr = new framework.JSContainer("tr");
-                            if (this.selectable) {
-                                tr.addEventListener(Table.SELECT_ROW_EVT_$LI$(), this.selecteRowOn);
-                            }
                             this.tbody.addChild$framework_JSContainer(tr.addClass("slds-hint-parent"));
                             for (var col = 0; col < cols; col++) {
                                 var value = this.model.getValueAt(realRow, col);
-                                var cell = this.tableCellRenderer['getComponent$framework_lightning_table_Table$java_lang_Object$int$int'](this, value, row, col);
+                                var cell = this.tableCellRenderer['getComponent$framework_lightning_table_Table$java_lang_Object$int$int'](this, value, realRow, col);
                                 var td = new framework.JSContainer("td").addClass("slds-cell-wrap").setAttribute("role", "gridcell");
                                 if (value != null && (typeof value === 'boolean')) {
                                     td.addClass("boolean-cell");
@@ -9346,12 +9814,6 @@ ui["__class"] = "ui";
                 };
                 Table.prototype.getBody = function () {
                     return this.tbody;
-                };
-                Table.prototype.setSelectable = function (b) {
-                    this.selectable = b;
-                };
-                Table.prototype.isSelectable = function () {
-                    return this.selectable;
                 };
                 Table.prototype.setMultiSelectable = function (b) {
                     this.multiSelectable = b;
@@ -9412,32 +9874,9 @@ ui["__class"] = "ui";
                 };
                 return Table;
             }(framework.JSContainer));
-            table_3.Table = Table;
+            table.Table = Table;
             Table["__class"] = "framework.lightning.table.Table";
             Table["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
-            (function (Table) {
-                var Table$0 = (function () {
-                    function Table$0() {
-                    }
-                    /**
-                     *
-                     * @param {framework.JSContainer} source
-                     * @param {Event} evt
-                     */
-                    Table$0.prototype.performAction = function (source, evt) {
-                        var index = source.getParent().getChildren().indexOf(source);
-                        var table = source.getParent().getParent();
-                        var page = table.currrentPage;
-                        index = (page * table.pageSize) + index;
-                        evt["first"] = index + "";
-                        evt["last"] = index + "";
-                        table.fireListener("selectRows", evt);
-                    };
-                    return Table$0;
-                }());
-                Table.Table$0 = Table$0;
-                Table$0["__interfaces"] = ["framework.EventListener"];
-            })(Table = table_3.Table || (table_3.Table = {}));
         })(table = lightning.table || (lightning.table = {}));
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
@@ -9448,14 +9887,44 @@ ui["__class"] = "ui";
         (function (table) {
             var TableColumn = (function (_super) {
                 __extends(TableColumn, _super);
-                function TableColumn(name, identifier, label) {
-                    var _this = _super.call(this, name, "th") || this;
-                    /*private*/ _this.title = new framework.JSContainer("div").addClass("slds-truncate");
-                    _this.identifier = null;
-                    _this.identifier = identifier;
-                    _this.addChild$framework_JSContainer(_this.title);
-                    _this.setLabel(label);
-                    _this.setAttribute("scope", "col");
+                function TableColumn(name, identifier, label, detailLnk) {
+                    var _this = this;
+                    if (((typeof name === 'string') || name === null) && ((identifier != null) || identifier === null) && ((typeof label === 'string') || label === null) && ((typeof detailLnk === 'boolean') || detailLnk === null)) {
+                        var __args = Array.prototype.slice.call(arguments);
+                        _this = _super.call(this, name, "th") || this;
+                        _this.identifier = null;
+                        _this.title = new framework.JSContainer("div").addClass("slds-truncate");
+                        _this.detailLink = false;
+                        _this.identifier = null;
+                        (function () {
+                            _this.identifier = identifier;
+                            _this.addChild$framework_JSContainer(_this.title);
+                            _this.setLabel(label);
+                            _this.setAttribute("scope", "col");
+                            _this.detailLink = detailLnk;
+                        })();
+                    }
+                    else if (((typeof name === 'string') || name === null) && ((identifier != null) || identifier === null) && ((typeof label === 'string') || label === null) && detailLnk === undefined) {
+                        var __args = Array.prototype.slice.call(arguments);
+                        {
+                            var __args_1 = Array.prototype.slice.call(arguments);
+                            var detailLnk_1 = false;
+                            _this = _super.call(this, name, "th") || this;
+                            _this.identifier = null;
+                            _this.title = new framework.JSContainer("div").addClass("slds-truncate");
+                            _this.detailLink = false;
+                            _this.identifier = null;
+                            (function () {
+                                _this.identifier = identifier;
+                                _this.addChild$framework_JSContainer(_this.title);
+                                _this.setLabel(label);
+                                _this.setAttribute("scope", "col");
+                                _this.detailLink = detailLnk_1;
+                            })();
+                        }
+                    }
+                    else
+                        throw new Error('invalid overload');
                     return _this;
                 }
                 TableColumn.prototype.getIdentifier = function () {
@@ -9476,6 +9945,12 @@ ui["__class"] = "ui";
                     else {
                         this.removeClass(cls);
                     }
+                };
+                TableColumn.prototype.isDetailLink = function () {
+                    return this.detailLink;
+                };
+                TableColumn.prototype.setDetailLink = function (detailLink) {
+                    this.detailLink = detailLink;
                 };
                 return TableColumn;
             }(framework.JSContainer));
@@ -9520,9 +9995,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.setActive = function (item) {
                 {
-                    var array6549 = this.getItems();
-                    for (var index6548 = 0; index6548 < array6549.length; index6548++) {
-                        var tab = array6549[index6548];
+                    var array20762 = this.getItems();
+                    for (var index20761 = 0; index20761 < array20762.length; index20761++) {
+                        var tab = array20762[index20761];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -9546,9 +10021,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.getTab = function (body) {
                 {
-                    var array6551 = this.getItems();
-                    for (var index6550 = 0; index6550 < array6551.length; index6550++) {
-                        var c = array6551[index6550];
+                    var array20764 = this.getItems();
+                    for (var index20763 = 0; index20763 < array20764.length; index20763++) {
+                        var c = array20764[index20763];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -9565,9 +10040,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.getActiveTab = function () {
                 {
-                    var array6553 = this.getItems();
-                    for (var index6552 = 0; index6552 < array6553.length; index6552++) {
-                        var item = array6553[index6552];
+                    var array20766 = this.getItems();
+                    for (var index20765 = 0; index20765 < array20766.length; index20765++) {
+                        var item = array20766[index20765];
                         {
                             if (item.isActive()) {
                                 return item;
@@ -9639,8 +10114,8 @@ ui["__class"] = "ui";
                 Text.textTags_$LI$()["span"] = "Span";
             };
             Text.prototype.setAlign = function (align) {
-                for (var index6554 = 0; index6554 < Text.ALIGNS_$LI$().length; index6554++) {
-                    var s = Text.ALIGNS_$LI$()[index6554];
+                for (var index20767 = 0; index20767 < Text.ALIGNS_$LI$().length; index20767++) {
+                    var s = Text.ALIGNS_$LI$()[index20767];
                     {
                         this.removeClass(s);
                     }
@@ -9649,8 +10124,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setTextType = function (type) {
-                for (var index6555 = 0; index6555 < Text.TEXT_TYPES_$LI$().length; index6555++) {
-                    var s = Text.TEXT_TYPES_$LI$()[index6555];
+                for (var index20768 = 0; index20768 < Text.TEXT_TYPES_$LI$().length; index20768++) {
+                    var s = Text.TEXT_TYPES_$LI$()[index20768];
                     {
                         this.removeClass(s);
                     }
@@ -9659,8 +10134,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setColor = function (color) {
-                for (var index6556 = 0; index6556 < Text.COLORS_$LI$().length; index6556++) {
-                    var s = Text.COLORS_$LI$()[index6556];
+                for (var index20769 = 0; index20769 < Text.COLORS_$LI$().length; index20769++) {
+                    var s = Text.COLORS_$LI$()[index20769];
                     {
                         this.removeClass(s);
                     }
@@ -9669,8 +10144,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setDecoration = function (decoration) {
-                for (var index6557 = 0; index6557 < Text.DECORATIONS_$LI$().length; index6557++) {
-                    var s = Text.DECORATIONS_$LI$()[index6557];
+                for (var index20770 = 0; index20770 < Text.DECORATIONS_$LI$().length; index20770++) {
+                    var s = Text.DECORATIONS_$LI$()[index20770];
                     {
                         this.removeClass(s);
                     }
@@ -9783,9 +10258,9 @@ ui["__class"] = "ui";
                 var params = this.delegate.getParameters();
                 var tagParam = new framework.design.TagParameter();
                 {
-                    var array6559 = Object.keys(Text.textTags_$LI$());
-                    for (var index6558 = 0; index6558 < array6559.length; index6558++) {
-                        var key = array6559[index6558];
+                    var array20772 = Object.keys(Text.textTags_$LI$());
+                    for (var index20771 = 0; index20771 < array20772.length; index20771++) {
+                        var key = array20772[index20771];
                         {
                             tagParam.options.push(new framework.design.Option(Text.textTags_$LI$()[key], key));
                         }
@@ -10044,6 +10519,231 @@ ui["__class"] = "ui";
     })(rtc = framework.rtc || (framework.rtc = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var SalesforceCrud = (function (_super) {
+            __extends(SalesforceCrud, _super);
+            function SalesforceCrud(name) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.table = new framework.salesforce.SalesforceTable("table");
+                /*private*/ _this.form = new framework.salesforce.SalesforceForm();
+                /*private*/ _this.soql = new framework.lightning.designables.JSDesignableSOQL("soql");
+                /*private*/ _this.listPanel = new framework.JSContainer("div");
+                /*private*/ _this.detailPanel = new framework.JSContainer("div");
+                /*private*/ _this.objectType = "Account";
+                /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
+                _this.addChild$framework_JSContainer(_this.listPanel);
+                _this.addChild$framework_JSContainer(_this.detailPanel);
+                _this.setAttribute("identifier", "lgt:crud");
+                _this.listPanel.addChild$framework_JSContainer(_this.table);
+                _this.listPanel.addChild$framework_JSContainer(_this.soql);
+                _this.detailPanel.addChild$framework_JSContainer(_this.form);
+                _this.soql.addEventListener(new SalesforceCrud.SalesforceCrud$0(_this), "success");
+                _this.table.addEventListener(new SalesforceCrud.SalesforceCrud$1(_this), "showDetail");
+                _this.showList();
+                return _this;
+            }
+            SalesforceCrud.prototype.refresh = function () {
+                var fi = new Object();
+                {
+                    var array20774 = this.table.getColumns();
+                    for (var index20773 = 0; index20773 < array20774.length; index20773++) {
+                        var o = array20774[index20773];
+                        {
+                            var name_2 = o["name"];
+                            if (!fi.hasOwnProperty(name_2)) {
+                                fi[name_2] = o;
+                            }
+                        }
+                    }
+                }
+                {
+                    var array20776 = this.form.getFields();
+                    for (var index20775 = 0; index20775 < array20776.length; index20775++) {
+                        var o = array20776[index20775];
+                        {
+                            var name_3 = o["name"];
+                            if (!fi.hasOwnProperty(name_3)) {
+                                fi[name_3] = o;
+                            }
+                        }
+                    }
+                }
+                var query = "SELECT Id";
+                {
+                    var array20778 = Object.keys(fi);
+                    for (var index20777 = 0; index20777 < array20778.length; index20777++) {
+                        var key = array20778[index20777];
+                        {
+                            if (!(function (o1, o2) { if (o1 && o1.equals) {
+                                return o1.equals(o2);
+                            }
+                            else {
+                                return o1 === o2;
+                            } })(key, "Id"))
+                                query = query + ", " + key;
+                        }
+                    }
+                }
+                query = query + " FROM " + this.objectType;
+                this.soql.setQuery(query);
+                this.soql.execute();
+            };
+            SalesforceCrud.prototype.showDetail = function (data) {
+                this.form.setData$jsweet_lang_Object(data);
+                this.listPanel.setStyle("display", "none");
+                this.detailPanel.setStyle("display", "block");
+            };
+            SalesforceCrud.prototype.showList = function () {
+                this.listPanel.setStyle("display", "block");
+                this.detailPanel.setStyle("display", "none");
+            };
+            SalesforceCrud.prototype.setObjectType = function (type) {
+                this.objectType = type;
+                this.table.setObjectType(type);
+                this.form.setObjectType(type);
+            };
+            SalesforceCrud.prototype.setColumns = function (fields) {
+                this.table.setColumns(fields);
+            };
+            SalesforceCrud.prototype.setFields = function (fields) {
+                this.form.setFields(fields);
+            };
+            /**
+             *
+             * @param {string} key
+             * @param {string} value
+             */
+            SalesforceCrud.prototype.applyParam = function (key, value) {
+                this.delegate.applyParameter(key, value, true);
+                if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(key, "objectType")) {
+                    this.setObjectType(value);
+                }
+            };
+            /**
+             *
+             * @return {*[]}
+             */
+            SalesforceCrud.prototype.getDesignables = function () {
+                return (new Array(this.table, this.form));
+            };
+            /**
+             *
+             * @return {framework.builder.marshalling.Component}
+             */
+            SalesforceCrud.prototype.getComponent = function () {
+                return this.delegate.getComponent();
+            };
+            /**
+             *
+             * @return {framework.design.Parameter[]}
+             */
+            SalesforceCrud.prototype.getParameters = function () {
+                var params = this.delegate.getParameters();
+                var objectType = new framework.design.AttributeParameter("objectType", "Object Type", "Basic");
+                params.push(objectType);
+                return params;
+            };
+            /**
+             *
+             * @param {*} designable
+             */
+            SalesforceCrud.prototype.addDesignable = function (designable) {
+                if (designable != null && designable instanceof framework.salesforce.SalesforceTable) {
+                    this.mirrorCopy(designable, this.table);
+                }
+                else if (designable != null && designable instanceof framework.salesforce.SalesforceForm) {
+                    this.mirrorCopy(designable, this.form);
+                }
+            };
+            SalesforceCrud.prototype.mirrorCopy = function (source, dest) {
+                var c = source.getComponent();
+                dest.getComponent().events = c.events;
+                {
+                    var array20780 = Object.keys(c.parameters);
+                    for (var index20779 = 0; index20779 < array20780.length; index20779++) {
+                        var key = array20780[index20779];
+                        {
+                            dest.applyParam(key, c.parameters[key]);
+                        }
+                    }
+                }
+                {
+                    var array20782 = Object.keys(c.styles);
+                    for (var index20781 = 0; index20781 < array20782.length; index20781++) {
+                        var key = array20782[index20781];
+                        {
+                            dest.setStyle(key, c.styles[key]);
+                        }
+                    }
+                }
+                for (var index20783 = 0; index20783 < c.events.length; index20783++) {
+                    var event_4 = c.events[index20783];
+                    {
+                        var listener = new framework.builder.BuilderEventListener(event_4.source, event_4.name, event_4.type);
+                        dest.addEventListener(listener, event_4.type);
+                    }
+                }
+            };
+            /**
+             *
+             * @param {*} designable
+             */
+            SalesforceCrud.prototype.removeDesignable = function (designable) {
+            };
+            /**
+             *
+             * @param {*} designable
+             * @param {number} steps
+             */
+            SalesforceCrud.prototype.moveDesignable = function (designable, steps) {
+            };
+            return SalesforceCrud;
+        }(framework.JSContainer));
+        salesforce.SalesforceCrud = SalesforceCrud;
+        SalesforceCrud["__class"] = "framework.salesforce.SalesforceCrud";
+        SalesforceCrud["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+        (function (SalesforceCrud) {
+            var SalesforceCrud$0 = (function () {
+                function SalesforceCrud$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                SalesforceCrud$0.prototype.performAction = function (source, evt) {
+                    var data = evt["data"];
+                    this.__parent.table.setTableData(data);
+                    this.__parent.showList();
+                    this.__parent.render();
+                };
+                return SalesforceCrud$0;
+            }());
+            SalesforceCrud.SalesforceCrud$0 = SalesforceCrud$0;
+            SalesforceCrud$0["__interfaces"] = ["framework.EventListener"];
+            var SalesforceCrud$1 = (function () {
+                function SalesforceCrud$1(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                SalesforceCrud$1.prototype.performAction = function (source, evt) {
+                    var data = evt["row"];
+                    this.__parent.showDetail(data);
+                };
+                return SalesforceCrud$1;
+            }());
+            SalesforceCrud.SalesforceCrud$1 = SalesforceCrud$1;
+            SalesforceCrud$1["__interfaces"] = ["framework.EventListener"];
+        })(SalesforceCrud = salesforce.SalesforceCrud || (salesforce.SalesforceCrud = {}));
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var TextComponent = (function (_super) {
         __extends(TextComponent, _super);
         function TextComponent(name, tag) {
@@ -10077,6 +10777,7 @@ ui["__class"] = "ui";
             _this.button.addEventListener(_this, "click");
             _this.addChild$framework_JSContainer(_this.buttonsCtn);
             _this.setLeftIcon$java_lang_String$java_lang_String("file", "utility");
+            _this.setAttribute("title", title);
             return _this;
         }
         TreeItem.prototype.setLeftIcon$java_lang_String$java_lang_String = function (name, type) {
@@ -10434,8 +11135,8 @@ ui["__class"] = "ui";
                     grid.addChild$framework_JSContainer(colLeft.addClass("slds-col").addClass("col-left"));
                     grid.addChild$framework_JSContainer(colRight.addClass("slds-col").addClass("col-right"));
                     _this.root = root;
-                    for (var index6560 = 0; index6560 < framework.builder.editors.EventTypes.events_$LI$().length; index6560++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index6560];
+                    for (var index20784 = 0; index20784 < framework.builder.editors.EventTypes.events_$LI$().length; index20784++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index20784];
                         _this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                     }
                     colLeft.addChild$framework_JSContainer(_this.component.setStyle("width", "100%"));
@@ -10447,16 +11148,14 @@ ui["__class"] = "ui";
                     _this.addChild$framework_JSContainer(_this.editor);
                     return _this;
                 }
-                /*private*/ EventEditor.prototype.decoName = function () {
-                };
                 EventEditor.prototype.fillValue = function (des, updEvtSelect) {
                     var s = false;
                     this.component.setHtml(des.getName());
                     if (!updEvtSelect) {
                         var listeners = des.getListeners()[this.events.getValue()];
                         if (listeners != null) {
-                            for (var index6561 = 0; index6561 < listeners.length; index6561++) {
-                                var e = listeners[index6561];
+                            for (var index20785 = 0; index20785 < listeners.length; index20785++) {
+                                var e = listeners[index20785];
                                 {
                                     if (e != null && e instanceof framework.builder.BuilderEventListener) {
                                         var bel = e;
@@ -10481,9 +11180,9 @@ ui["__class"] = "ui";
                     var last = "click";
                     var lastSrc = this.getSource(des, last);
                     {
-                        var array6563 = this.events.getChildren();
-                        for (var index6562 = 0; index6562 < array6563.length; index6562++) {
-                            var opt = array6563[index6562];
+                        var array20787 = this.events.getChildren();
+                        for (var index20786 = 0; index20786 < array20787.length; index20786++) {
+                            var opt = array20787[index20786];
                             {
                                 var option = opt;
                                 var type = option.getValue();
@@ -10512,8 +11211,8 @@ ui["__class"] = "ui";
                 EventEditor.prototype.getSource = function (des, type) {
                     var listeners = des.getListeners()[type];
                     if (listeners != null) {
-                        for (var index6564 = 0; index6564 < listeners.length; index6564++) {
-                            var l = listeners[index6564];
+                        for (var index20788 = 0; index20788 < listeners.length; index20788++) {
+                            var l = listeners[index20788];
                             {
                                 if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                     var evt = l;
@@ -10532,14 +11231,14 @@ ui["__class"] = "ui";
                     this.events.clearChildren();
                     this.events.setRendered(false);
                     {
-                        var array6566 = (designable).advancedEventTypes();
-                        for (var index6565 = 0; index6565 < array6566.length; index6565++) {
-                            var s = array6566[index6565];
+                        var array20790 = (designable).advancedEventTypes();
+                        for (var index20789 = 0; index20789 < array20790.length; index20789++) {
+                            var s = array20790[index20789];
                             this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                         }
                     }
-                    for (var index6567 = 0; index6567 < framework.builder.editors.EventTypes.events_$LI$().length; index6567++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index6567];
+                    for (var index20791 = 0; index20791 < framework.builder.editors.EventTypes.events_$LI$().length; index20791++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index20791];
                         this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                     }
                     this.fillValue(designable, true);
@@ -10554,9 +11253,9 @@ ui["__class"] = "ui";
                         return parent;
                     }
                     {
-                        var array6569 = parent.getDesignables();
-                        for (var index6568 = 0; index6568 < array6569.length; index6568++) {
-                            var des = array6569[index6568];
+                        var array20793 = parent.getDesignables();
+                        for (var index20792 = 0; index20792 < array20793.length; index20792++) {
+                            var des = array20793[index20792];
                             {
                                 var res = this.findDesignableById(des, id);
                                 if (res != null) {
@@ -10579,8 +11278,8 @@ ui["__class"] = "ui";
                     if (des != null) {
                         var listeners = des.getListeners()[type];
                         if (listeners != null) {
-                            for (var index6570 = 0; index6570 < listeners.length; index6570++) {
-                                var l_1 = listeners[index6570];
+                            for (var index20794 = 0; index20794 < listeners.length; index20794++) {
+                                var l_1 = listeners[index20794];
                                 {
                                     if (l_1 != null && l_1 instanceof framework.builder.BuilderEventListener) {
                                         var evt = l_1;
@@ -10723,6 +11422,7 @@ ui["__class"] = "ui";
                     /*private*/ _this.jsonDef = new framework.lightning.Modal("jsonDef", "Definition");
                     _this.json = new framework.JSTextArea("json");
                     _this.helper = new framework.JSTextArea("helper");
+                    /*private*/ _this.fieldList = new framework.salesforce.FieldListSelectModal("fieldList", "Select Fields from Table");
                     /*private*/ _this.hRule = new framework.builder.Ruler(false);
                     /*private*/ _this.composer = new framework.lightning.DockedComposer("composer");
                     /*private*/ _this.bd = new framework.lightning.Backdrop("backdrop");
@@ -10734,6 +11434,7 @@ ui["__class"] = "ui";
                     _this.selector = null;
                     _this.structureDockedComposer = null;
                     _this.addClass("visual-editor").addClass("slds-grid").addClass("slds-wrap");
+                    _this.addChild$framework_JSContainer(_this.fieldList);
                     var frmjson = new framework.lightning.FormLayout("frmjson");
                     frmjson.setStyle("margin", "8px");
                     frmjson.addClass("defn-popup");
@@ -10781,9 +11482,12 @@ ui["__class"] = "ui";
                     _this.toggleRuler.setStateful(true);
                     _this.toggleRuler.setSelected(false);
                     _this.toggleDefinitions.addEventListener(new VisualEditor.VisualEditor$0(_this), "click");
+                    _this.toggleDefinitions.setAttribute("title", "Show Definition JSON");
                     _this.toggleRuler.addEventListener(new VisualEditor.VisualEditor$1(_this), "click");
+                    _this.toggleRuler.setAttribute("title", "Show / Hide Ruler");
                     _this.addClass("show-outline");
                     _this.toggleOutline.addEventListener(new VisualEditor.VisualEditor$2(_this), "click");
+                    _this.toggleOutline.setAttribute("title", "Show / Hide Outline");
                     document.onkeyup = function (e) {
                         if (e.which === 27) {
                             _this.escape();
@@ -10791,8 +11495,17 @@ ui["__class"] = "ui";
                         }
                         return true;
                     };
+                    _this.hideOutline();
                     return _this;
                 }
+                VisualEditor.prototype.hideOutline = function () {
+                    this.toggleOutline.setSelected(false);
+                    this.removeClass("show-outline");
+                };
+                VisualEditor.prototype.showFields = function (type) {
+                    this.fieldList.getList().setType(type);
+                    this.fieldList.open();
+                };
                 VisualEditor.prototype.toggleDefns = function () {
                     var _this = this;
                     $.get("/js/controller/" + this.getProject().getName(), function (a, b, c) {
@@ -10890,9 +11603,9 @@ ui["__class"] = "ui";
                 VisualEditor.prototype.visit$framework_builder_editors_Visitor$framework_design_Designable = function (v, startAt) {
                     v.doVisit(startAt);
                     {
-                        var array6572 = startAt.getDesignables();
-                        for (var index6571 = 0; index6571 < array6572.length; index6571++) {
-                            var child = array6572[index6571];
+                        var array20796 = startAt.getDesignables();
+                        for (var index20795 = 0; index20795 < array20796.length; index20795++) {
+                            var child = array20796[index20795];
                             {
                                 this.visit$framework_builder_editors_Visitor$framework_design_Designable(v, child);
                             }
@@ -11216,6 +11929,103 @@ ui["__class"] = "ui";
     })(designables = framework.designables || (framework.designables = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var designables;
+    (function (designables) {
+        var JSDesignableCardLayout = (function (_super) {
+            __extends(JSDesignableCardLayout, _super);
+            function JSDesignableCardLayout(name, tag) {
+                var _this = _super.call(this, name, tag) || this;
+                /*private*/ _this.currentActive = "";
+                return _this;
+            }
+            JSDesignableCardLayout.prototype.addItem = function (item) {
+                this.addChild$framework_JSContainer(item);
+                return this;
+            };
+            /**
+             *
+             * @param {*} designable
+             */
+            JSDesignableCardLayout.prototype.addDesignable = function (designable) {
+                if (!(designable != null && designable instanceof framework.designables.JSDesignableCardLayoutItem)) {
+                    throw new Error("Only component of type Card Layout Item allowed in this container");
+                }
+                _super.prototype.addDesignable.call(this, designable);
+            };
+            JSDesignableCardLayout.prototype.activate = function (name) {
+                if ((function (o1, o2) { if (o1 && o1.equals) {
+                    return o1.equals(o2);
+                }
+                else {
+                    return o1 === o2;
+                } })(name, this.currentActive)) {
+                    return;
+                }
+                {
+                    var array20798 = this.getChildren();
+                    for (var index20797 = 0; index20797 < array20798.length; index20797++) {
+                        var child = array20798[index20797];
+                        {
+                            if ((function (o1, o2) { if (o1 && o1.equals) {
+                                return o1.equals(o2);
+                            }
+                            else {
+                                return o1 === o2;
+                            } })(child.getName(), name)) {
+                                var evt = new CustomEvent("activate");
+                                evt["data"] = child;
+                                child.fireListener("activate", evt);
+                                child.setStyle("display", "block");
+                            }
+                            else if ((function (o1, o2) { if (o1 && o1.equals) {
+                                return o1.equals(o2);
+                            }
+                            else {
+                                return o1 === o2;
+                            } })(child.getName(), this.currentActive)) {
+                                var evt = new CustomEvent("deactivate");
+                                evt["data"] = child;
+                                child.fireListener("deactivate", evt);
+                                child.setStyle("display", "none");
+                            }
+                            else {
+                                child.setStyle("display", "none");
+                            }
+                        }
+                    }
+                }
+                this.currentActive = name;
+            };
+            return JSDesignableCardLayout;
+        }(framework.designables.JSDesignable));
+        designables.JSDesignableCardLayout = JSDesignableCardLayout;
+        JSDesignableCardLayout["__class"] = "framework.designables.JSDesignableCardLayout";
+        JSDesignableCardLayout["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+    })(designables = framework.designables || (framework.designables = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var designables;
+    (function (designables) {
+        var JSDesignableCardLayoutItem = (function (_super) {
+            __extends(JSDesignableCardLayoutItem, _super);
+            function JSDesignableCardLayoutItem(name, tag) {
+                return _super.call(this, name, tag) || this;
+            }
+            /**
+             *
+             * @return {Array}
+             */
+            JSDesignableCardLayoutItem.prototype.advancedEventTypes = function () {
+                return ["activate", "deactivate"];
+            };
+            return JSDesignableCardLayoutItem;
+        }(framework.designables.JSDesignable));
+        designables.JSDesignableCardLayoutItem = JSDesignableCardLayoutItem;
+        JSDesignableCardLayoutItem["__class"] = "framework.designables.JSDesignableCardLayoutItem";
+        JSDesignableCardLayoutItem["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+    })(designables = framework.designables || (framework.designables = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var JSHTMLFragment = (function (_super) {
         __extends(JSHTMLFragment, _super);
         function JSHTMLFragment(name, template) {
@@ -11261,9 +12071,9 @@ ui["__class"] = "ui";
             }
             templates.options.push(new framework.design.Option("Default", "#default"));
             {
-                var array6574 = project.getTemplates();
-                for (var index6573 = 0; index6573 < array6574.length; index6573++) {
-                    var f = array6574[index6573];
+                var array20800 = project.getTemplates();
+                for (var index20799 = 0; index20799 < array20800.length; index20799++) {
+                    var f = array20800[index20799];
                     {
                         templates.options.push(new framework.design.Option(f.getName(), "#" + f.getName().split(".html").join("")));
                     }
@@ -11516,9 +12326,51 @@ ui["__class"] = "ui";
                     }
                     else {
                         return o1 === o2;
-                    } })(value, "text"))
+                    } })(value, "text") || (function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(value, "string") || (function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(value, "int") || (function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(value, "double"))
                         this.setTag("input");
-                    this.setType(value);
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(value, "currency") || (function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(value, "int") || (function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(value, "double")) {
+                        this.setType("number");
+                    }
+                    else {
+                        if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(value, "string"))
+                            value = "text";
+                        this.setType(value);
+                    }
                     this.setValue$java_lang_String(curVal);
                 }
             };
@@ -11904,7 +12756,7 @@ ui["__class"] = "ui";
                         _this.dataFields = null;
                         _this.title = new framework.JSContainer("a").setAttribute("href", "javascript:void(0);").addClass("slds-card__header-link slds-truncate");
                         _this.figure = new framework.lightning.SvgIcon("figure");
-                        _this.fields = new framework.lightning.table.Table("fields");
+                        _this.fields = new framework.lightning.designables.JSDesignableTable("fields");
                         _this.dataStructure = null;
                         _this.delegate = new framework.lightning.table.DefaultTableCellRenderer();
                         _this.labels = null;
@@ -11938,7 +12790,7 @@ ui["__class"] = "ui";
                     else if (((typeof name === 'string') || name === null) && ((structure != null && structure instanceof framework.builder.data.DataStructure) || structure === null) && labels === undefined && fields === undefined) {
                         var __args = Array.prototype.slice.call(arguments);
                         {
-                            var __args_1 = Array.prototype.slice.call(arguments);
+                            var __args_2 = Array.prototype.slice.call(arguments);
                             var labels_1 = ["Name", "Label", "Type", "Calculated", "Creatable", "Updatable", "Filterable", "Sortable", "Nillable", "Unique", "Length"];
                             var fields_1 = ["name", "label", "type", "calculated", "createable", "updateable", "filterable", "sortable", "nillable", "unique", "length"];
                             _this = _super.call(this, name, "div") || this;
@@ -11947,7 +12799,7 @@ ui["__class"] = "ui";
                             _this.dataFields = null;
                             _this.title = new framework.JSContainer("a").setAttribute("href", "javascript:void(0);").addClass("slds-card__header-link slds-truncate");
                             _this.figure = new framework.lightning.SvgIcon("figure");
-                            _this.fields = new framework.lightning.table.Table("fields");
+                            _this.fields = new framework.lightning.designables.JSDesignableTable("fields");
                             _this.dataStructure = null;
                             _this.delegate = new framework.lightning.table.DefaultTableCellRenderer();
                             _this.labels = null;
@@ -12183,7 +13035,6 @@ ui["__class"] = "ui";
             __extends(Builder, _super);
             function Builder(name) {
                 var _this = _super.call(this, name, "div") || this;
-                /*private*/ _this.topMenu = new framework.builder.TopMenu("header");
                 /*private*/ _this.editorTabs = new framework.lightning.Tabs("editorTabs");
                 /*private*/ _this.saveButton = new framework.lightning.IconButton("save");
                 /*private*/ _this.newFileModal = new framework.builder.NewFile("newFile", _this);
@@ -12245,7 +13096,7 @@ ui["__class"] = "ui";
                 return _this;
             }
             Builder.websocket_$LI$ = function () { if (Builder.websocket == null)
-                Builder.websocket = new WebSocket("ws:localhost:8080/preview"); return Builder.websocket; };
+                Builder.websocket = new WebSocket(/* replace */ /* replace */ window.location.origin.split("http://").join("ws://").split("https://").join("wss://") + "/preview"); return Builder.websocket; };
             ;
             Builder.prototype.openNewModal = function () {
                 this.newFileModal.open();
@@ -12298,9 +13149,9 @@ ui["__class"] = "ui";
             };
             Builder.prototype.isOpen = function (editorName) {
                 {
-                    var array6576 = this.editorTabs.getItems();
-                    for (var index6575 = 0; index6575 < array6576.length; index6575++) {
-                        var item = array6576[index6575];
+                    var array20802 = this.editorTabs.getItems();
+                    for (var index20801 = 0; index20801 < array20802.length; index20801++) {
+                        var item = array20802[index20801];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -12317,9 +13168,9 @@ ui["__class"] = "ui";
             };
             Builder.prototype.activateEditor = function (editorName) {
                 {
-                    var array6578 = this.editorTabs.getItems();
-                    for (var index6577 = 0; index6577 < array6578.length; index6577++) {
-                        var item = array6578[index6577];
+                    var array20804 = this.editorTabs.getItems();
+                    for (var index20803 = 0; index20803 < array20804.length; index20803++) {
+                        var item = array20804[index20803];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -12490,8 +13341,8 @@ ui["__class"] = "ui";
             Col.prototype.refreshCls = function () {
                 var cls = this.getAttribute("class").split(" ");
                 var ncls = "";
-                for (var index6579 = 0; index6579 < cls.length; index6579++) {
-                    var cl = cls[index6579];
+                for (var index20805 = 0; index20805 < cls.length; index20805++) {
+                    var cl = cls[index20805];
                     {
                         if ((function (str, searchString, position) {
                             if (position === void 0) { position = 0; }
@@ -12604,9 +13455,9 @@ ui["__class"] = "ui";
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
                 {
-                    var array6581 = this.getChildren();
-                    for (var index6580 = 0; index6580 < array6581.length; index6580++) {
-                        var child = array6581[index6580];
+                    var array20807 = this.getChildren();
+                    for (var index20806 = 0; index20806 < array20807.length; index20806++) {
+                        var child = array20807[index20806];
                         {
                             child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                             child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -12676,20 +13527,6 @@ ui["__class"] = "ui";
             Grid.prototype.setReverse = function (b) {
                 return this.toggleClass("slds-grid_reverse", b);
             };
-            Grid.prototype.setPullPadded = function (b) {
-                return this.toggleClass("slds-grid_pull-padded", b);
-            };
-            Grid.prototype.setPullPaddedSize = function (size) {
-                if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(Grid.PULL_PADDED_NONE, size)) {
-                    this.setPullPadded(false);
-                    this.removeClass(Grid.PULL_PADDED_X_LARGE).removeClass(Grid.PULL_PADDED_XX_LARGE).removeClass(Grid.PULL_PADDED_LARGE).removeClass(Grid.PULL_PADDED_MEDIUM).removeClass(Grid.PULL_PADDED_SMALL).removeClass(Grid.PULL_PADDED_X_SMALL).removeClass(Grid.PULL_PADDED_XX_SMALL).removeClass(Grid.PULL_PADDED_XXX_SMALL).addClass(size);
-                }
-                else {
-                    this.setPullPadded(true);
-                    this.removeClass(Grid.PULL_PADDED_X_LARGE).removeClass(Grid.PULL_PADDED_XX_LARGE).removeClass(Grid.PULL_PADDED_LARGE).removeClass(Grid.PULL_PADDED_MEDIUM).removeClass(Grid.PULL_PADDED_SMALL).removeClass(Grid.PULL_PADDED_X_SMALL).removeClass(Grid.PULL_PADDED_XX_SMALL).removeClass(Grid.PULL_PADDED_XXX_SMALL).addClass(size);
-                }
-                return this;
-            };
             Grid.prototype.setAlignCenter = function (b) {
                 return this.toggleClass("slds-grid_align-center", b);
             };
@@ -12728,15 +13565,6 @@ ui["__class"] = "ui";
             };
             return Grid;
         }(framework.lightning.LTContainer));
-        Grid.PULL_PADDED_NONE = "none";
-        Grid.PULL_PADDED_XXX_SMALL = "slds-grid_pull-padded-xxx-small";
-        Grid.PULL_PADDED_XX_SMALL = "slds-grid_pull-padded-xx-small";
-        Grid.PULL_PADDED_X_SMALL = "slds-grid_pull-padded-x-small";
-        Grid.PULL_PADDED_SMALL = "slds-grid_pull-padded-small";
-        Grid.PULL_PADDED_MEDIUM = "slds-grid_pull-padded-medium";
-        Grid.PULL_PADDED_LARGE = "slds-grid_pull-padded-large";
-        Grid.PULL_PADDED_X_LARGE = "slds-grid_pull-padded-x-large";
-        Grid.PULL_PADDED_XX_LARGE = "slds-grid_pull-padded-xx-large";
         lightning.Grid = Grid;
         Grid["__class"] = "framework.lightning.Grid";
         Grid["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
@@ -12932,8 +13760,6 @@ ui["__class"] = "ui";
                 /*private*/ _this.openComputerItem = new framework.builder.WelcomeScreenItem("openComputer", "OPN", "Open a project from computer", "Browse your computer to select an application", 2);
                 /*private*/ _this.openUrlItem = new framework.builder.WelcomeScreenItem("openUrl", "URL", "Open project from url", "Specify an URL of a project to fetch", 3);
                 /*private*/ _this.openLibrary = new framework.builder.WelcomeScreenItem("openLibrary", "LIB", "Open project from library", "Project stored on server", 4);
-                _this.builder = null;
-                _this.builder = builder;
                 _this.addClass("welcome-screen");
                 _this.setStyle("width", "50%");
                 _this.addClass("slds-fade-in-open slds-modal_large slds-app-launcher slds-align_absolute-center");
@@ -12942,8 +13768,8 @@ ui["__class"] = "ui";
                 _this.section.getContent().addChild$framework_JSContainer(_this.options);
                 _this.options.setWrap(true);
                 var items = [_this.newItem, _this.openComputerItem, _this.openUrlItem, _this.openLibrary];
-                for (var index6582 = 0; index6582 < items.length; index6582++) {
-                    var item = items[index6582];
+                for (var index20808 = 0; index20808 < items.length; index20808++) {
+                    var item = items[index20808];
                     {
                         var li = new framework.JSContainer("li");
                         _this.options.addChild$framework_JSContainer(li.addClass("slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1"));
@@ -13156,6 +13982,9 @@ ui["__class"] = "ui";
                 _this.applyParam("showFooter", "true");
                 return _this;
             }
+            ListPopOver.prototype.getListBox = function () {
+                return this.listBox;
+            };
             /**
              *
              * @param {string} key
@@ -13293,9 +14122,9 @@ ui["__class"] = "ui";
                 else if (name === undefined) {
                     var __args = Array.prototype.slice.call(arguments);
                     {
-                        var __args_2 = Array.prototype.slice.call(arguments);
-                        var name_2 = "Button";
-                        _this = _super.call(this, name_2) || this;
+                        var __args_3 = Array.prototype.slice.call(arguments);
+                        var name_4 = "Button";
+                        _this = _super.call(this, name_4) || this;
                         (function () {
                             _this.setTag("button");
                             _this.addClass("slds-button");
@@ -13318,8 +14147,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index6583 = 0; index6583 < Button.states_$LI$().length; index6583++) {
-                    var s = Button.states_$LI$()[index6583];
+                for (var index20809 = 0; index20809 < Button.states_$LI$().length; index20809++) {
+                    var s = Button.states_$LI$()[index20809];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -13533,9 +14362,9 @@ ui["__class"] = "ui";
                 var textParam = new framework.design.TextParameter("text", "Text", "Basic");
                 var tagParam = new framework.design.TagParameter();
                 {
-                    var array6585 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
-                    for (var index6584 = 0; index6584 < array6585.length; index6584++) {
-                        var key = array6585[index6584];
+                    var array20811 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
+                    for (var index20810 = 0; index20810 < array20811.length; index20810++) {
+                        var key = array20811[index20810];
                         {
                             tagParam.options.push(new framework.design.Option(JSDesignableTextComponent.textTags_$LI$()[key], key));
                         }
@@ -13809,8 +14638,8 @@ ui["__class"] = "ui";
                     if (parent != null) {
                         var children = parent.getDesignables();
                         var currentIndex = children.indexOf(this.designable);
-                        for (var index6586 = 0; index6586 < children.length; index6586++) {
-                            var child = children[index6586];
+                        for (var index20812 = 0; index20812 < children.length; index20812++) {
+                            var child = children[index20812];
                             {
                                 parent.removeDesignable(child);
                             }
@@ -13836,8 +14665,8 @@ ui["__class"] = "ui";
                         ;
                         var editor = (this.getAncestorWithClass("visual-editor"));
                         editor.persist = true;
-                        for (var index6587 = 0; index6587 < result.length; index6587++) {
-                            var child = result[index6587];
+                        for (var index20813 = 0; index20813 < result.length; index20813++) {
+                            var child = result[index20813];
                             {
                                 editor.addNewComponent$framework_design_Designable$framework_design_Designable(child, parent);
                             }
@@ -14110,6 +14939,107 @@ ui["__class"] = "ui";
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var builder;
+    (function (builder) {
+        var editors;
+        (function (editors) {
+            var TypeTreeItem = (function (_super) {
+                __extends(TypeTreeItem, _super);
+                function TypeTreeItem(types, dataType, structure) {
+                    var _this = _super.call(this, dataType["name"], dataType["label"]) || this;
+                    _this.dataType = new Object();
+                    _this.structure = null;
+                    _this.types = null;
+                    _this.dataType = dataType;
+                    _this.types = types;
+                    _this.structure = structure;
+                    _this.addEventListener(_this, "click");
+                    return _this;
+                }
+                TypeTreeItem.prototype.click = function (source, evt) {
+                    var veditor = (source.getAncestorWithClass("visual-editor"));
+                    veditor.showFields(this.getName());
+                };
+                TypeTreeItem.prototype.deleteMe = function () {
+                    var tys = JSON.parse(this.types.getData());
+                    var res = (new Array());
+                    for (var index20814 = 0; index20814 < tys.length; index20814++) {
+                        var o = tys[index20814];
+                        {
+                            if ((function (o1, o2) { if (o1 && o1.equals) {
+                                return o1.equals(o2);
+                            }
+                            else {
+                                return o1 === o2;
+                            } })(o["name"], this.dataType["name"])) {
+                            }
+                            else {
+                                res.push(o);
+                            }
+                        }
+                    }
+                    this.types.setData(JSON.stringify(res));
+                    framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.ProjectService").saveFile(this, this.types, new TypeTreeItem.TypeTreeItem$0(this));
+                };
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                TypeTreeItem.prototype.performAction = function (source, evt) {
+                    evt.stopPropagation();
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(source, this)) {
+                        this.click(source, evt);
+                        return;
+                    }
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(source.getName(), "delete")) {
+                        this.deleteMe();
+                    }
+                };
+                return TypeTreeItem;
+            }(framework.TreeItem));
+            editors.TypeTreeItem = TypeTreeItem;
+            TypeTreeItem["__class"] = "framework.builder.editors.TypeTreeItem";
+            TypeTreeItem["__interfaces"] = ["framework.interactions.Droppable", "framework.EventListener", "framework.Renderable"];
+            (function (TypeTreeItem) {
+                var TypeTreeItem$0 = (function () {
+                    function TypeTreeItem$0(__parent) {
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.builder.data.DataField[]} data_
+                     */
+                    TypeTreeItem$0.prototype.dataLoaded = function (data_) {
+                        if (((data_ != null) || data_ === null)) {
+                            return this.dataLoaded$java_lang_Object(data_);
+                        }
+                        else
+                            throw new Error('invalid overload');
+                    };
+                    TypeTreeItem$0.prototype.dataLoaded$java_lang_Object = function (data) {
+                        this.__parent.structure.reload$java_lang_String("types");
+                        this.__parent.structure.render();
+                    };
+                    return TypeTreeItem$0;
+                }());
+                TypeTreeItem.TypeTreeItem$0 = TypeTreeItem$0;
+                TypeTreeItem$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
+            })(TypeTreeItem = editors.TypeTreeItem || (editors.TypeTreeItem = {}));
+        })(editors = builder.editors || (builder.editors = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var lightning;
     (function (lightning) {
         var LightningApplication = (function (_super) {
@@ -14152,6 +15082,127 @@ ui["__class"] = "ui";
         LightningApplication["__class"] = "framework.lightning.LightningApplication";
         LightningApplication["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
     })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var WizardStep = (function (_super) {
+            __extends(WizardStep, _super);
+            function WizardStep(name, tag) {
+                return _super.call(this, name, tag) || this;
+            }
+            return WizardStep;
+        }(framework.designables.JSDesignableCardLayoutItem));
+        lightning.WizardStep = WizardStep;
+        WizardStep["__class"] = "framework.lightning.WizardStep";
+        WizardStep["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var FieldsList = (function (_super) {
+            __extends(FieldsList, _super);
+            function FieldsList(name) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.table = new framework.lightning.designables.JSDesignableTable("table");
+                /*private*/ _this.service = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.SalesforceObjectService"));
+                _this.table.clearColumns();
+                _this.table.addColumn(new framework.lightning.table.TableColumn("label", "label", "Label"));
+                _this.table.addColumn(new framework.lightning.table.TableColumn("name", "name", "API Name"));
+                _this.table.addColumn(new framework.lightning.table.TableColumn("type", "type", "Data Type"));
+                _this.table.refreshColumns();
+                _this.addChild$framework_JSContainer(_this.table);
+                _this.table.setIdField("name");
+                _this.setStyle("display", "none");
+                return _this;
+            }
+            FieldsList.prototype.getTable = function () {
+                return this.table;
+            };
+            FieldsList.prototype.setType = function (type) {
+                this.service.describe(this, type, this);
+            };
+            /**
+             *
+             * @param {*} response
+             * @param {number} statusCode
+             * @return {boolean}
+             */
+            FieldsList.prototype.consume = function (response, statusCode) {
+                var ob = response;
+                var fields = ob["fields"];
+                this.table.setTableData(fields);
+                this.render();
+                return true;
+            };
+            return FieldsList;
+        }(framework.designables.JSDesignableCardLayoutItem));
+        salesforce.FieldsList = FieldsList;
+        FieldsList["__class"] = "framework.salesforce.FieldsList";
+        FieldsList["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.ServiceCallback", "framework.Renderable"];
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var ObjectList = (function (_super) {
+            __extends(ObjectList, _super);
+            function ObjectList(name) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.table = new framework.lightning.designables.JSDesignableTable("table");
+                /*private*/ _this.service = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.SalesforceObjectService"));
+                _this.table.clearColumns();
+                _this.table.setSelectable(true);
+                _this.table.addColumn(new framework.lightning.table.TableColumn("label", "label", "Label", true));
+                _this.table.addColumn(new framework.lightning.table.TableColumn("name", "name", "API Name"));
+                _this.table.addColumn(new framework.lightning.table.TableColumn("description", "description", "Description"));
+                _this.table.addColumn(new framework.lightning.table.TableColumn("custom", "custom", "Custom"));
+                _this.table.addColumn(new framework.lightning.table.TableColumn("deployed", "deployed", "Deployed"));
+                _this.addChild$framework_JSContainer(_this.table);
+                _this.table.addEventListener(new ObjectList.ObjectList$0(_this), "showDetail");
+                _this.service.types(_this, _this);
+                return _this;
+            }
+            ObjectList.prototype.getSelectedItems = function () {
+                return this.table.getSelectedItems();
+            };
+            /**
+             *
+             * @param {*} response
+             * @param {number} statusCode
+             * @return {boolean}
+             */
+            ObjectList.prototype.consume = function (response, statusCode) {
+                var lst = response;
+                this.table.setTableData(lst);
+                this.render();
+                return true;
+            };
+            return ObjectList;
+        }(framework.designables.JSDesignableCardLayoutItem));
+        salesforce.ObjectList = ObjectList;
+        ObjectList["__class"] = "framework.salesforce.ObjectList";
+        ObjectList["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.ServiceCallback", "framework.Renderable"];
+        (function (ObjectList) {
+            var ObjectList$0 = (function () {
+                function ObjectList$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ObjectList$0.prototype.performAction = function (source, evt) {
+                    this.__parent.fireListener("showDetail", evt);
+                };
+                return ObjectList$0;
+            }());
+            ObjectList.ObjectList$0 = ObjectList$0;
+            ObjectList$0["__interfaces"] = ["framework.EventListener"];
+        })(ObjectList = salesforce.ObjectList || (salesforce.ObjectList = {}));
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
 })(framework || (framework = {}));
 (function (framework) {
     var rtc;
@@ -14668,8 +15719,8 @@ ui["__class"] = "ui";
                     var value = designable.getAttribute(attr);
                     this.clearChildren();
                     this.setRendered(false);
-                    for (var index6588 = 0; index6588 < parameter.options.length; index6588++) {
-                        var opt = parameter.options[index6588];
+                    for (var index20815 = 0; index20815 < parameter.options.length; index20815++) {
+                        var opt = parameter.options[index20815];
                         {
                             this.addOption(new framework.JSOption(opt.text, opt.value));
                         }
@@ -14841,9 +15892,9 @@ ui["__class"] = "ui";
                     var value = "";
                     var select = designable;
                     {
-                        var array6590 = select.getChildren();
-                        for (var index6589 = 0; index6589 < array6590.length; index6589++) {
-                            var c = array6590[index6589];
+                        var array20817 = select.getChildren();
+                        for (var index20816 = 0; index20816 < array20817.length; index20816++) {
+                            var c = array20817[index20816];
                             {
                                 var opt = c;
                                 value = value + "\n" + opt.getText();
@@ -14863,8 +15914,8 @@ ui["__class"] = "ui";
                     var select = this.designable;
                     select.clearChildren();
                     select.setRendered(false);
-                    for (var index6591 = 0; index6591 < options.length; index6591++) {
-                        var opt = options[index6591];
+                    for (var index20818 = 0; index20818 < options.length; index20818++) {
+                        var opt = options[index20818];
                         {
                             var option = new framework.JSOption(opt, opt);
                             select.addOption(option);
@@ -14890,14 +15941,30 @@ ui["__class"] = "ui";
                 var _this = _super.call(this, name) || this;
                 _this.label = new framework.JSContainer("label", "label").addClass("slds-form-element__label");
                 /*private*/ _this.control = new framework.JSContainer("div").addClass("slds-form-element__control");
+                /*private*/ _this.help = new framework.JSContainer("div").addClass("slds-form-element__help");
+                /*private*/ _this.asterix = new framework.JSContainer("abbr").addClass("slds-required").setAttribute("title", "Required").setHtml("*");
                 _this.addClass("slds-form-element");
                 _this.addChild$framework_JSContainer(_this.label);
+                _this.label.addChild$framework_JSContainer(_this.asterix);
                 _this.addChild$framework_JSContainer(_this.control);
+                _this.addChild$framework_JSContainer(_this.help);
                 _this.setAttribute("sections", "12");
                 _this.setAttribute("span", "12");
                 _this.refreshCls();
+                _this.clearError();
+                _this.setRequired(false);
                 return _this;
             }
+            FormElement.prototype.setError = function (msg) {
+                this.addClass("slds-has-error");
+                this.help.setHtml(msg);
+                this.help.setStyle("display", "block");
+            };
+            FormElement.prototype.clearError = function () {
+                this.removeClass("slds-has-error");
+                this.help.setHtml("");
+                this.help.setStyle("display", "none");
+            };
             FormElement.prototype.setLabel = function (label) {
                 this.label.setHtml(label);
                 return this;
@@ -14907,6 +15974,10 @@ ui["__class"] = "ui";
                 this.control.setRendered(false);
                 this.control.addChild$framework_JSContainer(input);
                 return this;
+            };
+            FormElement.prototype.setRequired = function (b) {
+                this.setAttribute("required", b + "");
+                this.asterix.setVisible(b);
             };
             FormElement.prototype.getInput = function () {
                 return this.control.getChildren()[0];
@@ -14987,6 +16058,84 @@ ui["__class"] = "ui";
     })(designables = framework.designables || (framework.designables = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var lightning;
+    (function (lightning) {
+        var designables;
+        (function (designables) {
+            var JSDesignableObjectType = (function (_super) {
+                __extends(JSDesignableObjectType, _super);
+                function JSDesignableObjectType(name) {
+                    var _this = _super.call(this, name) || this;
+                    /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
+                    /*private*/ _this.fields = (new Array());
+                    return _this;
+                }
+                JSDesignableObjectType.prototype.getFields = function () {
+                    return this.fields;
+                };
+                JSDesignableObjectType.prototype.setFields = function (fields) {
+                    this.fields = fields;
+                };
+                /**
+                 *
+                 * @param {string} key
+                 * @param {string} value
+                 */
+                JSDesignableObjectType.prototype.applyParam = function (key, value) {
+                    this.delegate.applyParameter(key, value, true);
+                };
+                /**
+                 *
+                 * @return {*[]}
+                 */
+                JSDesignableObjectType.prototype.getDesignables = function () {
+                    return (new Array());
+                };
+                /**
+                 *
+                 * @return {framework.builder.marshalling.Component}
+                 */
+                JSDesignableObjectType.prototype.getComponent = function () {
+                    return this.delegate.getComponent();
+                };
+                /**
+                 *
+                 * @return {framework.design.Parameter[]}
+                 */
+                JSDesignableObjectType.prototype.getParameters = function () {
+                    var params = this.delegate.getParameters();
+                    var options = new framework.design.AttributeParameter("fields", "Fields", "Extended");
+                    params.push(options);
+                    return params;
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 */
+                JSDesignableObjectType.prototype.addDesignable = function (designable) {
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 */
+                JSDesignableObjectType.prototype.removeDesignable = function (designable) {
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {number} steps
+                 */
+                JSDesignableObjectType.prototype.moveDesignable = function (designable, steps) {
+                };
+                return JSDesignableObjectType;
+            }(framework.lightning.DescriptionList));
+            designables.JSDesignableObjectType = JSDesignableObjectType;
+            JSDesignableObjectType["__class"] = "framework.lightning.designables.JSDesignableObjectType";
+            JSDesignableObjectType["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+        })(designables = lightning.designables || (lightning.designables = {}));
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var builder;
     (function (builder) {
         var ComponentsLibrary = (function (_super) {
@@ -15003,8 +16152,8 @@ ui["__class"] = "ui";
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index6592 = 0; index6592 < components.length; index6592++) {
-                    var com = components[index6592];
+                for (var index20819 = 0; index20819 < components.length; index20819++) {
+                    var com = components[index20819];
                     {
                         var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-2");
                         this.addChild$framework_JSContainer(li);
@@ -15490,6 +16639,7 @@ ui["__class"] = "ui";
                             return str.substr(position, searchString.length) === searchString;
                         })(labels[i], "Scrollable");
                         var parameter = new framework.design.AttributeParameter(keys[i], labels[i], basic ? "Basic" : "Advanced");
+                        parameter.options.push(new framework.design.Option("", ""));
                         parameters.push(parameter);
                     }
                     ;
@@ -16099,8 +17249,8 @@ ui["__class"] = "ui";
             };
             OpenProject.prototype.dataLoaded$java_lang_Object = function (data) {
                 var nprojects = data;
-                for (var index6593 = 0; index6593 < nprojects.length; index6593++) {
-                    var p = nprojects[index6593];
+                for (var index20820 = 0; index20820 < nprojects.length; index20820++) {
+                    var p = nprojects[index20820];
                     {
                         var project = new framework.builder.data.File(p);
                         var file = new framework.builder.UIFile(project.getName());
@@ -16188,6 +17338,207 @@ ui["__class"] = "ui";
             })(FieldSelector = data_8.FieldSelector || (data_8.FieldSelector = {}));
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var Prompt = (function (_super) {
+            __extends(Prompt, _super);
+            function Prompt(name, title) {
+                var _this = _super.call(this, name) || this;
+                _this.setTitle(title);
+                return _this;
+            }
+            Prompt.prototype.clearButtons = function () {
+                this.getFooter().clearChildren();
+                return this;
+            };
+            Prompt.prototype.addCancelButton = function (label) {
+                this.getFooter().addChild$framework_JSContainer(new framework.lightning.Button("cancel").setLabel(label).addEventListener(new Prompt.Prompt$0(this), "close"));
+                return this;
+            };
+            Prompt.prototype.addButton = function (name, label) {
+                this.getFooter().addChild$framework_JSContainer(new framework.lightning.Button(name).setLabel(label).addEventListener(new Prompt.Prompt$1(this, name), "click"));
+                return this;
+            };
+            Prompt.prototype.getButton = function (name) {
+                return this.getChild(name);
+            };
+            return Prompt;
+        }(framework.lightning.designables.JSDesignableModal));
+        lightning.Prompt = Prompt;
+        Prompt["__class"] = "framework.lightning.Prompt";
+        Prompt["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+        (function (Prompt) {
+            var Prompt$0 = (function () {
+                function Prompt$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                Prompt$0.prototype.performAction = function (source, evt) {
+                    this.__parent.close();
+                    this.__parent.fireListener("cancel", evt);
+                };
+                return Prompt$0;
+            }());
+            Prompt.Prompt$0 = Prompt$0;
+            Prompt$0["__interfaces"] = ["framework.EventListener"];
+            var Prompt$1 = (function () {
+                function Prompt$1(__parent, name) {
+                    this.name = name;
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                Prompt$1.prototype.performAction = function (source, evt) {
+                    this.__parent.fireListener(this.name, evt);
+                };
+                return Prompt$1;
+            }());
+            Prompt.Prompt$1 = Prompt$1;
+            Prompt$1["__interfaces"] = ["framework.EventListener"];
+        })(Prompt = lightning.Prompt || (lightning.Prompt = {}));
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var FieldListSelectModal = (function (_super) {
+            __extends(FieldListSelectModal, _super);
+            function FieldListSelectModal(name, title) {
+                var _this = _super.call(this, name) || this;
+                /*private*/ _this.fields = new framework.salesforce.FieldsList("fields");
+                _this.setTitle(title);
+                _this.getBody().addChild$framework_JSContainer(_this.fields);
+                _this.fields.getTable().setSelectable(true);
+                _this.fields.setStyle("display", "block");
+                return _this;
+            }
+            FieldListSelectModal.prototype.getList = function () {
+                return this.fields;
+            };
+            return FieldListSelectModal;
+        }(framework.lightning.designables.JSDesignableModal));
+        salesforce.FieldListSelectModal = FieldListSelectModal;
+        FieldListSelectModal["__class"] = "framework.salesforce.FieldListSelectModal";
+        FieldListSelectModal["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var ObjectListSelectModal = (function (_super) {
+            __extends(ObjectListSelectModal, _super);
+            function ObjectListSelectModal(name, title) {
+                var _this = _super.call(this, name) || this;
+                /*private*/ _this.list = null;
+                /*private*/ _this.fields = new framework.salesforce.FieldsList("fields");
+                /*private*/ _this.cardLayout = new framework.designables.JSDesignableCardLayout("layout", "div");
+                /*private*/ _this.saveButton = new framework.lightning.Button();
+                /*private*/ _this.backButton = new framework.lightning.Button();
+                _this.setTitle(title);
+                _this.list = new framework.salesforce.ObjectList("objects");
+                _this.cardLayout.addItem(_this.list);
+                _this.cardLayout.addItem(_this.fields);
+                _this.getBody().addChild$framework_JSContainer(_this.cardLayout);
+                _this.list.addEventListener(new ObjectListSelectModal.ObjectListSelectModal$0(_this), "showDetail");
+                _this.setTitle("Select Object Types to work with");
+                _this.getFooter().addChild$framework_JSContainer(_this.saveButton.setLabel("Save").addEventListener(new ObjectListSelectModal.ObjectListSelectModal$1(_this), "click"));
+                _this.getFooter().addChild$framework_JSContainer(_this.backButton.setLabel("Back").setStyle("float", "left").addEventListener(new ObjectListSelectModal.ObjectListSelectModal$2(_this), "click"));
+                return _this;
+            }
+            return ObjectListSelectModal;
+        }(framework.lightning.designables.JSDesignableModal));
+        salesforce.ObjectListSelectModal = ObjectListSelectModal;
+        ObjectListSelectModal["__class"] = "framework.salesforce.ObjectListSelectModal";
+        ObjectListSelectModal["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+        (function (ObjectListSelectModal) {
+            var ObjectListSelectModal$0 = (function () {
+                function ObjectListSelectModal$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ObjectListSelectModal$0.prototype.performAction = function (source, evt) {
+                    var name = evt["row"]["name"];
+                    this.__parent.fields.setType(name);
+                    this.__parent.cardLayout.activate("fields");
+                };
+                return ObjectListSelectModal$0;
+            }());
+            ObjectListSelectModal.ObjectListSelectModal$0 = ObjectListSelectModal$0;
+            ObjectListSelectModal$0["__interfaces"] = ["framework.EventListener"];
+            var ObjectListSelectModal$1 = (function () {
+                function ObjectListSelectModal$1(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ObjectListSelectModal$1.prototype.performAction = function (source, evt) {
+                    var evt1 = new CustomEvent("selectItems");
+                    evt1["data"] = this.__parent.list.getSelectedItems();
+                    this.__parent.fireListener("selectItems", evt1);
+                };
+                return ObjectListSelectModal$1;
+            }());
+            ObjectListSelectModal.ObjectListSelectModal$1 = ObjectListSelectModal$1;
+            ObjectListSelectModal$1["__interfaces"] = ["framework.EventListener"];
+            var ObjectListSelectModal$2 = (function () {
+                function ObjectListSelectModal$2(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ObjectListSelectModal$2.prototype.performAction = function (source, evt) {
+                    this.__parent.cardLayout.activate("objects");
+                };
+                return ObjectListSelectModal$2;
+            }());
+            ObjectListSelectModal.ObjectListSelectModal$2 = ObjectListSelectModal$2;
+            ObjectListSelectModal$2["__interfaces"] = ["framework.EventListener"];
+        })(ObjectListSelectModal = salesforce.ObjectListSelectModal || (salesforce.ObjectListSelectModal = {}));
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var SalesforceCrudModal = (function (_super) {
+            __extends(SalesforceCrudModal, _super);
+            function SalesforceCrudModal(name) {
+                var _this = _super.call(this, name) || this;
+                /*private*/ _this.crud = new framework.salesforce.SalesforceCrud("crud");
+                _this.applyParam("title", "Salesforce");
+                _this.crud.setObjectType("Account");
+                return _this;
+            }
+            SalesforceCrudModal.prototype.setColumns = function (fields) {
+                this.crud.setColumns(fields);
+            };
+            SalesforceCrudModal.prototype.setFields = function (fields) {
+                this.crud.setFields(fields);
+            };
+            return SalesforceCrudModal;
+        }(framework.lightning.designables.JSDesignableModal));
+        salesforce.SalesforceCrudModal = SalesforceCrudModal;
+        SalesforceCrudModal["__class"] = "framework.salesforce.SalesforceCrudModal";
+        SalesforceCrudModal["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
 })(framework || (framework = {}));
 (function (framework) {
     var designables;
@@ -16364,8 +17715,8 @@ ui["__class"] = "ui";
             JSDesignableLink.prototype.getParameters = function () {
                 var parameters = _super.prototype.getParameters.call(this);
                 var result = (new Array());
-                for (var index6594 = 0; index6594 < parameters.length; index6594++) {
-                    var p = parameters[index6594];
+                for (var index20821 = 0; index20821 < parameters.length; index20821++) {
+                    var p = parameters[index20821];
                     {
                         if (p != null && p instanceof framework.design.TagParameter) {
                         }
@@ -16418,9 +17769,9 @@ ui["__class"] = "ui";
                         project = framework.builder.Previewer.project;
                     }
                     {
-                        var array6596 = project.getChild("components").getChildren();
-                        for (var index6595 = 0; index6595 < array6596.length; index6595++) {
-                            var f = array6596[index6595];
+                        var array20823 = project.getChild("components").getChildren();
+                        for (var index20822 = 0; index20822 < array20823.length; index20822++) {
+                            var f = array20823[index20822];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -16431,9 +17782,9 @@ ui["__class"] = "ui";
                                     this.content = framework.builder.marshalling.MarshallUtil.build(f.getData());
                                     this.addChild$framework_JSContainer(this.content);
                                     {
-                                        var array6598 = f.getStylesheets();
-                                        for (var index6597 = 0; index6597 < array6598.length; index6597++) {
-                                            var sc = array6598[index6597];
+                                        var array20825 = f.getStylesheets();
+                                        for (var index20824 = 0; index20824 < array20825.length; index20824++) {
+                                            var sc = array20825[index20824];
                                             {
                                                 var elem = document.createElement("style");
                                                 elem.textContent = sc.getData();
@@ -16442,9 +17793,9 @@ ui["__class"] = "ui";
                                         }
                                     }
                                     {
-                                        var array6600 = f.getScripts();
-                                        for (var index6599 = 0; index6599 < array6600.length; index6599++) {
-                                            var sc = array6600[index6599];
+                                        var array20827 = f.getScripts();
+                                        for (var index20826 = 0; index20826 < array20827.length; index20826++) {
+                                            var sc = array20827[index20826];
                                             {
                                                 var elem = document.createElement("script");
                                                 elem.textContent = sc.getData();
@@ -16453,9 +17804,9 @@ ui["__class"] = "ui";
                                         }
                                     }
                                     {
-                                        var array6602 = f.getTemplates();
-                                        for (var index6601 = 0; index6601 < array6602.length; index6601++) {
-                                            var sc = array6602[index6601];
+                                        var array20829 = f.getTemplates();
+                                        for (var index20828 = 0; index20828 < array20829.length; index20828++) {
+                                            var sc = array20829[index20828];
                                             {
                                                 var elem = document.createElement("div");
                                                 elem.setAttribute("id", sc.getName());
@@ -16516,9 +17867,9 @@ ui["__class"] = "ui";
                 var project = framework.builder.Builder.getInstance().getProject();
                 component.options.push(new framework.design.Option("None", ""));
                 {
-                    var array6604 = project.getChild("components").getChildren();
-                    for (var index6603 = 0; index6603 < array6604.length; index6603++) {
-                        var f = array6604[index6603];
+                    var array20831 = project.getChild("components").getChildren();
+                    for (var index20830 = 0; index20830 < array20831.length; index20830++) {
+                        var f = array20831[index20830];
                         {
                             component.options.push(new framework.design.Option(f.getName(), f.getName()));
                         }
@@ -16562,8 +17913,15 @@ ui["__class"] = "ui";
                  */
                 JSDesignableFormElement.prototype.applyParam = function (key, value) {
                     _super.prototype.applyParam.call(this, key, value);
+                    if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(key, "required")) {
+                        this.setRequired(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })("true", value));
+                    }
                     if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(key, "type")) {
-                        var curVal = this.getValue();
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
                         }
@@ -16604,7 +17962,22 @@ ui["__class"] = "ui";
                         }
                         else {
                             return o1 === o2;
-                        } })(value, "text")) {
+                        } })(value, "text") || (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(value, "string") || (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(value, "int") || (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(value, "double")) {
                             var des = new framework.designables.JSDesignableInput(this.input.getName());
                             des.applyParam("type", value);
                             this.addDesignable(des);
@@ -16672,7 +18045,22 @@ ui["__class"] = "ui";
                         }
                         else {
                             return o1 === o2;
-                        } })(value, "lookup")) {
+                        } })(value, "ext-lookup")) {
+                            var des = new framework.lightning.ComboBox(this.input.getName());
+                            this.label.setVisible(true);
+                            this.setTag("div");
+                            this.addDesignable(des);
+                        }
+                        else if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(value, "reference")) {
+                            var des = new framework.salesforce.SalesforceLookup(this.input.getName());
+                            this.label.setVisible(true);
+                            this.setTag("div");
+                            this.addDesignable(des);
                         }
                         this.setRendered(false);
                         var editor = (this.getAncestorWithClass("visual-editor"));
@@ -16714,6 +18102,9 @@ ui["__class"] = "ui";
                 JSDesignableFormElement.prototype.getComponent = function () {
                     return _super.prototype.getComponent.call(this);
                 };
+                JSDesignableFormElement.prototype.validate = function () {
+                    return true;
+                };
                 /**
                  *
                  * @return {framework.design.Parameter[]}
@@ -16725,20 +18116,24 @@ ui["__class"] = "ui";
                     type.options.push(new framework.design.Option("datetime", "datetime"));
                     type.options.push(new framework.design.Option("Currency", "currency"));
                     type.options.push(new framework.design.Option("Number", "number"));
+                    type.options.push(new framework.design.Option("Double", "double"));
+                    type.options.push(new framework.design.Option("Integer", "int"));
                     type.options.push(new framework.design.Option("Email", "email"));
                     type.options.push(new framework.design.Option("Phone", "phone"));
-                    type.options.push(new framework.design.Option("Text", "text"));
+                    type.options.push(new framework.design.Option("Text", "string"));
                     type.options.push(new framework.design.Option("Password", "password"));
                     type.options.push(new framework.design.Option("Url", "url"));
                     type.options.push(new framework.design.Option("Checkbox", "checkbox"));
-                    type.options.push(new framework.design.Option("Lookup", "lookup"));
-                    type.options.push(new framework.design.Option("Ext Lookup", "extlookup"));
+                    type.options.push(new framework.design.Option("Lookup", "reference"));
+                    type.options.push(new framework.design.Option("Ext Lookup", "ext-lookup"));
                     type.options.push(new framework.design.Option("Pick List", "picklist"));
                     type.options.push(new framework.design.Option("Multi Pick List", "multipicklist"));
                     type.options.push(new framework.design.Option("Long Text", "textarea"));
                     type.options.push(new framework.design.Option("Rich Text", "richtext"));
                     var label = new framework.design.AttributeParameter("label", "Label", "Basic");
-                    parameters.push(type, label);
+                    var required = new framework.design.AttributeParameter("required", "Required", "Basic");
+                    required.options.push(new framework.design.Option("", ""));
+                    parameters.push(type, label, required);
                     return parameters;
                 };
                 /**
@@ -16854,7 +18249,6 @@ ui["__class"] = "ui";
                 return _super.call(this, "Service") || this;
             }
             JSDesignableService.prototype.execute = function () {
-                var _this = this;
                 var serviceName = this.getAttribute("service");
                 var method = this.getAttribute("method");
                 var payload = this.getAttribute("payload");
@@ -16866,10 +18260,7 @@ ui["__class"] = "ui";
                     opl = JSON.parse(payload);
                 }
                 opl["method"] = method;
-                framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(this, serviceName, opl, function (response, statusCode) {
-                    _this.fireListener("success", new framework.designables.DataEvent("success", response));
-                    return true;
-                });
+                framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor").Execute(this, serviceName, opl, new JSDesignableService.JSDesignableService$0(this));
             };
             /**
              *
@@ -16888,6 +18279,26 @@ ui["__class"] = "ui";
         designables.JSDesignableService = JSDesignableService;
         JSDesignableService["__class"] = "framework.designables.JSDesignableService";
         JSDesignableService["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+        (function (JSDesignableService) {
+            var JSDesignableService$0 = (function () {
+                function JSDesignableService$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {*} response
+                 * @param {number} statusCode
+                 * @return {boolean}
+                 */
+                JSDesignableService$0.prototype.consume = function (response, statusCode) {
+                    this.__parent.fireListener("success", new framework.designables.DataEvent("success", response));
+                    return true;
+                };
+                return JSDesignableService$0;
+            }());
+            JSDesignableService.JSDesignableService$0 = JSDesignableService$0;
+            JSDesignableService$0["__interfaces"] = ["framework.ServiceCallback"];
+        })(JSDesignableService = designables.JSDesignableService || (designables.JSDesignableService = {}));
     })(designables = framework.designables || (framework.designables = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -16899,6 +18310,7 @@ ui["__class"] = "ui";
                 __extends(JSDesignableSOQL, _super);
                 function JSDesignableSOQL(name) {
                     var _this = _super.call(this, name) || this;
+                    /*private*/ _this.adaptor = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor"));
                     _this.applyParam("limit", "10");
                     _this.applyParam("offset", "0");
                     return _this;
@@ -16907,7 +18319,6 @@ ui["__class"] = "ui";
                  *
                  */
                 JSDesignableSOQL.prototype.execute = function () {
-                    var _this = this;
                     var query = this.getAttribute("query");
                     var offset = this.getAttribute("offset");
                     var limit = this.getAttribute("limit");
@@ -16919,12 +18330,19 @@ ui["__class"] = "ui";
                     }
                     var payload = new Object();
                     payload["q"] = query;
-                    $.get("/objects/query", payload, function (a, b, c) {
-                        var evt = new CustomEvent("success");
-                        evt["data"] = a;
-                        _this.fireListener("success", evt);
-                        return true;
-                    });
+                    this.adaptor.Execute(this, "query", payload, new JSDesignableSOQL.JSDesignableSOQL$0(this));
+                };
+                JSDesignableSOQL.prototype.setQuery = function (query) {
+                    this.applyParam("query", query);
+                    return this;
+                };
+                JSDesignableSOQL.prototype.setOffSet = function (offset) {
+                    this.applyParam("offset", offset + "");
+                    return this;
+                };
+                JSDesignableSOQL.prototype.setLimit = function (limit) {
+                    this.applyParam("limit", limit + "");
+                    return this;
                 };
                 /**
                  *
@@ -16948,6 +18366,28 @@ ui["__class"] = "ui";
             designables.JSDesignableSOQL = JSDesignableSOQL;
             JSDesignableSOQL["__class"] = "framework.lightning.designables.JSDesignableSOQL";
             JSDesignableSOQL["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+            (function (JSDesignableSOQL) {
+                var JSDesignableSOQL$0 = (function () {
+                    function JSDesignableSOQL$0(__parent) {
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {*} response
+                     * @param {number} statusCode
+                     * @return {boolean}
+                     */
+                    JSDesignableSOQL$0.prototype.consume = function (response, statusCode) {
+                        var evt = new CustomEvent("success");
+                        evt["data"] = response;
+                        this.__parent.fireListener("success", evt);
+                        return true;
+                    };
+                    return JSDesignableSOQL$0;
+                }());
+                JSDesignableSOQL.JSDesignableSOQL$0 = JSDesignableSOQL$0;
+                JSDesignableSOQL$0["__interfaces"] = ["framework.ServiceCallback"];
+            })(JSDesignableSOQL = designables.JSDesignableSOQL || (designables.JSDesignableSOQL = {}));
         })(designables = lightning.designables || (lightning.designables = {}));
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
@@ -17006,6 +18446,8 @@ ui["__class"] = "ui";
                     _this.addComponents(new framework.builder.Component("lgt:btn-grp", "GRP", "Button Group"));
                     _this.addComponents(new framework.builder.Component("lgt:frm", "FRM", "Lightning Form"));
                     _this.addComponents(new framework.builder.Component("lgt:input", "INP", "Lightning Input"));
+                    _this.addComponents(new framework.builder.Component("lgt:combobox", "CMBO", "Lightning Combo Box"));
+                    _this.addComponents(new framework.builder.Component("lgt:lookup", "LKUP", "Lightning Lookup"));
                     _this.addComponents(new framework.builder.Component("lgt:table", "TABLE", "Data Table"));
                     _this.addComponents(new framework.builder.Component("zs:iterator", "ITER", "Iterator"));
                     return _this;
@@ -17036,6 +18478,8 @@ ui["__class"] = "ui";
                     _this.addComponents(new framework.builder.Component("lgt:modal", "MODAL", "Modal"));
                     _this.addComponents(new framework.builder.Component("lgt:acc", "ACC", "Accordion"));
                     _this.addComponents(new framework.builder.Component("lgt:acc-item", "ACCI", "Accordion Item"));
+                    _this.addComponents(new framework.builder.Component("zs:cardlayout", "CRD", "Card Layout"));
+                    _this.addComponents(new framework.builder.Component("zs:cardlayout-item", "CRDI", "Card Layout Item"));
                     _this.addComponents(new framework.builder.Component("lgt:popover", "POPOVER", "Pop Over"));
                     _this.addComponents(new framework.builder.Component("lgt:popover-footer-item", "LSTBXFI", "List Box Footer Item"));
                     _this.addComponents(new framework.builder.Component("lgt:listbox", "LSTBX", "List Box"));
@@ -17043,6 +18487,9 @@ ui["__class"] = "ui";
                     _this.addComponents(new framework.builder.Component("zs:http", "REST", "Rest Webservice"));
                     _this.addComponents(new framework.builder.Component("zs:service", "SERV", "Remote Service"));
                     _this.addComponents(new framework.builder.Component("lgt:soql", "SOQL", "Salesforce Query"));
+                    _this.addComponents(new framework.builder.Component("lgt:crud", "CRUD", "Salesforce Crud"));
+                    _this.addComponents(new framework.builder.Component("lgt:crud-table", "CRUD-TBL", "Salesforce Crud Table"));
+                    _this.addComponents(new framework.builder.Component("lgt:crud-form", "CRUD-FRM", "Salesforce Crud Form"));
                     return _this;
                 }
                 return LightningContainerComponentLibrary;
@@ -17082,9 +18529,9 @@ ui["__class"] = "ui";
                         this.clearChildren();
                         this.setRendered(false);
                         {
-                            var array6606 = Object.keys(o);
-                            for (var index6605 = 0; index6605 < array6606.length; index6605++) {
-                                var val = array6606[index6605];
+                            var array20833 = Object.keys(o);
+                            for (var index20832 = 0; index20832 < array20833.length; index20832++) {
+                                var val = array20833[index20832];
                                 {
                                     var txt = o[val];
                                     this.addOption(new framework.JSOption(txt, val));
@@ -17276,9 +18723,9 @@ ui["__class"] = "ui";
                     this.setRendered(false);
                     var options = JSON.parse(value);
                     {
-                        var array6608 = Object.keys(options);
-                        for (var index6607 = 0; index6607 < array6608.length; index6607++) {
-                            var optval = array6608[index6607];
+                        var array20835 = Object.keys(options);
+                        for (var index20834 = 0; index20834 < array20835.length; index20834++) {
+                            var optval = array20835[index20834];
                             {
                                 var checkbox = new framework.lightning.CheckBox(optval);
                                 checkbox.setLabel(options[optval]);
@@ -17323,8 +18770,8 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.setOptions = function (options) {
                 this.clearChildren();
-                for (var index6609 = 0; index6609 < options.length; index6609++) {
-                    var opt = options[index6609];
+                for (var index20836 = 0; index20836 < options.length; index20836++) {
+                    var opt = options[index20836];
                     {
                         this.addOption(opt);
                     }
@@ -17361,9 +18808,9 @@ ui["__class"] = "ui";
             CheckBoxGroup.prototype.getValue = function () {
                 var result = (new Array());
                 {
-                    var array6611 = this.getChildren();
-                    for (var index6610 = 0; index6610 < array6611.length; index6610++) {
-                        var child = array6611[index6610];
+                    var array20838 = this.getChildren();
+                    for (var index20837 = 0; index20837 < array20838.length; index20837++) {
+                        var child = array20838[index20837];
                         {
                             var cb = child;
                             if (cb.getValue() === true) {
@@ -17376,13 +18823,13 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.setValue$jsweet_lang_Array = function (val) {
                 this.clearAll();
-                for (var index6612 = 0; index6612 < val.length; index6612++) {
-                    var s = val[index6612];
+                for (var index20839 = 0; index20839 < val.length; index20839++) {
+                    var s = val[index20839];
                     {
                         {
-                            var array6614 = this.getChildren();
-                            for (var index6613 = 0; index6613 < array6614.length; index6613++) {
-                                var child = array6614[index6613];
+                            var array20841 = this.getChildren();
+                            for (var index20840 = 0; index20840 < array20841.length; index20840++) {
+                                var child = array20841[index20840];
                                 {
                                     var cb = child;
                                     if ((function (o1, o2) { if (o1 && o1.equals) {
@@ -17412,9 +18859,9 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.clearAll = function () {
                 {
-                    var array6616 = this.getChildren();
-                    for (var index6615 = 0; index6615 < array6616.length; index6615++) {
-                        var child = array6616[index6615];
+                    var array20843 = this.getChildren();
+                    for (var index20842 = 0; index20842 < array20843.length; index20842++) {
+                        var child = array20843[index20842];
                         {
                             var cb = child;
                             cb.setValue$java_lang_Boolean(false);
@@ -17508,6 +18955,370 @@ ui["__class"] = "ui";
 (function (framework) {
     var lightning;
     (function (lightning) {
+        var ComboBox = (function (_super) {
+            __extends(ComboBox, _super);
+            function ComboBox(name) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
+                /*private*/ _this.combo = new framework.JSContainer("combobox", "div").addClass("slds-combobox").addClass("slds-dropdown-trigger").addClass("slds-dropdown-trigger_click").setAttribute("aria-haspopup", "listbox").setAttribute("role", "combobox");
+                /*private*/ _this.input = new framework.JSInput("input");
+                _this.listBox = new framework.lightning.ListPopOver("popover");
+                /*private*/ _this.options = (new Array());
+                _this.inputIcon = new framework.lightning.SvgIcon("icon", "utility", "search");
+                /*private*/ _this.currentIconType = "utility";
+                /*private*/ _this.currentIconName = "search";
+                _this.value = null;
+                _this.addClass("slds-combobox_container");
+                _this.addClass("slds-has-inline-listbox");
+                _this.addChild$framework_JSContainer(_this.combo);
+                _this.setAttribute("identifier", "lgt:combobox");
+                var formelement = new framework.JSContainer("div").addClass("slds-combobox__form-element").addClass("slds-input-has-icon").addClass("slds-input-has-icon_right").setAttribute("role", "none");
+                _this.combo.addChild$framework_JSContainer(formelement);
+                formelement.addChild$framework_JSContainer(_this.input);
+                _this.input.addClass("slds-input slds-combobox__input").setAttribute("aria-autocomplete", "list").setAttribute("autocomplete", "off").setAttribute("role", "textbox");
+                _this.inputIcon.setTag("span");
+                _this.inputIcon.setAttribute("class", "slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right");
+                _this.inputIcon.setSvgClass("slds-icon slds-icon slds-icon_x-small slds-icon-text-default");
+                formelement.addChild$framework_JSContainer(_this.inputIcon);
+                _this.combo.addChild$framework_JSContainer(_this.listBox);
+                _this.listBox.addClass("slds-dropdown slds-dropdown_fluid");
+                _this.close();
+                _this.input.addEventListener(new ComboBox.ComboBox$0(_this), "keyup");
+                return _this;
+            }
+            ComboBox.prototype.setLoading = function (b) {
+                if (b) {
+                    this.currentIconName = this.inputIcon.getIconName();
+                    this.currentIconType = this.inputIcon.getType();
+                    this.inputIcon.setIconName("spinner");
+                    this.inputIcon.setType("utility");
+                }
+                else {
+                    this.inputIcon.setIconName(this.currentIconName);
+                    this.inputIcon.setType(this.currentIconType);
+                }
+            };
+            ComboBox.prototype.getTypedText = function () {
+                return this.input.getValue();
+            };
+            ComboBox.prototype.getInput = function () {
+                return this.input;
+            };
+            /**
+             *
+             * @return {Array}
+             */
+            ComboBox.prototype.advancedEventTypes = function () {
+                return ["open", "close", "select", "change"];
+            };
+            ComboBox.prototype.setPlaceHolder = function (value) {
+                this.input.setAttribute("placeholder", value);
+            };
+            ComboBox.prototype.close = function () {
+                this.combo.setAttribute("aria-expanded", "false");
+                this.combo.removeClass("slds-is-open");
+                var evt = new CustomEvent("open");
+                evt["data"] = this;
+                this.fireListener("close", evt);
+            };
+            ComboBox.prototype.open = function () {
+                this.combo.setAttribute("aria-expanded", "true");
+                this.combo.addClass("slds-is-open");
+                var evt = new CustomEvent("open");
+                evt["data"] = this;
+                this.listBox.getNative().focus();
+                this.fireListener("open", evt);
+            };
+            /**
+             *
+             * @param {string} key
+             * @param {string} value
+             */
+            ComboBox.prototype.applyParam = function (key, value) {
+                this.delegate.applyParameter(key, value, true);
+                if ((function (o1, o2) { if (o1 && o1.equals) {
+                    return o1.equals(o2);
+                }
+                else {
+                    return o1 === o2;
+                } })(key, "options")) {
+                    if (value != null) {
+                        var o = JSON.parse(value);
+                        this.clearOptions();
+                        this.setRendered(false);
+                        {
+                            var array20845 = Object.keys(o);
+                            for (var index20844 = 0; index20844 < array20845.length; index20844++) {
+                                var val = array20845[index20844];
+                                {
+                                    var txt = o[val];
+                                    var option = new Object();
+                                    option["value"] = val;
+                                    option["text"] = txt;
+                                    this.addOption(option);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            ComboBox.prototype.createItem = function (option) {
+                var txt = option["text"];
+                var val = option["value"];
+                var item = new framework.lightning.ListBoxItem(val);
+                item.setHasMeta(false);
+                item.setType(framework.lightning.ListBoxOption.TYPE_PLAIN);
+                item.setText(txt);
+                return item;
+            };
+            ComboBox.prototype.addOption = function (option) {
+                var item = this.createItem(option);
+                item.setData$java_lang_Object(option);
+                item.addEventListener(new ComboBox.ComboBox$1(this), "click");
+                this.options.push(option);
+                this.listBox.getListBox().addItem(item);
+            };
+            ComboBox.prototype.setData$jsweet_lang_Array = function (options) {
+                this.clearOptions();
+                for (var index20846 = 0; index20846 < options.length; index20846++) {
+                    var o = options[index20846];
+                    {
+                        this.addOption(o);
+                    }
+                }
+            };
+            ComboBox.prototype.setData = function (options) {
+                if (((options != null && options instanceof Array) || options === null)) {
+                    return this.setData$jsweet_lang_Array(options);
+                }
+                else if (((options != null) || options === null)) {
+                    return this.setData$java_lang_Object(options);
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            ComboBox.prototype.setOptions = function (options) {
+                this.setData$jsweet_lang_Array(options);
+            };
+            ComboBox.prototype.clearOptions = function () {
+                this.listBox.getListBox().clearItems();
+                this.options = (new Array());
+            };
+            /**
+             *
+             * @return {*[]}
+             */
+            ComboBox.prototype.getDesignables = function () {
+                return (new Array());
+            };
+            /**
+             *
+             * @return {framework.builder.marshalling.Component}
+             */
+            ComboBox.prototype.getComponent = function () {
+                return this.delegate.getComponent();
+            };
+            /**
+             *
+             * @return {framework.design.Parameter[]}
+             */
+            ComboBox.prototype.getParameters = function () {
+                var params = this.delegate.getParameters();
+                var options = new framework.design.AttributeParameter("options", "Options", "Extended");
+                params.push(options);
+                var placeHolder = new framework.design.AttributeParameter("placeHolder", "Placeholder", "Basic");
+                params.push(options, placeHolder);
+                return params;
+            };
+            /**
+             *
+             * @param {*} designable
+             */
+            ComboBox.prototype.addDesignable = function (designable) {
+            };
+            /**
+             *
+             * @param {*} designable
+             */
+            ComboBox.prototype.removeDesignable = function (designable) {
+                this.delegate.removeDesignable(designable);
+            };
+            /**
+             *
+             * @param {*} designable
+             * @param {number} steps
+             */
+            ComboBox.prototype.moveDesignable = function (designable, steps) {
+                this.delegate.moveDesignable$framework_design_Designable$int(designable, steps);
+            };
+            /**
+             *
+             * @return {Array}
+             */
+            ComboBox.prototype.getExtEditors = function () {
+                var options = new ComboBox.ComboBox$2(this, "options");
+                options.setKeyLabel("Value");
+                options.setValueLabel("Text");
+                options.setTabLabel("Options");
+                var customPropertiesEditorBody = new ComboBox.ComboBox$3(this, "custom");
+                customPropertiesEditorBody.setTabLabel("Custom");
+                return [options, customPropertiesEditorBody];
+            };
+            /**
+             *
+             * @return {Object}
+             */
+            ComboBox.prototype.getValue = function () {
+                return this.value;
+            };
+            ComboBox.prototype.getLabelProperty = function () {
+                return "text";
+            };
+            ComboBox.prototype.setValue$jsweet_lang_Object = function (val) {
+                if (val != null) {
+                    if (!(function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(val, this.value)) {
+                        this.value = val;
+                        var label = val[this.getLabelProperty()];
+                        this.input.setValue$java_lang_String(label);
+                        var evt = new CustomEvent("open");
+                        evt["data"] = val;
+                        this.fireListener("change", evt);
+                    }
+                }
+                else {
+                    if (this.value != null) {
+                        this.input.setValue$java_lang_String("");
+                        var evt = new CustomEvent("open");
+                        evt["data"] = this;
+                        this.fireListener("change", evt);
+                    }
+                }
+            };
+            /**
+             *
+             * @param {Object} val
+             */
+            ComboBox.prototype.setValue = function (val) {
+                if (((val != null && val instanceof Object) || val === null)) {
+                    return this.setValue$jsweet_lang_Object(val);
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            return ComboBox;
+        }(framework.JSContainer));
+        lightning.ComboBox = ComboBox;
+        ComboBox["__class"] = "framework.lightning.ComboBox";
+        ComboBox["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.design.ExtDesignable", "framework.Renderable", "framework.InputField"];
+        (function (ComboBox) {
+            var ComboBox$0 = (function () {
+                function ComboBox$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ComboBox$0.prototype.performAction = function (source, evt) {
+                    this.__parent.open();
+                    this.__parent.fireListener("keyup", evt);
+                };
+                return ComboBox$0;
+            }());
+            ComboBox.ComboBox$0 = ComboBox$0;
+            ComboBox$0["__interfaces"] = ["framework.EventListener"];
+            var ComboBox$1 = (function () {
+                function ComboBox$1(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                ComboBox$1.prototype.performAction = function (source, evt) {
+                    evt["data"] = source.getData();
+                    this.__parent.setValue(source.getData());
+                    this.__parent.fireListener("select", evt);
+                    this.__parent.close();
+                };
+                return ComboBox$1;
+            }());
+            ComboBox.ComboBox$1 = ComboBox$1;
+            ComboBox$1["__interfaces"] = ["framework.EventListener"];
+            var ComboBox$2 = (function (_super) {
+                __extends(ComboBox$2, _super);
+                function ComboBox$2(__parent, __arg0) {
+                    var _this = _super.call(this, __arg0) || this;
+                    _this.__parent = __parent;
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {Object} data
+                 */
+                ComboBox$2.prototype.applyDataOnDesignable = function (designable, data) {
+                    designable.applyParam("options", JSON.stringify(data));
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 * @return {Object}
+                 */
+                ComboBox$2.prototype.getDataFromDesignable = function (designable) {
+                    var options = designable.getAttribute("options");
+                    if (options != null && options.length > 0) {
+                        var data = JSON.parse(options);
+                        if (data != null) {
+                            return data;
+                        }
+                    }
+                    return new Object();
+                };
+                return ComboBox$2;
+            }(framework.builder.properties.KeyValueEditor));
+            ComboBox.ComboBox$2 = ComboBox$2;
+            ComboBox$2["__interfaces"] = ["framework.builder.properties.ExtPropertiesEditor", "framework.interactions.Droppable", "framework.EventListener", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
+            var ComboBox$3 = (function (_super) {
+                __extends(ComboBox$3, _super);
+                function ComboBox$3(__parent, __arg0) {
+                    var _this = _super.call(this, __arg0) || this;
+                    _this.__parent = __parent;
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {Object} data
+                 */
+                ComboBox$3.prototype.applyDataOnDesignable = function (designable, data) {
+                    designable['setData$java_lang_Object'](data);
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 * @return {Object}
+                 */
+                ComboBox$3.prototype.getDataFromDesignable = function (designable) {
+                    return designable.getData();
+                };
+                return ComboBox$3;
+            }(framework.builder.properties.KeyValueEditor));
+            ComboBox.ComboBox$3 = ComboBox$3;
+            ComboBox$3["__interfaces"] = ["framework.builder.properties.ExtPropertiesEditor", "framework.interactions.Droppable", "framework.EventListener", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
+        })(ComboBox = lightning.ComboBox || (lightning.ComboBox = {}));
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
         var designables;
         (function (designables) {
             var JSDesignableTable = (function (_super) {
@@ -17517,6 +19328,8 @@ ui["__class"] = "ui";
                     /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
                     /*private*/ _this.fields = (new Array());
                     /*private*/ _this.tableData = (new Array());
+                    /*private*/ _this.selected = (new Array());
+                    /*private*/ _this.selectable = false;
                     _this.setTableCellRenderer(_this);
                     for (var i = 1; i <= 5; i++) {
                         _this.addColumn(new framework.lightning.table.TableColumn("field" + i, "field" + i, "Field " + i));
@@ -17526,17 +19339,67 @@ ui["__class"] = "ui";
                     _this.setTableColumnModel(_this);
                     _this.refreshColumns();
                     _this.setModel(_this);
+                    _this.setIdField("Id");
                     return _this;
                 }
-                /**
-                 *
-                 */
-                JSDesignableTable.prototype.refreshData = function () {
-                    _super.prototype.refreshData.call(this);
-                    var evt = new CustomEvent("dataLoaded");
-                    evt["data"] = this.tableData;
+                JSDesignableTable.prototype.setIdField = function (field) {
+                    this.applyParam("IdField", field);
+                };
+                JSDesignableTable.prototype.getIdField = function () {
+                    return this.getAttribute("IdField");
+                };
+                JSDesignableTable.prototype.setSelectable = function (b) {
+                    this.selectable = b;
+                    this.refreshColumns();
+                };
+                JSDesignableTable.prototype.getSelectedItems = function () {
+                    var result = (new Array());
+                    for (var index20847 = 0; index20847 < this.tableData.length; index20847++) {
+                        var o = this.tableData[index20847];
+                        {
+                            if (o["selected"] != null && (o["selected"] === true)) {
+                                result.push(o);
+                            }
+                        }
+                    }
+                    this.selected = result;
+                    return result;
+                };
+                JSDesignableTable.prototype.setSelectedItems = function (items) {
+                    this.selected = items;
+                    for (var index20848 = 0; index20848 < this.tableData.length; index20848++) {
+                        var item = this.tableData[index20848];
+                        {
+                            item["selected"] = this.isSelected(item, items);
+                        }
+                    }
+                };
+                JSDesignableTable.prototype.isSelected = function (item, items) {
+                    var idField = this.getAttribute("IdField");
+                    for (var index20849 = 0; index20849 < items.length; index20849++) {
+                        var o = items[index20849];
+                        {
+                            if ((function (o1, o2) { if (o1 && o1.equals) {
+                                return o1.equals(o2);
+                            }
+                            else {
+                                return o1 === o2;
+                            } })(o[idField], item[idField])) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 };
                 JSDesignableTable.prototype.getComponent$framework_lightning_table_Table$java_lang_Object$int$int = function (table, value, row, column) {
+                    if (this.selectable && column === 0) {
+                        var ch = new framework.lightning.CheckBox("");
+                        ch.setValue$java_lang_Boolean(value);
+                        ch.setAttribute("rowIndex", row + "");
+                        ch.addEventListener(new JSDesignableTable.JSDesignableTable$0(this, row, ch), "change");
+                        ch.setValue$java_lang_Boolean(value);
+                        return ch;
+                    }
                     if (value != null && (typeof value === 'boolean')) {
                         var ch = new framework.lightning.CheckBox("");
                         ch.setValue$java_lang_Boolean(value);
@@ -17548,6 +19411,12 @@ ui["__class"] = "ui";
                         s = value.toString();
                     }
                     truncate.setHtml(s).setAttribute("title", s);
+                    var col = this.getColumn(column);
+                    if (col != null && col.isDetailLink()) {
+                        truncate.setTag("a");
+                        truncate.setAttribute("href", "javascript:void(0);");
+                        truncate.addEventListener(new JSDesignableTable.JSDesignableTable$1(this, row), "click");
+                    }
                     return truncate;
                 };
                 /**
@@ -17591,9 +19460,9 @@ ui["__class"] = "ui";
                         if (value != null) {
                             var o = JSON.parse(value);
                             {
-                                var array6618 = Object.keys(o);
-                                for (var index6617 = 0; index6617 < array6618.length; index6617++) {
-                                    var val = array6618[index6617];
+                                var array20851 = Object.keys(o);
+                                for (var index20850 = 0; index20850 < array20851.length; index20850++) {
+                                    var val = array20851[index20850];
                                     {
                                         var txt = o[val];
                                         var col = new framework.lightning.table.TableColumn(val, val, txt);
@@ -17685,6 +19554,9 @@ ui["__class"] = "ui";
                         this.setResizableCol(b);
                     }
                 };
+                JSDesignableTable.prototype.clearColumns = function () {
+                    this.fields = (new Array());
+                };
                 /**
                  *
                  * @return {*[]}
@@ -17703,9 +19575,9 @@ ui["__class"] = "ui";
                     var params = this.delegate.getParameters();
                     var options = new framework.design.AttributeParameter("fields", "Fields", "Extended");
                     params.push(options);
-                    var boolParams = ["Bordered", "CellBuffered", "ColBordered", "FixedLayout", "MultiSelectable", "NoRowHover", "Striped", "Selectable", "ResizableCol"];
-                    for (var index6619 = 0; index6619 < boolParams.length; index6619++) {
-                        var param = boolParams[index6619];
+                    var boolParams = ["Bordered", "CellBuffered", "ColBordered", "FixedLayout", "NoRowHover", "Striped", "Selectable", "ResizableCol"];
+                    for (var index20852 = 0; index20852 < boolParams.length; index20852++) {
+                        var param = boolParams[index20852];
                         {
                             var parameter_1 = new framework.design.AttributeParameter(param, param, "Advanced");
                             parameter_1.options.push(new framework.design.Option("", ""));
@@ -17720,10 +19592,8 @@ ui["__class"] = "ui";
                     parameter.options.push(new framework.design.Option("30", "30"));
                     parameter.options.push(new framework.design.Option("50", "50"));
                     params.push(parameter);
-                    var selectOn = new framework.design.AttributeParameter("SelectRow", "Select On", "Basic");
-                    selectOn.options.push(new framework.design.Option("click", "Click"));
-                    selectOn.options.push(new framework.design.Option("dblclick", "Double Click"));
-                    params.push(selectOn);
+                    var IdField = new framework.design.AttributeParameter("IdField", "Id Field", "Basic");
+                    params.push(IdField);
                     return params;
                 };
                 /**
@@ -17762,6 +19632,9 @@ ui["__class"] = "ui";
                  * @return {number}
                  */
                 JSDesignableTable.prototype.getColumnCount = function () {
+                    if (this.selectable) {
+                        return this.fields.length + 1;
+                    }
                     return this.fields.length;
                 };
                 /**
@@ -17770,6 +19643,7 @@ ui["__class"] = "ui";
                  * @return {number}
                  */
                 JSDesignableTable.prototype.getColumnIndex = function (columnIdentifier) {
+                    alert("sd");
                     for (var i = 0; i < this.fields.length; i++) {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -17777,6 +19651,9 @@ ui["__class"] = "ui";
                         else {
                             return o1 === o2;
                         } })(this.fields[i].getIdentifier(), columnIdentifier)) {
+                            if (this.selectable) {
+                                return i + 1;
+                            }
                             return i;
                         }
                     }
@@ -17789,14 +19666,24 @@ ui["__class"] = "ui";
                  * @return {framework.lightning.table.TableColumn}
                  */
                 JSDesignableTable.prototype.getColumn = function (columnIndex) {
-                    return this.fields[columnIndex];
+                    if (this.selectable) {
+                        if (columnIndex === 0) {
+                            return new framework.lightning.table.TableColumn("check", "", "");
+                        }
+                        else {
+                            return this.fields[columnIndex - 1];
+                        }
+                    }
+                    else {
+                        return this.fields[columnIndex];
+                    }
                 };
                 /**
                  *
                  * @return {Array}
                  */
                 JSDesignableTable.prototype.getExtEditors = function () {
-                    var fields = new JSDesignableTable.JSDesignableTable$0(this, "fields");
+                    var fields = new JSDesignableTable.JSDesignableTable$2(this, "fields");
                     fields.setKeyLabel("Name");
                     fields.setValueLabel("Label");
                     fields.setTabLabel("Fields");
@@ -17820,14 +19707,28 @@ ui["__class"] = "ui";
                 };
                 /**
                  *
-                 * @param {number} rowIndex
-                 * @param {number} columnIndex
+                 * @param {number} rowIndex_
+                 * @param {number} columnIndex_
                  * @return {*}
                  */
-                JSDesignableTable.prototype.getValueAt = function (rowIndex, columnIndex) {
+                JSDesignableTable.prototype.getValueAt = function (rowIndex_, columnIndex_) {
+                    var rowIndex = rowIndex_;
+                    var columnIndex = columnIndex_;
                     if (this.tableData.length > rowIndex) {
                         var line = this.tableData[rowIndex];
                         if (line != null) {
+                            if (this.selectable) {
+                                if (columnIndex > 0)
+                                    columnIndex = columnIndex - 1;
+                                else {
+                                    if (line["selected"] != null) {
+                                        return line["selected"];
+                                    }
+                                    else {
+                                        return false;
+                                    }
+                                }
+                            }
                             if (this.fields.length > columnIndex) {
                                 var col = this.fields[columnIndex];
                                 if (col != null) {
@@ -17853,9 +19754,46 @@ ui["__class"] = "ui";
             JSDesignableTable["__class"] = "framework.lightning.designables.JSDesignableTable";
             JSDesignableTable["__interfaces"] = ["framework.lightning.table.TableModel", "framework.interactions.Droppable", "framework.lightning.table.TableColumnModel", "framework.lightning.table.TableCellRenderer", "framework.design.Designable", "framework.design.ExtDesignable", "framework.Renderable"];
             (function (JSDesignableTable) {
-                var JSDesignableTable$0 = (function (_super) {
-                    __extends(JSDesignableTable$0, _super);
-                    function JSDesignableTable$0(__parent, __arg0) {
+                var JSDesignableTable$0 = (function () {
+                    function JSDesignableTable$0(__parent, row, ch) {
+                        this.row = row;
+                        this.ch = ch;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    JSDesignableTable$0.prototype.performAction = function (source, evt) {
+                        this.__parent.tableData[this.row]["selected"] = this.ch.getValue();
+                    };
+                    return JSDesignableTable$0;
+                }());
+                JSDesignableTable.JSDesignableTable$0 = JSDesignableTable$0;
+                JSDesignableTable$0["__interfaces"] = ["framework.EventListener"];
+                var JSDesignableTable$1 = (function () {
+                    function JSDesignableTable$1(__parent, row) {
+                        this.row = row;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    JSDesignableTable$1.prototype.performAction = function (source, evt) {
+                        evt["row"] = this.__parent.tableData[this.row];
+                        evt["data"] = this.__parent.tableData[this.row];
+                        this.__parent.fireListener("showDetail", evt);
+                    };
+                    return JSDesignableTable$1;
+                }());
+                JSDesignableTable.JSDesignableTable$1 = JSDesignableTable$1;
+                JSDesignableTable$1["__interfaces"] = ["framework.EventListener"];
+                var JSDesignableTable$2 = (function (_super) {
+                    __extends(JSDesignableTable$2, _super);
+                    function JSDesignableTable$2(__parent, __arg0) {
                         var _this = _super.call(this, __arg0) || this;
                         _this.__parent = __parent;
                         return _this;
@@ -17865,7 +19803,7 @@ ui["__class"] = "ui";
                      * @param {*} designable
                      * @param {Object} data
                      */
-                    JSDesignableTable$0.prototype.applyDataOnDesignable = function (designable, data) {
+                    JSDesignableTable$2.prototype.applyDataOnDesignable = function (designable, data) {
                         designable.applyParam("fields", JSON.stringify(data));
                     };
                     /**
@@ -17873,7 +19811,7 @@ ui["__class"] = "ui";
                      * @param {*} designable
                      * @return {Object}
                      */
-                    JSDesignableTable$0.prototype.getDataFromDesignable = function (designable) {
+                    JSDesignableTable$2.prototype.getDataFromDesignable = function (designable) {
                         var options = designable.getAttribute("fields");
                         if (options != null && options.length > 0) {
                             var data = JSON.parse(options);
@@ -17883,10 +19821,10 @@ ui["__class"] = "ui";
                         }
                         return new Object();
                     };
-                    return JSDesignableTable$0;
+                    return JSDesignableTable$2;
                 }(framework.builder.properties.KeyValueEditor));
-                JSDesignableTable.JSDesignableTable$0 = JSDesignableTable$0;
-                JSDesignableTable$0["__interfaces"] = ["framework.builder.properties.ExtPropertiesEditor", "framework.interactions.Droppable", "framework.EventListener", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
+                JSDesignableTable.JSDesignableTable$2 = JSDesignableTable$2;
+                JSDesignableTable$2["__interfaces"] = ["framework.builder.properties.ExtPropertiesEditor", "framework.interactions.Droppable", "framework.EventListener", "framework.builder.properties.PropertiesEditor", "framework.Renderable"];
             })(JSDesignableTable = designables.JSDesignableTable || (designables.JSDesignableTable = {}));
         })(designables = lightning.designables || (lightning.designables = {}));
     })(lightning = framework.lightning || (framework.lightning = {}));
@@ -17898,12 +19836,16 @@ ui["__class"] = "ui";
             __extends(FormLayout, _super);
             function FormLayout(name) {
                 var _this = _super.call(this, name) || this;
-                _this.labels = ["XXX Small", "XX Small", "X Small", "Small", "Medium", "Large", "X Large", "XX Large"];
+                _this.SPACINGS = ["None", "XXX Small", "XX Small", "X Small", "Small", "Medium", "Large", "X Large", "XX Large"];
+                /*private*/ _this.currentSpacing = FormLayout.SPACING_NONE_$LI$();
                 _this.addClass("slds-form");
                 _this.applyParam("wrap", "true");
                 _this.setCompound(true);
                 return _this;
             }
+            FormLayout.SPACING_NONE_$LI$ = function () { if (FormLayout.SPACING_NONE == null)
+                FormLayout.SPACING_NONE = framework.lightning.LTContainer.PADDING_SIZE_NONE_$LI$(); return FormLayout.SPACING_NONE; };
+            ;
             FormLayout.SPACING_XXX_SMALL_$LI$ = function () { if (FormLayout.SPACING_XXX_SMALL == null)
                 FormLayout.SPACING_XXX_SMALL = framework.lightning.LTContainer.PADDING_SIZE_XXX_SMALL_$LI$(); return FormLayout.SPACING_XXX_SMALL; };
             ;
@@ -17929,10 +19871,11 @@ ui["__class"] = "ui";
                 FormLayout.SPACING_XX_LARGE = framework.lightning.LTContainer.PADDING_SIZE_XX_LARGE_$LI$(); return FormLayout.SPACING_XX_LARGE; };
             ;
             FormLayout.prototype.setSpacing = function (spacing) {
+                this.currentSpacing = spacing;
                 {
-                    var array6621 = this.getChildren();
-                    for (var index6620 = 0; index6620 < array6621.length; index6620++) {
-                        var container = array6621[index6620];
+                    var array20854 = this.getChildren();
+                    for (var index20853 = 0; index20853 < array20854.length; index20853++) {
+                        var container = array20854[index20853];
                         {
                             var lt = container;
                             lt.setPaddingBottom(spacing).setPaddingLeft(spacing).setPaddingRight(spacing).setPaddingTop(spacing);
@@ -17979,6 +19922,7 @@ ui["__class"] = "ui";
             };
             FormLayout.prototype.addFormElement = function (element) {
                 this.addChild$framework_JSContainer(element);
+                element.setPaddingBottom(this.currentSpacing).setPaddingLeft(this.currentSpacing).setPaddingRight(this.currentSpacing).setPaddingTop(this.currentSpacing);
                 return this;
             };
             FormLayout.prototype.clear = function () {
@@ -17986,9 +19930,15 @@ ui["__class"] = "ui";
                 this.setRendered(false);
                 return this;
             };
+            FormLayout.prototype.clearFields = function () {
+                return this.clear();
+            };
             FormLayout.prototype.getElements = function () {
                 var l = this.getChildren();
                 return l;
+            };
+            FormLayout.prototype.getElement = function (name) {
+                return this.getChild(name);
             };
             return FormLayout;
         }(framework.lightning.designables.JSDesignableLightningGrid));
@@ -18075,9 +20025,9 @@ ui["__class"] = "ui";
                     var customs = des.getComponent().custom;
                     this.customComponents.clearComponent();
                     {
-                        var array6623 = Object.keys(customs);
-                        for (var index6622 = 0; index6622 < array6623.length; index6622++) {
-                            var s = array6623[index6622];
+                        var array20856 = Object.keys(customs);
+                        for (var index20855 = 0; index20855 < array20856.length; index20855++) {
+                            var s = array20856[index20855];
                             {
                                 this.customComponents.addComponents(new framework.builder.Component("html:cmp", customs[s], s));
                             }
@@ -18133,8 +20083,8 @@ ui["__class"] = "ui";
                     if (designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0)) {
                         var editors_1 = designable.getExtEditors();
                         if (editors_1 != null && editors_1.length > 0) {
-                            for (var index6624 = 0; index6624 < editors_1.length; index6624++) {
-                                var e = editors_1[index6624];
+                            for (var index20857 = 0; index20857 < editors_1.length; index20857++) {
+                                var e = editors_1[index20857];
                                 {
                                     e.setComponent(designable);
                                     this.mainEditor.addItem$java_lang_String$framework_builder_properties_PropertiesEditor(e.getLabel(designable), e).setActive(false);
@@ -18244,12 +20194,12 @@ ui["__class"] = "ui";
                 }
                 CrudTable.prototype.setFields = function (fields) {
                     this.configs["fields"] = fields;
-                    for (var index6625 = 0; index6625 < fields.length; index6625++) {
-                        var field = fields[index6625];
+                    for (var index20858 = 0; index20858 < fields.length; index20858++) {
+                        var field = fields[index20858];
                         {
-                            var name_3 = field["name"];
+                            var name_5 = field["name"];
                             var label = field["label"];
-                            var col = new framework.lightning.table.TableColumn(name_3, name_3, label);
+                            var col = new framework.lightning.table.TableColumn(name_5, name_5, label);
                             this.list.getTableColumnModel().addColumn(col);
                         }
                     }
@@ -18383,13 +20333,13 @@ ui["__class"] = "ui";
                 }
                 MultiForm.prototype.setConfigs = function (fields) {
                     var count = 0;
-                    for (var index6626 = 0; index6626 < fields.length; index6626++) {
-                        var opt = fields[index6626];
+                    for (var index20859 = 0; index20859 < fields.length; index20859++) {
+                        var opt = fields[index20859];
                         {
-                            var name_4 = opt["name"];
+                            var name_6 = opt["name"];
                             var label = opt["label"];
-                            this.select.addOption(new framework.JSOption(label, name_4));
-                            var form = new framework.builder.data.DynaForm(name_4);
+                            this.select.addOption(new framework.JSOption(label, name_6));
+                            var form = new framework.builder.data.DynaForm(name_6);
                             var options = opt["options"];
                             if (options == null) {
                                 options = opt["fields"];
@@ -18399,7 +20349,7 @@ ui["__class"] = "ui";
                             this.addSection(s);
                             form.setFields(options);
                             s.setVisible(count === 0);
-                            this.map.put(name_4, s);
+                            this.map.put(name_6, s);
                             count++;
                         }
                     }
@@ -18417,18 +20367,18 @@ ui["__class"] = "ui";
                     var type = this.select.getValue();
                     result["type"] = type;
                     {
-                        var array6628 = this.map.keySet();
-                        for (var index6627 = 0; index6627 < array6628.length; index6627++) {
-                            var name_5 = array6628[index6627];
+                        var array20861 = this.map.keySet();
+                        for (var index20860 = 0; index20860 < array20861.length; index20860++) {
+                            var name_7 = array20861[index20860];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
                                 }
                                 else {
                                     return o1 === o2;
-                                } })(name_5, type)) {
-                                    var form = this.map.get(name_5).getChildren()[0];
-                                    result[name_5] = form.getValue();
+                                } })(name_7, type)) {
+                                    var form = this.map.get(name_7).getChildren()[0];
+                                    result[name_7] = form.getValue();
                                     break;
                                 }
                             }
@@ -18438,13 +20388,13 @@ ui["__class"] = "ui";
                 };
                 MultiForm.prototype.setValue$jsweet_lang_Object = function (val) {
                     {
-                        var array6630 = this.map.keySet();
-                        for (var index6629 = 0; index6629 < array6630.length; index6629++) {
-                            var name_6 = array6630[index6629];
+                        var array20863 = this.map.keySet();
+                        for (var index20862 = 0; index20862 < array20863.length; index20862++) {
+                            var name_8 = array20863[index20862];
                             {
-                                if (val[name_6] != null) {
-                                    var form = this.map.get(name_6).getChildren()[0];
-                                    form.setValue$jsweet_lang_Object(val[name_6]);
+                                if (val[name_8] != null) {
+                                    var form = this.map.get(name_8).getChildren()[0];
+                                    form.setValue$jsweet_lang_Object(val[name_8]);
                                 }
                             }
                         }
@@ -18452,16 +20402,16 @@ ui["__class"] = "ui";
                     var type = val["type"];
                     this.select.setValue$java_lang_Object(type);
                     {
-                        var array6632 = this.map.keySet();
-                        for (var index6631 = 0; index6631 < array6632.length; index6631++) {
-                            var name_7 = array6632[index6631];
+                        var array20865 = this.map.keySet();
+                        for (var index20864 = 0; index20864 < array20865.length; index20864++) {
+                            var name_9 = array20865[index20864];
                             {
-                                this.map.get(name_7).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                                this.map.get(name_9).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
                                 }
                                 else {
                                     return o1 === o2;
-                                } })(name_7, type));
+                                } })(name_9, type));
                             }
                         }
                     }
@@ -18495,16 +20445,16 @@ ui["__class"] = "ui";
                     MultiForm$0.prototype.performAction = function (source, evt) {
                         var value = this.__parent.select.getValue();
                         {
-                            var array6634 = this.__parent.map.keySet();
-                            for (var index6633 = 0; index6633 < array6634.length; index6633++) {
-                                var name_8 = array6634[index6633];
+                            var array20867 = this.__parent.map.keySet();
+                            for (var index20866 = 0; index20866 < array20867.length; index20866++) {
+                                var name_10 = array20867[index20866];
                                 {
-                                    this.__parent.map.get(name_8).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                                    this.__parent.map.get(name_10).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
                                         return o1.equals(o2);
                                     }
                                     else {
                                         return o1 === o2;
-                                    } })(name_8, value));
+                                    } })(name_10, value));
                                 }
                             }
                         }
@@ -18516,6 +20466,52 @@ ui["__class"] = "ui";
             })(MultiForm = data.MultiForm || (data.MultiForm = {}));
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var builder;
+    (function (builder) {
+        var properties;
+        (function (properties) {
+            var ExtendedPropertyEditorPrompt = (function (_super) {
+                __extends(ExtendedPropertyEditorPrompt, _super);
+                function ExtendedPropertyEditorPrompt(name, title) {
+                    return _super.call(this, name, title) || this;
+                }
+                return ExtendedPropertyEditorPrompt;
+            }(framework.lightning.Prompt));
+            properties.ExtendedPropertyEditorPrompt = ExtendedPropertyEditorPrompt;
+            ExtendedPropertyEditorPrompt["__class"] = "framework.builder.properties.ExtendedPropertyEditorPrompt";
+            ExtendedPropertyEditorPrompt["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.design.Designable", "framework.Renderable"];
+        })(properties = builder.properties || (builder.properties = {}));
+    })(builder = framework.builder || (framework.builder = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var WizardPrompt = (function (_super) {
+            __extends(WizardPrompt, _super);
+            function WizardPrompt(name, title) {
+                var _this = _super.call(this, name, title) || this;
+                /*private*/ _this.wizardBody = new framework.designables.JSDesignableCardLayout("body", "div");
+                _this.getBody().addChild$framework_JSContainer(_this.wizardBody);
+                _this.addButton("next", "Next");
+                _this.addButton("previous", "Previous");
+                _this.addCancelButton("Cancel");
+                return _this;
+            }
+            WizardPrompt.prototype.getWizardBody = function () {
+                return this.wizardBody;
+            };
+            WizardPrompt.prototype.addStep = function (ctn) {
+                this.wizardBody.addItem(ctn);
+                return this;
+            };
+            return WizardPrompt;
+        }(framework.lightning.Prompt));
+        lightning.WizardPrompt = WizardPrompt;
+        WizardPrompt["__class"] = "framework.lightning.WizardPrompt";
+        WizardPrompt["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
 (function (framework) {
     var lightning;
@@ -18537,9 +20533,9 @@ ui["__class"] = "ui";
                 else if (name === undefined) {
                     var __args = Array.prototype.slice.call(arguments);
                     {
-                        var __args_3 = Array.prototype.slice.call(arguments);
-                        var name_9 = "item";
-                        _this = _super.call(this, name_9) || this;
+                        var __args_4 = Array.prototype.slice.call(arguments);
+                        var name_11 = "item";
+                        _this = _super.call(this, name_11) || this;
                         (function () {
                             _this.setAttribute("identifier", "lgt:popover-footer-item");
                             _this.applyParam("state", framework.lightning.Button.STATE_RESET);
@@ -18560,6 +20556,165 @@ ui["__class"] = "ui";
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var SalesforceLookup = (function (_super) {
+            __extends(SalesforceLookup, _super);
+            function SalesforceLookup(name) {
+                var _this = _super.call(this, name) || this;
+                /*private*/ _this.soql = new framework.lightning.designables.JSDesignableSOQL("soql");
+                /*private*/ _this.searching = false;
+                _this.setAttribute("identifier", "lgt:lookup");
+                _this.addChild$framework_JSContainer(_this.soql);
+                _this.soql.addEventListener(new SalesforceLookup.SalesforceLookup$0(_this), "success");
+                _this.addEventListener(new SalesforceLookup.SalesforceLookup$1(_this), "keyup");
+                _this.setObjectType("Account");
+                _this.setIconType("utility");
+                _this.setIconName("user");
+                _this.setMetadataProperty("Name");
+                _this.setLabelProperty("Name");
+                _this.setIdProperty("Id");
+                _this.listBox.getListBox().setStyle("width", "100%");
+                _this.listBox.getListBox().getChildren()[0].setStyle("width", "100%");
+                return _this;
+            }
+            SalesforceLookup.prototype.getLabelProperty = function () {
+                return this.getAttribute("labelProperty");
+            };
+            SalesforceLookup.prototype.setObjectType = function (type) {
+                this.applyParam("objectType", type);
+            };
+            SalesforceLookup.prototype.setIconType = function (type) {
+                this.applyParam("iconType", type);
+            };
+            SalesforceLookup.prototype.setIconName = function (name) {
+                this.applyParam("iconName", name);
+            };
+            SalesforceLookup.prototype.setMetadataProperty = function (property) {
+                this.applyParam("metadataProperty", property);
+            };
+            SalesforceLookup.prototype.setLabelProperty = function (property) {
+                this.applyParam("labelProperty", property);
+            };
+            SalesforceLookup.prototype.setIdProperty = function (property) {
+                this.applyParam("IdProperty", property);
+            };
+            SalesforceLookup.prototype.createItem = function (option) {
+                var metap = this.getAttribute("metadataProperty");
+                var labProp = this.getAttribute("labelProperty");
+                var idProp = this.getAttribute("IdProperty");
+                var id = option[idProp];
+                var label = option[labProp];
+                var meta = option[metap];
+                var item = new framework.lightning.ListBoxItem(id);
+                item.setText(label);
+                item.setIconName(this.getAttribute("iconName"));
+                item.setIconType(this.getAttribute("iconType"));
+                item.setMeta(meta);
+                return item;
+            };
+            /**
+             *
+             * @return {framework.design.Parameter[]}
+             */
+            SalesforceLookup.prototype.getParameters = function () {
+                var params = _super.prototype.getParameters.call(this);
+                var objectType = new framework.design.AttributeParameter("objectType", "Object Type", "Basic");
+                var metadataProperty = new framework.design.AttributeParameter("metadataProperty", "Metadata Property", "Basic");
+                var labelProperty = new framework.design.AttributeParameter("labelProperty", "Label Property", "Basic");
+                var IdProperty = new framework.design.AttributeParameter("IdProperty", "Id Property", "Basic");
+                var iconName = new framework.design.AttributeParameter("iconName", "Icon Name", "Basic");
+                var iconType = new framework.design.AttributeParameter("iconType", "Icon Type", "Basic");
+                params.push(objectType, IdProperty, labelProperty, metadataProperty, iconName, iconType);
+                return params;
+            };
+            /*private*/ SalesforceLookup.prototype.includeField = function (uni, query, fieldName) {
+                if (!uni.hasOwnProperty(fieldName)) {
+                    if (fieldName != null && fieldName.trim().length > 0) {
+                        uni[fieldName] = fieldName;
+                        return query = query + ", " + fieldName;
+                    }
+                }
+                return query;
+            };
+            SalesforceLookup.prototype.search = function (term) {
+                if (!this.searching) {
+                    var metap = this.getAttribute("metadataProperty");
+                    var labProp = this.getAttribute("labelProperty");
+                    var idProp = this.getAttribute("IdProperty");
+                    var uni = new Object();
+                    uni["Id"] = "Id";
+                    var query = "SELECT Id";
+                    query = this.includeField(uni, query, metap);
+                    query = this.includeField(uni, query, labProp);
+                    query = this.includeField(uni, query, idProp);
+                    query = query + " FROM " + this.getAttribute("objectType");
+                    if (term != null && term.trim().length > 0)
+                        query = query + " WHERE " + labProp + " LIKE \'" + term + "%\'";
+                    this.soql.setQuery(query);
+                    this.soql.setLimit(5);
+                    this.soql.execute();
+                    this.searching = true;
+                    this.setLoading(true);
+                }
+            };
+            SalesforceLookup.prototype.setValue$java_lang_String = function (value) {
+            };
+            SalesforceLookup.prototype.setValue = function (value) {
+                if (((typeof value === 'string') || value === null)) {
+                    return this.setValue$java_lang_String(value);
+                }
+                else if (((value != null && value instanceof Object) || value === null)) {
+                    _super.prototype.setValue.call(this, value);
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            return SalesforceLookup;
+        }(framework.lightning.ComboBox));
+        salesforce.SalesforceLookup = SalesforceLookup;
+        SalesforceLookup["__class"] = "framework.salesforce.SalesforceLookup";
+        SalesforceLookup["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.design.ExtDesignable", "framework.Renderable", "framework.InputField"];
+        (function (SalesforceLookup) {
+            var SalesforceLookup$0 = (function () {
+                function SalesforceLookup$0(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                SalesforceLookup$0.prototype.performAction = function (source, evt) {
+                    this.__parent.setOptions(evt["data"]);
+                    this.__parent.setLoading(false);
+                    this.__parent.render();
+                    this.__parent.searching = false;
+                };
+                return SalesforceLookup$0;
+            }());
+            SalesforceLookup.SalesforceLookup$0 = SalesforceLookup$0;
+            SalesforceLookup$0["__interfaces"] = ["framework.EventListener"];
+            var SalesforceLookup$1 = (function () {
+                function SalesforceLookup$1(__parent) {
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {framework.JSContainer} source
+                 * @param {Event} evt
+                 */
+                SalesforceLookup$1.prototype.performAction = function (source, evt) {
+                    this.__parent.search(this.__parent.getTypedText());
+                };
+                return SalesforceLookup$1;
+            }());
+            SalesforceLookup.SalesforceLookup$1 = SalesforceLookup$1;
+            SalesforceLookup$1["__interfaces"] = ["framework.EventListener"];
+        })(SalesforceLookup = salesforce.SalesforceLookup || (salesforce.SalesforceLookup = {}));
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var builder;
     (function (builder) {
         var data;
@@ -18570,25 +20725,25 @@ ui["__class"] = "ui";
                     return _super.call(this, name) || this;
                 }
                 DynaForm.prototype.setFields = function (fields) {
-                    for (var index6635 = 0; index6635 < fields.length; index6635++) {
-                        var o = fields[index6635];
+                    for (var index20868 = 0; index20868 < fields.length; index20868++) {
+                        var o = fields[index20868];
                         {
-                            var name_10 = o["name"];
+                            var name_12 = o["name"];
                             var type = o["type"];
                             var label = o["label"];
-                            var element = new framework.lightning.FormElement("elem_" + name_10, "div");
+                            var element = new framework.lightning.FormElement("elem_" + name_12, "div");
                             element.setLabel(label);
-                            var input = new framework.JSInput(name_10);
+                            var input = new framework.JSInput(name_12);
                             if (type == null || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type.trim(), "") || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "string") || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "text")) {
                             }
                             else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "integer") || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "numeric")) {
-                                input = new framework.JSInput(name_10).setType(framework.InputTypes.number);
+                                input = new framework.JSInput(name_12).setType(framework.InputTypes.number);
                             }
                             else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "select")) {
                                 var options = o["options"];
-                                var select = new framework.JSSelect(name_10);
-                                for (var index6636 = 0; index6636 < options.length; index6636++) {
-                                    var opt = options[index6636];
+                                var select = new framework.JSSelect(name_12);
+                                for (var index20869 = 0; index20869 < options.length; index20869++) {
+                                    var opt = options[index20869];
                                     {
                                         var text = opt["text"];
                                         var value = opt["value"];
@@ -18598,7 +20753,7 @@ ui["__class"] = "ui";
                                 input = select;
                             }
                             else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "multi")) {
-                                var multi = new framework.builder.data.MultiForm(name_10);
+                                var multi = new framework.builder.data.MultiForm(name_12);
                                 var options = o["options"];
                                 multi.setConfigs(options);
                                 input = multi;
@@ -18616,9 +20771,9 @@ ui["__class"] = "ui";
                 DynaForm.prototype.getValue = function () {
                     var result = new Object();
                     {
-                        var array6638 = this.getElements();
-                        for (var index6637 = 0; index6637 < array6638.length; index6637++) {
-                            var element = array6638[index6637];
+                        var array20871 = this.getElements();
+                        for (var index20870 = 0; index20870 < array20871.length; index20870++) {
+                            var element = array20871[index20870];
                             {
                                 var value = element.getInput().getValue();
                                 result[element.getInput().getName()] = value;
@@ -18629,13 +20784,13 @@ ui["__class"] = "ui";
                 };
                 DynaForm.prototype.setValue$jsweet_lang_Object = function (val) {
                     {
-                        var array6640 = this.getElements();
-                        for (var index6639 = 0; index6639 < array6640.length; index6639++) {
-                            var element = array6640[index6639];
+                        var array20873 = this.getElements();
+                        for (var index20872 = 0; index20872 < array20873.length; index20872++) {
+                            var element = array20873[index20872];
                             {
-                                var name_11 = element.getInput().getName();
-                                if (val[name_11] != null) {
-                                    var o = val[name_11];
+                                var name_13 = element.getInput().getName();
+                                if (val[name_13] != null) {
+                                    var o = val[name_13];
                                     var __in = element.getInput();
                                     __in.setValue(o);
                                 }
@@ -18770,6 +20925,40 @@ ui["__class"] = "ui";
                             this.setStacked(true);
                         }
                     }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "spacing")) {
+                        this.setSpacing(value);
+                    }
+                };
+                JSDesignableFormLayout.prototype.setData = function (options) {
+                    if (((options != null && options instanceof Object) || options === null)) {
+                        return this.setData$jsweet_lang_Object(options);
+                    }
+                    else if (((options != null) || options === null)) {
+                        return this.setData$java_lang_Object(options);
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                JSDesignableFormLayout.prototype.setData$jsweet_lang_Object = function (data) {
+                    {
+                        var array20875 = Object.keys(data);
+                        for (var index20874 = 0; index20874 < array20875.length; index20874++) {
+                            var key = array20875[index20874];
+                            {
+                                var o = data[key];
+                                var element = this.getElement(key);
+                                if (element != null) {
+                                    var f = element.getInput();
+                                    f.setValue(o);
+                                }
+                            }
+                        }
+                    }
                 };
                 /**
                  *
@@ -18782,7 +20971,14 @@ ui["__class"] = "ui";
                     parameter.options.push(new framework.design.Option("Horizontal", "horizontal"));
                     parameter.options.push(new framework.design.Option("inline", "inline"));
                     parameter.options.push(new framework.design.Option("Compound", "compound"));
-                    parameters.push(parameter);
+                    var spacing = new framework.design.AttributeParameter("spacing", "Spacing", "Basic");
+                    for (var i = 0; i < this.SPACINGS.length; i++) {
+                        var label = this.SPACINGS[i];
+                        var value = framework.lightning.LTContainer.SIZES_$LI$()[i];
+                        spacing.options.push(new framework.design.Option(label, value));
+                    }
+                    ;
+                    parameters.push(parameter, spacing);
                     return parameters;
                 };
                 /**
@@ -18803,9 +20999,9 @@ ui["__class"] = "ui";
                  */
                 JSDesignableFormLayout.prototype.removeDesignable = function (designable) {
                     {
-                        var array6642 = this.getElements();
-                        for (var index6641 = 0; index6641 < array6642.length; index6641++) {
-                            var element = array6642[index6641];
+                        var array20877 = this.getElements();
+                        for (var index20876 = 0; index20876 < array20877.length; index20876++) {
+                            var element = array20877[index20876];
                             {
                                 var b = (element != null && element instanceof framework.lightning.designables.JSDesignableFormElement);
                                 if (b) {
@@ -18843,9 +21039,9 @@ ui["__class"] = "ui";
                  */
                 JSDesignableFormLayout.prototype.moveDesignable = function (designable, steps) {
                     {
-                        var array6644 = this.getElements();
-                        for (var index6643 = 0; index6643 < array6644.length; index6643++) {
-                            var element = array6644[index6643];
+                        var array20879 = this.getElements();
+                        for (var index20878 = 0; index20878 < array20879.length; index20878++) {
+                            var element = array20879[index20878];
                             {
                                 var b = (element != null && element instanceof framework.lightning.designables.JSDesignableFormElement);
                                 if (b) {
@@ -18881,6 +21077,156 @@ ui["__class"] = "ui";
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var SalesforceTable = (function (_super) {
+            __extends(SalesforceTable, _super);
+            function SalesforceTable(name) {
+                var _this = _super.call(this, name) || this;
+                /*private*/ _this.columns = (new Array());
+                _this.setAttribute("identifier", "lgt:crud-table");
+                return _this;
+            }
+            SalesforceTable.prototype.setObjectType = function (type) {
+                this.applyParam("objectType", type);
+            };
+            SalesforceTable.prototype.setColumns = function (fields) {
+                this.columns = fields;
+                this.clearColumns();
+                for (var index20880 = 0; index20880 < fields.length; index20880++) {
+                    var o = fields[index20880];
+                    {
+                        var name_14 = o["name"];
+                        var label = o["label"];
+                        if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(name_14, "name")) {
+                            var col = new framework.lightning.table.TableColumn(name_14, name_14, label, true);
+                            this.addColumn(col);
+                        }
+                        else {
+                            var col = new framework.lightning.table.TableColumn(name_14, name_14, label);
+                            this.addColumn(col);
+                        }
+                    }
+                }
+                this.refreshColumns();
+            };
+            /**
+             *
+             * @param {string} key
+             * @param {string} value
+             */
+            SalesforceTable.prototype.applyParam = function (key, value) {
+                _super.prototype.applyParam.call(this, key, value);
+                if ((function (o1, o2) { if (o1 && o1.equals) {
+                    return o1.equals(o2);
+                }
+                else {
+                    return o1 === o2;
+                } })(key, "columns")) {
+                    var fields = JSON.parse(value);
+                    this.setColumns(fields);
+                }
+            };
+            /**
+             *
+             * @return {framework.design.Parameter[]}
+             */
+            SalesforceTable.prototype.getParameters = function () {
+                var params = _super.prototype.getParameters.call(this);
+                var objectType = new framework.design.AttributeParameter("objectType", "Object Type", "Basic");
+                var columns_ = new SalesforceTable.SalesforceTable$0(this, "columns", "Columns", "Basic");
+                params.push(objectType, columns_);
+                return params;
+            };
+            SalesforceTable.prototype.getColumns = function () {
+                return this.columns;
+            };
+            return SalesforceTable;
+        }(framework.lightning.designables.JSDesignableTable));
+        salesforce.SalesforceTable = SalesforceTable;
+        SalesforceTable["__class"] = "framework.salesforce.SalesforceTable";
+        SalesforceTable["__interfaces"] = ["framework.lightning.table.TableModel", "framework.interactions.Droppable", "framework.lightning.table.TableColumnModel", "framework.lightning.table.TableCellRenderer", "framework.design.Designable", "framework.design.ExtDesignable", "framework.Renderable"];
+        (function (SalesforceTable) {
+            var SalesforceTable$0 = (function (_super) {
+                __extends(SalesforceTable$0, _super);
+                function SalesforceTable$0(__parent, __arg0, __arg1, __arg2) {
+                    var _this = _super.call(this, __arg0, __arg1, __arg2) || this;
+                    _this.__parent = __parent;
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @return {framework.builder.properties.ExtendedPropertyEditorPrompt}
+                 */
+                SalesforceTable$0.prototype.getPrompt = function (designable) {
+                    var prompt = new SalesforceTable$0.SalesforceTable$0$0(this, "prompt", "Select Columns");
+                    prompt.addButton("save", "Save").addCancelButton("Cancel");
+                    prompt.addEventListener(new SalesforceTable$0.SalesforceTable$0$1(this, prompt, designable), "save");
+                    return prompt;
+                };
+                return SalesforceTable$0;
+            }(framework.design.ExtAttributeParameter));
+            SalesforceTable.SalesforceTable$0 = SalesforceTable$0;
+            (function (SalesforceTable$0) {
+                var SalesforceTable$0$0 = (function (_super) {
+                    __extends(SalesforceTable$0$0, _super);
+                    function SalesforceTable$0$0(__parent, __arg0, __arg1) {
+                        var _this = _super.call(this, __arg0, __arg1) || this;
+                        _this.__parent = __parent;
+                        return _this;
+                    }
+                    /**
+                     *
+                     * @param {*} designable
+                     * @param {framework.design.Parameter} parameter
+                     */
+                    SalesforceTable$0$0.prototype.setProperty = function (designable, parameter) {
+                        var list = null;
+                        if (this.getBody().getChildren().length > 0) {
+                            list = this.getBody().getChildren()[0];
+                        }
+                        else {
+                            list = new framework.salesforce.FieldsList("list");
+                            list.setStyle("display", "block");
+                            list.getTable().setSelectable(true);
+                            this.getBody().addChild$framework_JSContainer(list);
+                        }
+                        var type = designable.getAttribute("objectType");
+                        if (type == null || type.length <= 0) {
+                            type = "Account";
+                        }
+                        list.setType(type);
+                        list.getTable().setSelectedItems(this.__parent.__parent.columns);
+                    };
+                    return SalesforceTable$0$0;
+                }(framework.builder.properties.ExtendedPropertyEditorPrompt));
+                SalesforceTable$0.SalesforceTable$0$0 = SalesforceTable$0$0;
+                SalesforceTable$0$0["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.design.Designable", "framework.Renderable"];
+                var SalesforceTable$0$1 = (function () {
+                    function SalesforceTable$0$1(__parent, prompt, designable) {
+                        this.prompt = prompt;
+                        this.designable = designable;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    SalesforceTable$0$1.prototype.performAction = function (source, evt) {
+                        var lis = this.prompt.getBody().getChildren()[0];
+                        this.designable.applyParam("columns", JSON.stringify(lis.getTable().getSelectedItems()));
+                    };
+                    return SalesforceTable$0$1;
+                }());
+                SalesforceTable$0.SalesforceTable$0$1 = SalesforceTable$0$1;
+                SalesforceTable$0$1["__interfaces"] = ["framework.EventListener"];
+            })(SalesforceTable$0 = SalesforceTable.SalesforceTable$0 || (SalesforceTable.SalesforceTable$0 = {}));
+        })(SalesforceTable = salesforce.SalesforceTable || (salesforce.SalesforceTable = {}));
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var builder;
     (function (builder) {
         var properties;
@@ -18894,9 +21240,9 @@ ui["__class"] = "ui";
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
                     {
-                        var array6646 = this.component.getParameters();
-                        for (var index6645 = 0; index6645 < array6646.length; index6645++) {
-                            var p = array6646[index6645];
+                        var array20882 = this.component.getParameters();
+                        for (var index20881 = 0; index20881 < array20882.length; index20881++) {
+                            var p = array20882[index20881];
                             {
                                 if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(p.category, "advanced"))
                                     this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
@@ -18930,9 +21276,9 @@ ui["__class"] = "ui";
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
                     {
-                        var array6648 = designable.getParameters();
-                        for (var index6647 = 0; index6647 < array6648.length; index6647++) {
-                            var param = array6648[index6647];
+                        var array20884 = designable.getParameters();
+                        for (var index20883 = 0; index20883 < array20884.length; index20883++) {
+                            var param = array20884[index20883];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -18954,6 +21300,178 @@ ui["__class"] = "ui";
         })(properties = builder.properties || (builder.properties = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
+(function (framework) {
+    var salesforce;
+    (function (salesforce) {
+        var SalesforceForm = (function (_super) {
+            __extends(SalesforceForm, _super);
+            function SalesforceForm() {
+                var _this = _super.call(this) || this;
+                /*private*/ _this.fields = (new Array());
+                _this.setName("form");
+                _this.setAttribute("identifier", "lgt:crud-form");
+                return _this;
+            }
+            /**
+             *
+             * @param {string} key
+             * @param {string} value
+             */
+            SalesforceForm.prototype.applyParam = function (key, value) {
+                _super.prototype.applyParam.call(this, key, value);
+                if ((function (o1, o2) { if (o1 && o1.equals) {
+                    return o1.equals(o2);
+                }
+                else {
+                    return o1 === o2;
+                } })(key, "fields")) {
+                    var fields = JSON.parse(value);
+                    this.setFields(fields);
+                }
+            };
+            SalesforceForm.prototype.setObjectType = function (type) {
+                this.applyParam("objectType", type);
+            };
+            /**
+             *
+             * @return {framework.design.Parameter[]}
+             */
+            SalesforceForm.prototype.getParameters = function () {
+                var params = _super.prototype.getParameters.call(this);
+                var objectType = new framework.design.AttributeParameter("objectType", "Object Type", "Basic");
+                var fields = new SalesforceForm.SalesforceForm$0(this, "fields", "Fields", "Basic");
+                params.push(objectType, fields);
+                return params;
+            };
+            SalesforceForm.prototype.setFields = function (fields) {
+                this.fields = fields;
+                this.clear();
+                for (var index20885 = 0; index20885 < fields.length; index20885++) {
+                    var field = fields[index20885];
+                    {
+                        var name_15 = field["name"];
+                        var type = field["type"];
+                        var label = field["label"];
+                        var element = new framework.lightning.designables.JSDesignableFormElement(name_15);
+                        element.applyParam("span", "6");
+                        element.applyParam("type", type);
+                        element.applyParam("label", label);
+                        var nillable = field["nillable"];
+                        element.setRequired(!nillable);
+                        var select = element.getInput();
+                        if ((function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })(type, "picklist")) {
+                            var picklists = field["picklistValues"];
+                            for (var index20886 = 0; index20886 < picklists.length; index20886++) {
+                                var o = picklists[index20886];
+                                {
+                                    var active = o["active"];
+                                    if (active) {
+                                        var defaultValue = o["defaultValue"];
+                                        var plabel = o["label"];
+                                        var pvalue = o["value"];
+                                        var opt = new framework.JSOption(plabel, pvalue);
+                                        opt.setSelected(defaultValue);
+                                        select.addOption(new framework.JSOption(plabel, pvalue));
+                                    }
+                                }
+                            }
+                        }
+                        this.addFormElement(element);
+                    }
+                }
+            };
+            SalesforceForm.prototype.getFields = function () {
+                return this.fields;
+            };
+            return SalesforceForm;
+        }(framework.lightning.designables.JSDesignableFormLayout));
+        salesforce.SalesforceForm = SalesforceForm;
+        SalesforceForm["__class"] = "framework.salesforce.SalesforceForm";
+        SalesforceForm["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
+        (function (SalesforceForm) {
+            var SalesforceForm$0 = (function (_super) {
+                __extends(SalesforceForm$0, _super);
+                function SalesforceForm$0(__parent, __arg0, __arg1, __arg2) {
+                    var _this = _super.call(this, __arg0, __arg1, __arg2) || this;
+                    _this.__parent = __parent;
+                    return _this;
+                }
+                /**
+                 *
+                 * @param {*} designable
+                 * @return {framework.builder.properties.ExtendedPropertyEditorPrompt}
+                 */
+                SalesforceForm$0.prototype.getPrompt = function (designable) {
+                    var prompt = new SalesforceForm$0.SalesforceForm$0$0(this, "prompt", "Select Columns");
+                    prompt.addButton("save", "Save").addCancelButton("Cancel");
+                    prompt.addEventListener(new SalesforceForm$0.SalesforceForm$0$1(this, prompt, designable), "save");
+                    return prompt;
+                };
+                return SalesforceForm$0;
+            }(framework.design.ExtAttributeParameter));
+            SalesforceForm.SalesforceForm$0 = SalesforceForm$0;
+            (function (SalesforceForm$0) {
+                var SalesforceForm$0$0 = (function (_super) {
+                    __extends(SalesforceForm$0$0, _super);
+                    function SalesforceForm$0$0(__parent, __arg0, __arg1) {
+                        var _this = _super.call(this, __arg0, __arg1) || this;
+                        _this.__parent = __parent;
+                        return _this;
+                    }
+                    /**
+                     *
+                     * @param {*} designable
+                     * @param {framework.design.Parameter} parameter
+                     */
+                    SalesforceForm$0$0.prototype.setProperty = function (designable, parameter) {
+                        var list = null;
+                        if (this.getBody().getChildren().length > 0) {
+                            list = this.getBody().getChildren()[0];
+                        }
+                        else {
+                            list = new framework.salesforce.FieldsList("list");
+                            list.setStyle("display", "block");
+                            list.getTable().setSelectable(true);
+                            this.getBody().addChild$framework_JSContainer(list);
+                        }
+                        var type = designable.getAttribute("objectType");
+                        if (type == null || type.length <= 0) {
+                            type = "Account";
+                        }
+                        list.setType(type);
+                    };
+                    return SalesforceForm$0$0;
+                }(framework.builder.properties.ExtendedPropertyEditorPrompt));
+                SalesforceForm$0.SalesforceForm$0$0 = SalesforceForm$0$0;
+                SalesforceForm$0$0["__interfaces"] = ["framework.interactions.Droppable", "framework.builder.properties.PropertyEditor", "framework.design.Designable", "framework.Renderable"];
+                var SalesforceForm$0$1 = (function () {
+                    function SalesforceForm$0$1(__parent, prompt, designable) {
+                        this.prompt = prompt;
+                        this.designable = designable;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    SalesforceForm$0$1.prototype.performAction = function (source, evt) {
+                        var lis = this.prompt.getBody().getChildren()[0];
+                        this.designable.applyParam("fields", JSON.stringify(lis.getTable().getSelectedItems()));
+                    };
+                    return SalesforceForm$0$1;
+                }());
+                SalesforceForm$0.SalesforceForm$0$1 = SalesforceForm$0$1;
+                SalesforceForm$0$1["__interfaces"] = ["framework.EventListener"];
+            })(SalesforceForm$0 = SalesforceForm.SalesforceForm$0 || (SalesforceForm.SalesforceForm$0 = {}));
+        })(SalesforceForm = salesforce.SalesforceForm || (salesforce.SalesforceForm = {}));
+    })(salesforce = framework.salesforce || (framework.salesforce = {}));
+})(framework || (framework = {}));
 framework.lightning.FormLayout.SPACING_XX_LARGE_$LI$();
 framework.lightning.FormLayout.SPACING_X_LARGE_$LI$();
 framework.lightning.FormLayout.SPACING_LARGE_$LI$();
@@ -18962,6 +21480,7 @@ framework.lightning.FormLayout.SPACING_SMALL_$LI$();
 framework.lightning.FormLayout.SPACING_X_SMALL_$LI$();
 framework.lightning.FormLayout.SPACING_XX_SMALL_$LI$();
 framework.lightning.FormLayout.SPACING_XXX_SMALL_$LI$();
+framework.lightning.FormLayout.SPACING_NONE_$LI$();
 framework.designables.JSDesignableButton.stateLabels_$LI$();
 framework.designables.JSDesignableTextComponent.textTags_$LI$();
 framework.designables.JSDesignableTextComponent.__static_initialize();
@@ -18977,8 +21496,17 @@ framework.lightning.Text.COLORS_$LI$();
 framework.lightning.Text.TEXT_TYPES_LABELS_$LI$();
 framework.lightning.Text.TEXT_TYPES_$LI$();
 framework.lightning.Text.__static_initialize();
-framework.lightning.table.Table.SELECT_ROW_EVT_$LI$();
 framework.lightning.PopOver.NUBIN_POSITIONS_$LI$();
+framework.lightning.LTContainer.POSITIONS_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_XX_LARGE_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_X_LARGE_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_LARGE_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_MEDIUM_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_SMALL_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_X_SMALL_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_XX_SMALL_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_XXX_SMALL_$LI$();
+framework.lightning.LTContainer.MARGIN_SIZE_NONE_$LI$();
 framework.lightning.LTContainer.PADDING_SIZE_XX_LARGE_$LI$();
 framework.lightning.LTContainer.PADDING_SIZE_X_LARGE_$LI$();
 framework.lightning.LTContainer.PADDING_SIZE_LARGE_$LI$();
@@ -18988,7 +21516,7 @@ framework.lightning.LTContainer.PADDING_SIZE_X_SMALL_$LI$();
 framework.lightning.LTContainer.PADDING_SIZE_XX_SMALL_$LI$();
 framework.lightning.LTContainer.PADDING_SIZE_XXX_SMALL_$LI$();
 framework.lightning.LTContainer.PADDING_SIZE_NONE_$LI$();
-framework.lightning.LTContainer.Sizes_$LI$();
+framework.lightning.LTContainer.SIZES_$LI$();
 framework.JSContainer.defaultRenderer_$LI$();
 framework.interactions.InteractionsDecorator.droppableRenderer_$LI$();
 framework.interactions.InteractionsDecorator.draggableRenderer_$LI$();

@@ -28,7 +28,7 @@ import jsweet.dom.Event;
 
 public class Builder extends LTContainer {
 
-	private TopMenu topMenu = new TopMenu("header");
+	//private TopMenu topMenu = new TopMenu("header");
 
 	private Tabs editorTabs = new Tabs("editorTabs");
 
@@ -50,7 +50,7 @@ public class Builder extends LTContainer {
 
 	private Editor<?> activeEditor = null;
 
-	public static WebSocket websocket = new WebSocket("ws:localhost:8080/preview");
+	public static WebSocket websocket = new WebSocket(window.location.origin.replace("http://", "ws://").replace("https://", "wss://") +"/preview");
 
 	private boolean projectOpen = false;
 	

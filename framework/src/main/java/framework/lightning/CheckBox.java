@@ -36,7 +36,8 @@ public class CheckBox extends JSContainer implements InputField<Boolean>, EventL
 
 	@Override
 	public Boolean getValue() {
-		return getAttribute("checked") != null;
+		return checkbox.getValue();
+		//return getAttribute("checked") != null;
 		
 	}
 

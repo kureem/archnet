@@ -26,6 +26,9 @@ public class LightningContainerComponentLibrary extends ComponentsLibrary{
 		addComponents(new Component("lgt:acc", "ACC", "Accordion"));
 		addComponents(new Component("lgt:acc-item", "ACCI", "Accordion Item"));
 		
+		addComponents(new Component("zs:cardlayout", "CRD", "Card Layout"));
+		addComponents(new Component("zs:cardlayout-item", "CRDI", "Card Layout Item"));
+		
 		addComponents(new Component("lgt:popover", "POPOVER", "Pop Over"));
 		addComponents(new Component("lgt:popover-footer-item", "LSTBXFI", "List Box Footer Item"));
 		addComponents(new Component("lgt:listbox", "LSTBX", "List Box"));
@@ -35,6 +38,10 @@ public class LightningContainerComponentLibrary extends ComponentsLibrary{
 		addComponents(new Component("zs:http", "REST", "Rest Webservice"));
 		addComponents(new Component("zs:service", "SERV", "Remote Service"));
 		addComponents(new Component("lgt:soql", "SOQL", "Salesforce Query"));
+		
+		addComponents(new Component("lgt:crud", "CRUD", "Salesforce Crud"));
+		addComponents(new Component("lgt:crud-table", "CRUD-TBL", "Salesforce Crud Table"));
+		addComponents(new Component("lgt:crud-form", "CRUD-FRM", "Salesforce Crud Form"));
 	}
 
 }

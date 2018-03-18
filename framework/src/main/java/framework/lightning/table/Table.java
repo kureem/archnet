@@ -1,11 +1,9 @@
 package framework.lightning.table;
 
-import framework.EventListener;
 import framework.JSContainer;
 import framework.Renderable;
 import framework.lightning.Spinner;
 import jsweet.dom.CustomEvent;
-import jsweet.dom.Event;
 
 public class Table extends JSContainer {
 
@@ -31,31 +29,9 @@ public class Table extends JSContainer {
 
 	private Paginator paginator = new Paginator("paginator");
 
-	private boolean selectable = false;
-
 	private boolean multiSelectable = false;
 
-	private String selecteRowOn = "click";
-
 	private String emptyTableMessage = "No data available";
-
-	//private Array<TableRowsSelectionListener> rowsSelectionListeners = new Array<>();
-
-	private final static EventListener SELECT_ROW_EVT = new EventListener() {
-
-		@Override
-		public void performAction(JSContainer source, Event evt) {
-			double index = source.getParent().getChildren().indexOf(source);
-			//alert("selected row index: " + index);
- 
-			Table table = (Table) source.getParent().getParent();
-			int page = table.currrentPage;
-			index = (page * table.pageSize) + index;
-			evt.$set("first", index + "");
-			evt.$set("last", index + "");
-			table.fireListener("selectRows",evt);
-		}
-	};
 
 	public Table(String name) {
 		super(name, "table");
@@ -72,25 +48,9 @@ public class Table extends JSContainer {
 
 	}
 
-	/*public void addRowsSelectionListener(TableRowsSelectionListener l) {
-		rowsSelectionListeners.push(l);
-	}*/
-
-	/*public void fireRowsSelectionListeners(JSContainer source, Event evt, double firstIndex, double lastIndex) {
-		for (TableRowsSelectionListener l : rowsSelectionListeners) {
-			l.onSelectRow(source, evt, this, firstIndex, lastIndex);
-		}
-	}*/
-	
-	
-
 	@Override
 	public String[] advancedEventTypes() {
-		return new String[]{"selectRows", "sort", "changePage"};
-	}
-
-	public void setSelectRowOn(String on) {
-		this.selecteRowOn = on;
+		return new String[] { "selectRows", "sort", "changePage", "showDetail" };
 	}
 
 	private JSContainer addEmptyRow() {
@@ -117,7 +77,6 @@ public class Table extends JSContainer {
 
 	public void setModel(TableModel model) {
 		this.model = model;
-		// this.pageSize = model.getPageSize();
 	}
 
 	public TableCellRenderer getTableCellRenderer() {
@@ -145,12 +104,11 @@ public class Table extends JSContainer {
 	}
 
 	public void setPage(int page) {
-		
+
 		this.currrentPage = page;
 		refreshData();
 		CustomEvent evt = new CustomEvent("changePage");
 		evt.$set("page", page + "");
-		//evt.srcElement = getNative();
 		fireListener("changePage", evt);
 	}
 
@@ -170,18 +128,18 @@ public class Table extends JSContainer {
 	public void refreshData() {
 		tbody.clearChildren();
 		tbody.setRendered(false);
-		if(model == null){
+		if (model == null) {
 			return;
 		}
-		
-		if(tableColumnModel == null){
+
+		if (tableColumnModel == null) {
 			return;
 		}
-		
-		if(tableCellRenderer == null){
+
+		if (tableCellRenderer == null) {
 			return;
 		}
-		
+
 		double rows = model.getRowCount();
 		double cols = tableColumnModel.getColumnCount();
 		double iterSize = pageSize;
@@ -202,14 +160,12 @@ public class Table extends JSContainer {
 				}
 
 				JSContainer tr = new JSContainer("tr");
-				if (selectable) {
-					tr.addEventListener(SELECT_ROW_EVT, selecteRowOn);
-				}
+
 				tbody.addChild(tr.addClass("slds-hint-parent"));
 
 				for (int col = 0; col < cols; col++) {
 					java.lang.Object value = model.getValueAt(realRow, col);
-					Renderable cell = tableCellRenderer.getComponent(this, value, row, col);
+					Renderable cell = tableCellRenderer.getComponent(this, value, realRow, col);
 					JSContainer td = new JSContainer("td").addClass("slds-cell-wrap").setAttribute("role", "gridcell");
 					if (value != null && value instanceof Boolean) {
 						td.addClass("boolean-cell");
@@ -231,7 +187,7 @@ public class Table extends JSContainer {
 		tfoot.setAttribute("colspan", cols + "");
 		ftd.setAttribute("colspan", cols + "");
 		ftr.setAttribute("colspan", cols + "");
-		
+
 	}
 
 	public JSContainer getRow(int index) {
@@ -240,14 +196,6 @@ public class Table extends JSContainer {
 
 	public JSContainer getBody() {
 		return tbody;
-	}
-
-	public void setSelectable(boolean b) {
-		selectable = b;
-	}
-
-	public boolean isSelectable() {
-		return selectable;
 	}
 
 	public void setMultiSelectable(boolean b) {
@@ -316,7 +264,5 @@ public class Table extends JSContainer {
 		setFeature("slds-table_striped", b);
 		return this;
 	}
-
-
 
 }

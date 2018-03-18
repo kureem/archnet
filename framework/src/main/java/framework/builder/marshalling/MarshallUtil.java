@@ -62,10 +62,7 @@ public class MarshallUtil {
 				.getComponentFactory(component.impl).build(component, false);
 		des.setData(component.data);
 		des.getComponent().custom = component.custom;
-		String exp = des.getAttribute("exposeAs");
-		if(exp != null && exp.length() > 0){
-			new DesignableDelegate(des).exposeVariable(exp);
-		}
+		
 		if(design){
 			des.addEventListener(new SelectComponentEvent(selector), "click");
 		}
@@ -73,6 +70,10 @@ public class MarshallUtil {
 			for (Component c : component.children) {
 				Designable child = toDesignable(c,design,selector);
 				des.addDesignable(child);
+				String exp = child.getAttribute("exposeAs");
+				if(exp != null && exp.length() > 0){
+					new DesignableDelegate(child).exposeVariable(exp);
+				}
 				
 			}
 		}

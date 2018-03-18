@@ -30,6 +30,7 @@ import framework.lightning.FormLayout;
 import framework.lightning.IconButton;
 import framework.lightning.LightningApplication;
 import framework.lightning.Modal;
+import framework.salesforce.FieldListSelectModal;
 import jsweet.dom.Event;
 import jsweet.lang.JSON;
 
@@ -75,6 +76,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 	
 	JSTextArea helper = new JSTextArea("helper");
 	
+	private FieldListSelectModal fieldList = new FieldListSelectModal("fieldList", "Select Fields from Table");
 	
 	
 	//private JSContainer foot = new JSContainer("foot", "div").addClass("slds-size_2-of-12").addClass(".slds-docked-composer__footer").setStyle("display", "flex");
@@ -87,6 +89,8 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 	public VisualEditor(String name) {
 		super(name, "div", null);
 		addClass("visual-editor").addClass("slds-grid").addClass("slds-wrap");
+		
+		addChild(fieldList);
 		
 		FormLayout frmjson = new FormLayout("frmjson");
 		frmjson.setStyle("margin", "8px");
@@ -158,6 +162,8 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 			}
 		}, "click");
 		
+		toggleDefinitions.setAttribute("title", "Show Definition JSON");
+		
 		toggleRuler.addEventListener(new EventListener() {
 			
 			@Override
@@ -172,6 +178,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 				}
 			}
 		}, "click");
+		toggleRuler.setAttribute("title", "Show / Hide Ruler");
 		
 		addClass("show-outline");
 		toggleOutline.addEventListener(new EventListener() {
@@ -190,7 +197,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 			}
 		}, "click");
 		
-		
+		toggleOutline.setAttribute("title", "Show / Hide Outline");
 		document.onkeyup = (e)->{
 			
 			
@@ -201,9 +208,22 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 			}
 			return true;
 		};
+		
+		hideOutline();
 		//toggleOutline
 	}
 	
+	
+	public void hideOutline(){
+		toggleOutline.setSelected(false);
+		removeClass("show-outline");
+	}
+	
+	
+	public void showFields(String type){
+		fieldList.getList().setType(type);
+		fieldList.open();
+	}
 	
 	private boolean showDef = false;
 	public void toggleDefns(){

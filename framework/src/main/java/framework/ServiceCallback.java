@@ -2,6 +2,6 @@ package framework;
 
 public interface ServiceCallback {
 
-	boolean apply(Object response, double statusCode);
+	boolean consume(Object response, double statusCode);
 	
 }

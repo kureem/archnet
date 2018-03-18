@@ -1,6 +1,5 @@
 package framework.builder.editors;
 
-import static def.dom.Globals.alert;
 import static jsweet.lang.Globals.parseInt;
 
 import framework.EventListener;
@@ -14,6 +13,8 @@ import framework.util.HashMap;
 import framework.util.Map;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
+import jsweet.lang.JSON;
+import jsweet.lang.Object;
 
 public class Structure extends JSContainer {
 
@@ -210,16 +211,13 @@ public class Structure extends JSContainer {
 	
 	private void addTreeItem(JSContainer li, String type,String label){
 		TreeItem item =new TreeItem("", label);
-		
-		item.addIcon("add", "utility", new NewFileStructureEventListener( type, file, this));
-		if(type.equalsIgnoreCase("types")){
-			item.addIcon("import", "utility", new EventListener() {
-				
-				@Override
-				public void performAction(JSContainer source, Event evt) {
-					alert("to implement: Import from salesforce");
-				}
-			});
+		if(type.equals("types")){
+			
+			item.addIcon("import", "utility",new NewFileStructureEventListener( type, file, this));
+			
+		}else{
+			item.addIcon("add", "utility", new NewFileStructureEventListener( type, file, this));
+			
 		}
 		//item.addIcon(name, type, listener); 
 		item.addClass("type-" + type).addEventListener(toggleSelect, "click");
@@ -278,12 +276,30 @@ public class Structure extends JSContainer {
 		for (String type : lis.keySet()) {
 			JSContainer cstylesheets = new JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
 			if(file.getChild(type) != null){
-				for (File f : file.getChild(type).getChildren()) {
-					TreeItem item = new FileTreeItem(f, type, Builder.getInstance(), this);
-					item.addEventListener(toggleSelect, "click");
-					JSContainer li = new JSContainer("li").addChild(item).setAttribute("role", "treeitem")
-							.setAttribute("aria-level", "3");
-					lis.get(type).addChild(cstylesheets.addChild(li));
+				
+				if(type.equals("types")){
+					File ftype = file.getChild("types");
+					@SuppressWarnings("unchecked")
+					Array<Object> arrTypes = (Array<Object>)JSON.parse(ftype.getData());
+					if(arrTypes != null){
+						for(Object o : arrTypes){
+							TypeTreeItem item = new TypeTreeItem(ftype,o,this);
+							//TreeItem item = new FileTreeItem(f, type, Builder.getInstance(), this);
+							item.addEventListener(toggleSelect, "click");
+							JSContainer li = new JSContainer("li").addChild(item).setAttribute("role", "treeitem")
+									.setAttribute("aria-level", "3");
+							lis.get(type).addChild(cstylesheets.addChild(li));
+						}
+					}
+				}else{
+				
+					for (File f : file.getChild(type).getChildren()) {
+						TreeItem item = new FileTreeItem(f, type, Builder.getInstance(), this);
+						item.addEventListener(toggleSelect, "click");
+						JSContainer li = new JSContainer("li").addChild(item).setAttribute("role", "treeitem")
+								.setAttribute("aria-level", "3");
+						lis.get(type).addChild(cstylesheets.addChild(li));
+					}
 				}
 			}else{
 				lis.get(type).addChild(cstylesheets);

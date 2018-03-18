@@ -28,7 +28,7 @@ public class ProjectController {
 	private Salesforce salesforce;
 	@Autowired
 	private ConnectionRepository connectionRepository;
-	
+
 	@Autowired
 	private RuntimeService runtimeService;
 
@@ -41,9 +41,6 @@ public class ProjectController {
 		return runtimeService.startProcessInstanceByKey("hireProcess", variables);
 	}
 
-	
-	
-	
 	@SuppressWarnings("unused")
 	@RequestMapping(path = "/describe/{type}", method = RequestMethod.GET)
 	public Object describe(@PathVariable("type") String type, HttpServletResponse response) throws Exception {
@@ -58,7 +55,7 @@ public class ProjectController {
 		}
 
 		SObjectDetail detail = salesforce.sObjectsOperations().describeSObject(type);
-	
+
 		if (true) {
 			// return "redirect:/index.html";
 

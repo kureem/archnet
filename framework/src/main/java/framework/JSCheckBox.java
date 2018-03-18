@@ -41,7 +41,6 @@ public class JSCheckBox extends JSContainer implements InputField<Boolean> {
 		
 		HTMLInputElement el = (HTMLInputElement)getNative();
 		if(el != null){
-			//setValue(el.checked);
 			return el.checked;
 		}
 		if (getAttribute("value") != null && "true".equalsIgnoreCase(getAttribute("value"))) {
@@ -61,13 +60,9 @@ public class JSCheckBox extends JSContainer implements InputField<Boolean> {
 		}
 		HTMLInputElement el = (HTMLInputElement)getNative();
 		if(el != null){
-			setValue(el.checked);
-		//	return el.checked;
+			el.checked = b;
 		}
-		
-
 	}
-
 
 	public boolean isChecked() {
 		return getValue();

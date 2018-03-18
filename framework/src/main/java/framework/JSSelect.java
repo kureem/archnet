@@ -74,6 +74,7 @@ public class JSSelect extends JSContainer implements InputField<Object> {
 		return null;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void setValue(Object values) {
 		

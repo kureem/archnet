@@ -1,19 +1,13 @@
 package framework.renderer;
 
-import static def.dom.Globals.console;
 import static def.jquery.Globals.$;
 import static jsweet.dom.Globals.document;
 
 import framework.EventListener;
-import framework.InputField;
 import framework.JSContainer;
 import framework.JSHTMLFragment;
-import framework.JSInput;
 import framework.Renderable;
 import jsweet.dom.HTMLElement;
-import jsweet.dom.HTMLInputElement;
-import jsweet.dom.HTMLSelectElement;
-import jsweet.dom.HTMLTextAreaElement;
 import jsweet.dom.NamedNodeMap;
 import jsweet.dom.Node;
 import jsweet.lang.Array;

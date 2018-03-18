@@ -15,7 +15,7 @@ public class JSDesignableIterator extends JSContainer implements Designable{
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	
-	private Array<Object> data = new Array<Object>();
+	//private Array<Object> data = new Array<Object>();
 	
 	private JSContainer templateCtn = new JSContainer("tmp","div");
 	private JSContainer list = new JSContainer("list", "div");
@@ -52,6 +52,7 @@ public class JSDesignableIterator extends JSContainer implements Designable{
 		return delegate.getComponent();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setData(java.lang.Object obj){
 		super.setData(obj);
 		Array<Object> ls = (Array<Object>)obj;

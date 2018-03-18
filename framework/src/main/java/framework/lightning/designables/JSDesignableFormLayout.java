@@ -2,6 +2,7 @@ package framework.lightning.designables;
 
 import static def.dom.Globals.console;
 
+import framework.InputField;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Option;
@@ -9,6 +10,7 @@ import framework.design.Parameter;
 import framework.lightning.FormElement;
 import framework.lightning.FormLayout;
 import jsweet.lang.Array;
+import jsweet.lang.Object;
 
 public class JSDesignableFormLayout extends FormLayout {
 	
@@ -34,10 +36,23 @@ public class JSDesignableFormLayout extends FormLayout {
 			}else{
 				setStacked(true);
 			}
+		}else if(key.equals("spacing")){
+			setSpacing(value);
 		}
 	}
 
-	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void setData(Object data){
+		for(String key : Object.keys(data)){
+			Object o = (Object)data.$get(key);
+			FormElement element = getElement(key);
+			if(element != null){
+				InputField f = element.getInput();
+				f.setValue(o);
+				//element.getInput().setValue(o);
+			}
+		}
+	}
 
 	@Override
 	public Array<Parameter> getParameters() {
@@ -47,7 +62,16 @@ public class JSDesignableFormLayout extends FormLayout {
 		parameter.options.push(new Option("Horizontal", "horizontal"));
 		parameter.options.push(new Option("inline", "inline"));
 		parameter.options.push(new Option("Compound", "compound"));
-		parameters.push(parameter);
+		
+		
+		AttributeParameter spacing = new AttributeParameter("spacing", "Spacing", "Basic");
+		for(int i = 0; i < SPACINGS.length;i++){
+			String label = SPACINGS[i];
+			String value = SIZES[i];
+			spacing.options.push(new Option(label,value));
+		}
+		
+		parameters.push(parameter,spacing);
 		return parameters;
 	}
 

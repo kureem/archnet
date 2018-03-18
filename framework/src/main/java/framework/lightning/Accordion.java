@@ -25,8 +25,6 @@ public class Accordion extends JSContainer implements Designable {
 	 */
 	public Accordion addItem(AccordionItem item) {
 		addDesignable(item);
-		String i ;
-		
 		return this;
 	}
 	

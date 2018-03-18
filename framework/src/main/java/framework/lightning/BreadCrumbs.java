@@ -41,6 +41,7 @@ public class BreadCrumbs extends JSContainer implements Designable{
 	}
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Array<Designable> getDesignables() {
 		

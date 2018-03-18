@@ -64,6 +64,7 @@ public class CheckBoxGroup extends JSContainer implements ExtDesignable,InputFie
 		return params;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setData(java.lang.Object obj){
 		if(obj instanceof Array<?>){
 			Array<Option> options = (Array<Option>)obj;

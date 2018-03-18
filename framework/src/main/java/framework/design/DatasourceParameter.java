@@ -1,10 +1,6 @@
 package framework.design;
 
-import framework.JSContainer;
-import framework.builder.Builder;
-import framework.builder.data.File;
 import framework.builder.properties.PropertyEditor;
-import jsweet.lang.Array;
 
 public class DatasourceParameter extends AttributeParameter{
 

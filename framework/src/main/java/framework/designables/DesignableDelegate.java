@@ -56,7 +56,7 @@ public class DesignableDelegate {
 			ui.setAttribute("class", value);
 		}else if(key.equalsIgnoreCase("dhidden")){
 			ui.setVisible(!"true".equals(value));
-		}else if(key.equalsIgnoreCase("draggable")){
+		}else if(key.equalsIgnoreCase("draggable")){ 
 			ui.setAttribute("draggable", value);
 		}else if(key.equals("exposeAs")){
 			ui.setAttribute(key, value);
@@ -67,9 +67,9 @@ public class DesignableDelegate {
 				ui.setHtml(value);
 			}
 		}else{
-			if(value.length() < 200){
+			//if(value.length() < 200){
 				ui.setAttribute(key, value);
-			}
+			//}
 		}
 	}
 

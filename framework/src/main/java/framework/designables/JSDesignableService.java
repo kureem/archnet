@@ -32,7 +32,7 @@ public class JSDesignableService extends JSDesignableDataProvider implements Des
 		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(this, serviceName, opl, new ServiceCallback() {
 			
 			@Override
-			public boolean apply(java.lang.Object response, double statusCode) {
+			public boolean consume(java.lang.Object response, double statusCode) {
 				fireListener("success", new DataEvent("success",(Object)response));
 				return true;
 			}

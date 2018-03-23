@@ -1,5 +1,7 @@
 package framework.lightning.designables;
 
+import static jsweet.dom.Globals.alert;
+
 import framework.Adaptor;
 import framework.ServiceCallback;
 import framework.core.BeanFactory;
@@ -46,9 +48,13 @@ public class JSDesignableSOQL extends JSDesignableDataProvider implements Design
 			
 			@Override
 			public boolean consume(java.lang.Object response, double statusCode) {
-				CustomEvent evt = new CustomEvent("success");
-				evt.$set("data", response);
-				fireListener("success",evt );
+				if(statusCode == 200){
+					CustomEvent evt = new CustomEvent("success");
+					evt.$set("data", response);
+					fireListener("success",evt );
+				}else{
+					alert(response);
+				}
 				return true;
 			}
 		});

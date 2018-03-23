@@ -4,7 +4,10 @@ import def.js.JSON;
 import framework.EventListener;
 import framework.JSContainer;
 import framework.JSOption;
+import framework.ServiceCallback;
+import framework.builder.data.SalesforceObjectService;
 import framework.builder.properties.ExtendedPropertyEditorPrompt;
+import framework.core.BeanFactory;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.ExtAttributeParameter;
@@ -12,19 +15,40 @@ import framework.design.Parameter;
 import framework.designables.JSDesignableSelect;
 import framework.lightning.designables.JSDesignableFormElement;
 import framework.lightning.designables.JSDesignableFormLayout;
+import jsweet.dom.CustomEvent;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
 public class SalesforceForm extends JSDesignableFormLayout {
 
+	private Array<Object> fields_ = new Array<Object>();
+	
 	public SalesforceForm() {
 		super();
 		setName("form");
 		setAttribute("identifier", "lgt:crud-form");
+		setIdField("Id");
 	}
 
-	private Array<Object> fields = new Array<Object>();
+	public void setIdField(String field){
+		applyParam("IdField", field);
+	}
+	
+	public String getIdField(){
+		return getAttribute("IdField");
+	} 
+	
+	public String getObjectType(){
+		return getAttribute("objectType");
+	}
+	
+
+	@Override
+	public String[] advancedEventTypes() {
+		return new String[]{"beforeSave","success", "error"};
+		//return super.advancedEventTypes();
+	}
 
 	@Override
 	public void applyParam(String key, String value) {
@@ -44,7 +68,7 @@ public class SalesforceForm extends JSDesignableFormLayout {
 	public Array<Parameter> getParameters() {
 		Array<Parameter> params = super.getParameters();
 		AttributeParameter objectType = new AttributeParameter("objectType", "Object Type", "Basic");
-
+		AttributeParameter IdField = new AttributeParameter("IdField", "Id Field", "Basic");
 		ExtAttributeParameter fields = new ExtAttributeParameter("fields", "Fields", "Basic") {
 			@Override
 			public ExtendedPropertyEditorPrompt getPrompt(Designable designable) {
@@ -67,6 +91,7 @@ public class SalesforceForm extends JSDesignableFormLayout {
 						if (type == null || type.length() <= 0) {
 							type = "Account";
 						}
+						list.setSelectedItem(fields_);
 						list.setType(type);
 					}
 				};
@@ -84,14 +109,14 @@ public class SalesforceForm extends JSDesignableFormLayout {
 				return prompt;
 			}
 		};
-		params.push(objectType, fields);
+		params.push(IdField,objectType, fields);
 
 		return params;
 	}
 
 	@SuppressWarnings("unchecked")
 	public void setFields(Array<Object> fields) {
-		this.fields = fields;
+		this.fields_ = fields;
 		clear();
 		for (Object field : fields) {
 			String name = (String) field.$get("name");
@@ -125,7 +150,49 @@ public class SalesforceForm extends JSDesignableFormLayout {
 	}
 
 	public Array<Object> getFields() {
-		return fields;
+		return fields_;
 	}
 
+	
+	
+	
+	public void save(){
+		CustomEvent evt = new CustomEvent("beforeSave");
+		
+		fireListener("beforeSave", evt);
+		SalesforceObjectService service = BeanFactory.getInstance().getBeanOfType(SalesforceObjectService.class);
+		Object data_ = getData();
+		Object data = new Object();
+		String objectId = (String)data_.$get(this.getIdField());
+		for(Object field : fields_){
+			String name = (String)field.$get("name");
+			Boolean calculated = (Boolean)field.$get("calculated");
+			Boolean updatable = (Boolean)field.$get("updateable");
+			if(!updatable || calculated){
+				//data.$delete(name);
+			}else{
+				data.$set(name, data.$get(name));
+			}
+			//Boolean readOnly = 
+		}
+		
+		String name = getObjectType();
+		//String name = (String)data.$get("Name");
+		
+		service.update(this, name, objectId, data, new ServiceCallback() {
+			
+			@Override
+			public boolean consume(java.lang.Object response, double statusCode) {
+				evt.$set("data", response);
+				evt.$set("statusCode", statusCode);
+				if(statusCode == 200){
+					fireListener("success", evt);
+				}else{
+					fireListener("error", evt);
+				}
+				
+				return true;
+			}
+		});
+	}
 }

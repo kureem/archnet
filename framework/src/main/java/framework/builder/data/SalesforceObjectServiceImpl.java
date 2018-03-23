@@ -1,7 +1,6 @@
 package framework.builder.data;
 
-import java.util.Map;
-
+import def.js.JSON;
 import framework.Adaptor;
 import framework.ServiceCallback;
 import framework.core.BeanFactory;
@@ -34,22 +33,22 @@ public class SalesforceObjectServiceImpl implements SalesforceObjectService{
 	}
 
 	@Override
-	public void create(Object component, String name, Map<String, Object> fields, ServiceCallback callback) {
+	public void create(Object component, String name, jsweet.lang.Object data, ServiceCallback callback) {
 		jsweet.lang.Object req = new jsweet.lang.Object();
 		req.$set("name", name);
-		req.$set("fields", fields);
+		req.$set("fields", JSON.stringify(data));
 		adaptor.Execute(component, "create", req, callback);
 		
 	}
 
 	@Override
-	public void update(Object component, String name, String objectId, Map<String, Object> fields,
+	public void update(Object component, String name, String objectId, jsweet.lang.Object data,
 			ServiceCallback callback) {
 		
 		jsweet.lang.Object req = new jsweet.lang.Object();
-		req.$set("name", name);
-		req.$set("fields", fields);
-		req.$set("objectId", objectId);
+		req.$set("objectType", name);
+		req.$set("fields", JSON.stringify(data));
+		req.$set("Id", objectId);
 		adaptor.Execute(component, "update", req, callback);
 		
 	}

@@ -9,6 +9,10 @@ import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
+import framework.lightning.Col;
+import framework.lightning.Grid;
+import framework.lightning.Media;
+import framework.lightning.SvgIcon;
 import framework.lightning.designables.JSDesignableSOQL;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
@@ -27,12 +31,32 @@ public class SalesforceCrud extends JSContainer implements Designable {
 	private JSContainer detailPanel = new JSContainer("div");
 
 	private String objectType = "Account";
+	
+	private JSContainer pageHeader = new JSContainer("div");
+	
+	
+	
 
 	
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
 	public SalesforceCrud(String name) {
 		super(name, "div");
+		addChild(pageHeader);
+		pageHeader.addClass("slds-page-header").addClass("slds-join-bottom");
+		
+		Grid grid = new Grid("grid", "div");
+		pageHeader.addChild(grid);
+		
+		Col leftCol = new Col("leftCol");
+		grid.addChild(leftCol);
+		grid.addClass("slds-has-flexi-truncate");
+		Media media = new Media("media");
+		leftCol.addChild(media);
+		media.getFigureContainer().addChild(new SvgIcon("icon"));
+		
+		
+		addChild(pageHeader);
 		addChild(listPanel);
 		addChild(detailPanel);
 		setAttribute("identifier", "lgt:crud");
@@ -113,6 +137,10 @@ public class SalesforceCrud extends JSContainer implements Designable {
 
 	public void setFields(Array<Object> fields) {
 		form.setFields(fields);
+	}
+	
+	public void save(){
+		form.save();
 	}
 
 	@Override

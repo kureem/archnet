@@ -55,7 +55,7 @@ public class SalesforceTable extends JSDesignableTable{
 	}
 	@Override
 	public Array<Parameter> getParameters() {
-		
+		 
 		Array<Parameter> params = super.getParameters();
 		AttributeParameter objectType = new AttributeParameter("objectType", "Object Type", "Basic");
 		ExtAttributeParameter columns_ = new ExtAttributeParameter("columns", "Columns", "Basic"){
@@ -69,7 +69,6 @@ public class SalesforceTable extends JSDesignableTable{
 					
 					@Override
 					public void setProperty(Designable designable, Parameter parameter) {
-						// TODO Auto-generated method stub
 						 
 						FieldsList list = null;
 						if(getBody().getChildren().length > 0){
@@ -84,8 +83,9 @@ public class SalesforceTable extends JSDesignableTable{
 						if(type == null || type.length() <= 0){
 							type = "Account";
 						}
+						list.setSelectedItem(columns);
 						list.setType(type);
-						list.getTable().setSelectedItems(columns);
+						
 					}
 				};
 				prompt.addButton("save", "Save").addCancelButton("Cancel");

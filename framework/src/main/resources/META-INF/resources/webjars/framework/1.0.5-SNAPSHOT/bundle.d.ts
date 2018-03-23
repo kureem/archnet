@@ -284,8 +284,8 @@ declare namespace framework.builder.data {
         types(component: any, callback: framework.ServiceCallback): any;
         describe(component: any, type: string, callback: framework.ServiceCallback): any;
         query(component: any, query: string, offset: number, max: number, callback: framework.ServiceCallback): any;
-        create(component: any, name: string, fields: any, callback: framework.ServiceCallback): any;
-        update(component: any, name: string, objectId: string, fields: any, callback: framework.ServiceCallback): any;
+        create(component: any, name: string, data: Object, callback: framework.ServiceCallback): any;
+        update(component: any, name: string, objectId: string, data: Object, callback: framework.ServiceCallback): any;
         delete(component: any, name: string, objectId: string, callback: framework.ServiceCallback): any;
     }
 }
@@ -318,19 +318,19 @@ declare namespace framework.builder.data {
          *
          * @param {*} component
          * @param {string} name
-         * @param {*} fields
+         * @param {Object} data
          * @param {*} callback
          */
-        create(component: any, name: string, fields: any, callback: framework.ServiceCallback): void;
+        create(component: any, name: string, data: Object, callback: framework.ServiceCallback): void;
         /**
          *
          * @param {*} component
          * @param {string} name
          * @param {string} objectId
-         * @param {*} fields
+         * @param {Object} data
          * @param {*} callback
          */
-        update(component: any, name: string, objectId: string, fields: any, callback: framework.ServiceCallback): void;
+        update(component: any, name: string, objectId: string, data: Object, callback: framework.ServiceCallback): void;
         /**
          *
          * @param {*} component
@@ -739,6 +739,18 @@ declare namespace framework.designables {
 declare namespace framework {
     interface EventListener {
         performAction(source: framework.JSContainer, evt: Event): any;
+    }
+}
+declare namespace framework {
+    interface Function3<T1, T2, T3, R> {
+        /**
+         * Applies this function to the given arguments.
+         * @param {*} p1
+         * @param {*} p2
+         * @param {*} p3
+         * @return {*}
+         */
+        (p1: T1, p2: T2, p3: T3): R;
     }
 }
 declare namespace framework {
@@ -3793,6 +3805,7 @@ declare namespace framework.salesforce {
         listPanel: framework.JSContainer;
         detailPanel: framework.JSContainer;
         objectType: string;
+        pageHeader: framework.JSContainer;
         delegate: framework.designables.DesignableDelegate;
         constructor(name: string);
         refresh(): void;
@@ -3801,6 +3814,7 @@ declare namespace framework.salesforce {
         setObjectType(type: string): void;
         setColumns(fields: Array<Object>): void;
         setFields(fields: Array<Object>): void;
+        save(): void;
         /**
          *
          * @param {string} key
@@ -4750,6 +4764,12 @@ declare namespace framework.lightning {
         setWrap(b: boolean): Grid;
     }
 }
+declare namespace framework.lightning {
+    class PageHeader extends framework.lightning.LTContainer {
+        media: framework.lightning.Media;
+        constructor(name: string);
+    }
+}
 declare namespace framework.builder {
     class ItemSelector extends framework.lightning.Modal {
         input: framework.JSInput;
@@ -5260,7 +5280,9 @@ declare namespace framework.salesforce {
     class FieldsList extends framework.designables.JSDesignableCardLayoutItem implements framework.ServiceCallback {
         table: framework.lightning.designables.JSDesignableTable;
         service: framework.builder.data.SalesforceObjectService;
+        selectedItems: Array<Object>;
         constructor(name: string);
+        setSelectedItem(items: Array<Object>): void;
         getTable(): framework.lightning.designables.JSDesignableTable;
         setType(type: string): void;
         /**
@@ -7107,6 +7129,7 @@ declare namespace framework.builder.properties {
 }
 declare namespace framework.lightning.designables {
     class JSDesignableFormLayout extends framework.lightning.FormLayout {
+        data: Object;
         constructor();
         /**
          *
@@ -7116,6 +7139,8 @@ declare namespace framework.lightning.designables {
         applyParam(key: string, value: string): void;
         setData(options?: any): any;
         setData$jsweet_lang_Object(data: Object): void;
+        updateData(): void;
+        getData(): Object;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -7213,8 +7238,16 @@ declare namespace framework.builder.properties {
 }
 declare namespace framework.salesforce {
     class SalesforceForm extends framework.lightning.designables.JSDesignableFormLayout {
+        fields_: Array<Object>;
         constructor();
-        fields: Array<Object>;
+        setIdField(field: string): void;
+        getIdField(): string;
+        getObjectType(): string;
+        /**
+         *
+         * @return {Array}
+         */
+        advancedEventTypes(): string[];
         /**
          *
          * @param {string} key
@@ -7229,6 +7262,7 @@ declare namespace framework.salesforce {
         getParameters(): Array<framework.design.Parameter>;
         setFields(fields: Array<Object>): void;
         getFields(): Array<Object>;
+        save(): void;
     }
     namespace SalesforceForm {
         class SalesforceForm$0 extends framework.design.ExtAttributeParameter {
@@ -7264,6 +7298,18 @@ declare namespace framework.salesforce {
                 performAction(source: framework.JSContainer, evt: Event): void;
                 constructor(__parent: any, prompt: any, designable: any);
             }
+        }
+        class SalesforceForm$1 implements framework.ServiceCallback {
+            private evt;
+            __parent: any;
+            /**
+             *
+             * @param {*} response
+             * @param {number} statusCode
+             * @return {boolean}
+             */
+            consume(response: any, statusCode: number): boolean;
+            constructor(__parent: any, evt: any);
         }
     }
 }

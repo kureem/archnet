@@ -14,6 +14,8 @@ import jsweet.lang.Object;
 
 public class JSDesignableFormLayout extends FormLayout {
 	
+	private Object data = new Object();
+	
 	public JSDesignableFormLayout() {
 		super("Form Layout");
 		applyParam("layout", "compound");
@@ -43,6 +45,7 @@ public class JSDesignableFormLayout extends FormLayout {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setData(Object data){
+		this.data = data;
 		for(String key : Object.keys(data)){
 			Object o = (Object)data.$get(key);
 			FormElement element = getElement(key);
@@ -52,6 +55,20 @@ public class JSDesignableFormLayout extends FormLayout {
 				//element.getInput().setValue(o);
 			}
 		}
+	}
+	
+	
+	protected void updateData(){
+		for(FormElement element : getElements()){
+			String key = element.getName();
+			Object value = (Object)element.getInput().getValue();
+			data.$set(key, value);
+		}
+	}
+	
+	public Object getData(){
+		updateData();
+		return data;
 	}
 
 	@Override

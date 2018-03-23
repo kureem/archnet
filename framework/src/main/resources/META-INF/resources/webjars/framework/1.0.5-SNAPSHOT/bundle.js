@@ -92,8 +92,8 @@ var framework;
                  */
                 BasicDataEnvironment.prototype.deleteStructure = function (name) {
                     var tmp = (new Array());
-                    for (var index20651 = 0; index20651 < BasicDataEnvironment.structures_$LI$().length; index20651++) {
-                        var structure = BasicDataEnvironment.structures_$LI$()[index20651];
+                    for (var index2266 = 0; index2266 < BasicDataEnvironment.structures_$LI$().length; index2266++) {
+                        var structure = BasicDataEnvironment.structures_$LI$()[index2266];
                         {
                             if (!(function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -125,8 +125,8 @@ var framework;
                     BasicDataEnvironment$0.prototype.dataLoaded = function (data) {
                         var obj = data;
                         var sobjects = obj["sobjects"];
-                        for (var index20652 = 0; index20652 < sobjects.length; index20652++) {
-                            var o = sobjects[index20652];
+                        for (var index2267 = 0; index2267 < sobjects.length; index2267++) {
+                            var o = sobjects[index2267];
                             {
                                 var structure = new framework.builder.data.DataStructure(o);
                                 framework.builder.data.BasicDataEnvironment.structures_$LI$().push(structure);
@@ -293,9 +293,9 @@ var framework;
                 DataService.prototype.create = function (type, fields, listener) {
                     var data = new Object();
                     {
-                        var array20654 = fields.keySet();
-                        for (var index20653 = 0; index20653 < array20654.length; index20653++) {
-                            var key = array20654[index20653];
+                        var array2269 = fields.keySet();
+                        for (var index2268 = 0; index2268 < array2269.length; index2268++) {
+                            var key = array2269[index2268];
                             {
                                 data[key] = fields.get(key);
                             }
@@ -309,9 +309,9 @@ var framework;
                 DataService.prototype.update = function (type, objectId, fields, listener) {
                     var data = new Object();
                     {
-                        var array20656 = fields.keySet();
-                        for (var index20655 = 0; index20655 < array20656.length; index20655++) {
-                            var key = array20656[index20655];
+                        var array2271 = fields.keySet();
+                        for (var index2270 = 0; index2270 < array2271.length; index2270++) {
+                            var key = array2271[index2270];
                             {
                                 data[key] = fields.get(key);
                             }
@@ -402,9 +402,9 @@ var framework;
                 };
                 File.prototype.getChild = function (name) {
                     {
-                        var array20658 = this.getChildren();
-                        for (var index20657 = 0; index20657 < array20658.length; index20657++) {
-                            var f = array20658[index20657];
+                        var array2273 = this.getChildren();
+                        for (var index2272 = 0; index2272 < array2273.length; index2272++) {
+                            var f = array2273[index2272];
                             {
                                 if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(f.getName(), name)) {
                                     return f;
@@ -473,9 +473,9 @@ var framework;
                 File.prototype.removeFile = function (f) {
                     var children = (new Array());
                     {
-                        var array20660 = this.file["children"];
-                        for (var index20659 = 0; index20659 < array20660.length; index20659++) {
-                            var o = array20660[index20659];
+                        var array2275 = this.file["children"];
+                        for (var index2274 = 0; index2274 < array2275.length; index2274++) {
+                            var o = array2275[index2274];
                             {
                                 if (!(function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -493,9 +493,9 @@ var framework;
                 File.prototype.getChildren = function () {
                     var result = (new Array());
                     {
-                        var array20662 = this.file["children"];
-                        for (var index20661 = 0; index20661 < array20662.length; index20661++) {
-                            var o = array20662[index20661];
+                        var array2277 = this.file["children"];
+                        for (var index2276 = 0; index2276 < array2277.length; index2276++) {
+                            var o = array2277[index2276];
                             {
                                 result.push(new File(o));
                             }
@@ -748,7 +748,7 @@ var framework;
     var builder;
     (function (builder) {
         var data;
-        (function (data) {
+        (function (data_6) {
             var SalesforceObjectServiceImpl = (function () {
                 function SalesforceObjectServiceImpl() {
                     /*private*/ this.adaptor = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.Adaptor"));
@@ -791,13 +791,13 @@ var framework;
                  *
                  * @param {*} component
                  * @param {string} name
-                 * @param {*} fields
+                 * @param {Object} data
                  * @param {*} callback
                  */
-                SalesforceObjectServiceImpl.prototype.create = function (component, name, fields, callback) {
+                SalesforceObjectServiceImpl.prototype.create = function (component, name, data, callback) {
                     var req = new Object();
                     req["name"] = name;
-                    req["fields"] = fields;
+                    req["fields"] = JSON.stringify(data);
                     this.adaptor.Execute(component, "create", req, callback);
                 };
                 /**
@@ -805,14 +805,14 @@ var framework;
                  * @param {*} component
                  * @param {string} name
                  * @param {string} objectId
-                 * @param {*} fields
+                 * @param {Object} data
                  * @param {*} callback
                  */
-                SalesforceObjectServiceImpl.prototype.update = function (component, name, objectId, fields, callback) {
+                SalesforceObjectServiceImpl.prototype.update = function (component, name, objectId, data, callback) {
                     var req = new Object();
-                    req["name"] = name;
-                    req["fields"] = fields;
-                    req["objectId"] = objectId;
+                    req["objectType"] = name;
+                    req["fields"] = JSON.stringify(data);
+                    req["Id"] = objectId;
                     this.adaptor.Execute(component, "update", req, callback);
                 };
                 /**
@@ -830,7 +830,7 @@ var framework;
                 };
                 return SalesforceObjectServiceImpl;
             }());
-            data.SalesforceObjectServiceImpl = SalesforceObjectServiceImpl;
+            data_6.SalesforceObjectServiceImpl = SalesforceObjectServiceImpl;
             SalesforceObjectServiceImpl["__class"] = "framework.builder.data.SalesforceObjectServiceImpl";
             SalesforceObjectServiceImpl["__interfaces"] = ["framework.builder.data.SalesforceObjectService"];
         })(data = builder.data || (builder.data = {}));
@@ -1126,8 +1126,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index20663 = 0; index20663 < keys.length; index20663++) {
-                        var key = keys[index20663];
+                    for (var index2278 = 0; index2278 < keys.length; index2278++) {
+                        var key = keys[index2278];
                         {
                             var value = component.styles[key].toString();
                             instance.setStyle(key, value);
@@ -1136,8 +1136,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index20664 = 0; index20664 < keys.length; index20664++) {
-                        var key = keys[index20664];
+                    for (var index2279 = 0; index2279 < keys.length; index2279++) {
+                        var key = keys[index2279];
                         {
                             if (component.parameters[key] != null) {
                                 var value = component.parameters[key].toString();
@@ -1147,8 +1147,8 @@ var framework;
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index20665 = 0; index20665 < component.events.length; index20665++) {
-                        var event_1 = component.events[index20665];
+                    for (var index2280 = 0; index2280 < component.events.length; index2280++) {
+                        var event_1 = component.events[index2280];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source, event_1.name, event_1.type);
                             instance.addEventListener(listener, event_1.type);
@@ -1282,29 +1282,29 @@ var framework;
                     c.impl = designable.getAttribute("identifier");
                     var parameters = designable.getParameters();
                     {
-                        var array20667 = designable.getStyleNames();
-                        for (var index20666 = 0; index20666 < array20667.length; index20666++) {
-                            var s = array20667[index20666];
+                        var array2282 = designable.getStyleNames();
+                        for (var index2281 = 0; index2281 < array2282.length; index2281++) {
+                            var s = array2282[index2281];
                             {
                                 c.styles[s] = designable.getStyle(s);
                             }
                         }
                     }
-                    for (var index20668 = 0; index20668 < parameters.length; index20668++) {
-                        var p = parameters[index20668];
+                    for (var index2283 = 0; index2283 < parameters.length; index2283++) {
+                        var p = parameters[index2283];
                         {
                             c.parameters[p.name] = p.extractValue(designable);
                         }
                     }
                     {
-                        var array20670 = Object.keys(designable.getListeners());
-                        for (var index20669 = 0; index20669 < array20670.length; index20669++) {
-                            var key = array20670[index20669];
+                        var array2285 = Object.keys(designable.getListeners());
+                        for (var index2284 = 0; index2284 < array2285.length; index2284++) {
+                            var key = array2285[index2284];
                             {
                                 {
-                                    var array20672 = designable.getListeners()[key];
-                                    for (var index20671 = 0; index20671 < array20672.length; index20671++) {
-                                        var l = array20672[index20671];
+                                    var array2287 = designable.getListeners()[key];
+                                    for (var index2286 = 0; index2286 < array2287.length; index2286++) {
+                                        var l = array2287[index2286];
                                         {
                                             if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                                 var bel = l;
@@ -1321,9 +1321,9 @@ var framework;
                         }
                     }
                     {
-                        var array20674 = designable.getDesignables();
-                        for (var index20673 = 0; index20673 < array20674.length; index20673++) {
-                            var child = array20674[index20673];
+                        var array2289 = designable.getDesignables();
+                        for (var index2288 = 0; index2288 < array2289.length; index2288++) {
+                            var child = array2289[index2288];
                             {
                                 var childC = MarshallUtil.extract(child);
                                 c.children.push(childC);
@@ -1343,8 +1343,8 @@ var framework;
                         des.addEventListener(new framework.builder.SelectComponentEvent(selector), "click");
                     }
                     if (component.children != null) {
-                        for (var index20675 = 0; index20675 < component.children.length; index20675++) {
-                            var c = component.children[index20675];
+                        for (var index2290 = 0; index2290 < component.children.length; index2290++) {
+                            var c = component.children[index2290];
                             {
                                 var child = MarshallUtil.toDesignable(c, design, selector);
                                 des.addDesignable(child);
@@ -1365,15 +1365,15 @@ var framework;
                 MarshallUtil.controller = function (component, start) {
                     var des = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, false);
                     des['setData$java_lang_Object'](component.data);
-                    for (var index20676 = 0; index20676 < component.events.length; index20676++) {
-                        var event_2 = component.events[index20676];
+                    for (var index2291 = 0; index2291 < component.events.length; index2291++) {
+                        var event_2 = component.events[index2291];
                         {
                             start = start + "\n" + des.getName() + ":function(source,event){\n" + event_2.source + "\n}";
                         }
                     }
                     if (component.children != null) {
-                        for (var index20677 = 0; index20677 < component.children.length; index20677++) {
-                            var c = component.children[index20677];
+                        for (var index2292 = 0; index2292 < component.children.length; index2292++) {
+                            var c = component.children[index2292];
                             {
                                 MarshallUtil.controller(c, start);
                             }
@@ -1409,8 +1409,8 @@ var framework;
                     var events = o["events"];
                     if (events != null && events.length > 0) {
                         var bevents = (new Array());
-                        for (var index20678 = 0; index20678 < events.length; index20678++) {
-                            var e = events[index20678];
+                        for (var index2293 = 0; index2293 < events.length; index2293++) {
+                            var e = events[index2293];
                             {
                                 var event_3 = new framework.builder.marshalling.BuilderEvent();
                                 event_3.source = e["source"].toString();
@@ -1424,8 +1424,8 @@ var framework;
                     var bchildren = (new Array());
                     var children = o["children"];
                     if (children != null && children.length > 0) {
-                        for (var index20679 = 0; index20679 < children.length; index20679++) {
-                            var c = children[index20679];
+                        for (var index2294 = 0; index2294 < children.length; index2294++) {
+                            var c = children[index2294];
                             {
                                 bchildren.push(MarshallUtil.toComponent$jsweet_lang_Object(c));
                             }
@@ -1548,9 +1548,9 @@ var framework;
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
                 {
-                    var array20681 = Object.keys(this.beans);
-                    for (var index20680 = 0; index20680 < array20681.length; index20680++) {
-                        var key = array20681[index20680];
+                    var array2296 = Object.keys(this.beans);
+                    for (var index2295 = 0; index2295 < array2296.length; index2295++) {
+                        var key = array2296[index2295];
                         {
                             var bean = this.beans[key];
                             try {
@@ -1741,9 +1741,9 @@ var framework;
             };
             DesignableDelegate.containsName$java_lang_String$framework_design_Designable = function (name, ui) {
                 {
-                    var array20683 = ui.getChildren();
-                    for (var index20682 = 0; index20682 < array20683.length; index20682++) {
-                        var c = array20683[index20682];
+                    var array2298 = ui.getChildren();
+                    for (var index2297 = 0; index2297 < array2298.length; index2297++) {
+                        var c = array2298[index2297];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -1769,8 +1769,8 @@ var framework;
                     throw new Error('invalid overload');
             };
             /*private*/ DesignableDelegate.containsName$java_lang_String$jsweet_lang_Array = function (name, children) {
-                for (var index20684 = 0; index20684 < children.length; index20684++) {
-                    var c = children[index20684];
+                for (var index2299 = 0; index2299 < children.length; index2299++) {
+                    var c = children[index2299];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -1901,10 +1901,20 @@ var framework;
         function HerokuAdaptor() {
         }
         HerokuAdaptor.prototype.Execute = function (component, serviceName, request, callback) {
-            $.get("/service/" + serviceName, request, function (t, u, v) {
-                callback.consume(t, v.status);
-                return true;
-            }, "json");
+            var settings = Object.defineProperty({
+                error: function (jqXHR, textStatus, errorThrown) {
+                    callback.consume(errorThrown, jqXHR.status);
+                    return null;
+                },
+                success: function (data, textStatus, jqXHR) {
+                    callback.consume(data, jqXHR.status);
+                    return null;
+                }
+            }, '__interfaces', { configurable: true, value: ["def.jquery.JQueryAjaxSettings"] });
+            settings.type = "POST";
+            settings.data = request;
+            settings.url = "/service/" + serviceName;
+            $.ajax(settings);
         };
         return HerokuAdaptor;
     }());
@@ -2177,9 +2187,9 @@ var framework;
         };
         ObjectBuilder.prototype.clear = function () {
             {
-                var array20686 = Object.keys(this.obj);
-                for (var index20685 = 0; index20685 < array20686.length; index20685++) {
-                    var s = array20686[index20685];
+                var array2301 = Object.keys(this.obj);
+                for (var index2300 = 0; index2300 < array2301.length; index2300++) {
+                    var s = array2301[index2300];
                     {
                         delete this.obj[s];
                     }
@@ -2280,14 +2290,14 @@ var framework;
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var keys = Object.keys(c.getListeners());
-                for (var index20687 = 0; index20687 < keys.length; index20687++) {
-                    var key = keys[index20687];
+                for (var index2302 = 0; index2302 < keys.length; index2302++) {
+                    var key = keys[index2302];
                     {
                         var listeners = c.getListeners()[key];
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
-                                for (var index20688 = 0; index20688 < listeners.length; index20688++) {
-                                    var l = listeners[index20688];
+                                for (var index2303 = 0; index2303 < listeners.length; index2303++) {
+                                    var l = listeners[index2303];
                                     {
                                         l.performAction(c, evt);
                                     }
@@ -2301,9 +2311,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array20690 = c.getChangedAttributes();
-                        for (var index20689 = 0; index20689 < array20690.length; index20689++) {
-                            var key = array20690[index20689];
+                        var array2305 = c.getChangedAttributes();
+                        for (var index2304 = 0; index2304 < array2305.length; index2304++) {
+                            var key = array2305[index2304];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -2317,9 +2327,9 @@ var framework;
                 }
                 else {
                     {
-                        var array20692 = c.getAttributeNames();
-                        for (var index20691 = 0; index20691 < array20692.length; index20691++) {
-                            var key = array20692[index20691];
+                        var array2307 = c.getAttributeNames();
+                        for (var index2306 = 0; index2306 < array2307.length; index2306++) {
+                            var key = array2307[index2306];
                             {
                                 if (c.getAttribute(key) != null)
                                     njq.setAttribute(key, c.getAttribute(key));
@@ -2347,9 +2357,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array20694 = c.getChangedStyles();
-                        for (var index20693 = 0; index20693 < array20694.length; index20693++) {
-                            var key = array20694[index20693];
+                        var array2309 = c.getChangedStyles();
+                        for (var index2308 = 0; index2308 < array2309.length; index2308++) {
+                            var key = array2309[index2308];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -2358,9 +2368,9 @@ var framework;
                 }
                 else {
                     {
-                        var array20696 = c.getStyleNames();
-                        for (var index20695 = 0; index20695 < array20696.length; index20695++) {
-                            var key = array20696[index20695];
+                        var array2311 = c.getStyleNames();
+                        for (var index2310 = 0; index2310 < array2311.length; index2310++) {
+                            var key = array2311[index2310];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -2422,9 +2432,9 @@ var framework;
             HashMap.prototype.keySet = function () {
                 var result = (new Array());
                 {
-                    var array20698 = Object.keys(this.d);
-                    for (var index20697 = 0; index20697 < array20698.length; index20697++) {
-                        var key = array20698[index20697];
+                    var array2313 = Object.keys(this.d);
+                    for (var index2312 = 0; index2312 < array2313.length; index2312++) {
+                        var key = array2313[index2312];
                         {
                             result.push(key);
                         }
@@ -2475,7 +2485,7 @@ ui["__class"] = "ui";
     var builder;
     (function (builder) {
         var data;
-        (function (data_6) {
+        (function (data_7) {
             var DataStructure = (function (_super) {
                 __extends(DataStructure, _super);
                 function DataStructure(object) {
@@ -2516,8 +2526,8 @@ ui["__class"] = "ui";
                     else {
                         var fields = (new Array());
                         this.object["fields"] = cached;
-                        for (var index20699 = 0; index20699 < cached.length; index20699++) {
-                            var oField = cached[index20699];
+                        for (var index2314 = 0; index2314 < cached.length; index2314++) {
+                            var oField = cached[index2314];
                             {
                                 fields.push(new framework.builder.data.DataField(oField));
                             }
@@ -2527,7 +2537,7 @@ ui["__class"] = "ui";
                 };
                 return DataStructure;
             }(framework.builder.data.File));
-            data_6.DataStructure = DataStructure;
+            data_7.DataStructure = DataStructure;
             DataStructure["__class"] = "framework.builder.data.DataStructure";
             (function (DataStructure) {
                 var DataStructure$0 = (function () {
@@ -2544,8 +2554,8 @@ ui["__class"] = "ui";
                         var fields = (new Array());
                         var oFields = o["fields"];
                         this.__parent.object["fields"] = oFields;
-                        for (var index20700 = 0; index20700 < oFields.length; index20700++) {
-                            var oField = oFields[index20700];
+                        for (var index2315 = 0; index2315 < oFields.length; index2315++) {
+                            var oField = oFields[index2315];
                             {
                                 fields.push(new framework.builder.data.DataField(oField));
                             }
@@ -2556,7 +2566,7 @@ ui["__class"] = "ui";
                 }());
                 DataStructure.DataStructure$0 = DataStructure$0;
                 DataStructure$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
-            })(DataStructure = data_6.DataStructure || (data_6.DataStructure = {}));
+            })(DataStructure = data_7.DataStructure || (data_7.DataStructure = {}));
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -2574,8 +2584,8 @@ ui["__class"] = "ui";
             componentFactoryRegistry.registerComponentFactory("html:html", new Boot.Boot$0("html:html"));
             componentFactoryRegistry.registerComponentFactory("html:p", new Boot.Boot$1("html:p"));
             componentFactoryRegistry.registerComponentFactory("html:cmp", new Boot.Boot$2("html:cmp"));
-            for (var index20701 = 0; index20701 < tags.length; index20701++) {
-                var tag = tags[index20701];
+            for (var index2316 = 0; index2316 < tags.length; index2316++) {
+                var tag = tags[index2316];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -3712,8 +3722,8 @@ ui["__class"] = "ui";
              */
             TagParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.TagEditor("tagEditor");
-                for (var index20702 = 0; index20702 < this.options.length; index20702++) {
-                    var opt = this.options[index20702];
+                for (var index2317 = 0; index2317 < this.options.length; index2317++) {
+                    var opt = this.options[index2317];
                     {
                         editor.addOption(new framework.JSOption(opt.text, opt.value));
                     }
@@ -3885,8 +3895,8 @@ ui["__class"] = "ui";
         JSContainer.prototype.fireListener = function (key, evt) {
             var listeners = this.getListeners()[key];
             if (listeners != null && listeners.length > 0) {
-                for (var index20703 = 0; index20703 < listeners.length; index20703++) {
-                    var l = listeners[index20703];
+                for (var index2318 = 0; index2318 < listeners.length; index2318++) {
+                    var l = listeners[index2318];
                     {
                         l.performAction(this, evt);
                     }
@@ -3905,8 +3915,8 @@ ui["__class"] = "ui";
             })(path, "/")) {
                 current = (this.getAncestorWithClass("visual-editor")).getRootItem();
             }
-            for (var index20704 = 0; index20704 < sectins.length; index20704++) {
-                var s = sectins[index20704];
+            for (var index2319 = 0; index2319 < sectins.length; index2319++) {
+                var s = sectins[index2319];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -3980,9 +3990,9 @@ ui["__class"] = "ui";
         /*private*/ JSContainer.prototype.findDesignable = function (des, name, index) {
             var candidates = (new Array());
             {
-                var array20706 = des.getDesignables();
-                for (var index20705 = 0; index20705 < array20706.length; index20705++) {
-                    var d = array20706[index20705];
+                var array2321 = des.getDesignables();
+                for (var index2320 = 0; index2320 < array2321.length; index2320++) {
+                    var d = array2321[index2320];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -4005,9 +4015,9 @@ ui["__class"] = "ui";
         };
         JSContainer.prototype.getChild = function (name) {
             {
-                var array20708 = this.getChildren();
-                for (var index20707 = 0; index20707 < array20708.length; index20707++) {
-                    var child = array20708[index20707];
+                var array2323 = this.getChildren();
+                for (var index2322 = 0; index2322 < array2323.length; index2322++) {
+                    var child = array2323[index2322];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -4147,8 +4157,8 @@ ui["__class"] = "ui";
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index20709 = 0; index20709 < aStyles.length; index20709++) {
-                var style = aStyles[index20709];
+            for (var index2324 = 0; index2324 < aStyles.length; index2324++) {
+                var style = aStyles[index2324];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -4200,9 +4210,9 @@ ui["__class"] = "ui";
             var children = (new Array());
             var i = 0;
             {
-                var array20711 = this.getChildren();
-                for (var index20710 = 0; index20710 < array20711.length; index20710++) {
-                    var c = array20711[index20710];
+                var array2326 = this.getChildren();
+                for (var index2325 = 0; index2325 < array2326.length; index2325++) {
+                    var c = array2326[index2325];
                     {
                         if (i === index) {
                             children.push(c);
@@ -4431,9 +4441,9 @@ ui["__class"] = "ui";
             this.d["rendered"] = b;
             if (!b) {
                 {
-                    var array20713 = this.getChildren();
-                    for (var index20712 = 0; index20712 < array20713.length; index20712++) {
-                        var child = array20713[index20712];
+                    var array2328 = this.getChildren();
+                    for (var index2327 = 0; index2327 < array2328.length; index2327++) {
+                        var child = array2328[index2327];
                         {
                             child.setRendered(b);
                         }
@@ -4475,8 +4485,8 @@ ui["__class"] = "ui";
         JSContainer.prototype.postRender$jsweet_dom_HTMLElement = function (root) {
         };
         JSContainer.prototype.contains = function (lst, o) {
-            for (var index20714 = 0; index20714 < lst.length; index20714++) {
-                var oo = lst[index20714];
+            for (var index2329 = 0; index2329 < lst.length; index2329++) {
+                var oo = lst[index2329];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -4501,29 +4511,29 @@ ui["__class"] = "ui";
             if (!this.contains(renderers, JSContainer.defaultRenderer_$LI$())) {
                 var tmp = (new Array());
                 tmp.push(JSContainer.defaultRenderer_$LI$());
-                for (var index20715 = 0; index20715 < renderers.length; index20715++) {
-                    var r = renderers[index20715];
+                for (var index2330 = 0; index2330 < renderers.length; index2330++) {
+                    var r = renderers[index2330];
                     {
                         tmp.push(r);
                     }
                 }
                 renderers = tmp;
             }
-            for (var index20716 = 0; index20716 < renderers.length; index20716++) {
-                var renderer_1 = renderers[index20716];
+            for (var index2331 = 0; index2331 < renderers.length; index2331++) {
+                var renderer_1 = renderers[index2331];
                 renderer_1.doRender(this, parent);
             }
             {
-                var array20718 = this.getChildren();
-                for (var index20717 = 0; index20717 < array20718.length; index20717++) {
-                    var child = array20718[index20717];
+                var array2333 = this.getChildren();
+                for (var index2332 = 0; index2332 < array2333.length; index2332++) {
+                    var child = array2333[index2332];
                     {
                         child.render();
                     }
                 }
             }
-            for (var index20719 = 0; index20719 < renderers.length; index20719++) {
-                var renderer_2 = renderers[index20719];
+            for (var index2334 = 0; index2334 < renderers.length; index2334++) {
+                var renderer_2 = renderers[index2334];
                 {
                     if (renderer_2 != null && (renderer_2["__interfaces"] != null && renderer_2["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0 || renderer_2.constructor != null && renderer_2.constructor["__interfaces"] != null && renderer_2.constructor["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0))
                         renderer_2.postRender(this, parent);
@@ -4570,9 +4580,9 @@ ui["__class"] = "ui";
             var clsss = parent.getAttribute("class");
             if (clsss != null) {
                 {
-                    var array20721 = parent.getAttribute("class").split(" ");
-                    for (var index20720 = 0; index20720 < array20721.length; index20720++) {
-                        var s = array20721[index20720];
+                    var array2336 = parent.getAttribute("class").split(" ");
+                    for (var index2335 = 0; index2335 < array2336.length; index2335++) {
+                        var s = array2336[index2335];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -5186,9 +5196,9 @@ ui["__class"] = "ui";
                 };
                 Structure.prototype.getItem$framework_design_Designable$framework_JSContainer = function (designable, currentNode) {
                     {
-                        var array20723 = currentNode.getChildren();
-                        for (var index20722 = 0; index20722 < array20723.length; index20722++) {
-                            var des = array20723[index20722];
+                        var array2338 = currentNode.getChildren();
+                        for (var index2337 = 0; index2337 < array2338.length; index2337++) {
+                            var des = array2338[index2337];
                             {
                                 if (des != null && des instanceof framework.builder.editors.StructureTreeItem) {
                                     var titem = des;
@@ -5256,9 +5266,9 @@ ui["__class"] = "ui";
                 };
                 Structure.prototype.renderFiles = function () {
                     {
-                        var array20725 = this.lis.keySet();
-                        for (var index20724 = 0; index20724 < array20725.length; index20724++) {
-                            var type = array20725[index20724];
+                        var array2340 = this.lis.keySet();
+                        for (var index2339 = 0; index2339 < array2340.length; index2339++) {
+                            var type = array2340[index2339];
                             {
                                 var cstylesheets = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                                 if (this.file.getChild(type) != null) {
@@ -5271,8 +5281,8 @@ ui["__class"] = "ui";
                                         var ftype = this.file.getChild("types");
                                         var arrTypes = JSON.parse(ftype.getData());
                                         if (arrTypes != null) {
-                                            for (var index20726 = 0; index20726 < arrTypes.length; index20726++) {
-                                                var o = arrTypes[index20726];
+                                            for (var index2341 = 0; index2341 < arrTypes.length; index2341++) {
+                                                var o = arrTypes[index2341];
                                                 {
                                                     var item = new framework.builder.editors.TypeTreeItem(ftype, o, this);
                                                     item.addEventListener(this.toggleSelect, "click");
@@ -5284,9 +5294,9 @@ ui["__class"] = "ui";
                                     }
                                     else {
                                         {
-                                            var array20728 = this.file.getChild(type).getChildren();
-                                            for (var index20727 = 0; index20727 < array20728.length; index20727++) {
-                                                var f = array20728[index20727];
+                                            var array2343 = this.file.getChild(type).getChildren();
+                                            for (var index2342 = 0; index2342 < array2343.length; index2342++) {
+                                                var f = array2343[index2342];
                                                 {
                                                     var item = new framework.builder.editors.FileTreeItem(f, type, framework.builder.Builder.getInstance(), this);
                                                     item.addEventListener(this.toggleSelect, "click");
@@ -5313,9 +5323,9 @@ ui["__class"] = "ui";
                         var children = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                         li.addChild$framework_JSContainer(children);
                         {
-                            var array20730 = ctn.getDesignables();
-                            for (var index20729 = 0; index20729 < array20730.length; index20729++) {
-                                var c = array20730[index20729];
+                            var array2345 = ctn.getDesignables();
+                            for (var index2344 = 0; index2344 < array2345.length; index2344++) {
+                                var c = array2345[index2344];
                                 {
                                     var child = new framework.JSContainer("li");
                                     children.addChild$framework_JSContainer(child);
@@ -5431,8 +5441,8 @@ ui["__class"] = "ui";
                 this.itemSelectedListeners.push(l);
             };
             FilesList.prototype.fireItemSelectedListeners = function (file, selector) {
-                for (var index20731 = 0; index20731 < this.itemSelectedListeners.length; index20731++) {
-                    var l = this.itemSelectedListeners[index20731];
+                for (var index2346 = 0; index2346 < this.itemSelectedListeners.length; index2346++) {
+                    var l = this.itemSelectedListeners[index2346];
                     {
                         l.itemSelected(file, selector);
                     }
@@ -5440,9 +5450,9 @@ ui["__class"] = "ui";
             };
             FilesList.prototype.select = function (file) {
                 {
-                    var array20733 = this.getChildren();
-                    for (var index20732 = 0; index20732 < array20733.length; index20732++) {
-                        var c = array20733[index20732];
+                    var array2348 = this.getChildren();
+                    for (var index2347 = 0; index2347 < array2348.length; index2347++) {
+                        var c = array2348[index2347];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -5572,9 +5582,9 @@ ui["__class"] = "ui";
                     Previewer.project = f;
                     var preview = new framework.builder.editors.Preview(f);
                     {
-                        var array20735 = f.getStylesheets();
-                        for (var index20734 = 0; index20734 < array20735.length; index20734++) {
-                            var sc = array20735[index20734];
+                        var array2350 = f.getStylesheets();
+                        for (var index2349 = 0; index2349 < array2350.length; index2349++) {
+                            var sc = array2350[index2349];
                             {
                                 var elem = document.createElement("style");
                                 elem.textContent = sc.getData();
@@ -5583,9 +5593,9 @@ ui["__class"] = "ui";
                         }
                     }
                     {
-                        var array20737 = f.getScripts();
-                        for (var index20736 = 0; index20736 < array20737.length; index20736++) {
-                            var sc = array20737[index20736];
+                        var array2352 = f.getScripts();
+                        for (var index2351 = 0; index2351 < array2352.length; index2351++) {
+                            var sc = array2352[index2351];
                             {
                                 var elem = document.createElement("script");
                                 elem.textContent = sc.getData();
@@ -5594,9 +5604,9 @@ ui["__class"] = "ui";
                         }
                     }
                     {
-                        var array20739 = f.getTemplates();
-                        for (var index20738 = 0; index20738 < array20739.length; index20738++) {
-                            var sc = array20739[index20738];
+                        var array2354 = f.getTemplates();
+                        for (var index2353 = 0; index2353 < array2354.length; index2353++) {
+                            var sc = array2354[index2353];
                             {
                                 var elem = document.createElement("div");
                                 elem.setAttribute("id", /* replace */ sc.getName().split(".html").join(""));
@@ -6186,9 +6196,9 @@ ui["__class"] = "ui";
                 var dec = this.getAttribute("decorate-class");
                 if (dec != null) {
                     {
-                        var array20741 = this.getChildren();
-                        for (var index20740 = 0; index20740 < array20741.length; index20740++) {
-                            var c = array20741[index20740];
+                        var array2356 = this.getChildren();
+                        for (var index2355 = 0; index2355 < array2356.length; index2355++) {
+                            var c = array2356[index2355];
                             {
                                 c.setAttribute("class", dec);
                             }
@@ -6198,9 +6208,9 @@ ui["__class"] = "ui";
                 var decStyle = this.getAttribute("decorate-style");
                 if (decStyle != null) {
                     {
-                        var array20743 = this.getChildren();
-                        for (var index20742 = 0; index20742 < array20743.length; index20742++) {
-                            var c = array20743[index20742];
+                        var array2358 = this.getChildren();
+                        for (var index2357 = 0; index2357 < array2358.length; index2357++) {
+                            var c = array2358[index2357];
                             {
                                 c.setAttribute("style", decStyle);
                             }
@@ -6257,8 +6267,8 @@ ui["__class"] = "ui";
             JSDesignableList.prototype.removeDesignable = function (designable) {
                 this.removeChild(designable.getParent());
                 var tmp = (new Array());
-                for (var index20744 = 0; index20744 < this.designables.length; index20744++) {
-                    var d = this.designables[index20744];
+                for (var index2359 = 0; index2359 < this.designables.length; index2359++) {
+                    var d = this.designables[index2359];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -6490,8 +6500,8 @@ ui["__class"] = "ui";
             if (ele != null) {
                 if (ele.multiple) {
                     var result = (new Array());
-                    for (var index20745 = 0; index20745 < ele.selectedOptions.length; index20745++) {
-                        var e = ele.selectedOptions[index20745];
+                    for (var index2360 = 0; index2360 < ele.selectedOptions.length; index2360++) {
+                        var e = ele.selectedOptions[index2360];
                         {
                             var opt = e;
                             result.push(opt.value);
@@ -6506,9 +6516,9 @@ ui["__class"] = "ui";
             else {
                 var val = this.getAttribute("value");
                 {
-                    var array20747 = this.getChildren();
-                    for (var index20746 = 0; index20746 < array20747.length; index20746++) {
-                        var opt = array20747[index20746];
+                    var array2362 = this.getChildren();
+                    for (var index2361 = 0; index2361 < array2362.length; index2361++) {
+                        var opt = array2362[index2361];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -6558,13 +6568,13 @@ ui["__class"] = "ui";
                 }
                 this.setAttribute("value", firstVal);
                 {
-                    var array20749 = this.getChildren();
-                    for (var index20748 = 0; index20748 < array20749.length; index20748++) {
-                        var opt = array20749[index20748];
+                    var array2364 = this.getChildren();
+                    for (var index2363 = 0; index2363 < array2364.length; index2363++) {
+                        var opt = array2364[index2363];
                         {
                             opt.setSelected(false);
-                            for (var index20750 = 0; index20750 < arrVal.length; index20750++) {
-                                var val = arrVal[index20750];
+                            for (var index2365 = 0; index2365 < arrVal.length; index2365++) {
+                                var val = arrVal[index2365];
                                 {
                                     if ((function (o1, o2) { if (o1 && o1.equals) {
                                         return o1.equals(o2);
@@ -6582,9 +6592,9 @@ ui["__class"] = "ui";
             }
             else {
                 {
-                    var array20752 = this.getChildren();
-                    for (var index20751 = 0; index20751 < array20752.length; index20751++) {
-                        var opt = array20752[index20751];
+                    var array2367 = this.getChildren();
+                    for (var index2366 = 0; index2366 < array2367.length; index2366++) {
+                        var opt = array2367[index2366];
                         {
                             opt.setSelected(false);
                         }
@@ -6757,8 +6767,8 @@ ui["__class"] = "ui";
              */
             Accordion.prototype.removeDesignable = function (designable) {
                 var result = (new Array());
-                for (var index20753 = 0; index20753 < this.designables.length; index20753++) {
-                    var des = this.designables[index20753];
+                for (var index2368 = 0; index2368 < this.designables.length; index2368++) {
+                    var des = this.designables[index2368];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -7697,8 +7707,8 @@ ui["__class"] = "ui";
                     _super.prototype.setData$java_lang_Object.call(this, obj);
                     var ls = obj;
                     var iterable = this.templateCtn.getChildren()[0];
-                    for (var index20754 = 0; index20754 < ls.length; index20754++) {
-                        var o = ls[index20754];
+                    for (var index2369 = 0; index2369 < ls.length; index2369++) {
+                        var o = ls[index2369];
                         {
                             var ins = iterable.Clone();
                             this.list.addChild$framework_JSContainer(ins);
@@ -8725,8 +8735,8 @@ ui["__class"] = "ui";
                 LTContainer.POSITIONS = [LTContainer.POSITION_STATIC, LTContainer.POSITION_FIXED, LTContainer.POSITION_RELATIVE, LTContainer.POSITION_ABSOLUTE]; return LTContainer.POSITIONS; };
             ;
             LTContainer.prototype.setPosition = function (position) {
-                for (var index20755 = 0; index20755 < LTContainer.POSITIONS_$LI$().length; index20755++) {
-                    var pos = LTContainer.POSITIONS_$LI$()[index20755];
+                for (var index2370 = 0; index2370 < LTContainer.POSITIONS_$LI$().length; index2370++) {
+                    var pos = LTContainer.POSITIONS_$LI$()[index2370];
                     {
                         this.removeClass("slds-is-" + pos);
                     }
@@ -8765,8 +8775,8 @@ ui["__class"] = "ui";
                 return this.setSizeAndPosition("p", size, "left");
             };
             /*private*/ LTContainer.prototype.setSizeAndPosition = function (pref, size, position) {
-                for (var index20756 = 0; index20756 < LTContainer.SIZES_$LI$().length; index20756++) {
-                    var s = LTContainer.SIZES_$LI$()[index20756];
+                for (var index2371 = 0; index2371 < LTContainer.SIZES_$LI$().length; index2371++) {
+                    var s = LTContainer.SIZES_$LI$()[index2371];
                     {
                         this.removeClass("slds-" + pref + "-" + position + "_" + s);
                     }
@@ -9097,8 +9107,8 @@ ui["__class"] = "ui";
                 return this;
             };
             PopOver.prototype.setNubin = function (position) {
-                for (var index20757 = 0; index20757 < PopOver.NUBIN_POSITIONS_$LI$().length; index20757++) {
-                    var s = PopOver.NUBIN_POSITIONS_$LI$()[index20757];
+                for (var index2372 = 0; index2372 < PopOver.NUBIN_POSITIONS_$LI$().length; index2372++) {
+                    var s = PopOver.NUBIN_POSITIONS_$LI$()[index2372];
                     {
                         this.removeClass(s);
                     }
@@ -9402,24 +9412,24 @@ ui["__class"] = "ui";
                 return this.active;
             };
             TabItem.prototype.fireClose = function () {
-                for (var index20758 = 0; index20758 < this.listeners.length; index20758++) {
-                    var li = this.listeners[index20758];
+                for (var index2373 = 0; index2373 < this.listeners.length; index2373++) {
+                    var li = this.listeners[index2373];
                     {
                         li.onClose(this);
                     }
                 }
             };
             TabItem.prototype.fireActivate = function () {
-                for (var index20759 = 0; index20759 < this.listeners.length; index20759++) {
-                    var li = this.listeners[index20759];
+                for (var index2374 = 0; index2374 < this.listeners.length; index2374++) {
+                    var li = this.listeners[index2374];
                     {
                         li.onActivate(this);
                     }
                 }
             };
             TabItem.prototype.fireDeActivate = function () {
-                for (var index20760 = 0; index20760 < this.listeners.length; index20760++) {
-                    var li = this.listeners[index20760];
+                for (var index2375 = 0; index2375 < this.listeners.length; index2375++) {
+                    var li = this.listeners[index2375];
                     {
                         li.onDeactivate(this);
                     }
@@ -9995,9 +10005,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.setActive = function (item) {
                 {
-                    var array20762 = this.getItems();
-                    for (var index20761 = 0; index20761 < array20762.length; index20761++) {
-                        var tab = array20762[index20761];
+                    var array2377 = this.getItems();
+                    for (var index2376 = 0; index2376 < array2377.length; index2376++) {
+                        var tab = array2377[index2376];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10021,9 +10031,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.getTab = function (body) {
                 {
-                    var array20764 = this.getItems();
-                    for (var index20763 = 0; index20763 < array20764.length; index20763++) {
-                        var c = array20764[index20763];
+                    var array2379 = this.getItems();
+                    for (var index2378 = 0; index2378 < array2379.length; index2378++) {
+                        var c = array2379[index2378];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10040,9 +10050,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.getActiveTab = function () {
                 {
-                    var array20766 = this.getItems();
-                    for (var index20765 = 0; index20765 < array20766.length; index20765++) {
-                        var item = array20766[index20765];
+                    var array2381 = this.getItems();
+                    for (var index2380 = 0; index2380 < array2381.length; index2380++) {
+                        var item = array2381[index2380];
                         {
                             if (item.isActive()) {
                                 return item;
@@ -10114,8 +10124,8 @@ ui["__class"] = "ui";
                 Text.textTags_$LI$()["span"] = "Span";
             };
             Text.prototype.setAlign = function (align) {
-                for (var index20767 = 0; index20767 < Text.ALIGNS_$LI$().length; index20767++) {
-                    var s = Text.ALIGNS_$LI$()[index20767];
+                for (var index2382 = 0; index2382 < Text.ALIGNS_$LI$().length; index2382++) {
+                    var s = Text.ALIGNS_$LI$()[index2382];
                     {
                         this.removeClass(s);
                     }
@@ -10124,8 +10134,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setTextType = function (type) {
-                for (var index20768 = 0; index20768 < Text.TEXT_TYPES_$LI$().length; index20768++) {
-                    var s = Text.TEXT_TYPES_$LI$()[index20768];
+                for (var index2383 = 0; index2383 < Text.TEXT_TYPES_$LI$().length; index2383++) {
+                    var s = Text.TEXT_TYPES_$LI$()[index2383];
                     {
                         this.removeClass(s);
                     }
@@ -10134,8 +10144,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setColor = function (color) {
-                for (var index20769 = 0; index20769 < Text.COLORS_$LI$().length; index20769++) {
-                    var s = Text.COLORS_$LI$()[index20769];
+                for (var index2384 = 0; index2384 < Text.COLORS_$LI$().length; index2384++) {
+                    var s = Text.COLORS_$LI$()[index2384];
                     {
                         this.removeClass(s);
                     }
@@ -10144,8 +10154,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setDecoration = function (decoration) {
-                for (var index20770 = 0; index20770 < Text.DECORATIONS_$LI$().length; index20770++) {
-                    var s = Text.DECORATIONS_$LI$()[index20770];
+                for (var index2385 = 0; index2385 < Text.DECORATIONS_$LI$().length; index2385++) {
+                    var s = Text.DECORATIONS_$LI$()[index2385];
                     {
                         this.removeClass(s);
                     }
@@ -10258,9 +10268,9 @@ ui["__class"] = "ui";
                 var params = this.delegate.getParameters();
                 var tagParam = new framework.design.TagParameter();
                 {
-                    var array20772 = Object.keys(Text.textTags_$LI$());
-                    for (var index20771 = 0; index20771 < array20772.length; index20771++) {
-                        var key = array20772[index20771];
+                    var array2387 = Object.keys(Text.textTags_$LI$());
+                    for (var index2386 = 0; index2386 < array2387.length; index2386++) {
+                        var key = array2387[index2386];
                         {
                             tagParam.options.push(new framework.design.Option(Text.textTags_$LI$()[key], key));
                         }
@@ -10531,7 +10541,19 @@ ui["__class"] = "ui";
                 /*private*/ _this.listPanel = new framework.JSContainer("div");
                 /*private*/ _this.detailPanel = new framework.JSContainer("div");
                 /*private*/ _this.objectType = "Account";
+                /*private*/ _this.pageHeader = new framework.JSContainer("div");
                 /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
+                _this.addChild$framework_JSContainer(_this.pageHeader);
+                _this.pageHeader.addClass("slds-page-header").addClass("slds-join-bottom");
+                var grid = new framework.lightning.Grid("grid", "div");
+                _this.pageHeader.addChild$framework_JSContainer(grid);
+                var leftCol = new framework.lightning.Col("leftCol");
+                grid.addChild$framework_JSContainer(leftCol);
+                grid.addClass("slds-has-flexi-truncate");
+                var media = new framework.lightning.Media("media");
+                leftCol.addChild$framework_JSContainer(media);
+                media.getFigureContainer().addChild$framework_JSContainer(new framework.lightning.SvgIcon("icon"));
+                _this.addChild$framework_JSContainer(_this.pageHeader);
                 _this.addChild$framework_JSContainer(_this.listPanel);
                 _this.addChild$framework_JSContainer(_this.detailPanel);
                 _this.setAttribute("identifier", "lgt:crud");
@@ -10546,9 +10568,9 @@ ui["__class"] = "ui";
             SalesforceCrud.prototype.refresh = function () {
                 var fi = new Object();
                 {
-                    var array20774 = this.table.getColumns();
-                    for (var index20773 = 0; index20773 < array20774.length; index20773++) {
-                        var o = array20774[index20773];
+                    var array2389 = this.table.getColumns();
+                    for (var index2388 = 0; index2388 < array2389.length; index2388++) {
+                        var o = array2389[index2388];
                         {
                             var name_2 = o["name"];
                             if (!fi.hasOwnProperty(name_2)) {
@@ -10558,9 +10580,9 @@ ui["__class"] = "ui";
                     }
                 }
                 {
-                    var array20776 = this.form.getFields();
-                    for (var index20775 = 0; index20775 < array20776.length; index20775++) {
-                        var o = array20776[index20775];
+                    var array2391 = this.form.getFields();
+                    for (var index2390 = 0; index2390 < array2391.length; index2390++) {
+                        var o = array2391[index2390];
                         {
                             var name_3 = o["name"];
                             if (!fi.hasOwnProperty(name_3)) {
@@ -10571,9 +10593,9 @@ ui["__class"] = "ui";
                 }
                 var query = "SELECT Id";
                 {
-                    var array20778 = Object.keys(fi);
-                    for (var index20777 = 0; index20777 < array20778.length; index20777++) {
-                        var key = array20778[index20777];
+                    var array2393 = Object.keys(fi);
+                    for (var index2392 = 0; index2392 < array2393.length; index2392++) {
+                        var key = array2393[index2392];
                         {
                             if (!(function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10608,6 +10630,9 @@ ui["__class"] = "ui";
             };
             SalesforceCrud.prototype.setFields = function (fields) {
                 this.form.setFields(fields);
+            };
+            SalesforceCrud.prototype.save = function () {
+                this.form.save();
             };
             /**
              *
@@ -10660,25 +10685,25 @@ ui["__class"] = "ui";
                 var c = source.getComponent();
                 dest.getComponent().events = c.events;
                 {
-                    var array20780 = Object.keys(c.parameters);
-                    for (var index20779 = 0; index20779 < array20780.length; index20779++) {
-                        var key = array20780[index20779];
+                    var array2395 = Object.keys(c.parameters);
+                    for (var index2394 = 0; index2394 < array2395.length; index2394++) {
+                        var key = array2395[index2394];
                         {
                             dest.applyParam(key, c.parameters[key]);
                         }
                     }
                 }
                 {
-                    var array20782 = Object.keys(c.styles);
-                    for (var index20781 = 0; index20781 < array20782.length; index20781++) {
-                        var key = array20782[index20781];
+                    var array2397 = Object.keys(c.styles);
+                    for (var index2396 = 0; index2396 < array2397.length; index2396++) {
+                        var key = array2397[index2396];
                         {
                             dest.setStyle(key, c.styles[key]);
                         }
                     }
                 }
-                for (var index20783 = 0; index20783 < c.events.length; index20783++) {
-                    var event_4 = c.events[index20783];
+                for (var index2398 = 0; index2398 < c.events.length; index2398++) {
+                    var event_4 = c.events[index2398];
                     {
                         var listener = new framework.builder.BuilderEventListener(event_4.source, event_4.name, event_4.type);
                         dest.addEventListener(listener, event_4.type);
@@ -10884,7 +10909,7 @@ ui["__class"] = "ui";
     var builder;
     (function (builder) {
         var data;
-        (function (data_7) {
+        (function (data_8) {
             var DataSourcesEditor = (function (_super) {
                 __extends(DataSourcesEditor, _super);
                 function DataSourcesEditor(name, rootEditor) {
@@ -10967,7 +10992,7 @@ ui["__class"] = "ui";
                 };
                 return DataSourcesEditor;
             }(framework.builder.editors.AbstractEditor));
-            data_7.DataSourcesEditor = DataSourcesEditor;
+            data_8.DataSourcesEditor = DataSourcesEditor;
             DataSourcesEditor["__class"] = "framework.builder.data.DataSourcesEditor";
             DataSourcesEditor["__interfaces"] = ["framework.builder.editors.Editor", "framework.interactions.Droppable", "framework.Renderable"];
         })(data = builder.data || (builder.data = {}));
@@ -11135,8 +11160,8 @@ ui["__class"] = "ui";
                     grid.addChild$framework_JSContainer(colLeft.addClass("slds-col").addClass("col-left"));
                     grid.addChild$framework_JSContainer(colRight.addClass("slds-col").addClass("col-right"));
                     _this.root = root;
-                    for (var index20784 = 0; index20784 < framework.builder.editors.EventTypes.events_$LI$().length; index20784++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index20784];
+                    for (var index2399 = 0; index2399 < framework.builder.editors.EventTypes.events_$LI$().length; index2399++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index2399];
                         _this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                     }
                     colLeft.addChild$framework_JSContainer(_this.component.setStyle("width", "100%"));
@@ -11154,8 +11179,8 @@ ui["__class"] = "ui";
                     if (!updEvtSelect) {
                         var listeners = des.getListeners()[this.events.getValue()];
                         if (listeners != null) {
-                            for (var index20785 = 0; index20785 < listeners.length; index20785++) {
-                                var e = listeners[index20785];
+                            for (var index2400 = 0; index2400 < listeners.length; index2400++) {
+                                var e = listeners[index2400];
                                 {
                                     if (e != null && e instanceof framework.builder.BuilderEventListener) {
                                         var bel = e;
@@ -11180,9 +11205,9 @@ ui["__class"] = "ui";
                     var last = "click";
                     var lastSrc = this.getSource(des, last);
                     {
-                        var array20787 = this.events.getChildren();
-                        for (var index20786 = 0; index20786 < array20787.length; index20786++) {
-                            var opt = array20787[index20786];
+                        var array2402 = this.events.getChildren();
+                        for (var index2401 = 0; index2401 < array2402.length; index2401++) {
+                            var opt = array2402[index2401];
                             {
                                 var option = opt;
                                 var type = option.getValue();
@@ -11211,8 +11236,8 @@ ui["__class"] = "ui";
                 EventEditor.prototype.getSource = function (des, type) {
                     var listeners = des.getListeners()[type];
                     if (listeners != null) {
-                        for (var index20788 = 0; index20788 < listeners.length; index20788++) {
-                            var l = listeners[index20788];
+                        for (var index2403 = 0; index2403 < listeners.length; index2403++) {
+                            var l = listeners[index2403];
                             {
                                 if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                     var evt = l;
@@ -11231,14 +11256,14 @@ ui["__class"] = "ui";
                     this.events.clearChildren();
                     this.events.setRendered(false);
                     {
-                        var array20790 = (designable).advancedEventTypes();
-                        for (var index20789 = 0; index20789 < array20790.length; index20789++) {
-                            var s = array20790[index20789];
+                        var array2405 = (designable).advancedEventTypes();
+                        for (var index2404 = 0; index2404 < array2405.length; index2404++) {
+                            var s = array2405[index2404];
                             this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                         }
                     }
-                    for (var index20791 = 0; index20791 < framework.builder.editors.EventTypes.events_$LI$().length; index20791++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index20791];
+                    for (var index2406 = 0; index2406 < framework.builder.editors.EventTypes.events_$LI$().length; index2406++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index2406];
                         this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                     }
                     this.fillValue(designable, true);
@@ -11253,9 +11278,9 @@ ui["__class"] = "ui";
                         return parent;
                     }
                     {
-                        var array20793 = parent.getDesignables();
-                        for (var index20792 = 0; index20792 < array20793.length; index20792++) {
-                            var des = array20793[index20792];
+                        var array2408 = parent.getDesignables();
+                        for (var index2407 = 0; index2407 < array2408.length; index2407++) {
+                            var des = array2408[index2407];
                             {
                                 var res = this.findDesignableById(des, id);
                                 if (res != null) {
@@ -11278,8 +11303,8 @@ ui["__class"] = "ui";
                     if (des != null) {
                         var listeners = des.getListeners()[type];
                         if (listeners != null) {
-                            for (var index20794 = 0; index20794 < listeners.length; index20794++) {
-                                var l_1 = listeners[index20794];
+                            for (var index2409 = 0; index2409 < listeners.length; index2409++) {
+                                var l_1 = listeners[index2409];
                                 {
                                     if (l_1 != null && l_1 instanceof framework.builder.BuilderEventListener) {
                                         var evt = l_1;
@@ -11603,9 +11628,9 @@ ui["__class"] = "ui";
                 VisualEditor.prototype.visit$framework_builder_editors_Visitor$framework_design_Designable = function (v, startAt) {
                     v.doVisit(startAt);
                     {
-                        var array20796 = startAt.getDesignables();
-                        for (var index20795 = 0; index20795 < array20796.length; index20795++) {
-                            var child = array20796[index20795];
+                        var array2411 = startAt.getDesignables();
+                        for (var index2410 = 0; index2410 < array2411.length; index2410++) {
+                            var child = array2411[index2410];
                             {
                                 this.visit$framework_builder_editors_Visitor$framework_design_Designable(v, child);
                             }
@@ -11962,9 +11987,9 @@ ui["__class"] = "ui";
                     return;
                 }
                 {
-                    var array20798 = this.getChildren();
-                    for (var index20797 = 0; index20797 < array20798.length; index20797++) {
-                        var child = array20798[index20797];
+                    var array2413 = this.getChildren();
+                    for (var index2412 = 0; index2412 < array2413.length; index2412++) {
+                        var child = array2413[index2412];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -12071,9 +12096,9 @@ ui["__class"] = "ui";
             }
             templates.options.push(new framework.design.Option("Default", "#default"));
             {
-                var array20800 = project.getTemplates();
-                for (var index20799 = 0; index20799 < array20800.length; index20799++) {
-                    var f = array20800[index20799];
+                var array2415 = project.getTemplates();
+                for (var index2414 = 0; index2414 < array2415.length; index2414++) {
+                    var f = array2415[index2414];
                     {
                         templates.options.push(new framework.design.Option(f.getName(), "#" + f.getName().split(".html").join("")));
                     }
@@ -13149,9 +13174,9 @@ ui["__class"] = "ui";
             };
             Builder.prototype.isOpen = function (editorName) {
                 {
-                    var array20802 = this.editorTabs.getItems();
-                    for (var index20801 = 0; index20801 < array20802.length; index20801++) {
-                        var item = array20802[index20801];
+                    var array2417 = this.editorTabs.getItems();
+                    for (var index2416 = 0; index2416 < array2417.length; index2416++) {
+                        var item = array2417[index2416];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -13168,9 +13193,9 @@ ui["__class"] = "ui";
             };
             Builder.prototype.activateEditor = function (editorName) {
                 {
-                    var array20804 = this.editorTabs.getItems();
-                    for (var index20803 = 0; index20803 < array20804.length; index20803++) {
-                        var item = array20804[index20803];
+                    var array2419 = this.editorTabs.getItems();
+                    for (var index2418 = 0; index2418 < array2419.length; index2418++) {
+                        var item = array2419[index2418];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -13341,8 +13366,8 @@ ui["__class"] = "ui";
             Col.prototype.refreshCls = function () {
                 var cls = this.getAttribute("class").split(" ");
                 var ncls = "";
-                for (var index20805 = 0; index20805 < cls.length; index20805++) {
-                    var cl = cls[index20805];
+                for (var index2420 = 0; index2420 < cls.length; index2420++) {
+                    var cl = cls[index2420];
                     {
                         if ((function (str, searchString, position) {
                             if (position === void 0) { position = 0; }
@@ -13455,9 +13480,9 @@ ui["__class"] = "ui";
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
                 {
-                    var array20807 = this.getChildren();
-                    for (var index20806 = 0; index20806 < array20807.length; index20806++) {
-                        var child = array20807[index20806];
+                    var array2422 = this.getChildren();
+                    for (var index2421 = 0; index2421 < array2422.length; index2421++) {
+                        var child = array2422[index2421];
                         {
                             child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                             child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -13568,6 +13593,25 @@ ui["__class"] = "ui";
         lightning.Grid = Grid;
         Grid["__class"] = "framework.lightning.Grid";
         Grid["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
+    var lightning;
+    (function (lightning) {
+        var PageHeader = (function (_super) {
+            __extends(PageHeader, _super);
+            function PageHeader(name) {
+                var _this = _super.call(this, name, "div") || this;
+                /*private*/ _this.media = new framework.lightning.Media("media");
+                _this.addClass("slds-page-header");
+                _this.addChild$framework_JSContainer(_this.media);
+                return _this;
+            }
+            return PageHeader;
+        }(framework.lightning.LTContainer));
+        lightning.PageHeader = PageHeader;
+        PageHeader["__class"] = "framework.lightning.PageHeader";
+        PageHeader["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -13768,8 +13812,8 @@ ui["__class"] = "ui";
                 _this.section.getContent().addChild$framework_JSContainer(_this.options);
                 _this.options.setWrap(true);
                 var items = [_this.newItem, _this.openComputerItem, _this.openUrlItem, _this.openLibrary];
-                for (var index20808 = 0; index20808 < items.length; index20808++) {
-                    var item = items[index20808];
+                for (var index2423 = 0; index2423 < items.length; index2423++) {
+                    var item = items[index2423];
                     {
                         var li = new framework.JSContainer("li");
                         _this.options.addChild$framework_JSContainer(li.addClass("slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1"));
@@ -14147,8 +14191,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index20809 = 0; index20809 < Button.states_$LI$().length; index20809++) {
-                    var s = Button.states_$LI$()[index20809];
+                for (var index2424 = 0; index2424 < Button.states_$LI$().length; index2424++) {
+                    var s = Button.states_$LI$()[index2424];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -14362,9 +14406,9 @@ ui["__class"] = "ui";
                 var textParam = new framework.design.TextParameter("text", "Text", "Basic");
                 var tagParam = new framework.design.TagParameter();
                 {
-                    var array20811 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
-                    for (var index20810 = 0; index20810 < array20811.length; index20810++) {
-                        var key = array20811[index20810];
+                    var array2426 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
+                    for (var index2425 = 0; index2425 < array2426.length; index2425++) {
+                        var key = array2426[index2425];
                         {
                             tagParam.options.push(new framework.design.Option(JSDesignableTextComponent.textTags_$LI$()[key], key));
                         }
@@ -14638,8 +14682,8 @@ ui["__class"] = "ui";
                     if (parent != null) {
                         var children = parent.getDesignables();
                         var currentIndex = children.indexOf(this.designable);
-                        for (var index20812 = 0; index20812 < children.length; index20812++) {
-                            var child = children[index20812];
+                        for (var index2427 = 0; index2427 < children.length; index2427++) {
+                            var child = children[index2427];
                             {
                                 parent.removeDesignable(child);
                             }
@@ -14665,8 +14709,8 @@ ui["__class"] = "ui";
                         ;
                         var editor = (this.getAncestorWithClass("visual-editor"));
                         editor.persist = true;
-                        for (var index20813 = 0; index20813 < result.length; index20813++) {
-                            var child = result[index20813];
+                        for (var index2428 = 0; index2428 < result.length; index2428++) {
+                            var child = result[index2428];
                             {
                                 editor.addNewComponent$framework_design_Designable$framework_design_Designable(child, parent);
                             }
@@ -14963,8 +15007,8 @@ ui["__class"] = "ui";
                 TypeTreeItem.prototype.deleteMe = function () {
                     var tys = JSON.parse(this.types.getData());
                     var res = (new Array());
-                    for (var index20814 = 0; index20814 < tys.length; index20814++) {
-                        var o = tys[index20814];
+                    for (var index2429 = 0; index2429 < tys.length; index2429++) {
+                        var o = tys[index2429];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -15107,6 +15151,7 @@ ui["__class"] = "ui";
                 var _this = _super.call(this, name, "div") || this;
                 /*private*/ _this.table = new framework.lightning.designables.JSDesignableTable("table");
                 /*private*/ _this.service = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.SalesforceObjectService"));
+                /*private*/ _this.selectedItems = (new Array());
                 _this.table.clearColumns();
                 _this.table.addColumn(new framework.lightning.table.TableColumn("label", "label", "Label"));
                 _this.table.addColumn(new framework.lightning.table.TableColumn("name", "name", "API Name"));
@@ -15117,6 +15162,10 @@ ui["__class"] = "ui";
                 _this.setStyle("display", "none");
                 return _this;
             }
+            FieldsList.prototype.setSelectedItem = function (items) {
+                this.table.setSelectedItems(items);
+                this.selectedItems = items;
+            };
             FieldsList.prototype.getTable = function () {
                 return this.table;
             };
@@ -15130,10 +15179,21 @@ ui["__class"] = "ui";
              * @return {boolean}
              */
             FieldsList.prototype.consume = function (response, statusCode) {
-                var ob = response;
-                var fields = ob["fields"];
-                this.table.setTableData(fields);
-                this.render();
+                if (statusCode !== 200) {
+                    if (statusCode === 500) {
+                        alert("Please authenticate first and come back");
+                        var editor = (this.getAncestorWithClass("visual-editor"));
+                        editor.save();
+                        window.location.href = "/connect/salesforce";
+                    }
+                }
+                else {
+                    var ob = response;
+                    var fields = ob["fields"];
+                    this.table.setTableData(fields);
+                    this.table.setSelectedItems(this.selectedItems);
+                    this.render();
+                }
                 return true;
             };
             return FieldsList;
@@ -15719,8 +15779,8 @@ ui["__class"] = "ui";
                     var value = designable.getAttribute(attr);
                     this.clearChildren();
                     this.setRendered(false);
-                    for (var index20815 = 0; index20815 < parameter.options.length; index20815++) {
-                        var opt = parameter.options[index20815];
+                    for (var index2430 = 0; index2430 < parameter.options.length; index2430++) {
+                        var opt = parameter.options[index2430];
                         {
                             this.addOption(new framework.JSOption(opt.text, opt.value));
                         }
@@ -15892,9 +15952,9 @@ ui["__class"] = "ui";
                     var value = "";
                     var select = designable;
                     {
-                        var array20817 = select.getChildren();
-                        for (var index20816 = 0; index20816 < array20817.length; index20816++) {
-                            var c = array20817[index20816];
+                        var array2432 = select.getChildren();
+                        for (var index2431 = 0; index2431 < array2432.length; index2431++) {
+                            var c = array2432[index2431];
                             {
                                 var opt = c;
                                 value = value + "\n" + opt.getText();
@@ -15914,8 +15974,8 @@ ui["__class"] = "ui";
                     var select = this.designable;
                     select.clearChildren();
                     select.setRendered(false);
-                    for (var index20818 = 0; index20818 < options.length; index20818++) {
-                        var opt = options[index20818];
+                    for (var index2433 = 0; index2433 < options.length; index2433++) {
+                        var opt = options[index2433];
                         {
                             var option = new framework.JSOption(opt, opt);
                             select.addOption(option);
@@ -16152,8 +16212,8 @@ ui["__class"] = "ui";
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index20819 = 0; index20819 < components.length; index20819++) {
-                    var com = components[index20819];
+                for (var index2434 = 0; index2434 < components.length; index2434++) {
+                    var com = components[index2434];
                     {
                         var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-2");
                         this.addChild$framework_JSContainer(li);
@@ -17249,8 +17309,8 @@ ui["__class"] = "ui";
             };
             OpenProject.prototype.dataLoaded$java_lang_Object = function (data) {
                 var nprojects = data;
-                for (var index20820 = 0; index20820 < nprojects.length; index20820++) {
-                    var p = nprojects[index20820];
+                for (var index2435 = 0; index2435 < nprojects.length; index2435++) {
+                    var p = nprojects[index2435];
                     {
                         var project = new framework.builder.data.File(p);
                         var file = new framework.builder.UIFile(project.getName());
@@ -17279,7 +17339,7 @@ ui["__class"] = "ui";
     var builder;
     (function (builder) {
         var data;
-        (function (data_8) {
+        (function (data_9) {
             var FieldSelector = (function (_super) {
                 __extends(FieldSelector, _super);
                 function FieldSelector(name, structure) {
@@ -17309,7 +17369,7 @@ ui["__class"] = "ui";
                 };
                 return FieldSelector;
             }(framework.builder.properties.ItemSelector));
-            data_8.FieldSelector = FieldSelector;
+            data_9.FieldSelector = FieldSelector;
             FieldSelector["__class"] = "framework.builder.data.FieldSelector";
             FieldSelector["__interfaces"] = ["framework.interactions.Droppable", "framework.lightning.table.TableCellRenderer", "framework.Renderable"];
             (function (FieldSelector) {
@@ -17335,7 +17395,7 @@ ui["__class"] = "ui";
                 }());
                 FieldSelector.FieldSelector$0 = FieldSelector$0;
                 FieldSelector$0["__interfaces"] = ["framework.builder.data.RemoteDataListener"];
-            })(FieldSelector = data_8.FieldSelector || (data_8.FieldSelector = {}));
+            })(FieldSelector = data_9.FieldSelector || (data_9.FieldSelector = {}));
         })(data = builder.data || (builder.data = {}));
     })(builder = framework.builder || (framework.builder = {}));
 })(framework || (framework = {}));
@@ -17715,8 +17775,8 @@ ui["__class"] = "ui";
             JSDesignableLink.prototype.getParameters = function () {
                 var parameters = _super.prototype.getParameters.call(this);
                 var result = (new Array());
-                for (var index20821 = 0; index20821 < parameters.length; index20821++) {
-                    var p = parameters[index20821];
+                for (var index2436 = 0; index2436 < parameters.length; index2436++) {
+                    var p = parameters[index2436];
                     {
                         if (p != null && p instanceof framework.design.TagParameter) {
                         }
@@ -17769,9 +17829,9 @@ ui["__class"] = "ui";
                         project = framework.builder.Previewer.project;
                     }
                     {
-                        var array20823 = project.getChild("components").getChildren();
-                        for (var index20822 = 0; index20822 < array20823.length; index20822++) {
-                            var f = array20823[index20822];
+                        var array2438 = project.getChild("components").getChildren();
+                        for (var index2437 = 0; index2437 < array2438.length; index2437++) {
+                            var f = array2438[index2437];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -17782,9 +17842,9 @@ ui["__class"] = "ui";
                                     this.content = framework.builder.marshalling.MarshallUtil.build(f.getData());
                                     this.addChild$framework_JSContainer(this.content);
                                     {
-                                        var array20825 = f.getStylesheets();
-                                        for (var index20824 = 0; index20824 < array20825.length; index20824++) {
-                                            var sc = array20825[index20824];
+                                        var array2440 = f.getStylesheets();
+                                        for (var index2439 = 0; index2439 < array2440.length; index2439++) {
+                                            var sc = array2440[index2439];
                                             {
                                                 var elem = document.createElement("style");
                                                 elem.textContent = sc.getData();
@@ -17793,9 +17853,9 @@ ui["__class"] = "ui";
                                         }
                                     }
                                     {
-                                        var array20827 = f.getScripts();
-                                        for (var index20826 = 0; index20826 < array20827.length; index20826++) {
-                                            var sc = array20827[index20826];
+                                        var array2442 = f.getScripts();
+                                        for (var index2441 = 0; index2441 < array2442.length; index2441++) {
+                                            var sc = array2442[index2441];
                                             {
                                                 var elem = document.createElement("script");
                                                 elem.textContent = sc.getData();
@@ -17804,9 +17864,9 @@ ui["__class"] = "ui";
                                         }
                                     }
                                     {
-                                        var array20829 = f.getTemplates();
-                                        for (var index20828 = 0; index20828 < array20829.length; index20828++) {
-                                            var sc = array20829[index20828];
+                                        var array2444 = f.getTemplates();
+                                        for (var index2443 = 0; index2443 < array2444.length; index2443++) {
+                                            var sc = array2444[index2443];
                                             {
                                                 var elem = document.createElement("div");
                                                 elem.setAttribute("id", sc.getName());
@@ -17867,9 +17927,9 @@ ui["__class"] = "ui";
                 var project = framework.builder.Builder.getInstance().getProject();
                 component.options.push(new framework.design.Option("None", ""));
                 {
-                    var array20831 = project.getChild("components").getChildren();
-                    for (var index20830 = 0; index20830 < array20831.length; index20830++) {
-                        var f = array20831[index20830];
+                    var array2446 = project.getChild("components").getChildren();
+                    for (var index2445 = 0; index2445 < array2446.length; index2445++) {
+                        var f = array2446[index2445];
                         {
                             component.options.push(new framework.design.Option(f.getName(), f.getName()));
                         }
@@ -18378,9 +18438,14 @@ ui["__class"] = "ui";
                      * @return {boolean}
                      */
                     JSDesignableSOQL$0.prototype.consume = function (response, statusCode) {
-                        var evt = new CustomEvent("success");
-                        evt["data"] = response;
-                        this.__parent.fireListener("success", evt);
+                        if (statusCode === 200) {
+                            var evt = new CustomEvent("success");
+                            evt["data"] = response;
+                            this.__parent.fireListener("success", evt);
+                        }
+                        else {
+                            alert(response);
+                        }
                         return true;
                     };
                     return JSDesignableSOQL$0;
@@ -18529,9 +18594,9 @@ ui["__class"] = "ui";
                         this.clearChildren();
                         this.setRendered(false);
                         {
-                            var array20833 = Object.keys(o);
-                            for (var index20832 = 0; index20832 < array20833.length; index20832++) {
-                                var val = array20833[index20832];
+                            var array2448 = Object.keys(o);
+                            for (var index2447 = 0; index2447 < array2448.length; index2447++) {
+                                var val = array2448[index2447];
                                 {
                                     var txt = o[val];
                                     this.addOption(new framework.JSOption(txt, val));
@@ -18723,9 +18788,9 @@ ui["__class"] = "ui";
                     this.setRendered(false);
                     var options = JSON.parse(value);
                     {
-                        var array20835 = Object.keys(options);
-                        for (var index20834 = 0; index20834 < array20835.length; index20834++) {
-                            var optval = array20835[index20834];
+                        var array2450 = Object.keys(options);
+                        for (var index2449 = 0; index2449 < array2450.length; index2449++) {
+                            var optval = array2450[index2449];
                             {
                                 var checkbox = new framework.lightning.CheckBox(optval);
                                 checkbox.setLabel(options[optval]);
@@ -18770,8 +18835,8 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.setOptions = function (options) {
                 this.clearChildren();
-                for (var index20836 = 0; index20836 < options.length; index20836++) {
-                    var opt = options[index20836];
+                for (var index2451 = 0; index2451 < options.length; index2451++) {
+                    var opt = options[index2451];
                     {
                         this.addOption(opt);
                     }
@@ -18808,9 +18873,9 @@ ui["__class"] = "ui";
             CheckBoxGroup.prototype.getValue = function () {
                 var result = (new Array());
                 {
-                    var array20838 = this.getChildren();
-                    for (var index20837 = 0; index20837 < array20838.length; index20837++) {
-                        var child = array20838[index20837];
+                    var array2453 = this.getChildren();
+                    for (var index2452 = 0; index2452 < array2453.length; index2452++) {
+                        var child = array2453[index2452];
                         {
                             var cb = child;
                             if (cb.getValue() === true) {
@@ -18823,13 +18888,13 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.setValue$jsweet_lang_Array = function (val) {
                 this.clearAll();
-                for (var index20839 = 0; index20839 < val.length; index20839++) {
-                    var s = val[index20839];
+                for (var index2454 = 0; index2454 < val.length; index2454++) {
+                    var s = val[index2454];
                     {
                         {
-                            var array20841 = this.getChildren();
-                            for (var index20840 = 0; index20840 < array20841.length; index20840++) {
-                                var child = array20841[index20840];
+                            var array2456 = this.getChildren();
+                            for (var index2455 = 0; index2455 < array2456.length; index2455++) {
+                                var child = array2456[index2455];
                                 {
                                     var cb = child;
                                     if ((function (o1, o2) { if (o1 && o1.equals) {
@@ -18859,9 +18924,9 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.clearAll = function () {
                 {
-                    var array20843 = this.getChildren();
-                    for (var index20842 = 0; index20842 < array20843.length; index20842++) {
-                        var child = array20843[index20842];
+                    var array2458 = this.getChildren();
+                    for (var index2457 = 0; index2457 < array2458.length; index2457++) {
+                        var child = array2458[index2457];
                         {
                             var cb = child;
                             cb.setValue$java_lang_Boolean(false);
@@ -19047,9 +19112,9 @@ ui["__class"] = "ui";
                         this.clearOptions();
                         this.setRendered(false);
                         {
-                            var array20845 = Object.keys(o);
-                            for (var index20844 = 0; index20844 < array20845.length; index20844++) {
-                                var val = array20845[index20844];
+                            var array2460 = Object.keys(o);
+                            for (var index2459 = 0; index2459 < array2460.length; index2459++) {
+                                var val = array2460[index2459];
                                 {
                                     var txt = o[val];
                                     var option = new Object();
@@ -19080,8 +19145,8 @@ ui["__class"] = "ui";
             };
             ComboBox.prototype.setData$jsweet_lang_Array = function (options) {
                 this.clearOptions();
-                for (var index20846 = 0; index20846 < options.length; index20846++) {
-                    var o = options[index20846];
+                for (var index2461 = 0; index2461 < options.length; index2461++) {
+                    var o = options[index2461];
                     {
                         this.addOption(o);
                     }
@@ -19354,8 +19419,8 @@ ui["__class"] = "ui";
                 };
                 JSDesignableTable.prototype.getSelectedItems = function () {
                     var result = (new Array());
-                    for (var index20847 = 0; index20847 < this.tableData.length; index20847++) {
-                        var o = this.tableData[index20847];
+                    for (var index2462 = 0; index2462 < this.tableData.length; index2462++) {
+                        var o = this.tableData[index2462];
                         {
                             if (o["selected"] != null && (o["selected"] === true)) {
                                 result.push(o);
@@ -19367,17 +19432,18 @@ ui["__class"] = "ui";
                 };
                 JSDesignableTable.prototype.setSelectedItems = function (items) {
                     this.selected = items;
-                    for (var index20848 = 0; index20848 < this.tableData.length; index20848++) {
-                        var item = this.tableData[index20848];
+                    for (var index2463 = 0; index2463 < this.tableData.length; index2463++) {
+                        var item = this.tableData[index2463];
                         {
                             item["selected"] = this.isSelected(item, items);
                         }
                     }
+                    this.setTableData(this.tableData);
                 };
                 JSDesignableTable.prototype.isSelected = function (item, items) {
                     var idField = this.getAttribute("IdField");
-                    for (var index20849 = 0; index20849 < items.length; index20849++) {
-                        var o = items[index20849];
+                    for (var index2464 = 0; index2464 < items.length; index2464++) {
+                        var o = items[index2464];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -19460,9 +19526,9 @@ ui["__class"] = "ui";
                         if (value != null) {
                             var o = JSON.parse(value);
                             {
-                                var array20851 = Object.keys(o);
-                                for (var index20850 = 0; index20850 < array20851.length; index20850++) {
-                                    var val = array20851[index20850];
+                                var array2466 = Object.keys(o);
+                                for (var index2465 = 0; index2465 < array2466.length; index2465++) {
+                                    var val = array2466[index2465];
                                     {
                                         var txt = o[val];
                                         var col = new framework.lightning.table.TableColumn(val, val, txt);
@@ -19576,8 +19642,8 @@ ui["__class"] = "ui";
                     var options = new framework.design.AttributeParameter("fields", "Fields", "Extended");
                     params.push(options);
                     var boolParams = ["Bordered", "CellBuffered", "ColBordered", "FixedLayout", "NoRowHover", "Striped", "Selectable", "ResizableCol"];
-                    for (var index20852 = 0; index20852 < boolParams.length; index20852++) {
-                        var param = boolParams[index20852];
+                    for (var index2467 = 0; index2467 < boolParams.length; index2467++) {
+                        var param = boolParams[index2467];
                         {
                             var parameter_1 = new framework.design.AttributeParameter(param, param, "Advanced");
                             parameter_1.options.push(new framework.design.Option("", ""));
@@ -19873,9 +19939,9 @@ ui["__class"] = "ui";
             FormLayout.prototype.setSpacing = function (spacing) {
                 this.currentSpacing = spacing;
                 {
-                    var array20854 = this.getChildren();
-                    for (var index20853 = 0; index20853 < array20854.length; index20853++) {
-                        var container = array20854[index20853];
+                    var array2469 = this.getChildren();
+                    for (var index2468 = 0; index2468 < array2469.length; index2468++) {
+                        var container = array2469[index2468];
                         {
                             var lt = container;
                             lt.setPaddingBottom(spacing).setPaddingLeft(spacing).setPaddingRight(spacing).setPaddingTop(spacing);
@@ -20025,9 +20091,9 @@ ui["__class"] = "ui";
                     var customs = des.getComponent().custom;
                     this.customComponents.clearComponent();
                     {
-                        var array20856 = Object.keys(customs);
-                        for (var index20855 = 0; index20855 < array20856.length; index20855++) {
-                            var s = array20856[index20855];
+                        var array2471 = Object.keys(customs);
+                        for (var index2470 = 0; index2470 < array2471.length; index2470++) {
+                            var s = array2471[index2470];
                             {
                                 this.customComponents.addComponents(new framework.builder.Component("html:cmp", customs[s], s));
                             }
@@ -20083,8 +20149,8 @@ ui["__class"] = "ui";
                     if (designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0)) {
                         var editors_1 = designable.getExtEditors();
                         if (editors_1 != null && editors_1.length > 0) {
-                            for (var index20857 = 0; index20857 < editors_1.length; index20857++) {
-                                var e = editors_1[index20857];
+                            for (var index2472 = 0; index2472 < editors_1.length; index2472++) {
+                                var e = editors_1[index2472];
                                 {
                                     e.setComponent(designable);
                                     this.mainEditor.addItem$java_lang_String$framework_builder_properties_PropertiesEditor(e.getLabel(designable), e).setActive(false);
@@ -20174,7 +20240,7 @@ ui["__class"] = "ui";
     var builder;
     (function (builder) {
         var data;
-        (function (data_9) {
+        (function (data_10) {
             var CrudTable = (function (_super) {
                 __extends(CrudTable, _super);
                 function CrudTable(name) {
@@ -20194,8 +20260,8 @@ ui["__class"] = "ui";
                 }
                 CrudTable.prototype.setFields = function (fields) {
                     this.configs["fields"] = fields;
-                    for (var index20858 = 0; index20858 < fields.length; index20858++) {
-                        var field = fields[index20858];
+                    for (var index2473 = 0; index2473 < fields.length; index2473++) {
+                        var field = fields[index2473];
                         {
                             var name_5 = field["name"];
                             var label = field["label"];
@@ -20306,7 +20372,7 @@ ui["__class"] = "ui";
                 };
                 return CrudTable;
             }(framework.lightning.Panel));
-            data_9.CrudTable = CrudTable;
+            data_10.CrudTable = CrudTable;
             CrudTable["__class"] = "framework.builder.data.CrudTable";
             CrudTable["__interfaces"] = ["framework.lightning.table.TableModel", "framework.interactions.Droppable", "framework.lightning.table.TableCellRenderer", "framework.EventListener", "framework.design.Designable", "framework.Renderable"];
         })(data = builder.data || (builder.data = {}));
@@ -20333,8 +20399,8 @@ ui["__class"] = "ui";
                 }
                 MultiForm.prototype.setConfigs = function (fields) {
                     var count = 0;
-                    for (var index20859 = 0; index20859 < fields.length; index20859++) {
-                        var opt = fields[index20859];
+                    for (var index2474 = 0; index2474 < fields.length; index2474++) {
+                        var opt = fields[index2474];
                         {
                             var name_6 = opt["name"];
                             var label = opt["label"];
@@ -20367,9 +20433,9 @@ ui["__class"] = "ui";
                     var type = this.select.getValue();
                     result["type"] = type;
                     {
-                        var array20861 = this.map.keySet();
-                        for (var index20860 = 0; index20860 < array20861.length; index20860++) {
-                            var name_7 = array20861[index20860];
+                        var array2476 = this.map.keySet();
+                        for (var index2475 = 0; index2475 < array2476.length; index2475++) {
+                            var name_7 = array2476[index2475];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -20388,9 +20454,9 @@ ui["__class"] = "ui";
                 };
                 MultiForm.prototype.setValue$jsweet_lang_Object = function (val) {
                     {
-                        var array20863 = this.map.keySet();
-                        for (var index20862 = 0; index20862 < array20863.length; index20862++) {
-                            var name_8 = array20863[index20862];
+                        var array2478 = this.map.keySet();
+                        for (var index2477 = 0; index2477 < array2478.length; index2477++) {
+                            var name_8 = array2478[index2477];
                             {
                                 if (val[name_8] != null) {
                                     var form = this.map.get(name_8).getChildren()[0];
@@ -20402,9 +20468,9 @@ ui["__class"] = "ui";
                     var type = val["type"];
                     this.select.setValue$java_lang_Object(type);
                     {
-                        var array20865 = this.map.keySet();
-                        for (var index20864 = 0; index20864 < array20865.length; index20864++) {
-                            var name_9 = array20865[index20864];
+                        var array2480 = this.map.keySet();
+                        for (var index2479 = 0; index2479 < array2480.length; index2479++) {
+                            var name_9 = array2480[index2479];
                             {
                                 this.map.get(name_9).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -20445,9 +20511,9 @@ ui["__class"] = "ui";
                     MultiForm$0.prototype.performAction = function (source, evt) {
                         var value = this.__parent.select.getValue();
                         {
-                            var array20867 = this.__parent.map.keySet();
-                            for (var index20866 = 0; index20866 < array20867.length; index20866++) {
-                                var name_10 = array20867[index20866];
+                            var array2482 = this.__parent.map.keySet();
+                            for (var index2481 = 0; index2481 < array2482.length; index2481++) {
+                                var name_10 = array2482[index2481];
                                 {
                                     this.__parent.map.get(name_10).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
                                         return o1.equals(o2);
@@ -20725,8 +20791,8 @@ ui["__class"] = "ui";
                     return _super.call(this, name) || this;
                 }
                 DynaForm.prototype.setFields = function (fields) {
-                    for (var index20868 = 0; index20868 < fields.length; index20868++) {
-                        var o = fields[index20868];
+                    for (var index2483 = 0; index2483 < fields.length; index2483++) {
+                        var o = fields[index2483];
                         {
                             var name_12 = o["name"];
                             var type = o["type"];
@@ -20742,8 +20808,8 @@ ui["__class"] = "ui";
                             else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "select")) {
                                 var options = o["options"];
                                 var select = new framework.JSSelect(name_12);
-                                for (var index20869 = 0; index20869 < options.length; index20869++) {
-                                    var opt = options[index20869];
+                                for (var index2484 = 0; index2484 < options.length; index2484++) {
+                                    var opt = options[index2484];
                                     {
                                         var text = opt["text"];
                                         var value = opt["value"];
@@ -20771,9 +20837,9 @@ ui["__class"] = "ui";
                 DynaForm.prototype.getValue = function () {
                     var result = new Object();
                     {
-                        var array20871 = this.getElements();
-                        for (var index20870 = 0; index20870 < array20871.length; index20870++) {
-                            var element = array20871[index20870];
+                        var array2486 = this.getElements();
+                        for (var index2485 = 0; index2485 < array2486.length; index2485++) {
+                            var element = array2486[index2485];
                             {
                                 var value = element.getInput().getValue();
                                 result[element.getInput().getName()] = value;
@@ -20784,9 +20850,9 @@ ui["__class"] = "ui";
                 };
                 DynaForm.prototype.setValue$jsweet_lang_Object = function (val) {
                     {
-                        var array20873 = this.getElements();
-                        for (var index20872 = 0; index20872 < array20873.length; index20872++) {
-                            var element = array20873[index20872];
+                        var array2488 = this.getElements();
+                        for (var index2487 = 0; index2487 < array2488.length; index2487++) {
+                            var element = array2488[index2487];
                             {
                                 var name_13 = element.getInput().getName();
                                 if (val[name_13] != null) {
@@ -20878,6 +20944,7 @@ ui["__class"] = "ui";
                 __extends(JSDesignableFormLayout, _super);
                 function JSDesignableFormLayout() {
                     var _this = _super.call(this, "Form Layout") || this;
+                    /*private*/ _this.data = new Object();
                     _this.applyParam("layout", "compound");
                     return _this;
                 }
@@ -20945,10 +21012,11 @@ ui["__class"] = "ui";
                         throw new Error('invalid overload');
                 };
                 JSDesignableFormLayout.prototype.setData$jsweet_lang_Object = function (data) {
+                    this.data = data;
                     {
-                        var array20875 = Object.keys(data);
-                        for (var index20874 = 0; index20874 < array20875.length; index20874++) {
-                            var key = array20875[index20874];
+                        var array2490 = Object.keys(data);
+                        for (var index2489 = 0; index2489 < array2490.length; index2489++) {
+                            var key = array2490[index2489];
                             {
                                 var o = data[key];
                                 var element = this.getElement(key);
@@ -20959,6 +21027,23 @@ ui["__class"] = "ui";
                             }
                         }
                     }
+                };
+                JSDesignableFormLayout.prototype.updateData = function () {
+                    {
+                        var array2492 = this.getElements();
+                        for (var index2491 = 0; index2491 < array2492.length; index2491++) {
+                            var element = array2492[index2491];
+                            {
+                                var key = element.getName();
+                                var value = element.getInput().getValue();
+                                this.data[key] = value;
+                            }
+                        }
+                    }
+                };
+                JSDesignableFormLayout.prototype.getData = function () {
+                    this.updateData();
+                    return this.data;
                 };
                 /**
                  *
@@ -20999,9 +21084,9 @@ ui["__class"] = "ui";
                  */
                 JSDesignableFormLayout.prototype.removeDesignable = function (designable) {
                     {
-                        var array20877 = this.getElements();
-                        for (var index20876 = 0; index20876 < array20877.length; index20876++) {
-                            var element = array20877[index20876];
+                        var array2494 = this.getElements();
+                        for (var index2493 = 0; index2493 < array2494.length; index2493++) {
+                            var element = array2494[index2493];
                             {
                                 var b = (element != null && element instanceof framework.lightning.designables.JSDesignableFormElement);
                                 if (b) {
@@ -21039,9 +21124,9 @@ ui["__class"] = "ui";
                  */
                 JSDesignableFormLayout.prototype.moveDesignable = function (designable, steps) {
                     {
-                        var array20879 = this.getElements();
-                        for (var index20878 = 0; index20878 < array20879.length; index20878++) {
-                            var element = array20879[index20878];
+                        var array2496 = this.getElements();
+                        for (var index2495 = 0; index2495 < array2496.length; index2495++) {
+                            var element = array2496[index2495];
                             {
                                 var b = (element != null && element instanceof framework.lightning.designables.JSDesignableFormElement);
                                 if (b) {
@@ -21093,8 +21178,8 @@ ui["__class"] = "ui";
             SalesforceTable.prototype.setColumns = function (fields) {
                 this.columns = fields;
                 this.clearColumns();
-                for (var index20880 = 0; index20880 < fields.length; index20880++) {
-                    var o = fields[index20880];
+                for (var index2497 = 0; index2497 < fields.length; index2497++) {
+                    var o = fields[index2497];
                     {
                         var name_14 = o["name"];
                         var label = o["label"];
@@ -21196,8 +21281,8 @@ ui["__class"] = "ui";
                         if (type == null || type.length <= 0) {
                             type = "Account";
                         }
+                        list.setSelectedItem(this.__parent.__parent.columns);
                         list.setType(type);
-                        list.getTable().setSelectedItems(this.__parent.__parent.columns);
                     };
                     return SalesforceTable$0$0;
                 }(framework.builder.properties.ExtendedPropertyEditorPrompt));
@@ -21240,9 +21325,9 @@ ui["__class"] = "ui";
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
                     {
-                        var array20882 = this.component.getParameters();
-                        for (var index20881 = 0; index20881 < array20882.length; index20881++) {
-                            var p = array20882[index20881];
+                        var array2499 = this.component.getParameters();
+                        for (var index2498 = 0; index2498 < array2499.length; index2498++) {
+                            var p = array2499[index2498];
                             {
                                 if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(p.category, "advanced"))
                                     this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
@@ -21276,9 +21361,9 @@ ui["__class"] = "ui";
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
                     {
-                        var array20884 = designable.getParameters();
-                        for (var index20883 = 0; index20883 < array20884.length; index20883++) {
-                            var param = array20884[index20883];
+                        var array2501 = designable.getParameters();
+                        for (var index2500 = 0; index2500 < array2501.length; index2500++) {
+                            var param = array2501[index2500];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -21307,11 +21392,28 @@ ui["__class"] = "ui";
             __extends(SalesforceForm, _super);
             function SalesforceForm() {
                 var _this = _super.call(this) || this;
-                /*private*/ _this.fields = (new Array());
+                /*private*/ _this.fields_ = (new Array());
                 _this.setName("form");
                 _this.setAttribute("identifier", "lgt:crud-form");
+                _this.setIdField("Id");
                 return _this;
             }
+            SalesforceForm.prototype.setIdField = function (field) {
+                this.applyParam("IdField", field);
+            };
+            SalesforceForm.prototype.getIdField = function () {
+                return this.getAttribute("IdField");
+            };
+            SalesforceForm.prototype.getObjectType = function () {
+                return this.getAttribute("objectType");
+            };
+            /**
+             *
+             * @return {Array}
+             */
+            SalesforceForm.prototype.advancedEventTypes = function () {
+                return ["beforeSave", "success", "error"];
+            };
             /**
              *
              * @param {string} key
@@ -21339,15 +21441,16 @@ ui["__class"] = "ui";
             SalesforceForm.prototype.getParameters = function () {
                 var params = _super.prototype.getParameters.call(this);
                 var objectType = new framework.design.AttributeParameter("objectType", "Object Type", "Basic");
+                var IdField = new framework.design.AttributeParameter("IdField", "Id Field", "Basic");
                 var fields = new SalesforceForm.SalesforceForm$0(this, "fields", "Fields", "Basic");
-                params.push(objectType, fields);
+                params.push(IdField, objectType, fields);
                 return params;
             };
             SalesforceForm.prototype.setFields = function (fields) {
-                this.fields = fields;
+                this.fields_ = fields;
                 this.clear();
-                for (var index20885 = 0; index20885 < fields.length; index20885++) {
-                    var field = fields[index20885];
+                for (var index2502 = 0; index2502 < fields.length; index2502++) {
+                    var field = fields[index2502];
                     {
                         var name_15 = field["name"];
                         var type = field["type"];
@@ -21366,8 +21469,8 @@ ui["__class"] = "ui";
                             return o1 === o2;
                         } })(type, "picklist")) {
                             var picklists = field["picklistValues"];
-                            for (var index20886 = 0; index20886 < picklists.length; index20886++) {
-                                var o = picklists[index20886];
+                            for (var index2503 = 0; index2503 < picklists.length; index2503++) {
+                                var o = picklists[index2503];
                                 {
                                     var active = o["active"];
                                     if (active) {
@@ -21386,7 +21489,30 @@ ui["__class"] = "ui";
                 }
             };
             SalesforceForm.prototype.getFields = function () {
-                return this.fields;
+                return this.fields_;
+            };
+            SalesforceForm.prototype.save = function () {
+                var evt = new CustomEvent("beforeSave");
+                this.fireListener("beforeSave", evt);
+                var service = (framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.data.SalesforceObjectService"));
+                var data_ = this.getData();
+                var data = new Object();
+                var objectId = data_[this.getIdField()];
+                for (var index2504 = 0; index2504 < this.fields_.length; index2504++) {
+                    var field = this.fields_[index2504];
+                    {
+                        var name_16 = field["name"];
+                        var calculated = field["calculated"];
+                        var updatable = field["updateable"];
+                        if (!updatable || calculated) {
+                        }
+                        else {
+                            data[name_16] = data[name_16];
+                        }
+                    }
+                }
+                var name = this.getObjectType();
+                service.update(this, name, objectId, data, new SalesforceForm.SalesforceForm$1(this, evt));
             };
             return SalesforceForm;
         }(framework.lightning.designables.JSDesignableFormLayout));
@@ -21443,6 +21569,7 @@ ui["__class"] = "ui";
                         if (type == null || type.length <= 0) {
                             type = "Account";
                         }
+                        list.setSelectedItem(this.__parent.__parent.fields_);
                         list.setType(type);
                     };
                     return SalesforceForm$0$0;
@@ -21469,6 +21596,32 @@ ui["__class"] = "ui";
                 SalesforceForm$0.SalesforceForm$0$1 = SalesforceForm$0$1;
                 SalesforceForm$0$1["__interfaces"] = ["framework.EventListener"];
             })(SalesforceForm$0 = SalesforceForm.SalesforceForm$0 || (SalesforceForm.SalesforceForm$0 = {}));
+            var SalesforceForm$1 = (function () {
+                function SalesforceForm$1(__parent, evt) {
+                    this.evt = evt;
+                    this.__parent = __parent;
+                }
+                /**
+                 *
+                 * @param {*} response
+                 * @param {number} statusCode
+                 * @return {boolean}
+                 */
+                SalesforceForm$1.prototype.consume = function (response, statusCode) {
+                    this.evt["data"] = response;
+                    this.evt["statusCode"] = statusCode;
+                    if (statusCode === 200) {
+                        this.__parent.fireListener("success", this.evt);
+                    }
+                    else {
+                        this.__parent.fireListener("error", this.evt);
+                    }
+                    return true;
+                };
+                return SalesforceForm$1;
+            }());
+            SalesforceForm.SalesforceForm$1 = SalesforceForm$1;
+            SalesforceForm$1["__interfaces"] = ["framework.ServiceCallback"];
         })(SalesforceForm = salesforce.SalesforceForm || (salesforce.SalesforceForm = {}));
     })(salesforce = framework.salesforce || (framework.salesforce = {}));
 })(framework || (framework = {}));

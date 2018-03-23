@@ -87,6 +87,7 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 		for(Object item : tableData){
 			item.$set("selected", isSelected(item, items));
 		}
+		setTableData(tableData);
 	}
 	
 	public boolean isSelected(Object item, Array<Object> items){

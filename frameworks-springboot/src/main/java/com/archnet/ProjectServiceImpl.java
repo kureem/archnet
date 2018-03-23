@@ -109,6 +109,9 @@ public class ProjectServiceImpl implements ProjectService{
 	public File updateFile(String title,String data, String path) {
 		
 		File f = fileRepository.findOne(path);
+		if(f == null){
+			f = createProject(path.replace("/", ""), title);
+		}
 		f.setTitle(title);
 		f.setData(data);
 		fileRepository.save(f);

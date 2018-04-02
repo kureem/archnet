@@ -20,11 +20,14 @@ public class LightningContainerComponentLibrary extends ComponentsLibrary{
 		addComponents(new Component("lgt:panel-section", "SEC", "Panel Section"));
 		
 		
-		addComponents(new Component("lgt:modal", "MODAL", "Modal"));
+		
 		
 		
 		addComponents(new Component("lgt:acc", "ACC", "Accordion"));
 		addComponents(new Component("lgt:acc-item", "ACCI", "Accordion Item"));
+		
+		addComponents(new Component("lgt:tabs", "TABS", "Tabs"));
+		addComponents(new Component("lgt:tab-item", "TABSI", "Tab Item"));
 		
 		addComponents(new Component("zs:cardlayout", "CRD", "Card Layout"));
 		addComponents(new Component("zs:cardlayout-item", "CRDI", "Card Layout Item"));
@@ -34,6 +37,7 @@ public class LightningContainerComponentLibrary extends ComponentsLibrary{
 		addComponents(new Component("lgt:listbox", "LSTBX", "List Box"));
 		addComponents(new Component("lgt:listbox-item", "LSTBXI", "List Box Item"));
 		
+		addComponents(new Component("lgt:modal", "MODAL", "Modal"));
 		
 		addComponents(new Component("zs:http", "REST", "Rest Webservice"));
 		addComponents(new Component("zs:service", "SERV", "Remote Service"));

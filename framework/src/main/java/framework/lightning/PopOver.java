@@ -1,9 +1,12 @@
 package framework.lightning;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.designables.JSDesignable;
+import framework.designables.JSDesignableBasicComponent;
 
-public class PopOver extends JSContainer{
+public class PopOver extends JSContainer implements MouseEventAble,DndAble{
 	
 	public static final String NUBIN_NONE = "slds-nubbin_none";
 	
@@ -20,7 +23,7 @@ public final static String NUBIN_TOP_RIGHT = "slds-nubbin_top-right";
 	
 	private JSDesignable body = new JSDesignable("body", "div");
 	
-	private JSDesignable footer = new JSDesignable("footer", "footer");
+	private JSDesignable footer = new JSDesignableBasicComponent("footer", "footer");
 
 	public PopOver(String name) {
 		super(name, "section");

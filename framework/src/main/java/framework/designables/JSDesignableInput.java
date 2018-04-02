@@ -1,6 +1,9 @@
 package framework.designables;
 
+import framework.DndAble;
 import framework.JSInput;
+import framework.KeyboardEventAble;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -10,7 +13,7 @@ import framework.design.ValueParameter;
 import jsweet.lang.Array;
 import jsweet.lang.Error;
 
-public class JSDesignableInput extends JSInput implements Designable {
+public class JSDesignableInput extends JSInput implements Designable,MouseEventAble,DndAble,KeyboardEventAble {
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
@@ -37,6 +40,13 @@ public class JSDesignableInput extends JSInput implements Designable {
 			}
 			setValue((String)curVal);
 		}
+	}
+	
+	
+
+	@Override
+	public String[] advancedEventTypes() {
+		return new String[]{"change", "input", "blur", "focus","paste","copy", "focus", "error","beforepaste","beforecut","beforecopy"};
 	}
 
 	@Override

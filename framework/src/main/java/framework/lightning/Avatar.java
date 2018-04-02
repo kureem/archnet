@@ -1,6 +1,8 @@
 package framework.lightning;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.Component;
 import framework.core.BeanFactory;
@@ -12,7 +14,7 @@ import framework.designables.DesignableDelegate;
 import framework.designables.JSDesignableImage;
 import jsweet.lang.Array;
 
-public class Avatar extends JSContainer implements Designable{
+public class Avatar extends JSContainer implements Designable, MouseEventAble,DndAble{
 
 	
 	private JSDesignableImage image;// = new JSDesignableImage("img");

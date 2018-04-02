@@ -1,6 +1,8 @@
 package framework.lightning.designables;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -10,7 +12,7 @@ import framework.designables.DesignableDelegate;
 import framework.lightning.Grid;
 import jsweet.lang.Array;
 
-public class JSDesignableLightningGrid extends Grid implements Designable{
+public class JSDesignableLightningGrid extends Grid implements Designable, MouseEventAble,DndAble{
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	

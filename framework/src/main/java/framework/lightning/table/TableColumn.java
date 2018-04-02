@@ -2,10 +2,16 @@ package framework.lightning.table;
 
 
 import framework.JSContainer;
+import framework.builder.marshalling.Component;
+import framework.design.Designable;
+import framework.design.Parameter;
+import framework.designables.DesignableDelegate;
+import jsweet.lang.Array;
 
-public class TableColumn extends JSContainer {
+public class TableColumn extends JSContainer implements Designable {
 	
 	
+	private DesignableDelegate delegate = new DesignableDelegate(this);
 
    protected Object    identifier;
 
@@ -42,11 +48,13 @@ public class TableColumn extends JSContainer {
 
 	public TableColumn(String name, Object identifier,String label) {
 		this(name,identifier,label,false);
+		setAttribute("identifier", "lgt:table-column");
 	}
 	
 	public TableColumn(String name, Object identifier,String label, boolean detailLnk) {
 		super(name, "th");
 		this.identifier = identifier;
+		setAttribute("identifier", "lgt:table-column");
 		//title.addChild(innerTitle);
 		//title.addChild(icon);
 		addChild(title);
@@ -108,6 +116,42 @@ public class TableColumn extends JSContainer {
 
 	public void setDetailLink(boolean detailLink) {
 		this.detailLink = detailLink;
+	}
+
+	@Override
+	public void applyParam(String key, String value) {
+		delegate.applyParameter(key, value, true);
+		
+	}
+
+	@Override
+	public Array<Designable> getDesignables() {
+		return new Array<Designable>();
+	}
+
+	@Override
+	public Component getComponent() {
+		return delegate.getComponent();
+	}
+
+	@Override
+	public Array<Parameter> getParameters() {
+		return delegate.getParameters();
+	}
+
+	@Override
+	public void addDesignable(Designable designable) {
+		
+	}
+
+	@Override
+	public void removeDesignable(Designable designable) {
+		
+	}
+
+	@Override
+	public void moveDesignable(Designable designable, int steps) {
+		
 	}
 	
 	

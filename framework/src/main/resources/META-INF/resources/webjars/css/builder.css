@@ -30,6 +30,9 @@
 .builder .visual-editor .zoom {
 	display: inline;
 }
+.builder .visual-editor .zoom input{
+	padding:0px;
+}
 
 .builder .visual-editor .zoom a{
 	font-size: 22px;
@@ -163,6 +166,10 @@
 
 .builder .buttons-ctn{
 	display: none;
+}
+
+.builder .buttons-ctn button{
+	margin-top:0px;
 }
 
 .builder .slds-tree__item:hover .buttons-ctn{
@@ -428,7 +435,7 @@
 	
 }
 
-.visual-editor button[name=toggleOutline], .visual-editor button[name=toggleRuler], .visual-editor button[name=toggleDefinitions]{
+.visual-editor button[name=toggleOutline], .visual-editor button[name=toggleRuler], .visual-editor button[name=toggleDefinitions],.visual-editor button[name=refresh]{
 	width: auto;
     height: auto;
     border: none;
@@ -445,7 +452,7 @@
 
 
 .builder .visual-editor section[name=composer] > .slds-docked-composer__body{
-	border: solid 0.2rem #606060;
+	border: solid 0.2rem #7e8be4;
 }
 
 .builder .slds-form_compact .slds-input, .builder .slds-form_compact .slds-select{
@@ -455,6 +462,11 @@
 	padding: 0 4px;
 	margin: 0px;
 	height: auto;
+}
+
+.builder .slds-form_compact input[type=checkbox]{
+	position: relative;
+	top :5px;
 }
 
 .builder .slds-form_compact .slds-form-element{

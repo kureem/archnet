@@ -1,6 +1,8 @@
 package framework.lightning;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -8,7 +10,7 @@ import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
 import jsweet.lang.Array;
 
-public class BreadCrumbItem extends JSContainer implements Designable{
+public class BreadCrumbItem extends JSContainer implements Designable,   MouseEventAble,DndAble{
 
 	JSContainer link = new JSContainer("link","a").setAttribute("href", "javascript:void(0);");
 	

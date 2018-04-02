@@ -4,8 +4,10 @@ import static jsweet.dom.Globals.alert;
 import static jsweet.lang.Globals.parseInt;
 
 import def.js.JSON;
+import framework.DndAble;
 import framework.EventListener;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.Renderable;
 import framework.builder.marshalling.Component;
 import framework.builder.properties.ExtPropertiesEditor;
@@ -26,7 +28,7 @@ import jsweet.dom.Event;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class JSDesignableTable extends Table implements ExtDesignable, TableColumnModel, TableModel, TableCellRenderer {
+public class JSDesignableTable extends Table implements ExtDesignable, TableColumnModel, TableModel, TableCellRenderer,   MouseEventAble,DndAble {
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
@@ -56,6 +58,9 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 	}
 	
 	
+	
+
+
 	public void setIdField(String field){
 		applyParam("IdField", field);
 	}
@@ -252,12 +257,23 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 
 	@Override
 	public void addDesignable(Designable designable) {
-
+		if(designable instanceof TableColumn){
+			addColumn((TableColumn)designable);
+		}else{
+			throw new jsweet.lang.Error("Can only add component of type Table Column in a Table");
+		}
 	}
 
 	@Override
 	public void removeDesignable(Designable designable) {
-
+		Array<TableColumn> tmp =new Array<TableColumn>();
+		for(TableColumn tc : fields){
+			if(!tc.equals(designable)){
+				tmp.push(tc);
+			}
+		}
+		fields = tmp;
+		refreshColumns();
 	}
 
 	@Override

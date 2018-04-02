@@ -1,9 +1,13 @@
 package framework.salesforce;
 
+import static jsweet.dom.Globals.alert;
+import static jsweet.dom.Globals.window;
+
 import framework.EventListener;
 import framework.JSContainer;
 import framework.ServiceCallback;
 import framework.builder.data.SalesforceObjectService;
+import framework.builder.editors.VisualEditor;
 import framework.core.BeanFactory;
 import framework.designables.JSDesignableCardLayoutItem;
 import framework.lightning.designables.JSDesignableTable;
@@ -56,6 +60,22 @@ public class ObjectList extends JSDesignableCardLayoutItem implements ServiceCal
 		table.setTableData(lst);
 		render();
 		return true;
+	}
+
+	@Override
+	public boolean error(Object err, double statusCode) {
+		if (statusCode == 500) {
+			alert("Please authenticate first and come back");
+			
+			VisualEditor editor = getAncestorWithClass("visual-editor");
+			editor.save();
+			//ProjectService service = BeanFactory.getInstance().getBeanOfType(ProjectService.class);
+			
+			window.location.href = "/connect/salesforce";
+		}else{
+			alert("An error occured while executiong this function: status code=" + statusCode);
+		}
+		return false;
 	}
 
 }

@@ -1,6 +1,8 @@
 package framework.lightning.designables;
 
+import framework.DndAble;
 import framework.InputField;
+import framework.MouseEventAble;
 import framework.builder.editors.VisualEditor;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.Component;
@@ -19,7 +21,7 @@ import framework.lightning.FormElement;
 import framework.salesforce.SalesforceLookup;
 import jsweet.lang.Array;
 
-public class JSDesignableFormElement extends FormElement implements Designable, Preparable{
+public class JSDesignableFormElement extends FormElement implements Designable, Preparable,MouseEventAble,DndAble{
 
 	//private DesignableDelegate delegate = new DesignableDelegate(this);
 	

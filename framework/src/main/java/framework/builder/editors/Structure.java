@@ -194,8 +194,8 @@ public class Structure extends JSContainer {
 		ul.addChild(liRoot.addClass("type-ui"));
 		addNode(root, liRoot, 1, null);
 		
-		String[] items = new String[]{"scripts", "stylesheets", "templates", "components", "datasources", "variables", "types"};
-		String[] labels = new String[]{"JS", "CSS", "HTML", "Components", "Datasources", "Variables", "Types"};
+		String[] items = new String[]{"scripts", "stylesheets", "templates", "components"};
+		String[] labels = new String[]{"JS", "CSS", "HTML", "Modules"};
 		
 		for(int i = 0; i < items.length; i++){
 			JSContainer li = new JSContainer("li").setAttribute("role", "treeitem").setAttribute("aria-level", "1");

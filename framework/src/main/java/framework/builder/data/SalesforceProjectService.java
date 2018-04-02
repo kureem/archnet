@@ -1,7 +1,11 @@
 package framework.builder.data;
 
 import framework.JSContainer;
+import framework.ServiceCallback;
 import framework.core.BeanFactory;
+
+import static jsweet.dom.Globals.alert;
+
 import framework.Adaptor;
 
 public class SalesforceProjectService implements ProjectService{
@@ -13,9 +17,19 @@ public class SalesforceProjectService implements ProjectService{
 		request.$set("title", title);
 		request.$set("method", "createProject");
 		
-		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, (a,b)->{
-			listener.dataLoaded(a);
-			return true;
+		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, new ServiceCallback() {
+			
+			@Override
+			public boolean error(Object err, double statusCode) {
+				alert("Error occured while executing this service: status code = " + statusCode);
+				return false;
+			}
+			
+			@Override
+			public boolean consume(Object a, double statusCode) {
+				listener.dataLoaded(a);
+				return true;
+			}
 		});
 	}
 
@@ -23,9 +37,19 @@ public class SalesforceProjectService implements ProjectService{
 	public void getProjects(JSContainer source, RemoteDataListener<Object> listener) {
 		jsweet.lang.Object request = new jsweet.lang.Object();
 		request.$set("method", "getProjects");
-		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, (a,b)->{
-			listener.dataLoaded(a);
-			return true;
+		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request,new ServiceCallback() {
+			
+			@Override
+			public boolean error(Object err, double statusCode) {
+				alert("Error occured while executing this service: status code = " + statusCode);
+				return false;
+			}
+			
+			@Override
+			public boolean consume(Object a, double statusCode) {
+				listener.dataLoaded(a);
+				return true;
+			}
 		});
 	}
 
@@ -35,9 +59,19 @@ public class SalesforceProjectService implements ProjectService{
 		jsweet.lang.Object request = new jsweet.lang.Object();
 		request.$set("file", file);
 		request.$set("method", "saveFile");
-		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, (a,b)->{
-			listener.dataLoaded(a);
-			return true;
+		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request,new ServiceCallback() {
+			
+			@Override
+			public boolean error(Object err, double statusCode) {
+				alert("Error occured while executing this service: status code = " + statusCode);
+				return false;
+			}
+			
+			@Override
+			public boolean consume(Object a, double statusCode) {
+				listener.dataLoaded(a);
+				return true;
+			}
 		});
 	}
 
@@ -49,9 +83,19 @@ public class SalesforceProjectService implements ProjectService{
 		request.$set("title", title);
 		request.$set("dir", dir);
 		request.$set("method", "createFile");
-		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, (a,b)->{
-			listener.dataLoaded(a);
-			return true;
+		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, new ServiceCallback() {
+			
+			@Override
+			public boolean error(Object err, double statusCode) {
+				alert("Error occured while executing this service: status code = " + statusCode);
+				return false;
+			}
+			
+			@Override
+			public boolean consume(Object a, double statusCode) {
+				listener.dataLoaded(a);
+				return true;
+			}
 		});
 	}
 
@@ -61,9 +105,19 @@ public class SalesforceProjectService implements ProjectService{
 		jsweet.lang.Object request = new jsweet.lang.Object();
 		request.$set("path", path);
 		request.$set("method", "deleteFile");
-		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, (a,b)->{
-			listener.dataLoaded(a);
-			return true;
+		BeanFactory.getInstance().getBeanOfType(Adaptor.class).Execute(source, "ProjectService", request, new ServiceCallback() {
+			
+			@Override
+			public boolean error(Object err, double statusCode) {
+				alert("Error occured while executing this service: status code = " + statusCode);
+				return false;
+			}
+			
+			@Override
+			public boolean consume(Object a, double statusCode) {
+				listener.dataLoaded(a);
+				return true;
+			}
 		});
 	}
 

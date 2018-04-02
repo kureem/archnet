@@ -1,5 +1,7 @@
 package framework.designables;
 
+import static jsweet.dom.Globals.alert;
+
 import framework.Adaptor;
 import framework.ServiceCallback;
 import framework.core.BeanFactory;
@@ -35,6 +37,12 @@ public class JSDesignableService extends JSDesignableDataProvider implements Des
 			public boolean consume(java.lang.Object response, double statusCode) {
 				fireListener("success", new DataEvent("success",(Object)response));
 				return true;
+			}
+
+			@Override
+			public boolean error(java.lang.Object err, double statusCode) {
+				alert("Error occured: status code = " + statusCode);
+				return false;
 			}
 		});
 	}

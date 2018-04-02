@@ -3,8 +3,11 @@ package framework.designables;
 import static jsweet.lang.Globals.parseInt;
 
 import def.js.JSON;
+import framework.DndAble;
 import framework.JSOption;
 import framework.JSSelect;
+import framework.KeyboardEventAble;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.builder.properties.ExtPropertiesEditor;
 import framework.builder.properties.KeyValueEditor;
@@ -16,7 +19,7 @@ import framework.design.Parameter;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class JSDesignableSelect extends JSSelect implements ExtDesignable{
+public class JSDesignableSelect extends JSSelect implements ExtDesignable,MouseEventAble,DndAble,KeyboardEventAble{
 
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
@@ -26,7 +29,10 @@ public class JSDesignableSelect extends JSSelect implements ExtDesignable{
 		setAttribute("identifier", "html:select");
 	}
 
-	
+	@Override
+	public String[] advancedEventTypes() {
+		return new String[]{"change", "input", "blur", "focus","paste","copy", "focus", "error","beforepaste","beforecut","beforecopy"};
+	}
 	
 	@Override
 	public void applyParam(String key, String value) {

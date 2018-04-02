@@ -1,9 +1,12 @@
 package framework.builder.editors;
 
+import framework.DndAble;
 import framework.EventListener;
 import framework.JSContainer;
 import framework.JSOption;
 import framework.JSSelect;
+import framework.KeyboardEventAble;
+import framework.MouseEventAble;
 import framework.builder.BuilderEventListener;
 import framework.builder.data.File;
 import framework.builder.marshalling.Component;
@@ -157,8 +160,24 @@ public class EventEditor extends AbstractEditor<Component> {
 		
 		//filtering goes here
 		
-		for (String s : EventTypes.events)
-			events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
+		if(designable instanceof DndAble){
+			for (String s : EventTypes.dndevents)
+				events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
+		}
+		
+		if(designable instanceof MouseEventAble){
+			for (String s : EventTypes.mouseevents)
+				events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
+		}
+		
+		if(designable instanceof KeyboardEventAble){
+			for (String s : EventTypes.keyboardevents)
+				events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));
+		}
+		
+		
+		/*for (String s : EventTypes.events)
+			events.addOption(new JSOption(s.replace("on", ""), s.replace("on", "")));*/
 		fillValue(designable, true);
 	}
 

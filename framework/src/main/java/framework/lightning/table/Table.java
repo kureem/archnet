@@ -7,11 +7,13 @@ import jsweet.dom.CustomEvent;
 
 public class Table extends JSContainer {
 
-	private JSContainer thead = new JSContainer("thead");
+	protected JSContainer thead = new JSContainer("thead");
+	
+	protected JSContainer theadRow = new JSContainer("tr");
 
-	private JSContainer tbody = new JSContainer("tbody");
+	protected JSContainer tbody = new JSContainer("tbody");
 
-	private JSContainer tfoot = new JSContainer("tfoot");
+	protected JSContainer tfoot = new JSContainer("tfoot");
 
 	private TableModel model;
 
@@ -36,7 +38,7 @@ public class Table extends JSContainer {
 	public Table(String name) {
 		super(name, "table");
 		addClass("slds-table");
-		addChild(thead);
+		addChild(thead.addChild(theadRow));
 		addChild(tbody);
 		addChild(tfoot);
 		tfoot.addChild(ftr.addChild(ftd));
@@ -207,13 +209,15 @@ public class Table extends JSContainer {
 	}
 
 	public void refreshColumns() {
-		thead.clearChildren();
-		thead.setRendered(false);
-		JSContainer tr = new JSContainer("tr").addClass("slds-text-title_caps");
-		thead.addChild(tr);
+		//thead.clearChildren();
+		//thead.setRendered(false);
+		//JSContainer tr = new JSContainer("tr").addClass("slds-text-title_caps");
+		//thead.addChild(tr);
+		theadRow.clearChildren();
+		setRendered(false);
 		for (int i = 0; i < tableColumnModel.getColumnCount(); i++) {
 			TableColumn col = tableColumnModel.getColumn(i);
-			tr.addChild(col);
+			theadRow.addChild(col);
 		}
 	}
 

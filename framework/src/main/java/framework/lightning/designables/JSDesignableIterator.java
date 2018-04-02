@@ -1,6 +1,8 @@
 package framework.lightning.designables;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.Component;
 import framework.core.BeanFactory;
@@ -11,7 +13,7 @@ import jsweet.lang.Array;
 import jsweet.lang.Error;
 import jsweet.lang.Object;
 
-public class JSDesignableIterator extends JSContainer implements Designable{
+public class JSDesignableIterator extends JSContainer implements Designable, MouseEventAble,DndAble{
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	

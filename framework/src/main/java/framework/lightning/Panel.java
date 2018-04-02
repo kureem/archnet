@@ -1,22 +1,20 @@
 package framework.lightning;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.builder.marshalling.Component;
 import framework.core.BeanFactory;
 import framework.design.Designable;
-import framework.design.Parameter;
-import framework.designables.DesignableDelegate;
-import jsweet.lang.Array;
+import framework.lightning.designables.JSDesignableLightningGrid;
 
-public class Panel extends Grid implements Designable {
+public class Panel extends JSDesignableLightningGrid implements Designable,   MouseEventAble,DndAble {
 
-	// private FormLayout layout = new FormLayout("layout", "div");
 
-	private DesignableDelegate delegate = new DesignableDelegate(this);
 
 	public Panel(String name) {
-		super(name, "div");
+		super(name);
 		setNoWrap(true).setVertical(true);
 		addClass("slds-panel");
 	}
@@ -26,29 +24,9 @@ public class Panel extends Grid implements Designable {
 		return this;
 	}
 
-	@Override
-	public void applyParam(String key, String value) {
-		delegate.applyParameter(key, value, true);
+	
 
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public Array<Designable> getDesignables() {
-		Array children = getChildren();
-
-		return children;
-	}
-
-	@Override
-	public Component getComponent() {
-		return delegate.getComponent();
-	}
- 
-	@Override
-	public Array<Parameter> getParameters() {
-		return delegate.getParameters();
-	}
+	
 
 	@Override
 	public void addDesignable(Designable designable) {
@@ -61,15 +39,6 @@ public class Panel extends Grid implements Designable {
 		}
 	}
 
-	@Override
-	public void removeDesignable(Designable designable) {
-		removeChild(designable);
-
-	}
-
-	@Override
-	public void moveDesignable(Designable designable, int steps) {
-		delegate.moveDesignable(designable, steps);
-	}
+	
 
 }

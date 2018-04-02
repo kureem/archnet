@@ -14,5 +14,23 @@ public class EventTypes {
 			"onplay", "onplaying", "onprogress", "onratechange", "onreset", "onscroll", "onseeked", "onseeking",
 			"onselect", "onselectstart", "onstalled", "onsubmit", "onsuspend", "ontimeupdate", "onvolumechange",
 			"onwaiting" };
+	
+	
+	
+	public final static String[] mouseevents = new String[]{
+			"onclick", "oncontextmenu","ondblclick","onmousedown", "onmouseenter", "onmouseleave", "onmousemove", "onmouseout", "onmouseover",
+			"onmouseup", "onmousewheel"
+	};
+	
+	
+	public final static String[] keyboardevents = new String[]{
+			"onkeydown", "onkeypress", "onkeyup"
+			
+	};
 
+	
+	public final static String[] dndevents = new String[]{
+			"ondrag", "ondragend", "ondragenter",
+			"ondragleave", "ondragover", "ondragstart", "ondrop"
+	};
 }

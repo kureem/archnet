@@ -1,10 +1,13 @@
 package framework.salesforce;
 
+import framework.DndAble;
 import framework.EventListener;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.BuilderEventListener;
 import framework.builder.marshalling.BuilderEvent;
 import framework.builder.marshalling.Component;
+import framework.builder.marshalling.MarshallUtil;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Parameter;
@@ -18,7 +21,7 @@ import jsweet.dom.Event;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class SalesforceCrud extends JSContainer implements Designable {
+public class SalesforceCrud extends JSContainer implements Designable ,MouseEventAble, DndAble {
 
 	private SalesforceTable table = new SalesforceTable("table");
 
@@ -187,10 +190,12 @@ public class SalesforceCrud extends JSContainer implements Designable {
 	}
 	
 	protected void mirrorCopy(Designable source, Designable dest){
-		Component c = source.getComponent();
+		Component c = MarshallUtil.extract(source);
 		dest.getComponent().events = c.events;
 		for(String key : Object.keys(c.parameters)){
-			dest.applyParam(key, (String)c.parameters.$get(key));
+			String val = (String)c.parameters.$get(key);
+			if(val != null)
+				dest.applyParam(key, val);
 		}
 		
 		for(String key : Object.keys(c.styles)){

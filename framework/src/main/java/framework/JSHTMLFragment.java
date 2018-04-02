@@ -29,7 +29,7 @@ import jsweet.dom.HTMLElement;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class JSHTMLFragment extends JSDesignable {
+public class JSHTMLFragment extends JSDesignable implements MouseEventAble, KeyboardEventAble, DndAble {
 
 	//private String template;
 

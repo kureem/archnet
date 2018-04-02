@@ -1,13 +1,16 @@
 package framework.designables;
 
+import framework.DndAble;
 import framework.JSTextArea;
+import framework.KeyboardEventAble;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
 import framework.design.Parameter;
 import framework.design.ValueParameter;
 import jsweet.lang.Array;
 
-public class JSDesignableTextArea extends JSTextArea implements Designable {
+public class JSDesignableTextArea extends JSTextArea implements Designable,MouseEventAble,DndAble,KeyboardEventAble {
 	
 	private DesignableDelegate delegate  = new DesignableDelegate(this);
 
@@ -15,6 +18,11 @@ public class JSDesignableTextArea extends JSTextArea implements Designable {
 	public JSDesignableTextArea(String name) {
 		super(name);
 		setAttribute("identifier", "html:textarea");
+	}
+	
+	@Override
+	public String[] advancedEventTypes() {
+		return new String[]{"change", "input", "blur", "focus","paste","copy", "focus", "error","beforepaste","beforecut","beforecopy"};
 	}
 
 	@Override

@@ -78,7 +78,11 @@ import framework.lightning.designables.JSDesignableIterator;
 import framework.lightning.designables.JSDesignableLightningGrid;
 import framework.lightning.designables.JSDesignableModal;
 import framework.lightning.designables.JSDesignableSOQL;
+import framework.lightning.designables.JSDesignableTabBody;
+import framework.lightning.designables.JSDesignableTabItem;
 import framework.lightning.designables.JSDesignableTable;
+import framework.lightning.designables.JSDesignableTabs;
+import framework.lightning.table.TableColumn;
 import framework.rtc.Conference;
 import framework.salesforce.SalesforceCrud;
 import framework.salesforce.SalesforceForm;
@@ -356,13 +360,7 @@ public class Boot {
 		
 		
 		
-		componentFactoryRegistry.registerComponentFactory("lgt:accitem", new AbstractComponentFactory("lgt:accitem") {
-
-			@Override
-			public Designable createInstance(boolean designMode) {
-				return new AccordionItem("Item", "Accordion Item");
-			}
-		});
+		
 		
 		componentFactoryRegistry.registerComponentFactory("lgt:btn", new AbstractComponentFactory("lgt:btn") {
 
@@ -425,6 +423,15 @@ public class Boot {
 				return new JSDesignableTable("Table");
 			}
 		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:table-column", new AbstractComponentFactory("lgt:table-column") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new TableColumn("column" ,"column", "Column");
+			}
+		});
+
 		
 		componentFactoryRegistry.registerComponentFactory("lgt:combobox", new AbstractComponentFactory("lgt:combobox") {
 
@@ -556,6 +563,33 @@ public class Boot {
 				return new SalesforceForm();
 			}
 		});
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:tabs", new AbstractComponentFactory("lgt:tabs") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableTabs("Tabs");
+			}
+		});
+
+		componentFactoryRegistry.registerComponentFactory("lgt:tab-body", new AbstractComponentFactory("lgt:tab-body") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableTabBody("body");
+			}
+		});
+
+		
+		componentFactoryRegistry.registerComponentFactory("lgt:tab-item", new AbstractComponentFactory("lgt:tab-item") {
+
+			@Override
+			public Designable createInstance(boolean designMode) {
+				return new JSDesignableTabItem("Tab Item");
+			}
+		});
+
+
 
 		factory.addBean(ComponentFactoryRegistry.class, componentFactoryRegistry);
 

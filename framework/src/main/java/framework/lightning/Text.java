@@ -1,6 +1,8 @@
 package framework.lightning;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -12,7 +14,7 @@ import framework.designables.DesignableDelegate;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class Text extends JSContainer implements Designable{
+public class Text extends JSContainer implements Designable, MouseEventAble, DndAble{
 	
 	
 	

@@ -155,7 +155,7 @@ public class SalesforceForm extends JSDesignableFormLayout {
 
 	
 	
-	
+	 
 	public void save(){
 		CustomEvent evt = new CustomEvent("beforeSave");
 		
@@ -171,7 +171,7 @@ public class SalesforceForm extends JSDesignableFormLayout {
 			if(!updatable || calculated){
 				//data.$delete(name);
 			}else{
-				data.$set(name, data.$get(name));
+				data.$set(name, data_.$get(name));
 			}
 			//Boolean readOnly = 
 		}
@@ -192,6 +192,12 @@ public class SalesforceForm extends JSDesignableFormLayout {
 				}
 				
 				return true;
+			}
+
+			@Override
+			public boolean error(java.lang.Object err, double statusCode) {
+				fireListener("error", evt);
+				return false;
 			}
 		});
 	}

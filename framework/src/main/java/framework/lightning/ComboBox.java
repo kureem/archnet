@@ -13,6 +13,7 @@ import framework.design.Designable;
 import framework.design.ExtDesignable;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
+import framework.designables.JSDesignableInput;
 import jsweet.dom.CustomEvent;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
@@ -26,7 +27,7 @@ public class ComboBox extends JSContainer implements ExtDesignable, InputField<O
 			.addClass("slds-dropdown-trigger").addClass("slds-dropdown-trigger_click")
 			.setAttribute("aria-haspopup", "listbox").setAttribute("role", "combobox");
 
-	private JSInput input = new JSInput("input");
+	private JSDesignableInput input = new JSDesignableInput("input");
 
 	//protected ListBox listBox = new ListBox("listBox");
 	
@@ -41,14 +42,16 @@ public class ComboBox extends JSContainer implements ExtDesignable, InputField<O
 	private String currentIconType ="utility";
 	private String currentIconName = "search";
 	
+	JSContainer formelement = new JSContainer("div").addClass("slds-combobox__form-element")
+			.addClass("slds-input-has-icon").addClass("slds-input-has-icon_right").setAttribute("role", "none");
+	
 	public ComboBox(String name) {
 		super(name, "div");
 		addClass("slds-combobox_container");
 		addClass("slds-has-inline-listbox");
 		addChild(combo);
 		setAttribute("identifier", "lgt:combobox");
-		JSContainer formelement = new JSContainer("div").addClass("slds-combobox__form-element")
-				.addClass("slds-input-has-icon").addClass("slds-input-has-icon_right").setAttribute("role", "none");
+		
 
 		combo.addChild(formelement);
 		formelement.addChild(input);
@@ -203,7 +206,7 @@ public class ComboBox extends JSContainer implements ExtDesignable, InputField<O
 
 	@Override
 	public Array<Designable> getDesignables() {
-		return new Array<Designable>();
+		return new Array<Designable>(input);
 	}
 
 	@Override
@@ -226,7 +229,13 @@ public class ComboBox extends JSContainer implements ExtDesignable, InputField<O
 
 	@Override
 	public void addDesignable(Designable designable) {
-
+		
+		if(designable instanceof JSInput){
+			formelement.clearChildren();
+			formelement.setRendered(false);
+			formelement.addChild((JSContainer)designable);
+		}
+		
 	}
 
 	@Override

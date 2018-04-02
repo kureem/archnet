@@ -1,7 +1,9 @@
 package framework.lightning;
 
+import framework.DndAble;
 import framework.EventListener;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -12,7 +14,7 @@ import jsweet.dom.CustomEvent;
 import jsweet.dom.Event;
 import jsweet.lang.Array;
 
-public class AccordionItem extends JSContainer implements Designable {
+public class AccordionItem extends JSContainer implements Designable, MouseEventAble,DndAble {
 
 	private JSContainer accordionContent = (JSDesignable) new JSContainer("accordionContent", "div")
 			.addClass("slds-accordion__content");
@@ -64,10 +66,16 @@ public class AccordionItem extends JSContainer implements Designable {
 
 	}
 
+	@Override
+	public String[] advancedEventTypes() {
+		return new String[]{"open","close"};
+	}
+
 	public void open() {
 		addClass("slds-is-open");
 		CustomEvent evt = new CustomEvent("open");
 		evt.$set("data", this);
+		fireListener("open", evt);
 		 getParent().getParent().fireListener("open", evt);
 		//getContext().$set("openClass", "slds-is-open");
 	}
@@ -76,6 +84,7 @@ public class AccordionItem extends JSContainer implements Designable {
 		removeClass("slds-is-open");
 		CustomEvent evt = new CustomEvent("close");
 		evt.$set("data", this);
+		fireListener("close", evt);
 		 getParent().getParent().fireListener("close", evt);
 	}
 

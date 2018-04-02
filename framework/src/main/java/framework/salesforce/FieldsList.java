@@ -4,7 +4,6 @@ import static jsweet.dom.Globals.alert;
 import static jsweet.dom.Globals.window;
 
 import framework.ServiceCallback;
-import framework.builder.data.ProjectService;
 import framework.builder.data.SalesforceObjectService;
 import framework.builder.editors.VisualEditor;
 import framework.core.BeanFactory;
@@ -52,24 +51,41 @@ public class FieldsList extends JSDesignableCardLayoutItem implements ServiceCal
 	public boolean consume(Object response, double statusCode) {
 
 		if (statusCode != 200) {
-			if (statusCode == 500) {
-				alert("Please authenticate first and come back");
-				
-				VisualEditor editor = getAncestorWithClass("visual-editor");
-				editor.save();
-				//ProjectService service = BeanFactory.getInstance().getBeanOfType(ProjectService.class);
-				
-				window.location.href = "/connect/salesforce";
-			}
+			
 			// alert(response);
 		} else {
 
 			jsweet.lang.Object ob = (jsweet.lang.Object) response;
 			@SuppressWarnings("unchecked")
 			Array<jsweet.lang.Object> fields = (Array<jsweet.lang.Object>) ob.$get("fields");
-			table.setTableData(fields);
+			Array<jsweet.lang.Object> tmp = new Array<jsweet.lang.Object>();
+			for(jsweet.lang.Object field : fields){
+				String type = (String)field.$get("type");
+				
+				if(!type.equals("address")){
+					tmp.push(field);
+				}
+				
+			}
+			table.setTableData(tmp);
 			table.setSelectedItems(selectedItems);
 			render();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean error(Object err, double statusCode) {
+		if (statusCode == 500) {
+			alert("Please authenticate first and come back");
+			
+			VisualEditor editor = getAncestorWithClass("visual-editor");
+			editor.save();
+			//ProjectService service = BeanFactory.getInstance().getBeanOfType(ProjectService.class);
+			
+			window.location.href = "/connect/salesforce";
+		}else{
+			alert("An error occured while executiong this function: status code=" + statusCode);
 		}
 		return true;
 	}

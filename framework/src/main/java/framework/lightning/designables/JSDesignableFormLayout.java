@@ -2,7 +2,9 @@ package framework.lightning.designables;
 
 import static def.dom.Globals.console;
 
+import framework.DndAble;
 import framework.InputField;
+import framework.MouseEventAble;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
 import framework.design.Option;
@@ -12,7 +14,7 @@ import framework.lightning.FormLayout;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class JSDesignableFormLayout extends FormLayout {
+public class JSDesignableFormLayout extends FormLayout implements MouseEventAble,DndAble{
 	
 	private Object data = new Object();
 	

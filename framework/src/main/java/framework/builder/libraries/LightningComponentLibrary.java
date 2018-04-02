@@ -23,6 +23,7 @@ public class LightningComponentLibrary extends ComponentsLibrary {
 		addComponents(new Component("lgt:lookup", "LKUP", "Lightning Lookup"));
 		
 		addComponents(new Component("lgt:table", "TABLE", "Data Table"));
+		addComponents(new Component("lgt:table-column", "TABLE-COL", "Table Column"));
 		
 		addComponents(new Component("zs:iterator", "ITER", "Iterator"));
 		

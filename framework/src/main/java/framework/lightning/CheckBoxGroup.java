@@ -1,7 +1,9 @@
 package framework.lightning;
 
+import framework.DndAble;
 import framework.InputField;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.builder.properties.ExtPropertiesEditor;
 import framework.builder.properties.KeyValueEditor;
@@ -15,7 +17,7 @@ import jsweet.lang.Array;
 import jsweet.lang.JSON;
 import jsweet.lang.Object;
 
-public class CheckBoxGroup extends JSContainer implements ExtDesignable,InputField<Array<String>>{
+public class CheckBoxGroup extends JSContainer implements ExtDesignable,InputField<Array<String>>, MouseEventAble,DndAble{
 	
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 

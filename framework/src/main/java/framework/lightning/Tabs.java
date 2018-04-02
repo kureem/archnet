@@ -5,9 +5,9 @@ import jsweet.lang.Array;
 
 public class Tabs extends JSContainer {
 
-	private JSContainer nav = new JSContainer("ul").addClass("slds-tabs_default__nav").setAttribute("role", "tablist");
+	protected JSContainer nav = new JSContainer("ul").addClass("slds-tabs_default__nav").setAttribute("role", "tablist");
 	
-	private JSContainer body = new JSContainer("div").addClass("slds-tabs_default__content");
+	protected JSContainer body = new JSContainer("div").addClass("slds-tabs_default__content");
 
 	public Tabs(String name) {
 		super(name, "div");

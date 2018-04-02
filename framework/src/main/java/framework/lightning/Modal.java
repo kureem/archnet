@@ -2,6 +2,7 @@ package framework.lightning;
 
 import framework.EventListener;
 import framework.JSContainer;
+import jsweet.dom.CustomEvent;
 import jsweet.dom.Event;
 
 public class Modal extends JSContainer {
@@ -46,6 +47,12 @@ public class Modal extends JSContainer {
 
 	}
 	
+	
+	@Override
+	public String[] advancedEventTypes() {
+		return new String[] {"beforeOpen","open", "beforeClose", "close"};
+	}
+	
 	public Modal show(){
 		open();
 		return this;
@@ -78,19 +85,27 @@ public class Modal extends JSContainer {
 	}
 	
 	public void open(){
+		CustomEvent evt = new CustomEvent("beforeOpen");
+		fireListener("beforeOpen", evt);
 		addClass("slds-fade-in-open");
 		if(backdrop != null){
 			backdrop.open();
 		}
 		setVisible(true);
+		 evt = new CustomEvent("open");
+		fireListener("open", evt);
 	}
 	
 	public void close(){
+		CustomEvent evt = new CustomEvent("beforeClose");
+		fireListener("beforeOpen", evt);
 		removeClass("slds-fade-in-open");
 		if(backdrop != null){
 			backdrop.close();
 		}
 		setVisible(false);
+		 evt = new CustomEvent("close");
+			fireListener("close", evt);
 	}
 	
 	public final static String SIZE_LARGE = "slds-modal_large";

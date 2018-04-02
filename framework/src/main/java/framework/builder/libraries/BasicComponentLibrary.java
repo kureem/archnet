@@ -20,7 +20,7 @@ public class BasicComponentLibrary extends ComponentsLibrary{
 					new BasicComponent("select",	"SEL", 	"Select"),
 					new BasicComponent("textarea",	"TA","Text Area"),
 					new BasicComponent("button",	"BTN", 	"Button"),
-					new BasicComponent("cmp",	"CMP", 	"Component"),
+					//new BasicComponent("cmp",	"CMP", 	"Component"),
 					new BasicComponent("html", "HTM", "Html Template")
 				);
 	}

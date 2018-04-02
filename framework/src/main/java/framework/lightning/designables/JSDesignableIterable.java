@@ -1,11 +1,13 @@
 package framework.lightning.designables;
 
+import framework.DndAble;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.builder.marshalling.MarshallUtil;
 import framework.designables.JSDesignable;
 import jsweet.dom.CustomEvent;
 
-public class JSDesignableIterable extends JSDesignable{
+public class JSDesignableIterable extends JSDesignable implements MouseEventAble,DndAble{
 
 	public JSDesignableIterable(String name, String tag) {
 		super(name, tag);

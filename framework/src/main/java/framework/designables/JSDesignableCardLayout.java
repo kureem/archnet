@@ -1,10 +1,12 @@
 package framework.designables;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.design.Designable;
 import jsweet.dom.CustomEvent;
 
-public class JSDesignableCardLayout extends JSDesignable {
+public class JSDesignableCardLayout extends JSDesignable implements MouseEventAble,DndAble{
 
 	private String currentActive = "";
 

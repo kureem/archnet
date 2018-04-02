@@ -1,6 +1,8 @@
 package framework.designables;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.TextComponent;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
@@ -11,7 +13,7 @@ import framework.design.TextParameter;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class JSDesignableTextComponent extends TextComponent implements Designable {
+public class JSDesignableTextComponent extends TextComponent implements Designable, MouseEventAble, DndAble {
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
@@ -28,6 +30,10 @@ public class JSDesignableTextComponent extends TextComponent implements Designab
 		textTags.$set("span", "Span");
 
 	}
+	
+	
+
+	
 
 	public JSDesignableTextComponent(String name, String tag) {
 		super(name, tag);

@@ -93,7 +93,7 @@ public class NewFile extends ItemSelector {
 				}
 			
 			}
-		}, "keypress");
+		}, "ke");
 		this.structure = structure;
 		getFilesList().clearChildren();
 		getFilesList().addFile(lightning);

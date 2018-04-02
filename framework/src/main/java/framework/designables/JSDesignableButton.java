@@ -1,5 +1,7 @@
 package framework.designables;
 
+import framework.DndAble;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -8,7 +10,7 @@ import framework.design.Parameter;
 import framework.lightning.Button;
 import jsweet.lang.Array;
 
-public class JSDesignableButton extends Button implements Designable{
+public class JSDesignableButton extends Button implements Designable ,  MouseEventAble,DndAble{
 	
 	
 	private final static String[] stateLabels = new String[] { "Neutral", "Brand", "Destructive", "Success", "Reset" };
@@ -25,6 +27,8 @@ public class JSDesignableButton extends Button implements Designable{
 		applyParam("iconType", "utility");
 		
 	}
+	
+	
 	@Override
 	public void applyParam(String key, String value) {
 		delegate.applyParameter(key, value, true);

@@ -2,14 +2,16 @@ package framework.lightning;
 
 import static def.dom.Globals.console;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.Designable;
 import framework.design.Parameter;
 import framework.designables.DesignableDelegate;
 import jsweet.lang.Array;
 
-public class BreadCrumbs extends JSContainer implements Designable{
+public class BreadCrumbs extends JSContainer implements Designable  ,  MouseEventAble,DndAble{
 
 	private HorizontalList breadcrumb = new HorizontalList("breadcrumb");
 	

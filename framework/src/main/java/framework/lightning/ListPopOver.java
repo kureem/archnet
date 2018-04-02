@@ -96,13 +96,11 @@ public class ListPopOver extends PopOver implements Designable{
 
 	@Override
 	public void removeDesignable(Designable designable) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void moveDesignable(Designable designable, int steps) {
-		// TODO Auto-generated method stub
 		
 	}
 	

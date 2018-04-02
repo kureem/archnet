@@ -15,7 +15,7 @@ public abstract class JSDesignableDataProvider extends DescriptionList implement
 
 	@Override
 	public String[] advancedEventTypes() {
-		return new String[]{"success", "error"};
+		return new String[]{"success", "error","beforeSend"};
 	}
 
 	@Override

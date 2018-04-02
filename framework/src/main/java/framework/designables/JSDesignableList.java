@@ -1,6 +1,8 @@
 package framework.designables;
 
+import framework.DndAble;
 import framework.JSContainer;
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -9,7 +11,7 @@ import framework.design.Parameter;
 import framework.design.TagParameter;
 import jsweet.lang.Array;
 
-public class JSDesignableList extends JSContainer implements Designable{
+public class JSDesignableList extends JSContainer implements Designable,MouseEventAble,DndAble{
 
 	
 	private Array<Designable> designables = new Array<>();
@@ -17,7 +19,6 @@ public class JSDesignableList extends JSContainer implements Designable{
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	public JSDesignableList(String name) {
 		super(name, "ul");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

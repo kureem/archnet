@@ -1,5 +1,6 @@
 package framework.lightning.designables;
 
+import framework.MouseEventAble;
 import framework.builder.marshalling.Component;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
@@ -13,7 +14,7 @@ import framework.lightning.ModalFooter;
 import jsweet.lang.Array;
 import jsweet.lang.Error;
 
-public class JSDesignableModal extends Modal implements Designable{
+public class JSDesignableModal extends Modal implements Designable, MouseEventAble{
 	
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 	
@@ -32,6 +33,11 @@ public class JSDesignableModal extends Modal implements Designable{
 
 	
 	
+
+	
+
+
+
 
 	@Override
 	public void applyParam(String key, String value) {

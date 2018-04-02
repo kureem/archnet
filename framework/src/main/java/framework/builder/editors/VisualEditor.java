@@ -68,6 +68,8 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 	
 	private IconButton toggleRuler = new IconButton("toggleRuler");
 	
+	private IconButton refresh = new IconButton("refresh");
+	
 	private IconButton toggleDefinitions = new IconButton("toggleDefinitions");
 	
 	private Modal jsonDef = new Modal("jsonDef", "Definition");
@@ -137,6 +139,7 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		addChild(selector);
 		//addChild(templates);
 		composer.getTools().clearChildren();
+		composer.getTools().addChild(refresh);
 		composer.getTools().addChild(new Zoom("zoom", this));
 		composer.getTools().addChild(toggleOutline);
 		composer.getTools().addChild(toggleRuler);
@@ -148,11 +151,17 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		
 		toggleOutline.getIcon().setIconName("layout");
 		toggleOutline.setStateful(true);
-		toggleOutline.setSelected(true);
+		toggleOutline.setSelected(false);
+		
 		
 		toggleRuler.getIcon().setIconName("summarydetail");
 		toggleRuler.setStateful(true);
 		toggleRuler.setSelected(false);
+		
+		refresh.getIcon().setIconName("refresh");
+		refresh.setStateful(true);
+		refresh.setSelected(false);
+		
 		
 		toggleDefinitions.addEventListener(new EventListener() {
 			
@@ -209,8 +218,38 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 			return true;
 		};
 		
+		
+		
+		refresh.addEventListener(new EventListener() {
+			
+			@Override
+			public void performAction(JSContainer source, Event evt) {
+				refreshEverything();
+			}
+		}, "click");
+		
 		hideOutline();
 		//toggleOutline
+	}
+	
+	public void refreshEverything(){
+		String data = getMarshall();
+		file.setData(data);
+		Component component = unmarshall(file);
+		
+		root = (LightningApplication)cona(component);
+		
+		workspace.clearChildren();
+		workspace.setRendered(false);
+		workspace.addChild((JSContainer) root);
+		libraryDockedComposer.refreshWithProject(root);
+		
+		//structureDockedComposer = new StructureDockedComposer("strucutru", root, file, selector);
+		//leftComposers.addChild(structureDockedComposer);
+
+		//libraryDockedComposer.refreshWithProject(root);
+		
+		//consume(c);
 	}
 	
 	

@@ -1,12 +1,14 @@
 package framework.designables;
 
+import framework.DndAble;
+import framework.MouseEventAble;
 import framework.design.Option;
 import framework.design.Parameter;
 import framework.design.TagParameter;
 import framework.design.TextParameter;
 import jsweet.lang.Array;
 
-public class JSDesignableBlockComponent extends JSDesignable{
+public class JSDesignableBlockComponent extends JSDesignable implements MouseEventAble,DndAble{
 
 	public JSDesignableBlockComponent(String name, String tag) {
 		super(name, tag);

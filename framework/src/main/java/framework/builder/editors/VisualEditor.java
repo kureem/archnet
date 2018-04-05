@@ -22,6 +22,7 @@ import framework.builder.marshalling.MarshallUtil;
 import framework.builder.properties.PropertiesDockedComposer;
 import framework.core.BeanFactory;
 import framework.design.Designable;
+import framework.designables.DesignableDelegate;
 import framework.designables.JSDesignableBuilderComponent;
 import framework.lightning.Backdrop;
 import framework.lightning.DockedComposer;
@@ -480,11 +481,24 @@ public class VisualEditor extends AbstractEditor<Component> implements Designabl
 		if(container instanceof JSDesignableBuilderComponent){
 			container.applyParam("src", component.getInital());
 		}
+		
+		
+		
 		addNewComponent(container, designable);
 	}
 
 	public void addNewComponent(Designable container, Designable designable) {
 		try {
+			
+			String name = container.getName();
+			
+			int count = 0;
+			while(DesignableDelegate. containsName(name,designable)){
+				count++;
+				name = container.getName() + "_" + count;
+			}
+			container.applyParam("name", name);
+			
 			designable.addDesignable(container);
 			
 			container.addEventListener(new SelectComponentEvent(selector), "click");

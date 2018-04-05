@@ -73,7 +73,7 @@ public class DesignableDelegate {
 		}
 	}
 
-	private static boolean containsName(String name, Designable ui){
+	public static boolean containsName(String name, Designable ui){
 		for(JSContainer c : ui.getChildren()){
 			if(c.getName().equals(name)){
 				return true;
@@ -92,14 +92,7 @@ public class DesignableDelegate {
 	}
 	
 	public void addDesignable(Designable designable){
-		String name = designable.getName();
 		
-		int count = 0;
-		while(containsName(name,ui)){
-			count++;
-			name = designable.getName() + "_" + count;
-		}
-		designable.applyParam("name", name);
 		ui.addChild((JSContainer) designable);
 	}
 	

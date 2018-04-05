@@ -71,6 +71,7 @@ import framework.lightning.Panel;
 import framework.lightning.PanelSection;
 import framework.lightning.PopOverFooterItem;
 import framework.lightning.Text;
+import framework.lightning.designables.JSBuilderTable;
 import framework.lightning.designables.JSDesignableFormElement;
 import framework.lightning.designables.JSDesignableFormLayout;
 import framework.lightning.designables.JSDesignableIterable;
@@ -80,7 +81,6 @@ import framework.lightning.designables.JSDesignableModal;
 import framework.lightning.designables.JSDesignableSOQL;
 import framework.lightning.designables.JSDesignableTabBody;
 import framework.lightning.designables.JSDesignableTabItem;
-import framework.lightning.designables.JSDesignableTable;
 import framework.lightning.designables.JSDesignableTabs;
 import framework.lightning.table.TableColumn;
 import framework.rtc.Conference;
@@ -420,7 +420,7 @@ public class Boot {
 
 			@Override
 			public Designable createInstance(boolean designMode) {
-				return new JSDesignableTable("Table");
+				return new JSBuilderTable("Table");
 			}
 		});
 		

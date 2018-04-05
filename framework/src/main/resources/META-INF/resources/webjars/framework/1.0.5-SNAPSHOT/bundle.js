@@ -92,8 +92,8 @@ var framework;
                  */
                 BasicDataEnvironment.prototype.deleteStructure = function (name) {
                     var tmp = (new Array());
-                    for (var index6897 = 0; index6897 < BasicDataEnvironment.structures_$LI$().length; index6897++) {
-                        var structure = BasicDataEnvironment.structures_$LI$()[index6897];
+                    for (var index9941 = 0; index9941 < BasicDataEnvironment.structures_$LI$().length; index9941++) {
+                        var structure = BasicDataEnvironment.structures_$LI$()[index9941];
                         {
                             if (!(function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -125,8 +125,8 @@ var framework;
                     BasicDataEnvironment$0.prototype.dataLoaded = function (data) {
                         var obj = data;
                         var sobjects = obj["sobjects"];
-                        for (var index6898 = 0; index6898 < sobjects.length; index6898++) {
-                            var o = sobjects[index6898];
+                        for (var index9942 = 0; index9942 < sobjects.length; index9942++) {
+                            var o = sobjects[index9942];
                             {
                                 var structure = new framework.builder.data.DataStructure(o);
                                 framework.builder.data.BasicDataEnvironment.structures_$LI$().push(structure);
@@ -293,9 +293,9 @@ var framework;
                 DataService.prototype.create = function (type, fields, listener) {
                     var data = new Object();
                     {
-                        var array6900 = fields.keySet();
-                        for (var index6899 = 0; index6899 < array6900.length; index6899++) {
-                            var key = array6900[index6899];
+                        var array9944 = fields.keySet();
+                        for (var index9943 = 0; index9943 < array9944.length; index9943++) {
+                            var key = array9944[index9943];
                             {
                                 data[key] = fields.get(key);
                             }
@@ -309,9 +309,9 @@ var framework;
                 DataService.prototype.update = function (type, objectId, fields, listener) {
                     var data = new Object();
                     {
-                        var array6902 = fields.keySet();
-                        for (var index6901 = 0; index6901 < array6902.length; index6901++) {
-                            var key = array6902[index6901];
+                        var array9946 = fields.keySet();
+                        for (var index9945 = 0; index9945 < array9946.length; index9945++) {
+                            var key = array9946[index9945];
                             {
                                 data[key] = fields.get(key);
                             }
@@ -402,9 +402,9 @@ var framework;
                 };
                 File.prototype.getChild = function (name) {
                     {
-                        var array6904 = this.getChildren();
-                        for (var index6903 = 0; index6903 < array6904.length; index6903++) {
-                            var f = array6904[index6903];
+                        var array9948 = this.getChildren();
+                        for (var index9947 = 0; index9947 < array9948.length; index9947++) {
+                            var f = array9948[index9947];
                             {
                                 if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(f.getName(), name)) {
                                     return f;
@@ -473,9 +473,9 @@ var framework;
                 File.prototype.removeFile = function (f) {
                     var children = (new Array());
                     {
-                        var array6906 = this.file["children"];
-                        for (var index6905 = 0; index6905 < array6906.length; index6905++) {
-                            var o = array6906[index6905];
+                        var array9950 = this.file["children"];
+                        for (var index9949 = 0; index9949 < array9950.length; index9949++) {
+                            var o = array9950[index9949];
                             {
                                 if (!(function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -493,9 +493,9 @@ var framework;
                 File.prototype.getChildren = function () {
                     var result = (new Array());
                     {
-                        var array6908 = this.file["children"];
-                        for (var index6907 = 0; index6907 < array6908.length; index6907++) {
-                            var o = array6908[index6907];
+                        var array9952 = this.file["children"];
+                        for (var index9951 = 0; index9951 < array9952.length; index9951++) {
+                            var o = array9952[index9951];
                             {
                                 result.push(new File(o));
                             }
@@ -1267,8 +1267,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureStyles = function (instance, component) {
                     var keys = Object.keys(component.styles);
-                    for (var index6909 = 0; index6909 < keys.length; index6909++) {
-                        var key = keys[index6909];
+                    for (var index9953 = 0; index9953 < keys.length; index9953++) {
+                        var key = keys[index9953];
                         {
                             var value = component.styles[key].toString();
                             instance.setStyle(key, value);
@@ -1277,8 +1277,8 @@ var framework;
                 };
                 AbstractComponentFactory.prototype.configureParameters = function (instance, component, designMode) {
                     var keys = Object.keys(component.parameters);
-                    for (var index6910 = 0; index6910 < keys.length; index6910++) {
-                        var key = keys[index6910];
+                    for (var index9954 = 0; index9954 < keys.length; index9954++) {
+                        var key = keys[index9954];
                         {
                             if (component.parameters[key] != null) {
                                 var value = component.parameters[key].toString();
@@ -1288,8 +1288,8 @@ var framework;
                     }
                 };
                 AbstractComponentFactory.prototype.configureEvents = function (instance, component) {
-                    for (var index6911 = 0; index6911 < component.events.length; index6911++) {
-                        var event_1 = component.events[index6911];
+                    for (var index9955 = 0; index9955 < component.events.length; index9955++) {
+                        var event_1 = component.events[index9955];
                         {
                             var listener = new framework.builder.BuilderEventListener(event_1.source, event_1.name, event_1.type);
                             instance.addEventListener(listener, event_1.type);
@@ -1423,29 +1423,29 @@ var framework;
                     c.impl = designable.getAttribute("identifier");
                     var parameters = designable.getParameters();
                     {
-                        var array6913 = designable.getStyleNames();
-                        for (var index6912 = 0; index6912 < array6913.length; index6912++) {
-                            var s = array6913[index6912];
+                        var array9957 = designable.getStyleNames();
+                        for (var index9956 = 0; index9956 < array9957.length; index9956++) {
+                            var s = array9957[index9956];
                             {
                                 c.styles[s] = designable.getStyle(s);
                             }
                         }
                     }
-                    for (var index6914 = 0; index6914 < parameters.length; index6914++) {
-                        var p = parameters[index6914];
+                    for (var index9958 = 0; index9958 < parameters.length; index9958++) {
+                        var p = parameters[index9958];
                         {
                             c.parameters[p.name] = p.extractValue(designable);
                         }
                     }
                     {
-                        var array6916 = Object.keys(designable.getListeners());
-                        for (var index6915 = 0; index6915 < array6916.length; index6915++) {
-                            var key = array6916[index6915];
+                        var array9960 = Object.keys(designable.getListeners());
+                        for (var index9959 = 0; index9959 < array9960.length; index9959++) {
+                            var key = array9960[index9959];
                             {
                                 {
-                                    var array6918 = designable.getListeners()[key];
-                                    for (var index6917 = 0; index6917 < array6918.length; index6917++) {
-                                        var l = array6918[index6917];
+                                    var array9962 = designable.getListeners()[key];
+                                    for (var index9961 = 0; index9961 < array9962.length; index9961++) {
+                                        var l = array9962[index9961];
                                         {
                                             if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                                 var bel = l;
@@ -1462,9 +1462,9 @@ var framework;
                         }
                     }
                     {
-                        var array6920 = designable.getDesignables();
-                        for (var index6919 = 0; index6919 < array6920.length; index6919++) {
-                            var child = array6920[index6919];
+                        var array9964 = designable.getDesignables();
+                        for (var index9963 = 0; index9963 < array9964.length; index9963++) {
+                            var child = array9964[index9963];
                             {
                                 var childC = MarshallUtil.extract(child);
                                 c.children.push(childC);
@@ -1483,9 +1483,12 @@ var framework;
                     if (design) {
                         des.addEventListener(new framework.builder.SelectComponentEvent(selector), "click");
                     }
-                    if (component.children != null) {
-                        for (var index6921 = 0; index6921 < component.children.length; index6921++) {
-                            var c = component.children[index6921];
+                    if (component.children != null && component.children.length > 0) {
+                        if (des != null && (des["__interfaces"] != null && des["__interfaces"].indexOf("framework.design.Preparable") >= 0 || des.constructor != null && des.constructor["__interfaces"] != null && des.constructor["__interfaces"].indexOf("framework.design.Preparable") >= 0)) {
+                            des.prepare();
+                        }
+                        for (var index9965 = 0; index9965 < component.children.length; index9965++) {
+                            var c = component.children[index9965];
                             {
                                 var child = MarshallUtil.toDesignable(c, design, selector);
                                 des.addDesignable(child);
@@ -1506,15 +1509,15 @@ var framework;
                 MarshallUtil.controller = function (component, start) {
                     var des = framework.core.BeanFactory.getInstance().getBeanOfType("framework.builder.libraries.ComponentFactoryRegistry").getComponentFactory(component.impl).build(component, false);
                     des['setData$java_lang_Object'](component.data);
-                    for (var index6922 = 0; index6922 < component.events.length; index6922++) {
-                        var event_2 = component.events[index6922];
+                    for (var index9966 = 0; index9966 < component.events.length; index9966++) {
+                        var event_2 = component.events[index9966];
                         {
                             start = start + "\n" + des.getName() + ":function(source,event){\n" + event_2.source + "\n}";
                         }
                     }
                     if (component.children != null) {
-                        for (var index6923 = 0; index6923 < component.children.length; index6923++) {
-                            var c = component.children[index6923];
+                        for (var index9967 = 0; index9967 < component.children.length; index9967++) {
+                            var c = component.children[index9967];
                             {
                                 MarshallUtil.controller(c, start);
                             }
@@ -1550,8 +1553,8 @@ var framework;
                     var events = o["events"];
                     if (events != null && events.length > 0) {
                         var bevents = (new Array());
-                        for (var index6924 = 0; index6924 < events.length; index6924++) {
-                            var e = events[index6924];
+                        for (var index9968 = 0; index9968 < events.length; index9968++) {
+                            var e = events[index9968];
                             {
                                 var event_3 = new framework.builder.marshalling.BuilderEvent();
                                 event_3.source = e["source"].toString();
@@ -1565,8 +1568,8 @@ var framework;
                     var bchildren = (new Array());
                     var children = o["children"];
                     if (children != null && children.length > 0) {
-                        for (var index6925 = 0; index6925 < children.length; index6925++) {
-                            var c = children[index6925];
+                        for (var index9969 = 0; index9969 < children.length; index9969++) {
+                            var c = children[index9969];
                             {
                                 bchildren.push(MarshallUtil.toComponent$jsweet_lang_Object(c));
                             }
@@ -1689,9 +1692,9 @@ var framework;
             };
             BeanFactory.prototype.getBeanOfType = function (clazz) {
                 {
-                    var array6927 = Object.keys(this.beans);
-                    for (var index6926 = 0; index6926 < array6927.length; index6926++) {
-                        var key = array6927[index6926];
+                    var array9971 = Object.keys(this.beans);
+                    for (var index9970 = 0; index9970 < array9971.length; index9970++) {
+                        var key = array9971[index9970];
                         {
                             var bean = this.beans[key];
                             try {
@@ -1882,9 +1885,9 @@ var framework;
             };
             DesignableDelegate.containsName$java_lang_String$framework_design_Designable = function (name, ui) {
                 {
-                    var array6929 = ui.getChildren();
-                    for (var index6928 = 0; index6928 < array6929.length; index6928++) {
-                        var c = array6929[index6928];
+                    var array9973 = ui.getChildren();
+                    for (var index9972 = 0; index9972 < array9973.length; index9972++) {
+                        var c = array9973[index9972];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -1910,8 +1913,8 @@ var framework;
                     throw new Error('invalid overload');
             };
             /*private*/ DesignableDelegate.containsName$java_lang_String$jsweet_lang_Array = function (name, children) {
-                for (var index6930 = 0; index6930 < children.length; index6930++) {
-                    var c = children[index6930];
+                for (var index9974 = 0; index9974 < children.length; index9974++) {
+                    var c = children[index9974];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -1926,14 +1929,6 @@ var framework;
                 return false;
             };
             DesignableDelegate.prototype.addDesignable = function (designable) {
-                var name = designable.getName();
-                var count = 0;
-                while ((DesignableDelegate.containsName$java_lang_String$framework_design_Designable(name, this.ui))) {
-                    count++;
-                    name = designable.getName() + "_" + count;
-                }
-                ;
-                designable.applyParam("name", name);
                 this.ui['addChild$framework_JSContainer'](designable);
             };
             DesignableDelegate.guessName = function (children, designable) {
@@ -2328,9 +2323,9 @@ var framework;
         };
         ObjectBuilder.prototype.clear = function () {
             {
-                var array6932 = Object.keys(this.obj);
-                for (var index6931 = 0; index6931 < array6932.length; index6931++) {
-                    var s = array6932[index6931];
+                var array9976 = Object.keys(this.obj);
+                for (var index9975 = 0; index9975 < array9976.length; index9975++) {
+                    var s = array9976[index9975];
                     {
                         delete this.obj[s];
                     }
@@ -2431,14 +2426,14 @@ var framework;
             };
             ContainerRenderer.prototype.renderEvents = function (njq, c) {
                 var keys = Object.keys(c.getListeners());
-                for (var index6933 = 0; index6933 < keys.length; index6933++) {
-                    var key = keys[index6933];
+                for (var index9977 = 0; index9977 < keys.length; index9977++) {
+                    var key = keys[index9977];
                     {
                         var listeners = c.getListeners()[key];
                         njq.addEventListener(key, (function (listeners) {
                             return function (evt) {
-                                for (var index6934 = 0; index6934 < listeners.length; index6934++) {
-                                    var l = listeners[index6934];
+                                for (var index9978 = 0; index9978 < listeners.length; index9978++) {
+                                    var l = listeners[index9978];
                                     {
                                         l.performAction(c, evt);
                                     }
@@ -2452,9 +2447,9 @@ var framework;
             ContainerRenderer.prototype.renderAttributes = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array6936 = c.getChangedAttributes();
-                        for (var index6935 = 0; index6935 < array6936.length; index6935++) {
-                            var key = array6936[index6935];
+                        var array9980 = c.getChangedAttributes();
+                        for (var index9979 = 0; index9979 < array9980.length; index9979++) {
+                            var key = array9980[index9979];
                             {
                                 if (c.getAttribute(key) == null) {
                                     njq.removeAttribute(key);
@@ -2468,9 +2463,9 @@ var framework;
                 }
                 else {
                     {
-                        var array6938 = c.getAttributeNames();
-                        for (var index6937 = 0; index6937 < array6938.length; index6937++) {
-                            var key = array6938[index6937];
+                        var array9982 = c.getAttributeNames();
+                        for (var index9981 = 0; index9981 < array9982.length; index9981++) {
+                            var key = array9982[index9981];
                             {
                                 if (c.getAttribute(key) != null)
                                     njq.setAttribute(key, c.getAttribute(key));
@@ -2498,9 +2493,9 @@ var framework;
             ContainerRenderer.prototype.renderStyles = function (njq, c, changed) {
                 if (changed) {
                     {
-                        var array6940 = c.getChangedStyles();
-                        for (var index6939 = 0; index6939 < array6940.length; index6939++) {
-                            var key = array6940[index6939];
+                        var array9984 = c.getChangedStyles();
+                        for (var index9983 = 0; index9983 < array9984.length; index9983++) {
+                            var key = array9984[index9983];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -2509,9 +2504,9 @@ var framework;
                 }
                 else {
                     {
-                        var array6942 = c.getStyleNames();
-                        for (var index6941 = 0; index6941 < array6942.length; index6941++) {
-                            var key = array6942[index6941];
+                        var array9986 = c.getStyleNames();
+                        for (var index9985 = 0; index9985 < array9986.length; index9985++) {
+                            var key = array9986[index9985];
                             {
                                 njq.style.setProperty(key, c.getStyle(key));
                             }
@@ -2573,9 +2568,9 @@ var framework;
             HashMap.prototype.keySet = function () {
                 var result = (new Array());
                 {
-                    var array6944 = Object.keys(this.d);
-                    for (var index6943 = 0; index6943 < array6944.length; index6943++) {
-                        var key = array6944[index6943];
+                    var array9988 = Object.keys(this.d);
+                    for (var index9987 = 0; index9987 < array9988.length; index9987++) {
+                        var key = array9988[index9987];
                         {
                             result.push(key);
                         }
@@ -2667,8 +2662,8 @@ ui["__class"] = "ui";
                     else {
                         var fields = (new Array());
                         this.object["fields"] = cached;
-                        for (var index6945 = 0; index6945 < cached.length; index6945++) {
-                            var oField = cached[index6945];
+                        for (var index9989 = 0; index9989 < cached.length; index9989++) {
+                            var oField = cached[index9989];
                             {
                                 fields.push(new framework.builder.data.DataField(oField));
                             }
@@ -2695,8 +2690,8 @@ ui["__class"] = "ui";
                         var fields = (new Array());
                         var oFields = o["fields"];
                         this.__parent.object["fields"] = oFields;
-                        for (var index6946 = 0; index6946 < oFields.length; index6946++) {
-                            var oField = oFields[index6946];
+                        for (var index9990 = 0; index9990 < oFields.length; index9990++) {
+                            var oField = oFields[index9990];
                             {
                                 fields.push(new framework.builder.data.DataField(oField));
                             }
@@ -2725,8 +2720,8 @@ ui["__class"] = "ui";
             componentFactoryRegistry.registerComponentFactory("html:html", new Boot.Boot$0("html:html"));
             componentFactoryRegistry.registerComponentFactory("html:p", new Boot.Boot$1("html:p"));
             componentFactoryRegistry.registerComponentFactory("html:cmp", new Boot.Boot$2("html:cmp"));
-            for (var index6947 = 0; index6947 < tags.length; index6947++) {
-                var tag = tags[index6947];
+            for (var index9991 = 0; index9991 < tags.length; index9991++) {
+                var tag = tags[index9991];
                 {
                     componentFactoryRegistry.registerComponentFactory("html:" + tag, new framework.builder.libraries.BasicComponentFactory(tag));
                 }
@@ -2760,25 +2755,26 @@ ui["__class"] = "ui";
             componentFactoryRegistry.registerComponentFactory("lgt:panel", new Boot.Boot$29("lgt:panel"));
             componentFactoryRegistry.registerComponentFactory("lgt:panel-section", new Boot.Boot$30("lgt:panel-section"));
             componentFactoryRegistry.registerComponentFactory("lgt:table", new Boot.Boot$31("lgt:table"));
-            componentFactoryRegistry.registerComponentFactory("lgt:combobox", new Boot.Boot$32("lgt:combobox"));
-            componentFactoryRegistry.registerComponentFactory("lgt:lookup", new Boot.Boot$33("lgt:lookup"));
-            componentFactoryRegistry.registerComponentFactory("lgt:popover", new Boot.Boot$34("lgt:popover"));
-            componentFactoryRegistry.registerComponentFactory("lgt:listbox", new Boot.Boot$35("lgt:listbox"));
-            componentFactoryRegistry.registerComponentFactory("lgt:listbox-item", new Boot.Boot$36("lgt:listbox-item"));
-            componentFactoryRegistry.registerComponentFactory("lgt:popover-footer-item", new Boot.Boot$37("lgt:popover-footer-item"));
-            componentFactoryRegistry.registerComponentFactory("zs:iterator", new Boot.Boot$38("zs:iterator"));
-            componentFactoryRegistry.registerComponentFactory("zs:iterable", new Boot.Boot$39("zs:iterable"));
-            componentFactoryRegistry.registerComponentFactory("zs:cardlayout", new Boot.Boot$40("zs:cardlayout"));
-            componentFactoryRegistry.registerComponentFactory("zs:cardlayout-item", new Boot.Boot$41("zs:cardlayout-item"));
-            componentFactoryRegistry.registerComponentFactory("zs:http", new Boot.Boot$42("zs:http"));
-            componentFactoryRegistry.registerComponentFactory("zs:service", new Boot.Boot$43("zs:service"));
-            componentFactoryRegistry.registerComponentFactory("lgt:soql", new Boot.Boot$44("lgt:soql"));
-            componentFactoryRegistry.registerComponentFactory("lgt:crud", new Boot.Boot$45("lgt:crud"));
-            componentFactoryRegistry.registerComponentFactory("lgt:crud-table", new Boot.Boot$46("lgt:crud-table"));
-            componentFactoryRegistry.registerComponentFactory("lgt:crud-form", new Boot.Boot$47("lgt:crud-form"));
-            componentFactoryRegistry.registerComponentFactory("lgt:tabs", new Boot.Boot$48("lgt:tabs"));
-            componentFactoryRegistry.registerComponentFactory("lgt:tab-body", new Boot.Boot$49("lgt:tab-body"));
-            componentFactoryRegistry.registerComponentFactory("lgt:tab-item", new Boot.Boot$50("lgt:tab-item"));
+            componentFactoryRegistry.registerComponentFactory("lgt:table-column", new Boot.Boot$32("lgt:table-column"));
+            componentFactoryRegistry.registerComponentFactory("lgt:combobox", new Boot.Boot$33("lgt:combobox"));
+            componentFactoryRegistry.registerComponentFactory("lgt:lookup", new Boot.Boot$34("lgt:lookup"));
+            componentFactoryRegistry.registerComponentFactory("lgt:popover", new Boot.Boot$35("lgt:popover"));
+            componentFactoryRegistry.registerComponentFactory("lgt:listbox", new Boot.Boot$36("lgt:listbox"));
+            componentFactoryRegistry.registerComponentFactory("lgt:listbox-item", new Boot.Boot$37("lgt:listbox-item"));
+            componentFactoryRegistry.registerComponentFactory("lgt:popover-footer-item", new Boot.Boot$38("lgt:popover-footer-item"));
+            componentFactoryRegistry.registerComponentFactory("zs:iterator", new Boot.Boot$39("zs:iterator"));
+            componentFactoryRegistry.registerComponentFactory("zs:iterable", new Boot.Boot$40("zs:iterable"));
+            componentFactoryRegistry.registerComponentFactory("zs:cardlayout", new Boot.Boot$41("zs:cardlayout"));
+            componentFactoryRegistry.registerComponentFactory("zs:cardlayout-item", new Boot.Boot$42("zs:cardlayout-item"));
+            componentFactoryRegistry.registerComponentFactory("zs:http", new Boot.Boot$43("zs:http"));
+            componentFactoryRegistry.registerComponentFactory("zs:service", new Boot.Boot$44("zs:service"));
+            componentFactoryRegistry.registerComponentFactory("lgt:soql", new Boot.Boot$45("lgt:soql"));
+            componentFactoryRegistry.registerComponentFactory("lgt:crud", new Boot.Boot$46("lgt:crud"));
+            componentFactoryRegistry.registerComponentFactory("lgt:crud-table", new Boot.Boot$47("lgt:crud-table"));
+            componentFactoryRegistry.registerComponentFactory("lgt:crud-form", new Boot.Boot$48("lgt:crud-form"));
+            componentFactoryRegistry.registerComponentFactory("lgt:tabs", new Boot.Boot$49("lgt:tabs"));
+            componentFactoryRegistry.registerComponentFactory("lgt:tab-body", new Boot.Boot$50("lgt:tab-body"));
+            componentFactoryRegistry.registerComponentFactory("lgt:tab-item", new Boot.Boot$51("lgt:tab-item"));
             factory.addBean("framework.builder.libraries.ComponentFactoryRegistry", componentFactoryRegistry);
             factory.addBean("framework.builder.data.DataEnvironment", new framework.builder.data.BasicDataEnvironment());
             factory.addBean("framework.builder.data.ProjectService", new framework.builder.data.HerokuProjectService());
@@ -3366,7 +3362,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$31.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableTable("Table");
+                return new framework.lightning.designables.JSBuilderTable("Table");
             };
             return Boot$31;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3383,7 +3379,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$32.prototype.createInstance = function (designMode) {
-                return new framework.lightning.ComboBox("Combo Box");
+                return new framework.lightning.table.TableColumn("column", "column", "Column");
             };
             return Boot$32;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3400,7 +3396,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$33.prototype.createInstance = function (designMode) {
-                return new framework.salesforce.SalesforceLookup("Lookup");
+                return new framework.lightning.ComboBox("Combo Box");
             };
             return Boot$33;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3417,7 +3413,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$34.prototype.createInstance = function (designMode) {
-                return new framework.lightning.ListPopOver("Pop Over");
+                return new framework.salesforce.SalesforceLookup("Lookup");
             };
             return Boot$34;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3434,7 +3430,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$35.prototype.createInstance = function (designMode) {
-                return new framework.lightning.ListBox("List");
+                return new framework.lightning.ListPopOver("Pop Over");
             };
             return Boot$35;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3451,7 +3447,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$36.prototype.createInstance = function (designMode) {
-                return new framework.lightning.ListBoxItem("List Item");
+                return new framework.lightning.ListBox("List");
             };
             return Boot$36;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3468,7 +3464,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$37.prototype.createInstance = function (designMode) {
-                return new framework.lightning.PopOverFooterItem("Footer Item");
+                return new framework.lightning.ListBoxItem("List Item");
             };
             return Boot$37;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3485,7 +3481,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$38.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableIterator("Iterator");
+                return new framework.lightning.PopOverFooterItem("Footer Item");
             };
             return Boot$38;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3502,7 +3498,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$39.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableIterable("Iterable", "div");
+                return new framework.lightning.designables.JSDesignableIterator("Iterator");
             };
             return Boot$39;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3519,7 +3515,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$40.prototype.createInstance = function (designMode) {
-                return new framework.designables.JSDesignableCardLayout("Card Layout", "div");
+                return new framework.lightning.designables.JSDesignableIterable("Iterable", "div");
             };
             return Boot$40;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3536,7 +3532,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$41.prototype.createInstance = function (designMode) {
-                return new framework.designables.JSDesignableCardLayoutItem("Item", "div");
+                return new framework.designables.JSDesignableCardLayout("Card Layout", "div");
             };
             return Boot$41;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3553,7 +3549,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$42.prototype.createInstance = function (designMode) {
-                return new framework.designables.JSDesignableHTTP();
+                return new framework.designables.JSDesignableCardLayoutItem("Item", "div");
             };
             return Boot$42;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3570,7 +3566,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$43.prototype.createInstance = function (designMode) {
-                return new framework.designables.JSDesignableService();
+                return new framework.designables.JSDesignableHTTP();
             };
             return Boot$43;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3587,7 +3583,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$44.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableSOQL("soql");
+                return new framework.designables.JSDesignableService();
             };
             return Boot$44;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3604,7 +3600,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$45.prototype.createInstance = function (designMode) {
-                return new framework.salesforce.SalesforceCrud("Salesforce");
+                return new framework.lightning.designables.JSDesignableSOQL("soql");
             };
             return Boot$45;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3621,7 +3617,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$46.prototype.createInstance = function (designMode) {
-                return new framework.salesforce.SalesforceTable("Salesforce");
+                return new framework.salesforce.SalesforceCrud("Salesforce");
             };
             return Boot$46;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3638,7 +3634,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$47.prototype.createInstance = function (designMode) {
-                return new framework.salesforce.SalesforceForm();
+                return new framework.salesforce.SalesforceTable("Salesforce");
             };
             return Boot$47;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3655,7 +3651,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$48.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableTabs("Tabs");
+                return new framework.salesforce.SalesforceForm();
             };
             return Boot$48;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3672,7 +3668,7 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$49.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableTabBody("body");
+                return new framework.lightning.designables.JSDesignableTabs("Tabs");
             };
             return Boot$49;
         }(framework.builder.libraries.AbstractComponentFactory));
@@ -3689,12 +3685,29 @@ ui["__class"] = "ui";
              * @return {*}
              */
             Boot$50.prototype.createInstance = function (designMode) {
-                return new framework.lightning.designables.JSDesignableTabItem("Tab Item");
+                return new framework.lightning.designables.JSDesignableTabBody("body");
             };
             return Boot$50;
         }(framework.builder.libraries.AbstractComponentFactory));
         Boot.Boot$50 = Boot$50;
         Boot$50["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
+        var Boot$51 = (function (_super) {
+            __extends(Boot$51, _super);
+            function Boot$51(__arg0) {
+                return _super.call(this, __arg0) || this;
+            }
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            Boot$51.prototype.createInstance = function (designMode) {
+                return new framework.lightning.designables.JSDesignableTabItem("Tab Item");
+            };
+            return Boot$51;
+        }(framework.builder.libraries.AbstractComponentFactory));
+        Boot.Boot$51 = Boot$51;
+        Boot$51["__interfaces"] = ["framework.builder.marshalling.ComponentFactory"];
     })(Boot = framework.Boot || (framework.Boot = {}));
 })(framework || (framework = {}));
 (function (framework) {
@@ -3899,8 +3912,8 @@ ui["__class"] = "ui";
              */
             TagParameter.prototype.getEditor = function (designable) {
                 var editor = new framework.builder.properties.TagEditor("tagEditor");
-                for (var index6948 = 0; index6948 < this.options.length; index6948++) {
-                    var opt = this.options[index6948];
+                for (var index9992 = 0; index9992 < this.options.length; index9992++) {
+                    var opt = this.options[index9992];
                     {
                         editor.addOption(new framework.JSOption(opt.text, opt.value));
                     }
@@ -4072,8 +4085,8 @@ ui["__class"] = "ui";
         JSContainer.prototype.fireListener = function (key, evt) {
             var listeners = this.getListeners()[key];
             if (listeners != null && listeners.length > 0) {
-                for (var index6949 = 0; index6949 < listeners.length; index6949++) {
-                    var l = listeners[index6949];
+                for (var index9993 = 0; index9993 < listeners.length; index9993++) {
+                    var l = listeners[index9993];
                     {
                         l.performAction(this, evt);
                     }
@@ -4092,8 +4105,8 @@ ui["__class"] = "ui";
             })(path, "/")) {
                 current = (this.getAncestorWithClass("visual-editor")).getRootItem();
             }
-            for (var index6950 = 0; index6950 < sectins.length; index6950++) {
-                var s = sectins[index6950];
+            for (var index9994 = 0; index9994 < sectins.length; index9994++) {
+                var s = sectins[index9994];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -4167,9 +4180,9 @@ ui["__class"] = "ui";
         /*private*/ JSContainer.prototype.findDesignable = function (des, name, index) {
             var candidates = (new Array());
             {
-                var array6952 = des.getDesignables();
-                for (var index6951 = 0; index6951 < array6952.length; index6951++) {
-                    var d = array6952[index6951];
+                var array9996 = des.getDesignables();
+                for (var index9995 = 0; index9995 < array9996.length; index9995++) {
+                    var d = array9996[index9995];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -4192,9 +4205,9 @@ ui["__class"] = "ui";
         };
         JSContainer.prototype.getChild = function (name) {
             {
-                var array6954 = this.getChildren();
-                for (var index6953 = 0; index6953 < array6954.length; index6953++) {
-                    var child = array6954[index6953];
+                var array9998 = this.getChildren();
+                for (var index9997 = 0; index9997 < array9998.length; index9997++) {
+                    var child = array9998[index9997];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -4334,8 +4347,8 @@ ui["__class"] = "ui";
             }
             var aStyles = styles.split(" ");
             var add = true;
-            for (var index6955 = 0; index6955 < aStyles.length; index6955++) {
-                var style = aStyles[index6955];
+            for (var index9999 = 0; index9999 < aStyles.length; index9999++) {
+                var style = aStyles[index9999];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -4387,9 +4400,9 @@ ui["__class"] = "ui";
             var children = (new Array());
             var i = 0;
             {
-                var array6957 = this.getChildren();
-                for (var index6956 = 0; index6956 < array6957.length; index6956++) {
-                    var c = array6957[index6956];
+                var array10001 = this.getChildren();
+                for (var index10000 = 0; index10000 < array10001.length; index10000++) {
+                    var c = array10001[index10000];
                     {
                         if (i === index) {
                             children.push(c);
@@ -4618,9 +4631,9 @@ ui["__class"] = "ui";
             this.d["rendered"] = b;
             if (!b) {
                 {
-                    var array6959 = this.getChildren();
-                    for (var index6958 = 0; index6958 < array6959.length; index6958++) {
-                        var child = array6959[index6958];
+                    var array10003 = this.getChildren();
+                    for (var index10002 = 0; index10002 < array10003.length; index10002++) {
+                        var child = array10003[index10002];
                         {
                             child.setRendered(b);
                         }
@@ -4662,8 +4675,8 @@ ui["__class"] = "ui";
         JSContainer.prototype.postRender$jsweet_dom_HTMLElement = function (root) {
         };
         JSContainer.prototype.contains = function (lst, o) {
-            for (var index6960 = 0; index6960 < lst.length; index6960++) {
-                var oo = lst[index6960];
+            for (var index10004 = 0; index10004 < lst.length; index10004++) {
+                var oo = lst[index10004];
                 {
                     if ((function (o1, o2) { if (o1 && o1.equals) {
                         return o1.equals(o2);
@@ -4688,29 +4701,29 @@ ui["__class"] = "ui";
             if (!this.contains(renderers, JSContainer.defaultRenderer_$LI$())) {
                 var tmp = (new Array());
                 tmp.push(JSContainer.defaultRenderer_$LI$());
-                for (var index6961 = 0; index6961 < renderers.length; index6961++) {
-                    var r = renderers[index6961];
+                for (var index10005 = 0; index10005 < renderers.length; index10005++) {
+                    var r = renderers[index10005];
                     {
                         tmp.push(r);
                     }
                 }
                 renderers = tmp;
             }
-            for (var index6962 = 0; index6962 < renderers.length; index6962++) {
-                var renderer_1 = renderers[index6962];
+            for (var index10006 = 0; index10006 < renderers.length; index10006++) {
+                var renderer_1 = renderers[index10006];
                 renderer_1.doRender(this, parent);
             }
             {
-                var array6964 = this.getChildren();
-                for (var index6963 = 0; index6963 < array6964.length; index6963++) {
-                    var child = array6964[index6963];
+                var array10008 = this.getChildren();
+                for (var index10007 = 0; index10007 < array10008.length; index10007++) {
+                    var child = array10008[index10007];
                     {
                         child.render();
                     }
                 }
             }
-            for (var index6965 = 0; index6965 < renderers.length; index6965++) {
-                var renderer_2 = renderers[index6965];
+            for (var index10009 = 0; index10009 < renderers.length; index10009++) {
+                var renderer_2 = renderers[index10009];
                 {
                     if (renderer_2 != null && (renderer_2["__interfaces"] != null && renderer_2["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0 || renderer_2.constructor != null && renderer_2.constructor["__interfaces"] != null && renderer_2.constructor["__interfaces"].indexOf("framework.renderer.ExtendedRenderer") >= 0))
                         renderer_2.postRender(this, parent);
@@ -4757,9 +4770,9 @@ ui["__class"] = "ui";
             var clsss = parent.getAttribute("class");
             if (clsss != null) {
                 {
-                    var array6967 = parent.getAttribute("class").split(" ");
-                    for (var index6966 = 0; index6966 < array6967.length; index6966++) {
-                        var s = array6967[index6966];
+                    var array10011 = parent.getAttribute("class").split(" ");
+                    for (var index10010 = 0; index10010 < array10011.length; index10010++) {
+                        var s = array10011[index10010];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -5373,9 +5386,9 @@ ui["__class"] = "ui";
                 };
                 Structure.prototype.getItem$framework_design_Designable$framework_JSContainer = function (designable, currentNode) {
                     {
-                        var array6969 = currentNode.getChildren();
-                        for (var index6968 = 0; index6968 < array6969.length; index6968++) {
-                            var des = array6969[index6968];
+                        var array10013 = currentNode.getChildren();
+                        for (var index10012 = 0; index10012 < array10013.length; index10012++) {
+                            var des = array10013[index10012];
                             {
                                 if (des != null && des instanceof framework.builder.editors.StructureTreeItem) {
                                     var titem = des;
@@ -5443,9 +5456,9 @@ ui["__class"] = "ui";
                 };
                 Structure.prototype.renderFiles = function () {
                     {
-                        var array6971 = this.lis.keySet();
-                        for (var index6970 = 0; index6970 < array6971.length; index6970++) {
-                            var type = array6971[index6970];
+                        var array10015 = this.lis.keySet();
+                        for (var index10014 = 0; index10014 < array10015.length; index10014++) {
+                            var type = array10015[index10014];
                             {
                                 var cstylesheets = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                                 if (this.file.getChild(type) != null) {
@@ -5458,8 +5471,8 @@ ui["__class"] = "ui";
                                         var ftype = this.file.getChild("types");
                                         var arrTypes = JSON.parse(ftype.getData());
                                         if (arrTypes != null) {
-                                            for (var index6972 = 0; index6972 < arrTypes.length; index6972++) {
-                                                var o = arrTypes[index6972];
+                                            for (var index10016 = 0; index10016 < arrTypes.length; index10016++) {
+                                                var o = arrTypes[index10016];
                                                 {
                                                     var item = new framework.builder.editors.TypeTreeItem(ftype, o, this);
                                                     item.addEventListener(this.toggleSelect, "click");
@@ -5471,9 +5484,9 @@ ui["__class"] = "ui";
                                     }
                                     else {
                                         {
-                                            var array6974 = this.file.getChild(type).getChildren();
-                                            for (var index6973 = 0; index6973 < array6974.length; index6973++) {
-                                                var f = array6974[index6973];
+                                            var array10018 = this.file.getChild(type).getChildren();
+                                            for (var index10017 = 0; index10017 < array10018.length; index10017++) {
+                                                var f = array10018[index10017];
                                                 {
                                                     var item = new framework.builder.editors.FileTreeItem(f, type, framework.builder.Builder.getInstance(), this);
                                                     item.addEventListener(this.toggleSelect, "click");
@@ -5500,9 +5513,9 @@ ui["__class"] = "ui";
                         var children = new framework.JSContainer("ul").setAttribute("role", "group").setStyle("display", "none");
                         li.addChild$framework_JSContainer(children);
                         {
-                            var array6976 = ctn.getDesignables();
-                            for (var index6975 = 0; index6975 < array6976.length; index6975++) {
-                                var c = array6976[index6975];
+                            var array10020 = ctn.getDesignables();
+                            for (var index10019 = 0; index10019 < array10020.length; index10019++) {
+                                var c = array10020[index10019];
                                 {
                                     var child = new framework.JSContainer("li");
                                     children.addChild$framework_JSContainer(child);
@@ -5618,8 +5631,8 @@ ui["__class"] = "ui";
                 this.itemSelectedListeners.push(l);
             };
             FilesList.prototype.fireItemSelectedListeners = function (file, selector) {
-                for (var index6977 = 0; index6977 < this.itemSelectedListeners.length; index6977++) {
-                    var l = this.itemSelectedListeners[index6977];
+                for (var index10021 = 0; index10021 < this.itemSelectedListeners.length; index10021++) {
+                    var l = this.itemSelectedListeners[index10021];
                     {
                         l.itemSelected(file, selector);
                     }
@@ -5627,9 +5640,9 @@ ui["__class"] = "ui";
             };
             FilesList.prototype.select = function (file) {
                 {
-                    var array6979 = this.getChildren();
-                    for (var index6978 = 0; index6978 < array6979.length; index6978++) {
-                        var c = array6979[index6978];
+                    var array10023 = this.getChildren();
+                    for (var index10022 = 0; index10022 < array10023.length; index10022++) {
+                        var c = array10023[index10022];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -5759,9 +5772,9 @@ ui["__class"] = "ui";
                     Previewer.project = f;
                     var preview = new framework.builder.editors.Preview(f);
                     {
-                        var array6981 = f.getStylesheets();
-                        for (var index6980 = 0; index6980 < array6981.length; index6980++) {
-                            var sc = array6981[index6980];
+                        var array10025 = f.getStylesheets();
+                        for (var index10024 = 0; index10024 < array10025.length; index10024++) {
+                            var sc = array10025[index10024];
                             {
                                 var elem = document.createElement("style");
                                 elem.textContent = sc.getData();
@@ -5770,9 +5783,9 @@ ui["__class"] = "ui";
                         }
                     }
                     {
-                        var array6983 = f.getScripts();
-                        for (var index6982 = 0; index6982 < array6983.length; index6982++) {
-                            var sc = array6983[index6982];
+                        var array10027 = f.getScripts();
+                        for (var index10026 = 0; index10026 < array10027.length; index10026++) {
+                            var sc = array10027[index10026];
                             {
                                 var elem = document.createElement("script");
                                 elem.textContent = sc.getData();
@@ -5781,9 +5794,9 @@ ui["__class"] = "ui";
                         }
                     }
                     {
-                        var array6985 = f.getTemplates();
-                        for (var index6984 = 0; index6984 < array6985.length; index6984++) {
-                            var sc = array6985[index6984];
+                        var array10029 = f.getTemplates();
+                        for (var index10028 = 0; index10028 < array10029.length; index10028++) {
+                            var sc = array10029[index10028];
                             {
                                 var elem = document.createElement("div");
                                 elem.setAttribute("id", /* replace */ sc.getName().split(".html").join(""));
@@ -6383,9 +6396,9 @@ ui["__class"] = "ui";
                 var dec = this.getAttribute("decorate-class");
                 if (dec != null) {
                     {
-                        var array6987 = this.getChildren();
-                        for (var index6986 = 0; index6986 < array6987.length; index6986++) {
-                            var c = array6987[index6986];
+                        var array10031 = this.getChildren();
+                        for (var index10030 = 0; index10030 < array10031.length; index10030++) {
+                            var c = array10031[index10030];
                             {
                                 c.setAttribute("class", dec);
                             }
@@ -6395,9 +6408,9 @@ ui["__class"] = "ui";
                 var decStyle = this.getAttribute("decorate-style");
                 if (decStyle != null) {
                     {
-                        var array6989 = this.getChildren();
-                        for (var index6988 = 0; index6988 < array6989.length; index6988++) {
-                            var c = array6989[index6988];
+                        var array10033 = this.getChildren();
+                        for (var index10032 = 0; index10032 < array10033.length; index10032++) {
+                            var c = array10033[index10032];
                             {
                                 c.setAttribute("style", decStyle);
                             }
@@ -6454,8 +6467,8 @@ ui["__class"] = "ui";
             JSDesignableList.prototype.removeDesignable = function (designable) {
                 this.removeChild(designable.getParent());
                 var tmp = (new Array());
-                for (var index6990 = 0; index6990 < this.designables.length; index6990++) {
-                    var d = this.designables[index6990];
+                for (var index10034 = 0; index10034 < this.designables.length; index10034++) {
+                    var d = this.designables[index10034];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -6687,8 +6700,8 @@ ui["__class"] = "ui";
             if (ele != null) {
                 if (ele.multiple) {
                     var result = (new Array());
-                    for (var index6991 = 0; index6991 < ele.selectedOptions.length; index6991++) {
-                        var e = ele.selectedOptions[index6991];
+                    for (var index10035 = 0; index10035 < ele.selectedOptions.length; index10035++) {
+                        var e = ele.selectedOptions[index10035];
                         {
                             var opt = e;
                             result.push(opt.value);
@@ -6703,9 +6716,9 @@ ui["__class"] = "ui";
             else {
                 var val = this.getAttribute("value");
                 {
-                    var array6993 = this.getChildren();
-                    for (var index6992 = 0; index6992 < array6993.length; index6992++) {
-                        var opt = array6993[index6992];
+                    var array10037 = this.getChildren();
+                    for (var index10036 = 0; index10036 < array10037.length; index10036++) {
+                        var opt = array10037[index10036];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -6755,13 +6768,13 @@ ui["__class"] = "ui";
                 }
                 this.setAttribute("value", firstVal);
                 {
-                    var array6995 = this.getChildren();
-                    for (var index6994 = 0; index6994 < array6995.length; index6994++) {
-                        var opt = array6995[index6994];
+                    var array10039 = this.getChildren();
+                    for (var index10038 = 0; index10038 < array10039.length; index10038++) {
+                        var opt = array10039[index10038];
                         {
                             opt.setSelected(false);
-                            for (var index6996 = 0; index6996 < arrVal.length; index6996++) {
-                                var val = arrVal[index6996];
+                            for (var index10040 = 0; index10040 < arrVal.length; index10040++) {
+                                var val = arrVal[index10040];
                                 {
                                     if ((function (o1, o2) { if (o1 && o1.equals) {
                                         return o1.equals(o2);
@@ -6779,9 +6792,9 @@ ui["__class"] = "ui";
             }
             else {
                 {
-                    var array6998 = this.getChildren();
-                    for (var index6997 = 0; index6997 < array6998.length; index6997++) {
-                        var opt = array6998[index6997];
+                    var array10042 = this.getChildren();
+                    for (var index10041 = 0; index10041 < array10042.length; index10041++) {
+                        var opt = array10042[index10041];
                         {
                             opt.setSelected(false);
                         }
@@ -6954,8 +6967,8 @@ ui["__class"] = "ui";
              */
             Accordion.prototype.removeDesignable = function (designable) {
                 var result = (new Array());
-                for (var index6999 = 0; index6999 < this.designables.length; index6999++) {
-                    var des = this.designables[index6999];
+                for (var index10043 = 0; index10043 < this.designables.length; index10043++) {
+                    var des = this.designables[index10043];
                     {
                         if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -7903,8 +7916,8 @@ ui["__class"] = "ui";
                     _super.prototype.setData$java_lang_Object.call(this, obj);
                     var ls = obj;
                     var iterable = this.templateCtn.getChildren()[0];
-                    for (var index7000 = 0; index7000 < ls.length; index7000++) {
-                        var o = ls[index7000];
+                    for (var index10044 = 0; index10044 < ls.length; index10044++) {
+                        var o = ls[index10044];
                         {
                             var ins = iterable.Clone();
                             this.list.addChild$framework_JSContainer(ins);
@@ -8931,8 +8944,8 @@ ui["__class"] = "ui";
                 LTContainer.POSITIONS = [LTContainer.POSITION_STATIC, LTContainer.POSITION_FIXED, LTContainer.POSITION_RELATIVE, LTContainer.POSITION_ABSOLUTE]; return LTContainer.POSITIONS; };
             ;
             LTContainer.prototype.setPosition = function (position) {
-                for (var index7001 = 0; index7001 < LTContainer.POSITIONS_$LI$().length; index7001++) {
-                    var pos = LTContainer.POSITIONS_$LI$()[index7001];
+                for (var index10045 = 0; index10045 < LTContainer.POSITIONS_$LI$().length; index10045++) {
+                    var pos = LTContainer.POSITIONS_$LI$()[index10045];
                     {
                         this.removeClass("slds-is-" + pos);
                     }
@@ -8971,8 +8984,8 @@ ui["__class"] = "ui";
                 return this.setSizeAndPosition("p", size, "left");
             };
             /*private*/ LTContainer.prototype.setSizeAndPosition = function (pref, size, position) {
-                for (var index7002 = 0; index7002 < LTContainer.SIZES_$LI$().length; index7002++) {
-                    var s = LTContainer.SIZES_$LI$()[index7002];
+                for (var index10046 = 0; index10046 < LTContainer.SIZES_$LI$().length; index10046++) {
+                    var s = LTContainer.SIZES_$LI$()[index10046];
                     {
                         this.removeClass("slds-" + pref + "-" + position + "_" + s);
                     }
@@ -9318,8 +9331,8 @@ ui["__class"] = "ui";
                 return this;
             };
             PopOver.prototype.setNubin = function (position) {
-                for (var index7003 = 0; index7003 < PopOver.NUBIN_POSITIONS_$LI$().length; index7003++) {
-                    var s = PopOver.NUBIN_POSITIONS_$LI$()[index7003];
+                for (var index10047 = 0; index10047 < PopOver.NUBIN_POSITIONS_$LI$().length; index10047++) {
+                    var s = PopOver.NUBIN_POSITIONS_$LI$()[index10047];
                     {
                         this.removeClass(s);
                     }
@@ -9623,24 +9636,24 @@ ui["__class"] = "ui";
                 return this.active;
             };
             TabItem.prototype.fireClose = function () {
-                for (var index7004 = 0; index7004 < this.listeners.length; index7004++) {
-                    var li = this.listeners[index7004];
+                for (var index10048 = 0; index10048 < this.listeners.length; index10048++) {
+                    var li = this.listeners[index10048];
                     {
                         li.onClose(this);
                     }
                 }
             };
             TabItem.prototype.fireActivate = function () {
-                for (var index7005 = 0; index7005 < this.listeners.length; index7005++) {
-                    var li = this.listeners[index7005];
+                for (var index10049 = 0; index10049 < this.listeners.length; index10049++) {
+                    var li = this.listeners[index10049];
                     {
                         li.onActivate(this);
                     }
                 }
             };
             TabItem.prototype.fireDeActivate = function () {
-                for (var index7006 = 0; index7006 < this.listeners.length; index7006++) {
-                    var li = this.listeners[index7006];
+                for (var index10050 = 0; index10050 < this.listeners.length; index10050++) {
+                    var li = this.listeners[index10050];
                     {
                         li.onDeactivate(this);
                     }
@@ -9890,9 +9903,10 @@ ui["__class"] = "ui";
                 __extends(Table, _super);
                 function Table(name) {
                     var _this = _super.call(this, name, "table") || this;
-                    /*private*/ _this.thead = new framework.JSContainer("thead");
-                    /*private*/ _this.tbody = new framework.JSContainer("tbody");
-                    /*private*/ _this.tfoot = new framework.JSContainer("tfoot");
+                    _this.thead = new framework.JSContainer("thead");
+                    _this.theadRow = new framework.JSContainer("tr").addClass("slds-line-height_reset");
+                    _this.tbody = new framework.JSContainer("tbody");
+                    _this.tfoot = new framework.JSContainer("tfoot");
                     /*private*/ _this.tableCellRenderer = new framework.lightning.table.DefaultTableCellRenderer();
                     /*private*/ _this.tableColumnModel = new framework.lightning.table.DefaultTableColumnModel();
                     /*private*/ _this.currrentPage = 0;
@@ -9904,7 +9918,7 @@ ui["__class"] = "ui";
                     /*private*/ _this.emptyTableMessage = "No data available";
                     _this.model = null;
                     _this.addClass("slds-table");
-                    _this.addChild$framework_JSContainer(_this.thead);
+                    _this.addChild$framework_JSContainer(_this.thead.addChild$framework_JSContainer(_this.theadRow));
                     _this.addChild$framework_JSContainer(_this.tbody);
                     _this.addChild$framework_JSContainer(_this.tfoot);
                     _this.tfoot.addChild$framework_JSContainer(_this.ftr.addChild$framework_JSContainer(_this.ftd));
@@ -10043,13 +10057,11 @@ ui["__class"] = "ui";
                     return this.multiSelectable;
                 };
                 Table.prototype.refreshColumns = function () {
-                    this.thead.clearChildren();
-                    this.thead.setRendered(false);
-                    var tr = new framework.JSContainer("tr").addClass("slds-text-title_caps");
-                    this.thead.addChild$framework_JSContainer(tr);
+                    this.theadRow.clearChildren();
+                    this.theadRow.setRendered(false);
                     for (var i = 0; i < this.tableColumnModel.getColumnCount(); i++) {
                         var col = this.tableColumnModel.getColumn(i);
-                        tr.addChild$framework_JSContainer(col);
+                        this.theadRow.addChild$framework_JSContainer(col);
                     }
                     ;
                 };
@@ -10114,13 +10126,23 @@ ui["__class"] = "ui";
                         var __args = Array.prototype.slice.call(arguments);
                         _this = _super.call(this, name, "th") || this;
                         _this.identifier = null;
-                        _this.title = new framework.JSContainer("div").addClass("slds-truncate");
+                        _this.delegate = new framework.designables.DesignableDelegate(_this);
+                        _this.title = new framework.JSContainer("span").addClass("slds-truncate");
                         _this.detailLink = false;
+                        _this.icon = new framework.lightning.SvgIcon("", "utility", "arrowdown");
+                        _this.linkReset = new framework.JSContainer("a").addClass("slds-th__action slds-text-link_reset").setAttribute("href", "javascript:void(0);").setAttribute("role", "button").setAttribute("tabindex", "-1");
                         _this.identifier = null;
                         (function () {
                             _this.identifier = identifier;
-                            _this.addChild$framework_JSContainer(_this.title);
-                            _this.setLabel(label);
+                            _this.setAttribute("identifier", "lgt:table-column");
+                            _this.addChild$framework_JSContainer(_this.linkReset);
+                            _this.linkReset.addChild$framework_JSContainer(_this.title);
+                            _this.linkReset.addChild$framework_JSContainer(_this.icon);
+                            _this.icon.addClass("slds-icon_container");
+                            _this.icon.setSvgClass("slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon");
+                            _this.applyParam("label", label);
+                            _this.applyParam("capitalize", "true");
+                            _this.applyParam("detailLink", "false");
                             _this.setAttribute("scope", "col");
                             _this.detailLink = detailLnk;
                         })();
@@ -10132,24 +10154,42 @@ ui["__class"] = "ui";
                             var detailLnk_1 = false;
                             _this = _super.call(this, name, "th") || this;
                             _this.identifier = null;
-                            _this.title = new framework.JSContainer("div").addClass("slds-truncate");
+                            _this.delegate = new framework.designables.DesignableDelegate(_this);
+                            _this.title = new framework.JSContainer("span").addClass("slds-truncate");
                             _this.detailLink = false;
+                            _this.icon = new framework.lightning.SvgIcon("", "utility", "arrowdown");
+                            _this.linkReset = new framework.JSContainer("a").addClass("slds-th__action slds-text-link_reset").setAttribute("href", "javascript:void(0);").setAttribute("role", "button").setAttribute("tabindex", "-1");
                             _this.identifier = null;
                             (function () {
                                 _this.identifier = identifier;
-                                _this.addChild$framework_JSContainer(_this.title);
-                                _this.setLabel(label);
+                                _this.setAttribute("identifier", "lgt:table-column");
+                                _this.addChild$framework_JSContainer(_this.linkReset);
+                                _this.linkReset.addChild$framework_JSContainer(_this.title);
+                                _this.linkReset.addChild$framework_JSContainer(_this.icon);
+                                _this.icon.addClass("slds-icon_container");
+                                _this.icon.setSvgClass("slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon");
+                                _this.applyParam("label", label);
+                                _this.applyParam("capitalize", "true");
+                                _this.applyParam("detailLink", "false");
                                 _this.setAttribute("scope", "col");
                                 _this.detailLink = detailLnk_1;
                             })();
                         }
+                        (function () {
+                            _this.setAttribute("identifier", "lgt:table-column");
+                        })();
                     }
                     else
                         throw new Error('invalid overload');
                     return _this;
                 }
+                TableColumn.prototype.setBinding = function (binding) {
+                    this.identifier = binding;
+                };
                 TableColumn.prototype.getIdentifier = function () {
-                    return this.identifier;
+                    if (this.identifier != null)
+                        return this.identifier;
+                    return this.getName();
                 };
                 TableColumn.prototype.setWidth = function (width) {
                     this.title.setStyle("width", width);
@@ -10173,11 +10213,155 @@ ui["__class"] = "ui";
                 TableColumn.prototype.setDetailLink = function (detailLink) {
                     this.detailLink = detailLink;
                 };
+                /**
+                 *
+                 * @param {string} key
+                 * @param {string} value
+                 */
+                TableColumn.prototype.applyParam = function (key, value) {
+                    this.delegate.applyParameter(key, value, true);
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "label")) {
+                        this.setLabel(value);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "capitalized")) {
+                        this.setTitleCaps(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })("true", value));
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "detailLink")) {
+                        this.setDetailLink(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })("true", value));
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "alignRight")) {
+                        this.setAlignRight(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })("true", value));
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "sortable")) {
+                        this.setSortable(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                            return o1.equals(o2);
+                        }
+                        else {
+                            return o1 === o2;
+                        } })("true", value));
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "width")) {
+                        this.setWidth(value);
+                    }
+                };
+                /**
+                 *
+                 * @return {*[]}
+                 */
+                TableColumn.prototype.getDesignables = function () {
+                    return (new Array());
+                };
+                /**
+                 *
+                 * @return {framework.builder.marshalling.Component}
+                 */
+                TableColumn.prototype.getComponent = function () {
+                    return this.delegate.getComponent();
+                };
+                /**
+                 *
+                 * @return {framework.design.Parameter[]}
+                 */
+                TableColumn.prototype.getParameters = function () {
+                    var params = (new Array());
+                    params.push(new framework.design.NameParameter("Name", "Basic"));
+                    params.push(new framework.design.AttributeParameter("class", "Style class", "Basic"));
+                    params.push(new framework.design.AttributeParameter("style", "Style", "Basic"));
+                    var exposeAs = new framework.design.AttributeParameter("exposeAs", "Expose with var", "Basic");
+                    params.push(exposeAs);
+                    params.push(new framework.design.AttributeParameter("label", "Label", "Basic"));
+                    params.push(new framework.design.AttributeParameter("width", "Width", "Basic"));
+                    var capitalized = new framework.design.AttributeParameter("capitalized", "Capitalised", "Basic");
+                    capitalized.options.push(new framework.design.Option("", ""));
+                    var alignRight = new framework.design.AttributeParameter("alignRight", "Align Right", "Basic");
+                    alignRight.options.push(new framework.design.Option("", ""));
+                    var sortable = new framework.design.AttributeParameter("sortable", "Sortable", "Basic");
+                    sortable.options.push(new framework.design.Option("", ""));
+                    var detailLink = new framework.design.AttributeParameter("detailLink", "Detail Link", "Basic");
+                    detailLink.options.push(new framework.design.Option("", ""));
+                    params.push(sortable, capitalized, alignRight, detailLink);
+                    return params;
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 */
+                TableColumn.prototype.addDesignable = function (designable) {
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 */
+                TableColumn.prototype.removeDesignable = function (designable) {
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {number} steps
+                 */
+                TableColumn.prototype.moveDesignable = function (designable, steps) {
+                };
+                TableColumn.prototype.setAlignRight = function (b) {
+                    this.setFeature("slds-text-align_right", b);
+                };
+                TableColumn.prototype.setTitleCaps = function (b) {
+                    this.setFeature("slds-text-title_caps", b);
+                    return this;
+                };
+                TableColumn.prototype.setSortable = function (b) {
+                    this.setFeature("slds-is-sortable", b);
+                    return this;
+                };
                 return TableColumn;
             }(framework.JSContainer));
             table.TableColumn = TableColumn;
             TableColumn["__class"] = "framework.lightning.table.TableColumn";
-            TableColumn["__interfaces"] = ["framework.interactions.Droppable", "framework.Renderable"];
+            TableColumn["__interfaces"] = ["framework.interactions.Droppable", "framework.design.Designable", "framework.Renderable"];
         })(table = lightning.table || (lightning.table = {}));
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
@@ -10216,9 +10400,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.setActive = function (item) {
                 {
-                    var array7008 = this.getItems();
-                    for (var index7007 = 0; index7007 < array7008.length; index7007++) {
-                        var tab = array7008[index7007];
+                    var array10052 = this.getItems();
+                    for (var index10051 = 0; index10051 < array10052.length; index10051++) {
+                        var tab = array10052[index10051];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10242,9 +10426,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.getTab = function (body) {
                 {
-                    var array7010 = this.getItems();
-                    for (var index7009 = 0; index7009 < array7010.length; index7009++) {
-                        var c = array7010[index7009];
+                    var array10054 = this.getItems();
+                    for (var index10053 = 0; index10053 < array10054.length; index10053++) {
+                        var c = array10054[index10053];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10261,9 +10445,9 @@ ui["__class"] = "ui";
             };
             Tabs.prototype.getActiveTab = function () {
                 {
-                    var array7012 = this.getItems();
-                    for (var index7011 = 0; index7011 < array7012.length; index7011++) {
-                        var item = array7012[index7011];
+                    var array10056 = this.getItems();
+                    for (var index10055 = 0; index10055 < array10056.length; index10055++) {
+                        var item = array10056[index10055];
                         {
                             if (item.isActive()) {
                                 return item;
@@ -10335,8 +10519,8 @@ ui["__class"] = "ui";
                 Text.textTags_$LI$()["span"] = "Span";
             };
             Text.prototype.setAlign = function (align) {
-                for (var index7013 = 0; index7013 < Text.ALIGNS_$LI$().length; index7013++) {
-                    var s = Text.ALIGNS_$LI$()[index7013];
+                for (var index10057 = 0; index10057 < Text.ALIGNS_$LI$().length; index10057++) {
+                    var s = Text.ALIGNS_$LI$()[index10057];
                     {
                         this.removeClass(s);
                     }
@@ -10345,8 +10529,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setTextType = function (type) {
-                for (var index7014 = 0; index7014 < Text.TEXT_TYPES_$LI$().length; index7014++) {
-                    var s = Text.TEXT_TYPES_$LI$()[index7014];
+                for (var index10058 = 0; index10058 < Text.TEXT_TYPES_$LI$().length; index10058++) {
+                    var s = Text.TEXT_TYPES_$LI$()[index10058];
                     {
                         this.removeClass(s);
                     }
@@ -10355,8 +10539,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setColor = function (color) {
-                for (var index7015 = 0; index7015 < Text.COLORS_$LI$().length; index7015++) {
-                    var s = Text.COLORS_$LI$()[index7015];
+                for (var index10059 = 0; index10059 < Text.COLORS_$LI$().length; index10059++) {
+                    var s = Text.COLORS_$LI$()[index10059];
                     {
                         this.removeClass(s);
                     }
@@ -10365,8 +10549,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Text.prototype.setDecoration = function (decoration) {
-                for (var index7016 = 0; index7016 < Text.DECORATIONS_$LI$().length; index7016++) {
-                    var s = Text.DECORATIONS_$LI$()[index7016];
+                for (var index10060 = 0; index10060 < Text.DECORATIONS_$LI$().length; index10060++) {
+                    var s = Text.DECORATIONS_$LI$()[index10060];
                     {
                         this.removeClass(s);
                     }
@@ -10479,9 +10663,9 @@ ui["__class"] = "ui";
                 var params = this.delegate.getParameters();
                 var tagParam = new framework.design.TagParameter();
                 {
-                    var array7018 = Object.keys(Text.textTags_$LI$());
-                    for (var index7017 = 0; index7017 < array7018.length; index7017++) {
-                        var key = array7018[index7017];
+                    var array10062 = Object.keys(Text.textTags_$LI$());
+                    for (var index10061 = 0; index10061 < array10062.length; index10061++) {
+                        var key = array10062[index10061];
                         {
                             tagParam.options.push(new framework.design.Option(Text.textTags_$LI$()[key], key));
                         }
@@ -10779,9 +10963,9 @@ ui["__class"] = "ui";
             SalesforceCrud.prototype.refresh = function () {
                 var fi = new Object();
                 {
-                    var array7020 = this.table.getColumns();
-                    for (var index7019 = 0; index7019 < array7020.length; index7019++) {
-                        var o = array7020[index7019];
+                    var array10064 = this.table.getColumns();
+                    for (var index10063 = 0; index10063 < array10064.length; index10063++) {
+                        var o = array10064[index10063];
                         {
                             var name_2 = o["name"];
                             if (!fi.hasOwnProperty(name_2)) {
@@ -10791,9 +10975,9 @@ ui["__class"] = "ui";
                     }
                 }
                 {
-                    var array7022 = this.form.getFields();
-                    for (var index7021 = 0; index7021 < array7022.length; index7021++) {
-                        var o = array7022[index7021];
+                    var array10066 = this.form.getFields();
+                    for (var index10065 = 0; index10065 < array10066.length; index10065++) {
+                        var o = array10066[index10065];
                         {
                             var name_3 = o["name"];
                             if (!fi.hasOwnProperty(name_3)) {
@@ -10804,9 +10988,9 @@ ui["__class"] = "ui";
                 }
                 var query = "SELECT Id";
                 {
-                    var array7024 = Object.keys(fi);
-                    for (var index7023 = 0; index7023 < array7024.length; index7023++) {
-                        var key = array7024[index7023];
+                    var array10068 = Object.keys(fi);
+                    for (var index10067 = 0; index10067 < array10068.length; index10067++) {
+                        var key = array10068[index10067];
                         {
                             if (!(function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -10896,9 +11080,9 @@ ui["__class"] = "ui";
                 var c = framework.builder.marshalling.MarshallUtil.extract(source);
                 dest.getComponent().events = c.events;
                 {
-                    var array7026 = Object.keys(c.parameters);
-                    for (var index7025 = 0; index7025 < array7026.length; index7025++) {
-                        var key = array7026[index7025];
+                    var array10070 = Object.keys(c.parameters);
+                    for (var index10069 = 0; index10069 < array10070.length; index10069++) {
+                        var key = array10070[index10069];
                         {
                             var val = c.parameters[key];
                             if (val != null)
@@ -10907,16 +11091,16 @@ ui["__class"] = "ui";
                     }
                 }
                 {
-                    var array7028 = Object.keys(c.styles);
-                    for (var index7027 = 0; index7027 < array7028.length; index7027++) {
-                        var key = array7028[index7027];
+                    var array10072 = Object.keys(c.styles);
+                    for (var index10071 = 0; index10071 < array10072.length; index10071++) {
+                        var key = array10072[index10071];
                         {
                             dest.setStyle(key, c.styles[key]);
                         }
                     }
                 }
-                for (var index7029 = 0; index7029 < c.events.length; index7029++) {
-                    var event_4 = c.events[index7029];
+                for (var index10073 = 0; index10073 < c.events.length; index10073++) {
+                    var event_4 = c.events[index10073];
                     {
                         var listener = new framework.builder.BuilderEventListener(event_4.source, event_4.name, event_4.type);
                         dest.addEventListener(listener, event_4.type);
@@ -11373,8 +11557,8 @@ ui["__class"] = "ui";
                     grid.addChild$framework_JSContainer(colLeft.addClass("slds-col").addClass("col-left"));
                     grid.addChild$framework_JSContainer(colRight.addClass("slds-col").addClass("col-right"));
                     _this.root = root;
-                    for (var index7030 = 0; index7030 < framework.builder.editors.EventTypes.events_$LI$().length; index7030++) {
-                        var s = framework.builder.editors.EventTypes.events_$LI$()[index7030];
+                    for (var index10074 = 0; index10074 < framework.builder.editors.EventTypes.events_$LI$().length; index10074++) {
+                        var s = framework.builder.editors.EventTypes.events_$LI$()[index10074];
                         _this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                     }
                     colLeft.addChild$framework_JSContainer(_this.component.setStyle("width", "100%"));
@@ -11392,8 +11576,8 @@ ui["__class"] = "ui";
                     if (!updEvtSelect) {
                         var listeners = des.getListeners()[this.events.getValue()];
                         if (listeners != null) {
-                            for (var index7031 = 0; index7031 < listeners.length; index7031++) {
-                                var e = listeners[index7031];
+                            for (var index10075 = 0; index10075 < listeners.length; index10075++) {
+                                var e = listeners[index10075];
                                 {
                                     if (e != null && e instanceof framework.builder.BuilderEventListener) {
                                         var bel = e;
@@ -11418,9 +11602,9 @@ ui["__class"] = "ui";
                     var last = "click";
                     var lastSrc = this.getSource(des, last);
                     {
-                        var array7033 = this.events.getChildren();
-                        for (var index7032 = 0; index7032 < array7033.length; index7032++) {
-                            var opt = array7033[index7032];
+                        var array10077 = this.events.getChildren();
+                        for (var index10076 = 0; index10076 < array10077.length; index10076++) {
+                            var opt = array10077[index10076];
                             {
                                 var option = opt;
                                 var type = option.getValue();
@@ -11449,8 +11633,8 @@ ui["__class"] = "ui";
                 EventEditor.prototype.getSource = function (des, type) {
                     var listeners = des.getListeners()[type];
                     if (listeners != null) {
-                        for (var index7034 = 0; index7034 < listeners.length; index7034++) {
-                            var l = listeners[index7034];
+                        for (var index10078 = 0; index10078 < listeners.length; index10078++) {
+                            var l = listeners[index10078];
                             {
                                 if (l != null && l instanceof framework.builder.BuilderEventListener) {
                                     var evt = l;
@@ -11469,27 +11653,27 @@ ui["__class"] = "ui";
                     this.events.clearChildren();
                     this.events.setRendered(false);
                     {
-                        var array7036 = (designable).advancedEventTypes();
-                        for (var index7035 = 0; index7035 < array7036.length; index7035++) {
-                            var s = array7036[index7035];
+                        var array10080 = (designable).advancedEventTypes();
+                        for (var index10079 = 0; index10079 < array10080.length; index10079++) {
+                            var s = array10080[index10079];
                             this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                         }
                     }
                     if (designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.DndAble") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.DndAble") >= 0)) {
-                        for (var index7037 = 0; index7037 < framework.builder.editors.EventTypes.dndevents_$LI$().length; index7037++) {
-                            var s = framework.builder.editors.EventTypes.dndevents_$LI$()[index7037];
+                        for (var index10081 = 0; index10081 < framework.builder.editors.EventTypes.dndevents_$LI$().length; index10081++) {
+                            var s = framework.builder.editors.EventTypes.dndevents_$LI$()[index10081];
                             this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                         }
                     }
                     if (designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.MouseEventAble") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.MouseEventAble") >= 0)) {
-                        for (var index7038 = 0; index7038 < framework.builder.editors.EventTypes.mouseevents_$LI$().length; index7038++) {
-                            var s = framework.builder.editors.EventTypes.mouseevents_$LI$()[index7038];
+                        for (var index10082 = 0; index10082 < framework.builder.editors.EventTypes.mouseevents_$LI$().length; index10082++) {
+                            var s = framework.builder.editors.EventTypes.mouseevents_$LI$()[index10082];
                             this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                         }
                     }
                     if (designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.KeyboardEventAble") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.KeyboardEventAble") >= 0)) {
-                        for (var index7039 = 0; index7039 < framework.builder.editors.EventTypes.keyboardevents_$LI$().length; index7039++) {
-                            var s = framework.builder.editors.EventTypes.keyboardevents_$LI$()[index7039];
+                        for (var index10083 = 0; index10083 < framework.builder.editors.EventTypes.keyboardevents_$LI$().length; index10083++) {
+                            var s = framework.builder.editors.EventTypes.keyboardevents_$LI$()[index10083];
                             this.events.addOption(new framework.JSOption(/* replace */ s.split("on").join(""), /* replace */ s.split("on").join("")));
                         }
                     }
@@ -11505,9 +11689,9 @@ ui["__class"] = "ui";
                         return parent;
                     }
                     {
-                        var array7041 = parent.getDesignables();
-                        for (var index7040 = 0; index7040 < array7041.length; index7040++) {
-                            var des = array7041[index7040];
+                        var array10085 = parent.getDesignables();
+                        for (var index10084 = 0; index10084 < array10085.length; index10084++) {
+                            var des = array10085[index10084];
                             {
                                 var res = this.findDesignableById(des, id);
                                 if (res != null) {
@@ -11530,8 +11714,8 @@ ui["__class"] = "ui";
                     if (des != null) {
                         var listeners = des.getListeners()[type];
                         if (listeners != null) {
-                            for (var index7042 = 0; index7042 < listeners.length; index7042++) {
-                                var l_1 = listeners[index7042];
+                            for (var index10086 = 0; index10086 < listeners.length; index10086++) {
+                                var l_1 = listeners[index10086];
                                 {
                                     if (l_1 != null && l_1 instanceof framework.builder.BuilderEventListener) {
                                         var evt = l_1;
@@ -11871,9 +12055,9 @@ ui["__class"] = "ui";
                 VisualEditor.prototype.visit$framework_builder_editors_Visitor$framework_design_Designable = function (v, startAt) {
                     v.doVisit(startAt);
                     {
-                        var array7044 = startAt.getDesignables();
-                        for (var index7043 = 0; index7043 < array7044.length; index7043++) {
-                            var child = array7044[index7043];
+                        var array10088 = startAt.getDesignables();
+                        for (var index10087 = 0; index10087 < array10088.length; index10087++) {
+                            var child = array10088[index10087];
                             {
                                 this.visit$framework_builder_editors_Visitor$framework_design_Designable(v, child);
                             }
@@ -11944,6 +12128,14 @@ ui["__class"] = "ui";
                 };
                 VisualEditor.prototype.addNewComponent$framework_design_Designable$framework_design_Designable = function (container, designable) {
                     try {
+                        var name_4 = container.getName();
+                        var count = 0;
+                        while ((framework.designables.DesignableDelegate.containsName$java_lang_String$framework_design_Designable(name_4, designable))) {
+                            count++;
+                            name_4 = container.getName() + "_" + count;
+                        }
+                        ;
+                        container.applyParam("name", name_4);
                         designable.addDesignable(container);
                         container.addEventListener(new framework.builder.SelectComponentEvent(this.selector), "click");
                     }
@@ -12272,9 +12464,9 @@ ui["__class"] = "ui";
                     return;
                 }
                 {
-                    var array7046 = this.getChildren();
-                    for (var index7045 = 0; index7045 < array7046.length; index7045++) {
-                        var child = array7046[index7045];
+                    var array10090 = this.getChildren();
+                    for (var index10089 = 0; index10089 < array10090.length; index10089++) {
+                        var child = array10090[index10089];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -12381,9 +12573,9 @@ ui["__class"] = "ui";
             }
             templates.options.push(new framework.design.Option("Default", "#default"));
             {
-                var array7048 = project.getTemplates();
-                for (var index7047 = 0; index7047 < array7048.length; index7047++) {
-                    var f = array7048[index7047];
+                var array10092 = project.getTemplates();
+                for (var index10091 = 0; index10091 < array10092.length; index10091++) {
+                    var f = array10092[index10091];
                     {
                         templates.options.push(new framework.design.Option(f.getName(), "#" + f.getName().split(".html").join("")));
                     }
@@ -13473,9 +13665,9 @@ ui["__class"] = "ui";
             };
             Builder.prototype.isOpen = function (editorName) {
                 {
-                    var array7050 = this.editorTabs.getItems();
-                    for (var index7049 = 0; index7049 < array7050.length; index7049++) {
-                        var item = array7050[index7049];
+                    var array10094 = this.editorTabs.getItems();
+                    for (var index10093 = 0; index10093 < array10094.length; index10093++) {
+                        var item = array10094[index10093];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -13492,9 +13684,9 @@ ui["__class"] = "ui";
             };
             Builder.prototype.activateEditor = function (editorName) {
                 {
-                    var array7052 = this.editorTabs.getItems();
-                    for (var index7051 = 0; index7051 < array7052.length; index7051++) {
-                        var item = array7052[index7051];
+                    var array10096 = this.editorTabs.getItems();
+                    for (var index10095 = 0; index10095 < array10096.length; index10095++) {
+                        var item = array10096[index10095];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -13665,8 +13857,8 @@ ui["__class"] = "ui";
             Col.prototype.refreshCls = function () {
                 var cls = this.getAttribute("class").split(" ");
                 var ncls = "";
-                for (var index7053 = 0; index7053 < cls.length; index7053++) {
-                    var cl = cls[index7053];
+                for (var index10097 = 0; index10097 < cls.length; index10097++) {
+                    var cl = cls[index10097];
                     {
                         if ((function (str, searchString, position) {
                             if (position === void 0) { position = 0; }
@@ -13779,9 +13971,9 @@ ui["__class"] = "ui";
                 this.currentLayout = layout;
                 this.removeClass(DescriptionList.INLINE).removeClass(DescriptionList.HORIZONTAL);
                 {
-                    var array7055 = this.getChildren();
-                    for (var index7054 = 0; index7054 < array7055.length; index7054++) {
-                        var child = array7055[index7054];
+                    var array10099 = this.getChildren();
+                    for (var index10098 = 0; index10098 < array10099.length; index10098++) {
+                        var child = array10099[index10098];
                         {
                             child.removeClass(DescriptionList.INLINE + "__label").removeClass(DescriptionList.INLINE + "__detail");
                             child.removeClass(DescriptionList.HORIZONTAL + "__label").removeClass(DescriptionList.HORIZONTAL + "__detail");
@@ -14111,8 +14303,8 @@ ui["__class"] = "ui";
                 _this.section.getContent().addChild$framework_JSContainer(_this.options);
                 _this.options.setWrap(true);
                 var items = [_this.newItem, _this.openComputerItem, _this.openUrlItem, _this.openLibrary];
-                for (var index7056 = 0; index7056 < items.length; index7056++) {
-                    var item = items[index7056];
+                for (var index10100 = 0; index10100 < items.length; index10100++) {
+                    var item = items[index10100];
                     {
                         var li = new framework.JSContainer("li");
                         _this.options.addChild$framework_JSContainer(li.addClass("slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1"));
@@ -14466,8 +14658,8 @@ ui["__class"] = "ui";
                     var __args = Array.prototype.slice.call(arguments);
                     {
                         var __args_3 = Array.prototype.slice.call(arguments);
-                        var name_4 = "Button";
-                        _this = _super.call(this, name_4) || this;
+                        var name_5 = "Button";
+                        _this = _super.call(this, name_5) || this;
                         (function () {
                             _this.setTag("button");
                             _this.addClass("slds-button");
@@ -14490,8 +14682,8 @@ ui["__class"] = "ui";
                 return this;
             };
             Button.prototype.setState = function (state) {
-                for (var index7057 = 0; index7057 < Button.states_$LI$().length; index7057++) {
-                    var s = Button.states_$LI$()[index7057];
+                for (var index10101 = 0; index10101 < Button.states_$LI$().length; index10101++) {
+                    var s = Button.states_$LI$()[index10101];
                     {
                         this.removeClass("slds-button_" + s);
                     }
@@ -14723,6 +14915,370 @@ ui["__class"] = "ui";
     })(lightning = framework.lightning || (framework.lightning = {}));
 })(framework || (framework = {}));
 (function (framework) {
+    var lightning;
+    (function (lightning) {
+        var designables;
+        (function (designables) {
+            var JSBuilderTable = (function (_super) {
+                __extends(JSBuilderTable, _super);
+                function JSBuilderTable(name) {
+                    var _this = _super.call(this, name) || this;
+                    /*private*/ _this.delegate = new framework.designables.DesignableDelegate(_this);
+                    /*private*/ _this.tableData = (new Array());
+                    _this.addClass("slds-table_resizable-cols");
+                    _this.setTableCellRenderer(_this);
+                    _this.applyParam("PageSize", "10");
+                    _this.setTableColumnModel(_this);
+                    _this.setModel(_this);
+                    _this.setIdField("Id");
+                    return _this;
+                }
+                JSBuilderTable.prototype.setIdField = function (field) {
+                    this.applyParam("IdField", field);
+                };
+                JSBuilderTable.prototype.getIdField = function () {
+                    return this.getAttribute("IdField");
+                };
+                JSBuilderTable.prototype.getSelectedItems = function () {
+                    var result = (new Array());
+                    for (var index10102 = 0; index10102 < this.tableData.length; index10102++) {
+                        var o = this.tableData[index10102];
+                        {
+                            if (o["selected"] != null && (o["selected"] === true)) {
+                                result.push(o);
+                            }
+                        }
+                    }
+                    return result;
+                };
+                JSBuilderTable.prototype.setSelectedItems = function (items) {
+                    for (var index10103 = 0; index10103 < this.tableData.length; index10103++) {
+                        var item = this.tableData[index10103];
+                        {
+                            item["selected"] = this.isSelected(item, items);
+                        }
+                    }
+                    this.setTableData(this.tableData);
+                };
+                JSBuilderTable.prototype.isSelected = function (item, items) {
+                    var idField = this.getAttribute("IdField");
+                    for (var index10104 = 0; index10104 < items.length; index10104++) {
+                        var o = items[index10104];
+                        {
+                            if ((function (o1, o2) { if (o1 && o1.equals) {
+                                return o1.equals(o2);
+                            }
+                            else {
+                                return o1 === o2;
+                            } })(o[idField], item[idField])) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                };
+                JSBuilderTable.prototype.getComponent$framework_lightning_table_Table$java_lang_Object$int$int = function (table, value, row, column) {
+                    if (value != null && (typeof value === 'boolean')) {
+                        var ch = new framework.lightning.CheckBox("");
+                        ch.setValue$java_lang_Boolean(value);
+                        return ch;
+                    }
+                    var truncate = new framework.JSContainer("div").addClass("slds-truncate");
+                    var s = "";
+                    if (value != null) {
+                        s = value.toString();
+                    }
+                    truncate.setHtml(s).setAttribute("title", s);
+                    var col = this.getColumn(column);
+                    if (col != null && col.isDetailLink()) {
+                        truncate.setTag("a");
+                        truncate.setAttribute("href", "javascript:void(0);");
+                        truncate.addEventListener(new JSBuilderTable.JSBuilderTable$0(this, row), "click");
+                    }
+                    return truncate;
+                };
+                /**
+                 *
+                 * @param {framework.lightning.table.Table} table
+                 * @param {*} value
+                 * @param {number} row
+                 * @param {number} column
+                 * @return {*}
+                 */
+                JSBuilderTable.prototype.getComponent = function (table, value, row, column) {
+                    if (((table != null && table instanceof framework.lightning.table.Table) || table === null) && ((value != null) || value === null) && ((typeof row === 'number') || row === null) && ((typeof column === 'number') || column === null)) {
+                        return this.getComponent$framework_lightning_table_Table$java_lang_Object$int$int(table, value, row, column);
+                    }
+                    else if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                        return this.getComponent$();
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                /**
+                 *
+                 * @param {string} key
+                 * @param {string} value
+                 */
+                JSBuilderTable.prototype.applyParam = function (key, value) {
+                    this.delegate.applyParameter(key, value, true);
+                    var b = (function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })("true", value);
+                    if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "PageSize")) {
+                        this.setPageSize((parseInt(value) | 0));
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "Bordered")) {
+                        this.setBordered(b);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "CellBuffered")) {
+                        this.setCellBuffered(b);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "ColBordered")) {
+                        this.setColBordered(b);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "FixedLayout")) {
+                        this.setFixedLayout(b);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "MultiSelectable")) {
+                        this.setMultiSelectable(b);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "NoRowHover")) {
+                        this.setNoRowHover(b);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "Striped")) {
+                        this.setStriped(b);
+                    }
+                    else if ((function (o1, o2) { if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                    }
+                    else {
+                        return o1 === o2;
+                    } })(key, "ResizableCol")) {
+                        this.setResizableCol(b);
+                    }
+                };
+                JSBuilderTable.prototype.clearColumns = function () {
+                    this.theadRow.clearChildren();
+                    this.theadRow.setRendered(false);
+                };
+                /**
+                 *
+                 * @return {*[]}
+                 */
+                JSBuilderTable.prototype.getDesignables = function () {
+                    var res = this.theadRow.getChildren();
+                    return res;
+                };
+                JSBuilderTable.prototype.getComponent$ = function () {
+                    return this.delegate.getComponent();
+                };
+                /**
+                 *
+                 * @return {framework.design.Parameter[]}
+                 */
+                JSBuilderTable.prototype.getParameters = function () {
+                    var params = this.delegate.getParameters();
+                    var options = new framework.design.AttributeParameter("fields", "Fields", "Extended");
+                    params.push(options);
+                    var boolParams = ["Bordered", "CellBuffered", "ColBordered", "FixedLayout", "NoRowHover", "Striped", "Selectable", "ResizableCol"];
+                    for (var index10105 = 0; index10105 < boolParams.length; index10105++) {
+                        var param = boolParams[index10105];
+                        {
+                            var parameter_1 = new framework.design.AttributeParameter(param, param, "Advanced");
+                            parameter_1.options.push(new framework.design.Option("", ""));
+                            params.push(parameter_1);
+                        }
+                    }
+                    var parameter = new framework.design.AttributeParameter("PageSize", "Page Size", "Basic");
+                    parameter.options.push(new framework.design.Option("5", "5"));
+                    parameter.options.push(new framework.design.Option("10", "10"));
+                    parameter.options.push(new framework.design.Option("15", "15"));
+                    parameter.options.push(new framework.design.Option("20", "20"));
+                    parameter.options.push(new framework.design.Option("30", "30"));
+                    parameter.options.push(new framework.design.Option("50", "50"));
+                    params.push(parameter);
+                    var IdField = new framework.design.AttributeParameter("IdField", "Id Field", "Basic");
+                    params.push(IdField);
+                    return params;
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 */
+                JSBuilderTable.prototype.addDesignable = function (designable) {
+                    if (designable != null && designable instanceof framework.lightning.table.TableColumn) {
+                        this.addColumn(designable);
+                    }
+                    else {
+                        throw new Error("Can only add component of type Table Column in a Table");
+                    }
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 */
+                JSBuilderTable.prototype.removeDesignable = function (designable) {
+                    this.theadRow.removeChild(designable);
+                };
+                /**
+                 *
+                 * @param {*} designable
+                 * @param {number} steps
+                 */
+                JSBuilderTable.prototype.moveDesignable = function (designable, steps) {
+                };
+                /**
+                 *
+                 * @param {framework.lightning.table.TableColumn} aColumn
+                 */
+                JSBuilderTable.prototype.addColumn = function (aColumn) {
+                    this.theadRow.addChild$framework_JSContainer(aColumn);
+                };
+                JSBuilderTable.prototype.setTableData = function (data) {
+                    this.tableData = data;
+                    this.refreshData();
+                };
+                /**
+                 *
+                 * @return {number}
+                 */
+                JSBuilderTable.prototype.getColumnCount = function () {
+                    return this.theadRow.getChildren().length;
+                };
+                /**
+                 *
+                 * @param {*} columnIdentifier
+                 * @return {number}
+                 */
+                JSBuilderTable.prototype.getColumnIndex = function (columnIdentifier) {
+                    return -1;
+                };
+                /**
+                 *
+                 * @param {number} columnIndex
+                 * @return {framework.lightning.table.TableColumn}
+                 */
+                JSBuilderTable.prototype.getColumn = function (columnIndex) {
+                    return this.theadRow.getChildren()[columnIndex];
+                };
+                /**
+                 *
+                 * @return {number}
+                 */
+                JSBuilderTable.prototype.getRowCount = function () {
+                    return this.tableData.length;
+                };
+                /**
+                 *
+                 * @param {number} rowIndex
+                 * @param {number} columnIndex
+                 * @return {boolean}
+                 */
+                JSBuilderTable.prototype.isCellEditable = function (rowIndex, columnIndex) {
+                    return false;
+                };
+                /**
+                 *
+                 * @param {number} rowIndex_
+                 * @param {number} columnIndex_
+                 * @return {*}
+                 */
+                JSBuilderTable.prototype.getValueAt = function (rowIndex_, columnIndex_) {
+                    var rowIndex = rowIndex_;
+                    if (this.tableData.length > rowIndex) {
+                        var line = this.tableData[rowIndex];
+                        if (line != null) {
+                            var col = this.getColumn(columnIndex_);
+                            if (col != null) {
+                                var key = col.getIdentifier();
+                                return line[key];
+                            }
+                        }
+                    }
+                    return "";
+                };
+                /**
+                 *
+                 * @param {*} aValue
+                 * @param {number} rowIndex
+                 * @param {number} columnIndex
+                 */
+                JSBuilderTable.prototype.setValueAt = function (aValue, rowIndex, columnIndex) {
+                };
+                return JSBuilderTable;
+            }(framework.lightning.table.Table));
+            designables.JSBuilderTable = JSBuilderTable;
+            JSBuilderTable["__class"] = "framework.lightning.designables.JSBuilderTable";
+            JSBuilderTable["__interfaces"] = ["framework.lightning.table.TableModel", "framework.MouseEventAble", "framework.DndAble", "framework.interactions.Droppable", "framework.lightning.table.TableColumnModel", "framework.lightning.table.TableCellRenderer", "framework.design.Designable", "framework.Renderable"];
+            (function (JSBuilderTable) {
+                var JSBuilderTable$0 = (function () {
+                    function JSBuilderTable$0(__parent, row) {
+                        this.row = row;
+                        this.__parent = __parent;
+                    }
+                    /**
+                     *
+                     * @param {framework.JSContainer} source
+                     * @param {Event} evt
+                     */
+                    JSBuilderTable$0.prototype.performAction = function (source, evt) {
+                        evt["row"] = this.__parent.tableData[this.row];
+                        evt["data"] = this.__parent.tableData[this.row];
+                        this.__parent.fireListener("showDetail", evt);
+                    };
+                    return JSBuilderTable$0;
+                }());
+                JSBuilderTable.JSBuilderTable$0 = JSBuilderTable$0;
+                JSBuilderTable$0["__interfaces"] = ["framework.EventListener"];
+            })(JSBuilderTable = designables.JSBuilderTable || (designables.JSBuilderTable = {}));
+        })(designables = lightning.designables || (lightning.designables = {}));
+    })(lightning = framework.lightning || (framework.lightning = {}));
+})(framework || (framework = {}));
+(function (framework) {
     var builder;
     (function (builder) {
         var ComponentsTabs = (function (_super) {
@@ -14839,9 +15395,20 @@ ui["__class"] = "ui";
                 };
                 /**
                  *
-                 * @return {framework.builder.marshalling.Component}
+                 * @param {framework.lightning.table.Table} table
+                 * @param {*} value
+                 * @param {number} row
+                 * @param {number} column
+                 * @return {*}
                  */
-                JSDesignableTabs.prototype.getComponent = function () {
+                JSDesignableTabs.prototype.getComponent = function (table, value, row, column) {
+                    if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                        return this.getComponent$();
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                JSDesignableTabs.prototype.getComponent$ = function () {
                     return this.delegate.getComponent();
                 };
                 /**
@@ -14938,9 +15505,20 @@ ui["__class"] = "ui";
             };
             /**
              *
-             * @return {framework.builder.marshalling.Component}
+             * @param {framework.lightning.table.Table} table
+             * @param {*} value
+             * @param {number} row
+             * @param {number} column
+             * @return {*}
              */
-            JSDesignableTextComponent.prototype.getComponent = function () {
+            JSDesignableTextComponent.prototype.getComponent = function (table, value, row, column) {
+                if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                    return this.getComponent$();
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            JSDesignableTextComponent.prototype.getComponent$ = function () {
                 return this.delegate.getComponent();
             };
             /**
@@ -14952,9 +15530,9 @@ ui["__class"] = "ui";
                 var textParam = new framework.design.TextParameter("text", "Text", "Basic");
                 var tagParam = new framework.design.TagParameter();
                 {
-                    var array7059 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
-                    for (var index7058 = 0; index7058 < array7059.length; index7058++) {
-                        var key = array7059[index7058];
+                    var array10107 = Object.keys(JSDesignableTextComponent.textTags_$LI$());
+                    for (var index10106 = 0; index10106 < array10107.length; index10106++) {
+                        var key = array10107[index10106];
                         {
                             tagParam.options.push(new framework.design.Option(JSDesignableTextComponent.textTags_$LI$()[key], key));
                         }
@@ -15228,8 +15806,8 @@ ui["__class"] = "ui";
                     if (parent != null) {
                         var children = parent.getDesignables();
                         var currentIndex = children.indexOf(this.designable);
-                        for (var index7060 = 0; index7060 < children.length; index7060++) {
-                            var child = children[index7060];
+                        for (var index10108 = 0; index10108 < children.length; index10108++) {
+                            var child = children[index10108];
                             {
                                 parent.removeDesignable(child);
                             }
@@ -15255,8 +15833,8 @@ ui["__class"] = "ui";
                         ;
                         var editor = (this.getAncestorWithClass("visual-editor"));
                         editor.persist = true;
-                        for (var index7061 = 0; index7061 < result.length; index7061++) {
-                            var child = result[index7061];
+                        for (var index10109 = 0; index10109 < result.length; index10109++) {
+                            var child = result[index10109];
                             {
                                 editor.addNewComponent$framework_design_Designable$framework_design_Designable(child, parent);
                             }
@@ -15553,8 +16131,8 @@ ui["__class"] = "ui";
                 TypeTreeItem.prototype.deleteMe = function () {
                     var tys = JSON.parse(this.types.getData());
                     var res = (new Array());
-                    for (var index7062 = 0; index7062 < tys.length; index7062++) {
-                        var o = tys[index7062];
+                    for (var index10110 = 0; index10110 < tys.length; index10110++) {
+                        var o = tys[index10110];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -15731,8 +16309,8 @@ ui["__class"] = "ui";
                     var ob = response;
                     var fields = ob["fields"];
                     var tmp = (new Array());
-                    for (var index7063 = 0; index7063 < fields.length; index7063++) {
-                        var field = fields[index7063];
+                    for (var index10111 = 0; index10111 < fields.length; index10111++) {
+                        var field = fields[index10111];
                         {
                             var type = field["type"];
                             if (!(function (o1, o2) { if (o1 && o1.equals) {
@@ -16370,8 +16948,8 @@ ui["__class"] = "ui";
                     var value = designable.getAttribute(attr);
                     this.clearChildren();
                     this.setRendered(false);
-                    for (var index7064 = 0; index7064 < parameter.options.length; index7064++) {
-                        var opt = parameter.options[index7064];
+                    for (var index10112 = 0; index10112 < parameter.options.length; index10112++) {
+                        var opt = parameter.options[index10112];
                         {
                             this.addOption(new framework.JSOption(opt.text, opt.value));
                         }
@@ -16543,9 +17121,9 @@ ui["__class"] = "ui";
                     var value = "";
                     var select = designable;
                     {
-                        var array7066 = select.getChildren();
-                        for (var index7065 = 0; index7065 < array7066.length; index7065++) {
-                            var c = array7066[index7065];
+                        var array10114 = select.getChildren();
+                        for (var index10113 = 0; index10113 < array10114.length; index10113++) {
+                            var c = array10114[index10113];
                             {
                                 var opt = c;
                                 value = value + "\n" + opt.getText();
@@ -16565,8 +17143,8 @@ ui["__class"] = "ui";
                     var select = this.designable;
                     select.clearChildren();
                     select.setRendered(false);
-                    for (var index7067 = 0; index7067 < options.length; index7067++) {
-                        var opt = options[index7067];
+                    for (var index10115 = 0; index10115 < options.length; index10115++) {
+                        var opt = options[index10115];
                         {
                             var option = new framework.JSOption(opt, opt);
                             select.addOption(option);
@@ -16677,9 +17255,20 @@ ui["__class"] = "ui";
             };
             /**
              *
-             * @return {framework.builder.marshalling.Component}
+             * @param {framework.lightning.table.Table} table
+             * @param {*} value
+             * @param {number} row
+             * @param {number} column
+             * @return {*}
              */
-            JSDesignableDataProvider.prototype.getComponent = function () {
+            JSDesignableDataProvider.prototype.getComponent = function (table, value, row, column) {
+                if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                    return this.getComponent$();
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            JSDesignableDataProvider.prototype.getComponent$ = function () {
                 return this.delegate.getComponent();
             };
             /**
@@ -16744,9 +17333,20 @@ ui["__class"] = "ui";
                 };
                 /**
                  *
-                 * @return {framework.builder.marshalling.Component}
+                 * @param {framework.lightning.table.Table} table
+                 * @param {*} value
+                 * @param {number} row
+                 * @param {number} column
+                 * @return {*}
                  */
-                JSDesignableObjectType.prototype.getComponent = function () {
+                JSDesignableObjectType.prototype.getComponent = function (table, value, row, column) {
+                    if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                        return this.getComponent$();
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                JSDesignableObjectType.prototype.getComponent$ = function () {
                     return this.delegate.getComponent();
                 };
                 /**
@@ -16803,8 +17403,8 @@ ui["__class"] = "ui";
                 for (var _i = 0; _i < arguments.length; _i++) {
                     components[_i] = arguments[_i];
                 }
-                for (var index7068 = 0; index7068 < components.length; index7068++) {
-                    var com = components[index7068];
+                for (var index10116 = 0; index10116 < components.length; index10116++) {
+                    var com = components[index10116];
                     {
                         var li = new framework.JSContainer("li").addClass("slds-p-horizontal_small slds-size_1-of-2");
                         this.addChild$framework_JSContainer(li);
@@ -17818,8 +18418,8 @@ ui["__class"] = "ui";
             };
             OpenProject.prototype.dataLoaded$java_lang_Object = function (data) {
                 var nprojects = data;
-                for (var index7069 = 0; index7069 < nprojects.length; index7069++) {
-                    var p = nprojects[index7069];
+                for (var index10117 = 0; index10117 < nprojects.length; index10117++) {
+                    var p = nprojects[index10117];
                     {
                         var project = new framework.builder.data.File(p);
                         var file = new framework.builder.UIFile(project.getName());
@@ -18227,9 +18827,20 @@ ui["__class"] = "ui";
             };
             /**
              *
-             * @return {framework.builder.marshalling.Component}
+             * @param {framework.lightning.table.Table} table
+             * @param {*} value
+             * @param {number} row
+             * @param {number} column
+             * @return {*}
              */
-            JSDesignableButton.prototype.getComponent = function () {
+            JSDesignableButton.prototype.getComponent = function (table, value, row, column) {
+                if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                    return this.getComponent$();
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            JSDesignableButton.prototype.getComponent$ = function () {
                 return this.delegate.getComponent();
             };
             /**
@@ -18284,8 +18895,8 @@ ui["__class"] = "ui";
             JSDesignableLink.prototype.getParameters = function () {
                 var parameters = _super.prototype.getParameters.call(this);
                 var result = (new Array());
-                for (var index7070 = 0; index7070 < parameters.length; index7070++) {
-                    var p = parameters[index7070];
+                for (var index10118 = 0; index10118 < parameters.length; index10118++) {
+                    var p = parameters[index10118];
                     {
                         if (p != null && p instanceof framework.design.TagParameter) {
                         }
@@ -18338,9 +18949,9 @@ ui["__class"] = "ui";
                         project = framework.builder.Previewer.project;
                     }
                     {
-                        var array7072 = project.getChild("components").getChildren();
-                        for (var index7071 = 0; index7071 < array7072.length; index7071++) {
-                            var f = array7072[index7071];
+                        var array10120 = project.getChild("components").getChildren();
+                        for (var index10119 = 0; index10119 < array10120.length; index10119++) {
+                            var f = array10120[index10119];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -18351,9 +18962,9 @@ ui["__class"] = "ui";
                                     this.content = framework.builder.marshalling.MarshallUtil.build(f.getData());
                                     this.addChild$framework_JSContainer(this.content);
                                     {
-                                        var array7074 = f.getStylesheets();
-                                        for (var index7073 = 0; index7073 < array7074.length; index7073++) {
-                                            var sc = array7074[index7073];
+                                        var array10122 = f.getStylesheets();
+                                        for (var index10121 = 0; index10121 < array10122.length; index10121++) {
+                                            var sc = array10122[index10121];
                                             {
                                                 var elem = document.createElement("style");
                                                 elem.textContent = sc.getData();
@@ -18362,9 +18973,9 @@ ui["__class"] = "ui";
                                         }
                                     }
                                     {
-                                        var array7076 = f.getScripts();
-                                        for (var index7075 = 0; index7075 < array7076.length; index7075++) {
-                                            var sc = array7076[index7075];
+                                        var array10124 = f.getScripts();
+                                        for (var index10123 = 0; index10123 < array10124.length; index10123++) {
+                                            var sc = array10124[index10123];
                                             {
                                                 var elem = document.createElement("script");
                                                 elem.textContent = sc.getData();
@@ -18373,9 +18984,9 @@ ui["__class"] = "ui";
                                         }
                                     }
                                     {
-                                        var array7078 = f.getTemplates();
-                                        for (var index7077 = 0; index7077 < array7078.length; index7077++) {
-                                            var sc = array7078[index7077];
+                                        var array10126 = f.getTemplates();
+                                        for (var index10125 = 0; index10125 < array10126.length; index10125++) {
+                                            var sc = array10126[index10125];
                                             {
                                                 var elem = document.createElement("div");
                                                 elem.setAttribute("id", sc.getName());
@@ -18436,9 +19047,9 @@ ui["__class"] = "ui";
                 var project = framework.builder.Builder.getInstance().getProject();
                 component.options.push(new framework.design.Option("None", ""));
                 {
-                    var array7080 = project.getChild("components").getChildren();
-                    for (var index7079 = 0; index7079 < array7080.length; index7079++) {
-                        var f = array7080[index7079];
+                    var array10128 = project.getChild("components").getChildren();
+                    for (var index10127 = 0; index10127 < array10128.length; index10127++) {
+                        var f = array10128[index10127];
                         {
                             component.options.push(new framework.design.Option(f.getName(), f.getName()));
                         }
@@ -18666,9 +19277,20 @@ ui["__class"] = "ui";
                 };
                 /**
                  *
-                 * @return {framework.builder.marshalling.Component}
+                 * @param {framework.lightning.table.Table} table
+                 * @param {*} value
+                 * @param {number} row
+                 * @param {number} column
+                 * @return {*}
                  */
-                JSDesignableFormElement.prototype.getComponent = function () {
+                JSDesignableFormElement.prototype.getComponent = function (table, value, row, column) {
+                    if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                        return this.getComponent$();
+                    }
+                    else
+                        throw new Error('invalid overload');
+                };
+                JSDesignableFormElement.prototype.getComponent$ = function () {
                     return _super.prototype.getComponent.call(this);
                 };
                 JSDesignableFormElement.prototype.validate = function () {
@@ -19057,6 +19679,7 @@ ui["__class"] = "ui";
                     _this.addComponents(new framework.builder.Component("lgt:combobox", "CMBO", "Lightning Combo Box"));
                     _this.addComponents(new framework.builder.Component("lgt:lookup", "LKUP", "Lightning Lookup"));
                     _this.addComponents(new framework.builder.Component("lgt:table", "TABLE", "Data Table"));
+                    _this.addComponents(new framework.builder.Component("lgt:table-column", "TABLE-COL", "Table Column"));
                     _this.addComponents(new framework.builder.Component("zs:iterator", "ITER", "Iterator"));
                     return _this;
                 }
@@ -19146,9 +19769,9 @@ ui["__class"] = "ui";
                         this.clearChildren();
                         this.setRendered(false);
                         {
-                            var array7082 = Object.keys(o);
-                            for (var index7081 = 0; index7081 < array7082.length; index7081++) {
-                                var val = array7082[index7081];
+                            var array10130 = Object.keys(o);
+                            for (var index10129 = 0; index10129 < array10130.length; index10129++) {
+                                var val = array10130[index10129];
                                 {
                                     var txt = o[val];
                                     this.addOption(new framework.JSOption(txt, val));
@@ -19188,9 +19811,20 @@ ui["__class"] = "ui";
             };
             /**
              *
-             * @return {framework.builder.marshalling.Component}
+             * @param {framework.lightning.table.Table} table
+             * @param {*} value
+             * @param {number} row
+             * @param {number} column
+             * @return {*}
              */
-            JSDesignableSelect.prototype.getComponent = function () {
+            JSDesignableSelect.prototype.getComponent = function (table, value, row, column) {
+                if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                    return this.getComponent$();
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            JSDesignableSelect.prototype.getComponent$ = function () {
                 return this.delegate.getComponent();
             };
             /**
@@ -19340,9 +19974,9 @@ ui["__class"] = "ui";
                     this.setRendered(false);
                     var options = JSON.parse(value);
                     {
-                        var array7084 = Object.keys(options);
-                        for (var index7083 = 0; index7083 < array7084.length; index7083++) {
-                            var optval = array7084[index7083];
+                        var array10132 = Object.keys(options);
+                        for (var index10131 = 0; index10131 < array10132.length; index10131++) {
+                            var optval = array10132[index10131];
                             {
                                 var checkbox = new framework.lightning.CheckBox(optval);
                                 checkbox.setLabel(options[optval]);
@@ -19361,9 +19995,20 @@ ui["__class"] = "ui";
             };
             /**
              *
-             * @return {framework.builder.marshalling.Component}
+             * @param {framework.lightning.table.Table} table
+             * @param {*} value
+             * @param {number} row
+             * @param {number} column
+             * @return {*}
              */
-            CheckBoxGroup.prototype.getComponent = function () {
+            CheckBoxGroup.prototype.getComponent = function (table, value, row, column) {
+                if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                    return this.getComponent$();
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            CheckBoxGroup.prototype.getComponent$ = function () {
                 return this.delegate.getComponent();
             };
             /**
@@ -19387,8 +20032,8 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.setOptions = function (options) {
                 this.clearChildren();
-                for (var index7085 = 0; index7085 < options.length; index7085++) {
-                    var opt = options[index7085];
+                for (var index10133 = 0; index10133 < options.length; index10133++) {
+                    var opt = options[index10133];
                     {
                         this.addOption(opt);
                     }
@@ -19425,9 +20070,9 @@ ui["__class"] = "ui";
             CheckBoxGroup.prototype.getValue = function () {
                 var result = (new Array());
                 {
-                    var array7087 = this.getChildren();
-                    for (var index7086 = 0; index7086 < array7087.length; index7086++) {
-                        var child = array7087[index7086];
+                    var array10135 = this.getChildren();
+                    for (var index10134 = 0; index10134 < array10135.length; index10134++) {
+                        var child = array10135[index10134];
                         {
                             var cb = child;
                             if (cb.getValue() === true) {
@@ -19440,13 +20085,13 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.setValue$jsweet_lang_Array = function (val) {
                 this.clearAll();
-                for (var index7088 = 0; index7088 < val.length; index7088++) {
-                    var s = val[index7088];
+                for (var index10136 = 0; index10136 < val.length; index10136++) {
+                    var s = val[index10136];
                     {
                         {
-                            var array7090 = this.getChildren();
-                            for (var index7089 = 0; index7089 < array7090.length; index7089++) {
-                                var child = array7090[index7089];
+                            var array10138 = this.getChildren();
+                            for (var index10137 = 0; index10137 < array10138.length; index10137++) {
+                                var child = array10138[index10137];
                                 {
                                     var cb = child;
                                     if ((function (o1, o2) { if (o1 && o1.equals) {
@@ -19476,9 +20121,9 @@ ui["__class"] = "ui";
             };
             CheckBoxGroup.prototype.clearAll = function () {
                 {
-                    var array7092 = this.getChildren();
-                    for (var index7091 = 0; index7091 < array7092.length; index7091++) {
-                        var child = array7092[index7091];
+                    var array10140 = this.getChildren();
+                    for (var index10139 = 0; index10139 < array10140.length; index10139++) {
+                        var child = array10140[index10139];
                         {
                             var cb = child;
                             cb.setValue$java_lang_Boolean(false);
@@ -19664,9 +20309,9 @@ ui["__class"] = "ui";
                         this.clearOptions();
                         this.setRendered(false);
                         {
-                            var array7094 = Object.keys(o);
-                            for (var index7093 = 0; index7093 < array7094.length; index7093++) {
-                                var val = array7094[index7093];
+                            var array10142 = Object.keys(o);
+                            for (var index10141 = 0; index10141 < array10142.length; index10141++) {
+                                var val = array10142[index10141];
                                 {
                                     var txt = o[val];
                                     var option = new Object();
@@ -19697,8 +20342,8 @@ ui["__class"] = "ui";
             };
             ComboBox.prototype.setData$jsweet_lang_Array = function (options) {
                 this.clearOptions();
-                for (var index7095 = 0; index7095 < options.length; index7095++) {
-                    var o = options[index7095];
+                for (var index10143 = 0; index10143 < options.length; index10143++) {
+                    var o = options[index10143];
                     {
                         this.addOption(o);
                     }
@@ -19730,9 +20375,20 @@ ui["__class"] = "ui";
             };
             /**
              *
-             * @return {framework.builder.marshalling.Component}
+             * @param {framework.lightning.table.Table} table
+             * @param {*} value
+             * @param {number} row
+             * @param {number} column
+             * @return {*}
              */
-            ComboBox.prototype.getComponent = function () {
+            ComboBox.prototype.getComponent = function (table, value, row, column) {
+                if (table === undefined && value === undefined && row === undefined && column === undefined) {
+                    return this.getComponent$();
+                }
+                else
+                    throw new Error('invalid overload');
+            };
+            ComboBox.prototype.getComponent$ = function () {
                 return this.delegate.getComponent();
             };
             /**
@@ -19953,10 +20609,6 @@ ui["__class"] = "ui";
                     /*private*/ _this.selected = (new Array());
                     /*private*/ _this.selectable = false;
                     _this.setTableCellRenderer(_this);
-                    for (var i = 1; i <= 5; i++) {
-                        _this.addColumn(new framework.lightning.table.TableColumn("field" + i, "field" + i, "Field " + i));
-                    }
-                    ;
                     _this.applyParam("PageSize", "10");
                     _this.setTableColumnModel(_this);
                     _this.refreshColumns();
@@ -19976,8 +20628,8 @@ ui["__class"] = "ui";
                 };
                 JSDesignableTable.prototype.getSelectedItems = function () {
                     var result = (new Array());
-                    for (var index7096 = 0; index7096 < this.tableData.length; index7096++) {
-                        var o = this.tableData[index7096];
+                    for (var index10144 = 0; index10144 < this.tableData.length; index10144++) {
+                        var o = this.tableData[index10144];
                         {
                             if (o["selected"] != null && (o["selected"] === true)) {
                                 result.push(o);
@@ -19989,8 +20641,8 @@ ui["__class"] = "ui";
                 };
                 JSDesignableTable.prototype.setSelectedItems = function (items) {
                     this.selected = items;
-                    for (var index7097 = 0; index7097 < this.tableData.length; index7097++) {
-                        var item = this.tableData[index7097];
+                    for (var index10145 = 0; index10145 < this.tableData.length; index10145++) {
+                        var item = this.tableData[index10145];
                         {
                             item["selected"] = this.isSelected(item, items);
                         }
@@ -19999,8 +20651,8 @@ ui["__class"] = "ui";
                 };
                 JSDesignableTable.prototype.isSelected = function (item, items) {
                     var idField = this.getAttribute("IdField");
-                    for (var index7098 = 0; index7098 < items.length; index7098++) {
-                        var o = items[index7098];
+                    for (var index10146 = 0; index10146 < items.length; index10146++) {
+                        var o = items[index10146];
                         {
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
@@ -20083,9 +20735,9 @@ ui["__class"] = "ui";
                         if (value != null) {
                             var o = JSON.parse(value);
                             {
-                                var array7100 = Object.keys(o);
-                                for (var index7099 = 0; index7099 < array7100.length; index7099++) {
-                                    var val = array7100[index7099];
+                                var array10148 = Object.keys(o);
+                                for (var index10147 = 0; index10147 < array10148.length; index10147++) {
+                                    var val = array10148[index10147];
                                     {
                                         var txt = o[val];
                                         var col = new framework.lightning.table.TableColumn(val, val, txt);
@@ -20185,7 +20837,8 @@ ui["__class"] = "ui";
                  * @return {*[]}
                  */
                 JSDesignableTable.prototype.getDesignables = function () {
-                    return (new Array());
+                    var res = this.theadRow.getChildren();
+                    return res;
                 };
                 JSDesignableTable.prototype.getComponent$ = function () {
                     return this.delegate.getComponent();
@@ -20199,12 +20852,12 @@ ui["__class"] = "ui";
                     var options = new framework.design.AttributeParameter("fields", "Fields", "Extended");
                     params.push(options);
                     var boolParams = ["Bordered", "CellBuffered", "ColBordered", "FixedLayout", "NoRowHover", "Striped", "Selectable", "ResizableCol"];
-                    for (var index7101 = 0; index7101 < boolParams.length; index7101++) {
-                        var param = boolParams[index7101];
+                    for (var index10149 = 0; index10149 < boolParams.length; index10149++) {
+                        var param = boolParams[index10149];
                         {
-                            var parameter_1 = new framework.design.AttributeParameter(param, param, "Advanced");
-                            parameter_1.options.push(new framework.design.Option("", ""));
-                            params.push(parameter_1);
+                            var parameter_2 = new framework.design.AttributeParameter(param, param, "Advanced");
+                            parameter_2.options.push(new framework.design.Option("", ""));
+                            params.push(parameter_2);
                         }
                     }
                     var parameter = new framework.design.AttributeParameter("PageSize", "Page Size", "Basic");
@@ -20224,12 +20877,34 @@ ui["__class"] = "ui";
                  * @param {*} designable
                  */
                 JSDesignableTable.prototype.addDesignable = function (designable) {
+                    if (designable != null && designable instanceof framework.lightning.table.TableColumn) {
+                        this.addColumn(designable);
+                    }
+                    else {
+                        throw new Error("Can only add component of type Table Column in a Table");
+                    }
                 };
                 /**
                  *
                  * @param {*} designable
                  */
                 JSDesignableTable.prototype.removeDesignable = function (designable) {
+                    var tmp = (new Array());
+                    for (var index10150 = 0; index10150 < this.fields.length; index10150++) {
+                        var tc = this.fields[index10150];
+                        {
+                            if (!(function (o1, o2) { if (o1 && o1.equals) {
+                                return o1.equals(o2);
+                            }
+                            else {
+                                return o1 === o2;
+                            } })(tc, designable)) {
+                                tmp.push(tc);
+                            }
+                        }
+                    }
+                    this.fields = tmp;
+                    this.refreshColumns();
                 };
                 /**
                  *
@@ -20371,6 +21046,9 @@ ui["__class"] = "ui";
                  */
                 JSDesignableTable.prototype.setValueAt = function (aValue, rowIndex, columnIndex) {
                 };
+                JSDesignableTable.prototype.prepare = function () {
+                    this.fields = (new Array());
+                };
                 return JSDesignableTable;
             }(framework.lightning.table.Table));
             designables.JSDesignableTable = JSDesignableTable;
@@ -20496,9 +21174,9 @@ ui["__class"] = "ui";
             FormLayout.prototype.setSpacing = function (spacing) {
                 this.currentSpacing = spacing;
                 {
-                    var array7103 = this.getChildren();
-                    for (var index7102 = 0; index7102 < array7103.length; index7102++) {
-                        var container = array7103[index7102];
+                    var array10152 = this.getChildren();
+                    for (var index10151 = 0; index10151 < array10152.length; index10151++) {
+                        var container = array10152[index10151];
                         {
                             var lt = container;
                             lt.setPaddingBottom(spacing).setPaddingLeft(spacing).setPaddingRight(spacing).setPaddingTop(spacing);
@@ -20684,9 +21362,9 @@ ui["__class"] = "ui";
                     var customs = des.getComponent().custom;
                     this.customComponents.clearComponent();
                     {
-                        var array7105 = Object.keys(customs);
-                        for (var index7104 = 0; index7104 < array7105.length; index7104++) {
-                            var s = array7105[index7104];
+                        var array10154 = Object.keys(customs);
+                        for (var index10153 = 0; index10153 < array10154.length; index10153++) {
+                            var s = array10154[index10153];
                             {
                                 this.customComponents.addComponents(new framework.builder.Component("html:cmp", customs[s], s));
                             }
@@ -20742,8 +21420,8 @@ ui["__class"] = "ui";
                     if (designable != null && (designable["__interfaces"] != null && designable["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0 || designable.constructor != null && designable.constructor["__interfaces"] != null && designable.constructor["__interfaces"].indexOf("framework.design.ExtDesignable") >= 0)) {
                         var editors_1 = designable.getExtEditors();
                         if (editors_1 != null && editors_1.length > 0) {
-                            for (var index7106 = 0; index7106 < editors_1.length; index7106++) {
-                                var e = editors_1[index7106];
+                            for (var index10155 = 0; index10155 < editors_1.length; index10155++) {
+                                var e = editors_1[index10155];
                                 {
                                     e.setComponent(designable);
                                     this.mainEditor.addItem$java_lang_String$framework_builder_properties_PropertiesEditor(e.getLabel(designable), e).setActive(false);
@@ -20896,8 +21574,8 @@ ui["__class"] = "ui";
                     var __args = Array.prototype.slice.call(arguments);
                     {
                         var __args_4 = Array.prototype.slice.call(arguments);
-                        var name_5 = "item";
-                        _this = _super.call(this, name_5) || this;
+                        var name_6 = "item";
+                        _this = _super.call(this, name_6) || this;
                         (function () {
                             _this.setAttribute("identifier", "lgt:popover-footer-item");
                             _this.applyParam("state", framework.lightning.Button.STATE_RESET);
@@ -21087,25 +21765,25 @@ ui["__class"] = "ui";
                     return _super.call(this, name) || this;
                 }
                 DynaForm.prototype.setFields = function (fields) {
-                    for (var index7107 = 0; index7107 < fields.length; index7107++) {
-                        var o = fields[index7107];
+                    for (var index10156 = 0; index10156 < fields.length; index10156++) {
+                        var o = fields[index10156];
                         {
-                            var name_6 = o["name"];
+                            var name_7 = o["name"];
                             var type = o["type"];
                             var label = o["label"];
-                            var element = new framework.lightning.FormElement("elem_" + name_6, "div");
+                            var element = new framework.lightning.FormElement("elem_" + name_7, "div");
                             element.setLabel(label);
-                            var input = new framework.JSInput(name_6);
+                            var input = new framework.JSInput(name_7);
                             if (type == null || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type.trim(), "") || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "string") || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "text")) {
                             }
                             else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "integer") || (function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "numeric")) {
-                                input = new framework.JSInput(name_6).setType(framework.InputTypes.number);
+                                input = new framework.JSInput(name_7).setType(framework.InputTypes.number);
                             }
                             else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "select")) {
                                 var options = o["options"];
-                                var select = new framework.JSSelect(name_6);
-                                for (var index7108 = 0; index7108 < options.length; index7108++) {
-                                    var opt = options[index7108];
+                                var select = new framework.JSSelect(name_7);
+                                for (var index10157 = 0; index10157 < options.length; index10157++) {
+                                    var opt = options[index10157];
                                     {
                                         var text = opt["text"];
                                         var value = opt["value"];
@@ -21115,7 +21793,7 @@ ui["__class"] = "ui";
                                 input = select;
                             }
                             else if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(type, "multi")) {
-                                var multi = new framework.builder.data.MultiForm(name_6);
+                                var multi = new framework.builder.data.MultiForm(name_7);
                                 var options = o["options"];
                                 multi.setConfigs(options);
                                 input = multi;
@@ -21133,9 +21811,9 @@ ui["__class"] = "ui";
                 DynaForm.prototype.getValue = function () {
                     var result = new Object();
                     {
-                        var array7110 = this.getElements();
-                        for (var index7109 = 0; index7109 < array7110.length; index7109++) {
-                            var element = array7110[index7109];
+                        var array10159 = this.getElements();
+                        for (var index10158 = 0; index10158 < array10159.length; index10158++) {
+                            var element = array10159[index10158];
                             {
                                 var value = element.getInput().getValue();
                                 result[element.getInput().getName()] = value;
@@ -21146,13 +21824,13 @@ ui["__class"] = "ui";
                 };
                 DynaForm.prototype.setValue$jsweet_lang_Object = function (val) {
                     {
-                        var array7112 = this.getElements();
-                        for (var index7111 = 0; index7111 < array7112.length; index7111++) {
-                            var element = array7112[index7111];
+                        var array10161 = this.getElements();
+                        for (var index10160 = 0; index10160 < array10161.length; index10160++) {
+                            var element = array10161[index10160];
                             {
-                                var name_7 = element.getInput().getName();
-                                if (val[name_7] != null) {
-                                    var o = val[name_7];
+                                var name_8 = element.getInput().getName();
+                                if (val[name_8] != null) {
+                                    var o = val[name_8];
                                     var __in = element.getInput();
                                     __in.setValue(o);
                                 }
@@ -21310,9 +21988,9 @@ ui["__class"] = "ui";
                 JSDesignableFormLayout.prototype.setData$jsweet_lang_Object = function (data) {
                     this.data = data;
                     {
-                        var array7114 = Object.keys(data);
-                        for (var index7113 = 0; index7113 < array7114.length; index7113++) {
-                            var key = array7114[index7113];
+                        var array10163 = Object.keys(data);
+                        for (var index10162 = 0; index10162 < array10163.length; index10162++) {
+                            var key = array10163[index10162];
                             {
                                 var o = data[key];
                                 var element = this.getElement(key);
@@ -21326,9 +22004,9 @@ ui["__class"] = "ui";
                 };
                 JSDesignableFormLayout.prototype.updateData = function () {
                     {
-                        var array7116 = this.getElements();
-                        for (var index7115 = 0; index7115 < array7116.length; index7115++) {
-                            var element = array7116[index7115];
+                        var array10165 = this.getElements();
+                        for (var index10164 = 0; index10164 < array10165.length; index10164++) {
+                            var element = array10165[index10164];
                             {
                                 var key = element.getName();
                                 var value = element.getInput().getValue();
@@ -21380,9 +22058,9 @@ ui["__class"] = "ui";
                  */
                 JSDesignableFormLayout.prototype.removeDesignable = function (designable) {
                     {
-                        var array7118 = this.getElements();
-                        for (var index7117 = 0; index7117 < array7118.length; index7117++) {
-                            var element = array7118[index7117];
+                        var array10167 = this.getElements();
+                        for (var index10166 = 0; index10166 < array10167.length; index10166++) {
+                            var element = array10167[index10166];
                             {
                                 var b = (element != null && element instanceof framework.lightning.designables.JSDesignableFormElement);
                                 if (b) {
@@ -21420,9 +22098,9 @@ ui["__class"] = "ui";
                  */
                 JSDesignableFormLayout.prototype.moveDesignable = function (designable, steps) {
                     {
-                        var array7120 = this.getElements();
-                        for (var index7119 = 0; index7119 < array7120.length; index7119++) {
-                            var element = array7120[index7119];
+                        var array10169 = this.getElements();
+                        for (var index10168 = 0; index10168 < array10169.length; index10168++) {
+                            var element = array10169[index10168];
                             {
                                 var b = (element != null && element instanceof framework.lightning.designables.JSDesignableFormElement);
                                 if (b) {
@@ -21481,12 +22159,12 @@ ui["__class"] = "ui";
                 }
                 CrudTable.prototype.setFields = function (fields) {
                     this.configs["fields"] = fields;
-                    for (var index7121 = 0; index7121 < fields.length; index7121++) {
-                        var field = fields[index7121];
+                    for (var index10170 = 0; index10170 < fields.length; index10170++) {
+                        var field = fields[index10170];
                         {
-                            var name_8 = field["name"];
+                            var name_9 = field["name"];
                             var label = field["label"];
-                            var col = new framework.lightning.table.TableColumn(name_8, name_8, label);
+                            var col = new framework.lightning.table.TableColumn(name_9, name_9, label);
                             this.list.getTableColumnModel().addColumn(col);
                         }
                     }
@@ -21620,13 +22298,13 @@ ui["__class"] = "ui";
                 }
                 MultiForm.prototype.setConfigs = function (fields) {
                     var count = 0;
-                    for (var index7122 = 0; index7122 < fields.length; index7122++) {
-                        var opt = fields[index7122];
+                    for (var index10171 = 0; index10171 < fields.length; index10171++) {
+                        var opt = fields[index10171];
                         {
-                            var name_9 = opt["name"];
+                            var name_10 = opt["name"];
                             var label = opt["label"];
-                            this.select.addOption(new framework.JSOption(label, name_9));
-                            var form = new framework.builder.data.DynaForm(name_9);
+                            this.select.addOption(new framework.JSOption(label, name_10));
+                            var form = new framework.builder.data.DynaForm(name_10);
                             var options = opt["options"];
                             if (options == null) {
                                 options = opt["fields"];
@@ -21636,7 +22314,7 @@ ui["__class"] = "ui";
                             this.addSection(s);
                             form.setFields(options);
                             s.setVisible(count === 0);
-                            this.map.put(name_9, s);
+                            this.map.put(name_10, s);
                             count++;
                         }
                     }
@@ -21654,18 +22332,18 @@ ui["__class"] = "ui";
                     var type = this.select.getValue();
                     result["type"] = type;
                     {
-                        var array7124 = this.map.keySet();
-                        for (var index7123 = 0; index7123 < array7124.length; index7123++) {
-                            var name_10 = array7124[index7123];
+                        var array10173 = this.map.keySet();
+                        for (var index10172 = 0; index10172 < array10173.length; index10172++) {
+                            var name_11 = array10173[index10172];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
                                 }
                                 else {
                                     return o1 === o2;
-                                } })(name_10, type)) {
-                                    var form = this.map.get(name_10).getChildren()[0];
-                                    result[name_10] = form.getValue();
+                                } })(name_11, type)) {
+                                    var form = this.map.get(name_11).getChildren()[0];
+                                    result[name_11] = form.getValue();
                                     break;
                                 }
                             }
@@ -21675,13 +22353,13 @@ ui["__class"] = "ui";
                 };
                 MultiForm.prototype.setValue$jsweet_lang_Object = function (val) {
                     {
-                        var array7126 = this.map.keySet();
-                        for (var index7125 = 0; index7125 < array7126.length; index7125++) {
-                            var name_11 = array7126[index7125];
+                        var array10175 = this.map.keySet();
+                        for (var index10174 = 0; index10174 < array10175.length; index10174++) {
+                            var name_12 = array10175[index10174];
                             {
-                                if (val[name_11] != null) {
-                                    var form = this.map.get(name_11).getChildren()[0];
-                                    form.setValue$jsweet_lang_Object(val[name_11]);
+                                if (val[name_12] != null) {
+                                    var form = this.map.get(name_12).getChildren()[0];
+                                    form.setValue$jsweet_lang_Object(val[name_12]);
                                 }
                             }
                         }
@@ -21689,16 +22367,16 @@ ui["__class"] = "ui";
                     var type = val["type"];
                     this.select.setValue$java_lang_Object(type);
                     {
-                        var array7128 = this.map.keySet();
-                        for (var index7127 = 0; index7127 < array7128.length; index7127++) {
-                            var name_12 = array7128[index7127];
+                        var array10177 = this.map.keySet();
+                        for (var index10176 = 0; index10176 < array10177.length; index10176++) {
+                            var name_13 = array10177[index10176];
                             {
-                                this.map.get(name_12).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                                this.map.get(name_13).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
                                 }
                                 else {
                                     return o1 === o2;
-                                } })(name_12, type));
+                                } })(name_13, type));
                             }
                         }
                     }
@@ -21732,16 +22410,16 @@ ui["__class"] = "ui";
                     MultiForm$0.prototype.performAction = function (source, evt) {
                         var value = this.__parent.select.getValue();
                         {
-                            var array7130 = this.__parent.map.keySet();
-                            for (var index7129 = 0; index7129 < array7130.length; index7129++) {
-                                var name_13 = array7130[index7129];
+                            var array10179 = this.__parent.map.keySet();
+                            for (var index10178 = 0; index10178 < array10179.length; index10178++) {
+                                var name_14 = array10179[index10178];
                                 {
-                                    this.__parent.map.get(name_13).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
+                                    this.__parent.map.get(name_14).setVisible(/* equals */ (function (o1, o2) { if (o1 && o1.equals) {
                                         return o1.equals(o2);
                                     }
                                     else {
                                         return o1 === o2;
-                                    } })(name_13, value));
+                                    } })(name_14, value));
                                 }
                             }
                         }
@@ -21771,17 +22449,17 @@ ui["__class"] = "ui";
             SalesforceTable.prototype.setColumns = function (fields) {
                 this.columns = fields;
                 this.clearColumns();
-                for (var index7131 = 0; index7131 < fields.length; index7131++) {
-                    var o = fields[index7131];
+                for (var index10180 = 0; index10180 < fields.length; index10180++) {
+                    var o = fields[index10180];
                     {
-                        var name_14 = o["name"];
+                        var name_15 = o["name"];
                         var label = o["label"];
-                        if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(name_14, "name")) {
-                            var col = new framework.lightning.table.TableColumn(name_14, name_14, label, true);
+                        if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(name_15, "name")) {
+                            var col = new framework.lightning.table.TableColumn(name_15, name_15, label, true);
                             this.addColumn(col);
                         }
                         else {
-                            var col = new framework.lightning.table.TableColumn(name_14, name_14, label);
+                            var col = new framework.lightning.table.TableColumn(name_15, name_15, label);
                             this.addColumn(col);
                         }
                     }
@@ -21918,9 +22596,9 @@ ui["__class"] = "ui";
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
                     {
-                        var array7133 = this.component.getParameters();
-                        for (var index7132 = 0; index7132 < array7133.length; index7132++) {
-                            var p = array7133[index7132];
+                        var array10182 = this.component.getParameters();
+                        for (var index10181 = 0; index10181 < array10182.length; index10181++) {
+                            var p = array10182[index10181];
                             {
                                 if ((function (o1, o2) { return o1.toUpperCase() === (o2 === null ? o2 : o2.toUpperCase()); })(p.category, "advanced"))
                                     this.addProperty$framework_design_Parameter$framework_design_Designable(p, designable);
@@ -21954,9 +22632,9 @@ ui["__class"] = "ui";
                     _super.prototype.setComponent.call(this, designable);
                     this.clear();
                     {
-                        var array7135 = designable.getParameters();
-                        for (var index7134 = 0; index7134 < array7135.length; index7134++) {
-                            var param = array7135[index7134];
+                        var array10184 = designable.getParameters();
+                        for (var index10183 = 0; index10183 < array10184.length; index10183++) {
+                            var param = array10184[index10183];
                             {
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -22042,13 +22720,13 @@ ui["__class"] = "ui";
             SalesforceForm.prototype.setFields = function (fields) {
                 this.fields_ = fields;
                 this.clear();
-                for (var index7136 = 0; index7136 < fields.length; index7136++) {
-                    var field = fields[index7136];
+                for (var index10185 = 0; index10185 < fields.length; index10185++) {
+                    var field = fields[index10185];
                     {
-                        var name_15 = field["name"];
+                        var name_16 = field["name"];
                         var type = field["type"];
                         var label = field["label"];
-                        var element = new framework.lightning.designables.JSDesignableFormElement(name_15);
+                        var element = new framework.lightning.designables.JSDesignableFormElement(name_16);
                         element.applyParam("span", "6");
                         element.applyParam("type", type);
                         element.applyParam("label", label);
@@ -22062,8 +22740,8 @@ ui["__class"] = "ui";
                             return o1 === o2;
                         } })(type, "picklist")) {
                             var picklists = field["picklistValues"];
-                            for (var index7137 = 0; index7137 < picklists.length; index7137++) {
-                                var o = picklists[index7137];
+                            for (var index10186 = 0; index10186 < picklists.length; index10186++) {
+                                var o = picklists[index10186];
                                 {
                                     var active = o["active"];
                                     if (active) {
@@ -22091,16 +22769,16 @@ ui["__class"] = "ui";
                 var data_ = this.getData();
                 var data = new Object();
                 var objectId = data_[this.getIdField()];
-                for (var index7138 = 0; index7138 < this.fields_.length; index7138++) {
-                    var field = this.fields_[index7138];
+                for (var index10187 = 0; index10187 < this.fields_.length; index10187++) {
+                    var field = this.fields_[index10187];
                     {
-                        var name_16 = field["name"];
+                        var name_17 = field["name"];
                         var calculated = field["calculated"];
                         var updatable = field["updateable"];
                         if (!updatable || calculated) {
                         }
                         else {
-                            data[name_16] = data_[name_16];
+                            data[name_17] = data_[name_17];
                         }
                     }
                 }

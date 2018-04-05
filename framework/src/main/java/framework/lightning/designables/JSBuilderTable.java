@@ -1,23 +1,17 @@
 package framework.lightning.designables;
 
-import static jsweet.dom.Globals.alert;
 import static jsweet.lang.Globals.parseInt;
 
-import def.js.JSON;
 import framework.DndAble;
 import framework.EventListener;
 import framework.JSContainer;
 import framework.MouseEventAble;
 import framework.Renderable;
 import framework.builder.marshalling.Component;
-import framework.builder.properties.ExtPropertiesEditor;
-import framework.builder.properties.KeyValueEditor;
 import framework.design.AttributeParameter;
 import framework.design.Designable;
-import framework.design.ExtDesignable;
 import framework.design.Option;
 import framework.design.Parameter;
-import framework.design.Preparable;
 import framework.designables.DesignableDelegate;
 import framework.lightning.CheckBox;
 import framework.lightning.table.Table;
@@ -29,31 +23,30 @@ import jsweet.dom.Event;
 import jsweet.lang.Array;
 import jsweet.lang.Object;
 
-public class JSDesignableTable extends Table implements ExtDesignable, TableColumnModel, TableModel, TableCellRenderer,   MouseEventAble,DndAble {
+public class JSBuilderTable extends Table implements Designable,  TableColumnModel, TableModel, TableCellRenderer,   MouseEventAble,DndAble{
 
 	private DesignableDelegate delegate = new DesignableDelegate(this);
 
-	private Array<TableColumn> fields = new Array<TableColumn>();
 
 	private Array<Object> tableData = new Array<Object>();
 	
 	
-	private Array<Object> selected = new Array<Object>();
+//	private Array<Object> selected = new Array<Object>();
 
-	private boolean selectable = false;
+	//private boolean selectable = false;
 	
 
 
-	public JSDesignableTable(String name) {
+	public JSBuilderTable(String name) {
 		super(name);
 
+		addClass("slds-table_resizable-cols");
 		setTableCellRenderer(this);
 		/*for (int i = 1; i <= 5; i++) {
 			addColumn(new TableColumn("field" + i, "field" + i, "Field " + i));
 		}*/
 		applyParam("PageSize", "10");
 		setTableColumnModel(this);
-		refreshColumns();
 		setModel(this);
 		setIdField("Id");
 	}
@@ -70,10 +63,7 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 		return getAttribute("IdField");
 	}
 
-	public void setSelectable(boolean b) {
-		this.selectable = b;
-		refreshColumns();
-	}
+	
 
 	public Array<Object> getSelectedItems() {
 		Array<Object> result = new Array<Object>();
@@ -82,14 +72,14 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 				result.push(o);
 			}
 		}
-		this.selected = result;
+		//this.selected = result;
 		return result;
 	}
 	
 	
 	public void setSelectedItems(Array<Object> items) {
 		
-		this.selected = items;
+		//this.selected = items;
 		for(Object item : tableData){
 			item.$set("selected", isSelected(item, items));
 		}
@@ -110,20 +100,7 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 
 	@Override
 	public Renderable getComponent(Table table, java.lang.Object value, int row, int column) {
-		if (selectable && column == 0) {
-			CheckBox ch = new CheckBox("");
-			ch.setValue((Boolean) value);
-			ch.setAttribute("rowIndex", row + "");
-			ch.addEventListener(new EventListener() {
-
-				@Override
-				public void performAction(JSContainer source, Event evt) {
-					tableData.$get(row).$set("selected", ch.getValue());
-				}
-			}, "change");
-			ch.setValue((Boolean) value);
-			return ch;
-		}
+		
 		
 		
 
@@ -164,18 +141,7 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 		delegate.applyParameter(key, value, true);
 
 		boolean b = "true".equals(value);
-		if (key.equals("fields")) {
-			fields = new Array<TableColumn>();
-			if (value != null) {
-				Object o = (Object) JSON.parse(value);
-				for (String val : Object.keys(o)) {
-					String txt = (String) o.$get(val);
-					TableColumn col = new TableColumn(val, val, txt);
-					fields.push(col);
-				}
-			}
-			refreshColumns();
-		} else if (key.equals("PageSize")) {
+		if (key.equals("PageSize")) {
 
 			setPageSize((int) parseInt(value));
 
@@ -200,9 +166,6 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 		} else if (key.equals("Striped")) {
 			setStriped(b);
 
-		} else if (key.equals("Selectable")) {
-
-			setSelectable(b);
 		} else if (key.equals("ResizableCol")) {
 
 			setResizableCol(b);
@@ -210,7 +173,8 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 	}
 
 	public void clearColumns() {
-		fields = new Array<TableColumn>();
+		theadRow.clearChildren();
+		theadRow.setRendered(false);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -269,14 +233,7 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 
 	@Override
 	public void removeDesignable(Designable designable) {
-		Array<TableColumn> tmp =new Array<TableColumn>();
-		for(TableColumn tc : fields){
-			if(!tc.equals(designable)){
-				tmp.push(tc);
-			}
-		}
-		fields = tmp;
-		refreshColumns();
+		theadRow.removeChild(designable);
 	}
 
 	@Override
@@ -286,8 +243,7 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 
 	@Override
 	public void addColumn(TableColumn aColumn) {
-		fields.push(aColumn);
-		refreshColumns();
+		theadRow.addChild(aColumn);
 	}
 
 	public void setTableData(Array<Object> data) {
@@ -300,71 +256,21 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 
 	@Override
 	public double getColumnCount() {
-		if (selectable) {
-			return fields.length + 1;
-		}
-		return fields.length;
+		return theadRow.getChildren().length;
 	}
 
 	@Override
 	public double getColumnIndex(java.lang.Object columnIdentifier) {
-		alert("sd");
-
-		for (double i = 0; i < fields.length; i++) {
-			if (fields.$get(i).getIdentifier().equals(columnIdentifier)) {
-				if (selectable) {
-					return i + 1;
-				}
-				return i;
-			}
-		}
+		
 		return -1;
 	}
 
 	@Override
 	public TableColumn getColumn(int columnIndex) {
-		if (selectable) {
-			if (columnIndex == 0) {
-				return new TableColumn("check", "", "");
-				// return fields.$get(0);
-			} else {
-				return fields.$get(columnIndex - 1);
-			}
-		} else {
-			return fields.$get(columnIndex);
-		}
+		return (TableColumn)theadRow.getChildren().$get(columnIndex);
 	}
 
-	@Override
-	public ExtPropertiesEditor[] getExtEditors() {
-		KeyValueEditor fields = new KeyValueEditor("fields") {
-
-			@Override
-			public void applyDataOnDesignable(Designable designable, Object data) {
-
-				designable.applyParam("fields", JSON.stringify(data));
-			}
-
-			@Override
-			public Object getDataFromDesignable(Designable designable) {
-				String options = designable.getAttribute("fields");
-				if (options != null && options.length() > 0) {
-					Object data = (Object) JSON.parse(options);
-					if (data != null) {
-						return data;
-					}
-				}
-				return new Object();
-			}
-
-		};
-		fields.setKeyLabel("Name");
-		fields.setValueLabel("Label");
-		fields.setTabLabel("Fields");
-
-		return new ExtPropertiesEditor[] { fields };
-
-	}
+	
 
 	@Override
 	public double getRowCount() {
@@ -380,34 +286,20 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 	@Override
 	public java.lang.Object getValueAt(int rowIndex_, int columnIndex_) {
 		int rowIndex = rowIndex_;
-		int columnIndex = columnIndex_;
+		//int columnIndex = columnIndex_;
 
 		if (tableData.length > rowIndex) {
 			Object line = tableData.$get(rowIndex);
 			if (line != null) {
-				if (selectable) {
-					// rowIndex
-					if (columnIndex > 0)
-						columnIndex = columnIndex - 1;
-					else {
-						// alert(" sdf");
-						if (line.$get("selected") != null) {
+				
 
-							return line.$get("selected");
-						} else {
-							return false;
-						}
-
-					}
-				}
-
-				if (fields.length > columnIndex) {
-					TableColumn col = fields.$get(columnIndex);
+				
+					TableColumn col = getColumn(columnIndex_);
 					if (col != null) {
 						String key = (String) col.getIdentifier();
 						return line.$get(key);
 					}
-				}
+				
 			}
 		}
 		return "";
@@ -422,10 +314,11 @@ public class JSDesignableTable extends Table implements ExtDesignable, TableColu
 
 
 
-	//@Override
-	public void prepare() {
-		fields = new Array<TableColumn>();
-		
-	}
+	
+
+	
+	
+	
+	
 
 }

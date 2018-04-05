@@ -10,6 +10,7 @@ import framework.builder.libraries.ComponentFactoryRegistry;
 import framework.core.BeanFactory;
 import framework.design.Designable;
 import framework.design.Parameter;
+import framework.design.Preparable;
 import framework.designables.DesignableDelegate;
 import jsweet.lang.Array;
 import jsweet.lang.JSON;
@@ -66,7 +67,10 @@ public class MarshallUtil {
 		if(design){
 			des.addEventListener(new SelectComponentEvent(selector), "click");
 		}
-		if (component.children != null) {
+		if (component.children != null && component.children.length > 0) {
+			if(des instanceof Preparable){
+				((Preparable)des).prepare();
+			}
 			for (Component c : component.children) {
 				Designable child = toDesignable(c,design,selector);
 				des.addDesignable(child);

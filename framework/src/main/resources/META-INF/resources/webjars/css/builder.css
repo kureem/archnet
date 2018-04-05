@@ -1,3 +1,291 @@
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+.bld-reset {
+    margin: 0
+}
+
+.bld-reset article,.bld-reset aside,.bld-reset details,.bld-reset figcaption,.bld-reset figure,.bld-reset footer,.bld-reset header,.bld-reset hgroup,.bld-reset main,.bld-reset menu,.bld-reset nav,.bld-reset section,.bld-reset summary {
+    display: block
+}
+
+.bld-reset audio,.bld-reset canvas,.bld-reset progress,.bld-reset video {
+    display: inline-block;
+    vertical-align: baseline
+}
+
+.bld-reset audio:not([controls]) {
+    display: none;
+    height: 0
+}
+
+.bld-reset template {
+    display: none
+}
+
+.bld-reset a {
+    background-color: transparent
+}
+
+.bld-reset a:active,.bld-reset a:hover {
+    outline: 0
+}
+
+.bld-reset abbr[title] {
+    border-bottom: 1px dotted
+}
+
+.bld-reset b,.bld-reset strong {
+    font-weight: 700
+}
+
+.bld-reset dfn {
+    font-style: italic
+}
+
+.bld-reset h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+.bld-reset mark {
+    background: #ff0;
+    color: #000
+}
+
+.bld-reset small {
+    font-size: 80%
+}
+
+.bld-reset sub,.bld-reset sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+.bld-reset sup {
+    top: -.5em
+}
+
+.bld-reset sub {
+    bottom: -.25em
+}
+
+.bld-reset img {
+    border: 0
+}
+
+.bld-reset svg:not(:root) {
+    overflow: hidden
+}
+
+.bld-reset figure {
+    margin: 1em 40px
+}
+
+.bld-reset hr {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0
+}
+
+.bld-reset pre {
+    overflow: auto
+}
+
+.bld-reset code,.bld-reset kbd,.bld-reset pre,.bld-reset samp {
+    font-family: monospace,monospace;
+    font-size: 1em
+}
+
+.bld-reset button,.bld-reset input,.bld-reset optgroup,.bld-reset select,.bld-reset textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0
+}
+
+.bld-reset button {
+    overflow: visible
+}
+
+.bld-reset button,.bld-reset select {
+    text-transform: none
+}
+
+.bld-reset button,.bld-reset input[type=button],.bld-reset input[type=reset],.bld-reset input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer
+}
+
+.bld-reset button[disabled],.bld-reset input[disabled] {
+    cursor: default
+}
+
+.bld-reset button::-moz-focus-inner,.bld-reset input::-moz-focus-inner {
+    border: 0;
+    padding: 0
+}
+
+.bld-reset input {
+    line-height: normal
+}
+
+.bld-reset input[type=checkbox],.bld-reset input[type=radio] {
+    box-sizing: border-box;
+    padding: 0
+}
+
+.bld-reset input[type=number]::-webkit-inner-spin-button,.bld-reset input[type=number]::-webkit-outer-spin-button {
+    height: auto
+}
+
+.bld-reset input[type=search] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box
+}
+
+.bld-reset input[type=search]::-webkit-search-cancel-button,.bld-reset input[type=search]::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+
+.bld-reset fieldset {
+    border: 1px solid silver;
+    margin: 0 2px;
+    padding: .35em .625em .75em
+}
+
+.bld-reset legend {
+    border: 0;
+    padding: 0
+}
+
+.bld-reset textarea {
+    overflow: auto
+}
+
+.bld-reset optgroup {
+    font-weight: 700
+}
+
+.bld-reset table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+.bld-reset td,.bld-reset th {
+    padding: 0
+}
+
+.bld-reset *,.bld-reset :after,.bld-reset :before {
+    box-sizing: border-box
+}
+
+.bld-reset :-ms-input-placeholder {
+    color: #706e6b;
+    font-weight: 400;
+    font-size: .8125rem
+}
+
+
+
+.bld-reset dl,.bld-reset fieldset,.bld-reset h1,.bld-reset h2,.bld-reset h3,.bld-reset h4,.bld-reset h5,.bld-reset h6,.bld-reset ol,.bld-reset p,.bld-reset ul {
+    margin: 0;
+    padding: 0
+}
+
+.bld-reset dd,.bld-reset figure {
+    margin: 0
+}
+
+.bld-reset abbr[title] {
+    text-decoration: none
+}
+
+.bld-reset abbr[title],.bld-reset fieldset,.bld-reset hr {
+    border: 0
+}
+
+.bld-reset hr {
+    padding: 0
+}
+
+.bld-reset h1,.bld-reset h2,.bld-reset h3,.bld-reset h4,.bld-reset h5,.bld-reset h6 {
+    font-weight: inherit;
+    font-size: 1em
+}
+
+.bld-reset ol,.bld-reset ul {
+    list-style: none
+}
+
+.bld-reset a {
+    color: #0070d2;
+    text-decoration: none;
+    transition: color .1s linear
+}
+
+.bld-reset a:focus,.bld-reset a:hover {
+    text-decoration: underline;
+    color: #005fb2
+}
+
+.bld-reset a:active {
+    color: #005fb2
+}
+
+.bld-reset a,.bld-reset button {
+    cursor: pointer
+}
+
+.bld-reset b,.bld-reset dfn,.bld-reset strong {
+    font-weight: 700
+}
+
+.bld-reset mark {
+    background-color: #fff03f;
+    color: #3e3e3c
+}
+
+.bld-reset abbr[title] {
+    cursor: help
+}
+
+.bld-reset input[type=search] {
+    box-sizing: border-box
+}
+
+.bld-reset table {
+    width: 100%
+}
+
+.bld-reset caption,.bld-reset td,.bld-reset th {
+    text-align: left
+}
+
+.bld-reset hr {
+    display: block;
+    margin: 2rem 0;
+    border-top: 1px solid #dddbda;
+    height: 1px;
+    clear: both
+}
+
+.bld-reset audio,.bld-reset canvas,.bld-reset iframe,.bld-reset img,.bld-reset svg,.bld-reset video {
+    vertical-align: middle
+}
+
+.bld-reset img {
+    max-width: 100%;
+    height: auto
+}
+
+
+
+
+
+
 .builder .visual-editor .slds-docked-composer{
 	z-index:1;
 }

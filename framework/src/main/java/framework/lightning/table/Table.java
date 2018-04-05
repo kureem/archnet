@@ -9,7 +9,7 @@ public class Table extends JSContainer {
 
 	protected JSContainer thead = new JSContainer("thead");
 	
-	protected JSContainer theadRow = new JSContainer("tr");
+	protected JSContainer theadRow = new JSContainer("tr").addClass("slds-line-height_reset");
 
 	protected JSContainer tbody = new JSContainer("tbody");
 
@@ -214,7 +214,7 @@ public class Table extends JSContainer {
 		//JSContainer tr = new JSContainer("tr").addClass("slds-text-title_caps");
 		//thead.addChild(tr);
 		theadRow.clearChildren();
-		setRendered(false);
+		theadRow.setRendered(false);
 		for (int i = 0; i < tableColumnModel.getColumnCount(); i++) {
 			TableColumn col = tableColumnModel.getColumn(i);
 			theadRow.addChild(col);

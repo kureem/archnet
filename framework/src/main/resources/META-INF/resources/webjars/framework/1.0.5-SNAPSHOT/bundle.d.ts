@@ -849,18 +849,6 @@ declare namespace framework {
     }
 }
 declare namespace framework {
-    interface Function3<T1, T2, T3, R> {
-        /**
-         * Applies this function to the given arguments.
-         * @param {*} p1
-         * @param {*} p2
-         * @param {*} p3
-         * @return {*}
-         */
-        (p1: T1, p2: T2, p3: T3): R;
-    }
-}
-declare namespace framework {
     class HerokuAdaptor implements framework.Adaptor {
         Execute(component: any, serviceName: string, request: Object, callback: framework.ServiceCallback): void;
         constructor();
@@ -1665,6 +1653,15 @@ declare namespace framework {
             constructor(__arg0: any);
         }
         class Boot$50 extends framework.builder.libraries.AbstractComponentFactory {
+            /**
+             *
+             * @param {boolean} designMode
+             * @return {*}
+             */
+            createInstance(designMode: boolean): framework.design.Designable;
+            constructor(__arg0: any);
+        }
+        class Boot$51 extends framework.builder.libraries.AbstractComponentFactory {
             /**
              *
              * @param {boolean} designMode
@@ -3738,6 +3735,7 @@ declare namespace framework.lightning.table {
 declare namespace framework.lightning.table {
     class Table extends framework.JSContainer {
         thead: framework.JSContainer;
+        theadRow: framework.JSContainer;
         tbody: framework.JSContainer;
         tfoot: framework.JSContainer;
         model: framework.lightning.table.TableModel;
@@ -3789,17 +3787,61 @@ declare namespace framework.lightning.table {
     }
 }
 declare namespace framework.lightning.table {
-    class TableColumn extends framework.JSContainer {
+    class TableColumn extends framework.JSContainer implements framework.design.Designable {
+        delegate: framework.designables.DesignableDelegate;
         identifier: any;
         title: framework.JSContainer;
         detailLink: boolean;
+        icon: framework.lightning.SvgIcon;
+        linkReset: framework.JSContainer;
         constructor(name?: any, identifier?: any, label?: any, detailLnk?: any);
+        setBinding(binding: string): void;
         getIdentifier(): any;
         setWidth(width: string): TableColumn;
         setLabel(title: string): TableColumn;
         setFeature(cls: string, b: boolean): void;
         isDetailLink(): boolean;
         setDetailLink(detailLink: boolean): void;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        /**
+         *
+         * @return {framework.builder.marshalling.Component}
+         */
+        getComponent(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+        setAlignRight(b: boolean): void;
+        setTitleCaps(b: boolean): TableColumn;
+        setSortable(b: boolean): TableColumn;
     }
 }
 declare namespace framework.lightning {
@@ -5262,6 +5304,124 @@ declare namespace framework.lightning.designables {
         moveDesignable(designable: framework.design.Designable, steps: number): void;
     }
 }
+declare namespace framework.lightning.designables {
+    class JSBuilderTable extends framework.lightning.table.Table implements framework.design.Designable, framework.lightning.table.TableColumnModel, framework.lightning.table.TableModel, framework.lightning.table.TableCellRenderer, framework.MouseEventAble, framework.DndAble {
+        delegate: framework.designables.DesignableDelegate;
+        tableData: Array<Object>;
+        constructor(name: string);
+        setIdField(field: string): void;
+        getIdField(): string;
+        getSelectedItems(): Array<Object>;
+        setSelectedItems(items: Array<Object>): void;
+        isSelected(item: Object, items: Array<Object>): boolean;
+        getComponent$framework_lightning_table_Table$java_lang_Object$int$int(table: framework.lightning.table.Table, value: any, row: number, column: number): framework.Renderable;
+        /**
+         *
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
+         */
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        /**
+         *
+         * @param {string} key
+         * @param {string} value
+         */
+        applyParam(key: string, value: string): void;
+        clearColumns(): void;
+        /**
+         *
+         * @return {*[]}
+         */
+        getDesignables(): Array<framework.design.Designable>;
+        getComponent$(): framework.builder.marshalling.Component;
+        /**
+         *
+         * @return {framework.design.Parameter[]}
+         */
+        getParameters(): Array<framework.design.Parameter>;
+        /**
+         *
+         * @param {*} designable
+         */
+        addDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         */
+        removeDesignable(designable: framework.design.Designable): void;
+        /**
+         *
+         * @param {*} designable
+         * @param {number} steps
+         */
+        moveDesignable(designable: framework.design.Designable, steps: number): void;
+        /**
+         *
+         * @param {framework.lightning.table.TableColumn} aColumn
+         */
+        addColumn(aColumn: framework.lightning.table.TableColumn): void;
+        setTableData(data: Array<Object>): void;
+        /**
+         *
+         * @return {number}
+         */
+        getColumnCount(): number;
+        /**
+         *
+         * @param {*} columnIdentifier
+         * @return {number}
+         */
+        getColumnIndex(columnIdentifier: any): number;
+        /**
+         *
+         * @param {number} columnIndex
+         * @return {framework.lightning.table.TableColumn}
+         */
+        getColumn(columnIndex: number): framework.lightning.table.TableColumn;
+        /**
+         *
+         * @return {number}
+         */
+        getRowCount(): number;
+        /**
+         *
+         * @param {number} rowIndex
+         * @param {number} columnIndex
+         * @return {boolean}
+         */
+        isCellEditable(rowIndex: number, columnIndex: number): boolean;
+        /**
+         *
+         * @param {number} rowIndex_
+         * @param {number} columnIndex_
+         * @return {*}
+         */
+        getValueAt(rowIndex_: number, columnIndex_: number): any;
+        /**
+         *
+         * @param {*} aValue
+         * @param {number} rowIndex
+         * @param {number} columnIndex
+         */
+        setValueAt(aValue: any, rowIndex: number, columnIndex: number): void;
+    }
+    namespace JSBuilderTable {
+        class JSBuilderTable$0 implements framework.EventListener {
+            private row;
+            __parent: any;
+            /**
+             *
+             * @param {framework.JSContainer} source
+             * @param {Event} evt
+             */
+            performAction(source: framework.JSContainer, evt: Event): void;
+            constructor(__parent: any, row: any);
+        }
+    }
+}
 declare namespace framework.builder {
     class ComponentsTabs extends framework.lightning.Tabs {
         constructor(name: string);
@@ -5294,9 +5454,14 @@ declare namespace framework.lightning.designables {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -5343,9 +5508,14 @@ declare namespace framework.designables {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -5959,9 +6129,14 @@ declare namespace framework.designables {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         abstract execute(): any;
         /**
          *
@@ -6006,9 +6181,14 @@ declare namespace framework.lightning.designables {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -6435,9 +6615,14 @@ declare namespace framework.designables {
         createParameter(name: string, label: string, type: string): framework.design.Parameter;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @param {*} designable
@@ -6528,9 +6713,14 @@ declare namespace framework.lightning.designables {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         validate(): boolean;
         /**
          *
@@ -6682,9 +6872,14 @@ declare namespace framework.designables {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -6764,9 +6959,14 @@ declare namespace framework.lightning {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -6887,9 +7087,14 @@ declare namespace framework.lightning {
         getDesignables(): Array<framework.design.Designable>;
         /**
          *
-         * @return {framework.builder.marshalling.Component}
+         * @param {framework.lightning.table.Table} table
+         * @param {*} value
+         * @param {number} row
+         * @param {number} column
+         * @return {*}
          */
-        getComponent(): framework.builder.marshalling.Component;
+        getComponent(table?: any, value?: any, row?: any, column?: any): any;
+        getComponent$(): framework.builder.marshalling.Component;
         /**
          *
          * @return {framework.design.Parameter[]}
@@ -7096,6 +7301,7 @@ declare namespace framework.lightning.designables {
          * @param {number} columnIndex
          */
         setValueAt(aValue: any, rowIndex: number, columnIndex: number): void;
+        prepare(): void;
     }
     namespace JSDesignableTable {
         class JSDesignableTable$0 implements framework.EventListener {

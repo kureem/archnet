@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.limitless</groupId>
+  <artifactId>framework</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0.5-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20180413143356</lastUpdated>
+  </versioning>
+</metadata>
